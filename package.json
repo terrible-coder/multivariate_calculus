@@ -2,7 +2,7 @@
   "name": "vector_calculus",
   "version": "0.0.1",
   "description": "Handles Vector calculus",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,5 +12,8 @@
     "vector-calculus"
   ],
   "author": "terrible-coder",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^16.2.3"
+  }
 }

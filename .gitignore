@@ -1,3 +1,5 @@
 index.html
 build
 @types
+node_modules
+vc.js
