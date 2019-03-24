@@ -43,6 +43,14 @@ export class Matrix implements matrix {
 		return new Matrix(this.elements);
 	}
 
+	public get data() {
+		const self = this;
+		function dataAt(i:number, j:number,):number;
+		function dataAt(i:number):number[];
+		function dataAt(i:number, j?:number) {return j?self.elements[i][j]:self.elements[i];}
+		return dataAt;
+	}
+
 	public add(that: Matrix) {
 		if(this.row !== that.row || this.col !== that.col) throw "Addition defined only for matrices of same order.";
 		return new Matrix(new Array(this.row).fill(0).map((_, i) => new Array(that.col).fill(0).map((_, j)=> this.elements[i][j]+that.elements[i][j])));

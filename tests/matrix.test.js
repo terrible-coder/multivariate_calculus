@@ -54,6 +54,9 @@ describe("Matrix", function() {
 			c.elements[0][0] = -1;
 			expect(c).not.toBe(B);
 		});
+		it("Gets indexed data", function() {
+			C.elements.forEach((row, i) => row.forEach((value, j) => expect(value).toBe(C.data(i, j))));
+		});
 	});
 	describe("Errors", function() {
 		it("Addition", function() {
