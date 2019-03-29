@@ -59,6 +59,10 @@ describe("Matrix", function() {
 		});
 	});
 	describe("Errors", function() {
+		it("Initialisation", function() {
+			expect(_=>new Matrix([2, 2, [3, 8]])).toThrow();
+			expect(_=>new Matrix([[1, 2, 3], "hello", [7, 8, 9]])).toThrow();
+		});
 		it("Addition", function() {
 			expect(_=>A.add(I)).toThrow();
 		});

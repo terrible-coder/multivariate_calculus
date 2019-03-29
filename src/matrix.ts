@@ -1,6 +1,6 @@
 export interface matrix {
 	readonly elements:number[][];
-	
+
 	copy():matrix;
 	add(that:matrix):matrix;
 	sub(that:matrix):matrix;
@@ -47,7 +47,7 @@ export class Matrix implements matrix {
 		const self = this;
 		function dataAt(i:number, j:number,):number;
 		function dataAt(i:number):number[];
-		function dataAt(i:number, j?:number) {return j?self.elements[i][j]:self.elements[i];}
+		function dataAt(i:number, j?:number) {return j !== undefined? self.elements[i][j]: self.elements[i];}
 		return dataAt;
 	}
 
