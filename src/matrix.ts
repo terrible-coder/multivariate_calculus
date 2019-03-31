@@ -1,12 +1,3 @@
-export interface matrix {
-	readonly elements:number[][];
-
-	copy():matrix;
-	add(that:matrix):matrix;
-	sub(that:matrix):matrix;
-	mul(that:matrix):matrix;
-}
-
 function isValidMatrix(matrix2x2:number[][]) {
 	let row = matrix2x2.length;
 	let col = matrix2x2[0].length;
@@ -18,7 +9,7 @@ function isValidMatrix(matrix2x2:number[][]) {
 	return true;
 }
 
-export class Matrix implements matrix {
+export class Matrix {
 	readonly elements: number[][];
 	readonly row:number;
 	readonly col:number;
@@ -52,27 +43,15 @@ export class Matrix implements matrix {
 	}
 
 	public add(that: Matrix) {
-		if(this.row !== that.row || this.col !== that.col) throw "Addition defined only for matrices of same order.";
-		return new Matrix(new Array(this.row).fill(0).map((_, i) => new Array(that.col).fill(0).map((_, j)=> this.elements[i][j]+that.elements[i][j])));
+		return Matrix.add(this, that);
 	}
 
 	public sub(that: Matrix) {
-		if(this.row !== that.row || this.col !== that.col) throw "Subtration defined only for matrices of same order.";
-		return new Matrix(new Array(this.row).fill(0).map((_, i) => new Array(that.col).fill(0).map((_, j)=> this.elements[i][j]+that.elements[i][j])));
+		return Matrix.sub(this, that);
 	}
 
 	public mul(that: Matrix) {
-		if(this.col !== that.row) throw "Multiplication not defined.";
-		const r = this.row;
-		const c = that.col;
-		const p = this.col;
-		const C = new Array(r).fill(0).map((_, i)=> new Array(c).fill(0).map((_, j) => {
-			let sum = 0;
-			for(let k = 0; k < p; k++)
-				sum += this.elements[i][k] * that.elements[k][j];
-			return sum;
-		}));
-		return new Matrix(C);
+		return Matrix.mul(this, that);
 	}
 
 	public scale(k: number) {
@@ -130,5 +109,29 @@ export class Matrix implements matrix {
 		for(let i = 0; i < dim; i++)
 			s += A.elements[0][i] * A.cofactor(0, i);
 		return s;
+	}
+
+	public static add(A: Matrix, B: Matrix) {
+		if(A.row !== B.row || A.col !== B.col) throw "Addition defined only for matrices of same order.";
+		return new Matrix(new Array(A.row).fill(0).map((_, i) => new Array(B.col).fill(0).map((_, j)=> A.elements[i][j]+B.elements[i][j])));
+	}
+
+	public static sub(A: Matrix, B: Matrix) {
+		if(A.row !== B.row || A.col !== B.col) throw "Subtraction defined only for matrices of same order.";
+		return new Matrix(new Array(A.row).fill(0).map((_, i) => new Array(B.col).fill(0).map((_, j)=> A.elements[i][j]-B.elements[i][j])));
+	}
+
+	public static mul(A: Matrix, B: Matrix) {
+		if(A.col !== B.row) throw "Multiplication not defined.";
+		const r = A.row;
+		const c = B.col;
+		const p = A.col;
+		const C = new Array(r).fill(0).map((_, i)=> new Array(c).fill(0).map((_, j) => {
+			let sum = 0;
+			for(let k = 0; k < p; k++)
+				sum += A.elements[i][k] * B.elements[k][j];
+			return sum;
+		}));
+		return new Matrix(C);
 	}
 }

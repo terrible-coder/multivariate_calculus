@@ -23,10 +23,6 @@ describe("Vector", function() {
 		expect(Vector.mag(Vector.unit(random))).toBeCloseTo(1);
 		expect(Vector.mag(Vector.unit(B))).toBeCloseTo(1);
 	});
-	it("Converts to matrix", function() {
-		expect(random.toMatrix()).toBeDefined();
-		expect(random.toMatrix()).toBeInstanceOf(require("../build/matrix").Matrix);
-	});
 	it("generalises dot", function() {
 		expect(_=>A.dot(random)).not.toThrow();
 	});
