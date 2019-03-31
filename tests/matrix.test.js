@@ -20,12 +20,16 @@ describe("Matrix", function() {
 	describe("Algebra", function() {
 		it("Addition", function() {
 			expect(A.add(B)).toEqual(B);
+			expect(Matrix.add(A, B)).toEqual(B);
 		});
 		it("Subtraction", function() {
-			expect(A.sub(B)).toEqual(B);
+			expect(B.sub(A)).toEqual(B);
+			expect(A.sub(B)).toEqual(B.scale(-1));
 		});
 		it("Multiply", function() {
 			expect(I.mul(C)).toEqual(C);
+			const x = Matrix.transpose(new Matrix([[1, 0, 0]]));
+			expect(I.mul(x)).toEqual(x);
 		});
 		it("Scaling", function() {
 			expect(I.scale(5)).toEqual(new Matrix([

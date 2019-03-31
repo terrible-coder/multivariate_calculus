@@ -1,46 +1,38 @@
-import { matrix, Matrix } from "./matrix";
+import { Matrix } from "./matrix";
 
-export class Vector implements matrix {
-	readonly elements: number[][];
-	readonly dimension: number;
-	
+export class Vector extends Matrix {
 	constructor(list: number[]) {
-		this.elements = [list.slice()];
-		this.dimension = list.length;
+		super([list.slice()]);
+	}
+
+	public get dimension() {
+		return this.col;
 	}
 
 	public copy() {
 		return new Vector(this.elements[0]);
 	}
 
-	public get data() {
+	public get X() {
 		return (i: number) => i>this.dimension? 0: this.elements[0][i-1];
 	}
 
-	toMatrix(dim?: number) {
-		if(dim === this.dimension || dim === undefined)
-			return new Matrix(this.elements);
+	general(dim:number) {
 		if(dim < this.dimension)
-			throw "Cannot reduce number of dimensions.";
-		return new Matrix([this.elements[0].concat(new Array(dim-this.dimension).fill(0))]);
+		throw "Cannot reduce number of dimensions.";
+		if(dim === this.dimension)
+		return this.copy();
+		return new Vector(this.elements[0].slice().concat(new Array(dim - this.dimension).fill(0)));
 	}
 
-	public add(that: Vector) {
+	public add(that: Vector): Vector {
 		const dim = Math.max(this.dimension, that.dimension);
-		const A = new Matrix(this.toMatrix(dim).elements);
-		const B = new Matrix(that.toMatrix(dim).elements);
-		return new Vector(A.add(B).elements[0]);
+		return new Vector(Matrix.add(this.general(dim), that.general(dim)).data(0));
 	}
 
-	public sub(that: Vector) {
+	public sub(that: Vector): Vector {
 		const dim = Math.max(this.dimension, that.dimension);
-		const A = new Matrix(this.toMatrix(dim).elements);
-		const B = new Matrix(that.toMatrix(dim).elements);
-		return new Vector(A.sub(B).data(0));
-	}
-
-	public mul(that: Vector): never {
-		throw new Error("Normal multiplication not defined for vectors.");
+		return new Vector(Matrix.sub(this.general(dim), that.general(dim)).data(0));
 	}
 
 	public scale(k: number) {
@@ -49,8 +41,8 @@ export class Vector implements matrix {
 
 	public dot(that: Vector) {
 		const dim = Math.max(this.dimension, that.dimension);
-		const A = this.toMatrix(dim);
-		const B = that.toMatrix(dim);
+		const A = this.general(dim);
+		const B = that.general(dim);
 		return A.mul(Matrix.transpose(B)).elements[0][0];
 	}
 
@@ -58,16 +50,13 @@ export class Vector implements matrix {
 		if(this.dimension > 3 || that.dimension > 3)
 			throw new Error("Cross product defined only till 3 dimensions.");
 		const A = new Matrix([
-			[0, -this.data(3), this.data(3)],
-			[this.data(3), 0, -this.data(1)],
-			[-this.data(2), this.data(1), 0]
+			[0, -this.X(3), this.X(3)],
+			[this.X(3), 0, -this.X(1)],
+			[-this.X(2), this.X(1), 0]
 		]);
-		const B = new Matrix([
-			[that.data(1)],
-			[that.data(2)],
-			[that.data(3)]
-		]);
-		return new Vector(Matrix.transpose(A.mul(B)).data(0));
+		const B = Matrix.transpose(that.general(3));
+		const v = A.mul(B);
+		return new Vector(Matrix.transpose(v).data(0));
 	}
 
 	public static magSq(v: Vector) {
@@ -82,11 +71,11 @@ export class Vector implements matrix {
 		return Math.acos(v1.dot(v2)/(Vector.mag(v1)*Vector.mag(v2)));
 	}
 
-	public static unit(v: Vector) {
+	public static dir(v: Vector) {
 		return v.scale(1/Vector.mag(v));
 	}
 
 	public static directionCosines(v: Vector) {
-		return Vector.unit(v).elements[0].slice();
+		return Vector.dir(v).elements[0].slice();
 	}
 }
