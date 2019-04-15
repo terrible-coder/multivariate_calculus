@@ -1,15 +1,24 @@
 {
-  "name": "vector_calculus",
+  "name": "multivariate_calculus",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/terrible-coder/Vector_Calculus.git"
+  },
   "version": "0.0.1",
-  "description": "Handles Vector calculus",
+  "description": "Handles calculus of multiple variables in multidimensional space.",
   "main": "build/index.js",
+  "types": "@types/index.d.ts",
   "scripts": {
     "test": "test"
   },
   "keywords": [
     "vector",
     "calculus",
-    "vector-calculus"
+    "vector-calculus",
+    "multivariable",
+    "multivariate",
+    "multivariable-calculus",
+    "multivariate-calculus"
   ],
   "author": "terrible-coder",
   "license": "MIT",

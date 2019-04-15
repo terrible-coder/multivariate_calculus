@@ -1,0 +1,16 @@
+#folders
+node_modules
+tests
+
+#files
+.gitignore
+package-lock.json
+jest.config.js
+tsconfig.json
+index.html
+vc.js
+
+#script files
+build.cmd
+test.cmd
+pack.cmd
