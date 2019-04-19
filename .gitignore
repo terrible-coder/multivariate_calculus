@@ -1,5 +1,7 @@
 index.html
 build
 @types
+out
+doc
 node_modules
 vc.js
