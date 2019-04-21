@@ -25,7 +25,6 @@
   "devDependencies": {
     "@types/jest": "^24.0.11",
     "browserify": "^16.2.3",
-    "jest": "^24.5.0",
-    "jsdoc": "^3.5.5"
+    "jest": "^24.7.1"
   }
 }
