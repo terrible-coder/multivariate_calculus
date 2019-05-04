@@ -31,8 +31,8 @@ const A = new mcalc.Matrix(2, 3);   // [[0, 0, 0], [0, 0, 0]]
 This is still a work in progress. The library might not be stable yet.
 Work is being done on building the project to make it a useful tool for Physics and Mathematics.
 
-## Features implemented:
-- [ ] Scalar algebra
+**Features implemented:**
+- [x] Scalar algebra
 - [x] Matrix algebra
 - [x] Vector algebra
 - [ ] Tensor algebra
