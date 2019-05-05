@@ -1,4 +1,5 @@
-import { Expression, Token, Evaluable, BinaryOperator, Constant, Variable } from "./definitions";
+import { Token, Evaluable, BinaryOperator, Constant, Variable } from "./definitions";
+import { Expression } from "./expression";
 
 export abstract class Scalar implements Token, Evaluable {
 	readonly abstract type: "variable" | "constant";
@@ -6,7 +7,7 @@ export abstract class Scalar implements Token, Evaluable {
 	public add(that: Scalar): Evaluable {
 		if(this instanceof Scalar.Constant && that instanceof Scalar.Constant)
 			return new Scalar.Constant(this.value + that.value);
-		return new Expression(new BinaryOperator("+", this, that));
+		return new Expression(new BinaryOperator("+"), this, that);
 	}
 	abstract mul(that: Scalar): Scalar;
 
