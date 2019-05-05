@@ -1,4 +1,4 @@
-import { Evaluable, Operator, Variable, BinaryOperator, UnaryOperator } from "./definitions";
+import { Evaluable, Operator, Variable, BinaryOperator, UnaryOperator, Constant } from "./definitions";
 
 type UnaryOperands = {
 	readonly arg: Evaluable;
@@ -70,5 +70,29 @@ export class Expression implements Evaluable {
 
 	public mul(that: Evaluable): Evaluable {
 		return new Expression(new BinaryOperator("*"), this, that);
+	}
+
+	public isFunctionOf(v: Variable) {
+		return this.arg_list.has(v);
+	}
+
+	private static eval(e: Evaluable, values: Map<Variable, Constant>): Evaluable {
+		if (e.type === "constant")
+			return e;
+		if (e.type === "variable")
+			return values.get(<Variable>e) || e;
+		if (e instanceof Expression) {
+			let depends = false;
+			e.arg_list.forEach(v => depends = depends || e.isFunctionOf(v));
+			if (depends)
+				return e.at(values);
+		}
+		return e;
+	}
+
+	public at(values: Map<Variable, Constant>) {
+		if (this.op instanceof BinaryOperator)
+			return new Expression(this.op, Expression.eval(this.lhs, values), Expression.eval(this.rhs, values));
+		return new Expression(<UnaryOperator>this.op, Expression.eval(this.arg, values));
 	}
 }
