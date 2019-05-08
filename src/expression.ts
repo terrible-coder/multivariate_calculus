@@ -90,9 +90,30 @@ export class Expression implements Evaluable {
 		return e;
 	}
 
-	public at(values: Map<Variable, Constant>) {
+	private static simplify(e: Evaluable): Evaluable {
+		if(e.type === "constant")
+			return <Constant>e;
+		if(e.type === "variable")
+			return <Variable>e;
+		if(e instanceof Expression) {
+			if(e.op instanceof UnaryOperator)
+				return e.op.op(Expression.simplify(e.arg));
+			if(e.op instanceof BinaryOperator) {
+				switch(e.op.op) {
+				case "+": return Expression.simplify(e.lhs).add(Expression.simplify(e.rhs));
+				case "*": return Expression.simplify(e.lhs).mul(Expression.simplify(e.rhs));
+				}
+			}
+		}
+		throw "Something went wrong.";
+	}
+
+	public at(values: Map<Variable, Constant>, simple = true) {
+		let exp;
 		if (this.op instanceof BinaryOperator)
-			return new Expression(this.op, Expression.eval(this.lhs, values), Expression.eval(this.rhs, values));
-		return new Expression(<UnaryOperator>this.op, Expression.eval(this.arg, values));
+			exp = new Expression(this.op, Expression.eval(this.lhs, values), Expression.eval(this.rhs, values));
+		else
+			exp = new Expression(<UnaryOperator>this.op, Expression.eval(this.arg, values));
+		return simple? Expression.simplify(exp): exp;
 	}
 }
