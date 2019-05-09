@@ -1,5 +1,5 @@
 import { Evaluable, Operator, Variable, BinaryOperator, UnaryOperator, Constant } from "./definitions";
-import { MUL, ADD } from "./operators";
+import { ADD, SUB, MUL } from "./operators";
 
 type UnaryOperands = {
 	readonly arg: Evaluable;
@@ -65,9 +65,9 @@ export class Expression implements Evaluable {
 		return new Expression(ADD, this, that);
 	}
 
-	// public sub(that: Evaluable): Expression {
-	// 	return new Expression(new BinaryOperator("-"), this, that);
-	// }
+	public sub(that: Evaluable): Expression {
+		return new Expression(SUB, this, that);
+	}
 
 	public mul(that: Evaluable): Evaluable {
 		return new Expression(MUL, this, that);
@@ -89,24 +89,6 @@ export class Expression implements Evaluable {
 				return e.at(values);
 		}
 		return e;
-	}
-
-	private static simplify(e: Evaluable): Evaluable {
-		if(e.type === "constant")
-			return <Constant>e;
-		if(e.type === "variable")
-			return <Variable>e;
-		if(e instanceof Expression) {
-			if(e.op instanceof UnaryOperator)
-				return e.op.op(Expression.simplify(e.arg));
-			if(e.op instanceof BinaryOperator) {
-				switch(e.op.op) {
-				case "+": return Expression.simplify(e.lhs).add(Expression.simplify(e.rhs));
-				case "*": return Expression.simplify(e.lhs).mul(Expression.simplify(e.rhs));
-				}
-			}
-		}
-		throw "Something went wrong.";
 	}
 
 	public at(values: Map<Variable, Constant>, simple = true) {

@@ -1,11 +1,10 @@
-const d = require("../build/definitions");
-const { ADD, MUL } = require("../build/operators");
+const { ADD } = require("../build/operators");
 const Expression = require("../build/expression").Expression;
-const s = require("../build/scalar");
+const {Scalar} = require("../build/scalar");
 
-const x = new s.Scalar.Variable();
-const y = new s.Scalar.Variable();
-const two = new s.Scalar.Constant(2);
+const x = new Scalar.Variable();
+const y = new Scalar.Variable();
+const two = new Scalar.Constant(2);
 const expr1 = x.add(two);
 const expr2 = x.add(y);
 
@@ -17,13 +16,9 @@ describe("Checks expression functionality", function() {
 	});
 	
 	test("Check evaluation at a point", function() {
-		const four = two.add(two);
-		console.log(expr1.at(new Map([
-			[x, two]
-		])));
 		expect(expr1.at(new Map([
 			[x, two]
-		]))).toEqual(four);
+		]))).toEqual(two.add(two));
 		expect(expr2.at(new Map([
 			[x, two]
 		]))).toEqual(two.add(y));
