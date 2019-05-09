@@ -1,4 +1,5 @@
 import { Evaluable, Operator, Variable, BinaryOperator, UnaryOperator, Constant } from "./definitions";
+import { MUL, ADD } from "./operators";
 
 type UnaryOperands = {
 	readonly arg: Evaluable;
@@ -61,15 +62,15 @@ export class Expression implements Evaluable {
 	}
 
 	public add(that: Evaluable): Expression {
-		return new Expression(new BinaryOperator("+"), this, that);
+		return new Expression(ADD, this, that);
 	}
 
-	public sub(that: Evaluable): Expression {
-		return new Expression(new BinaryOperator("-"), this, that);
-	}
+	// public sub(that: Evaluable): Expression {
+	// 	return new Expression(new BinaryOperator("-"), this, that);
+	// }
 
 	public mul(that: Evaluable): Evaluable {
-		return new Expression(new BinaryOperator("*"), this, that);
+		return new Expression(MUL, this, that);
 	}
 
 	public isFunctionOf(v: Variable) {
@@ -109,11 +110,13 @@ export class Expression implements Evaluable {
 	}
 
 	public at(values: Map<Variable, Constant>, simple = true) {
-		let exp;
 		if (this.op instanceof BinaryOperator)
-			exp = new Expression(this.op, Expression.eval(this.lhs, values), Expression.eval(this.rhs, values));
+			return simple?
+				this.op.operate(Expression.eval(this.lhs, values), Expression.eval(this.rhs, values)):
+				new Expression(this.op, Expression.eval(this.lhs, values), Expression.eval(this.rhs, values))
 		else
-			exp = new Expression(<UnaryOperator>this.op, Expression.eval(this.arg, values));
-		return simple? Expression.simplify(exp): exp;
+			return simple?
+				(<UnaryOperator>this.op).operate(Expression.eval(this.arg, values)):
+				new Expression(<UnaryOperator>this.op, Expression.eval(this.arg, values));
 	}
 }

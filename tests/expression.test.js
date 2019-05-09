@@ -1,4 +1,5 @@
 const d = require("../build/definitions");
+const { ADD, MUL } = require("../build/operators");
 const Expression = require("../build/expression").Expression;
 const s = require("../build/scalar");
 
@@ -16,15 +17,19 @@ describe("Checks expression functionality", function() {
 	});
 	
 	test("Check evaluation at a point", function() {
+		const four = two.add(two);
+		console.log(expr1.at(new Map([
+			[x, two]
+		])));
 		expect(expr1.at(new Map([
 			[x, two]
-		]))).toEqual(two.add(two));
+		]))).toEqual(four);
 		expect(expr2.at(new Map([
 			[x, two]
 		]))).toEqual(two.add(y));
 		expect(expr2.at(new Map([
 			[x, two],
 			[y, two]
-		]), false)).toEqual(new Expression(new d.BinaryOperator("+"), two, two));
+		]), false)).toEqual(new Expression(ADD, two, two));
 	});
 });
