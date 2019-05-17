@@ -4,4 +4,5 @@ build
 out
 doc
 node_modules
+buildcache
 vc.js
