@@ -45,10 +45,11 @@ Upon execution `value` should be a `Scalar.Constant` object with a constant valu
 One may choose to work with more than one variable too. There is support for scalar algebra 
 for any number of variables.
 
-This is still a work in progress. The library might not be stable yet.
-Work is being done on building the project to make it a useful tool for Physics and Mathematics.
+This is still a work in progress. A documentation page and a browser version of this library
+is coming soon. Work is being done on building the project to make it a useful tool for
+Physics and Mathematics.
 
-## Features implemented:
+**Features implemented:**
 - [x] Scalar operations
 - [x] Matrix operations
 - [x] Vector operations
