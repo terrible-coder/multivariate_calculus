@@ -1,3 +1,6 @@
+/**
+ * Represents any kind of operator that has a left hand operand and a right hand operand.
+ */
 export enum BinaryOperator {
 	/** The operator for adding two values. */
 	ADD = "add",
@@ -9,6 +12,9 @@ export enum BinaryOperator {
 	DIV = "div",
 }
 
+/**
+ * Checks whether the passed string has been defined as a BinaryOperator.
+ */
 export function isBinaryOperator(s: string): s is BinaryOperator {
 	for(let k in BinaryOperator)
 		if(BinaryOperator[k] === s)

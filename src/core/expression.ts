@@ -2,7 +2,16 @@ import { Evaluable, Variable, isExpression, isVariable, Expression, Constant } f
 import { isBinaryOperator } from "./operators/binary";
 import { isUnaryOperator, math } from "./operators/unary";
 
+/**
+ * Contains helper functions needed by any class that is an `Expression`.
+ */
 export namespace ExpressionBuilder {
+	/**
+	 * Given any one or two `Evaluable` quantities, contructs a `Set` of
+	 * unknowns it/they depend on.
+	 * @param a {Evaluable}
+	 * @param b {Evaluable} Optional
+	 */
 	export function createArgList(a: Evaluable, b?: Evaluable) {
 		const list = new Set<Variable>();
 		if(isExpression(a))
@@ -28,6 +37,14 @@ export namespace ExpressionBuilder {
 		return values.get(<Variable>e) || e;
 	}
 
+	/**
+	 * Given an `Expression` and a `Map` of variables to constants, evaluates
+	 * the value of the given expression at the given values of variables.
+	 * It is like evaluating the expression by substituting the specified
+	 * variables by respective constant values.
+	 * @param exp {Expression}
+	 * @param values {Map<Variable, Constant>}
+	 */
 	export function evaluateAt(exp: Expression, values: Map<Variable, Constant>) {
 		if(isBinaryOperator(exp.op))
 			return simplify(exp.lhs, values)[exp.op](simplify(exp.rhs, values));

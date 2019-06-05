@@ -7,7 +7,7 @@ import { UnaryOperator } from "./core/operators/unary";
  * Base class to works with scalar quantities.
  */
 export abstract class Scalar implements Token, Evaluable {
-	readonly abstract type: "expression" | "variable" | "constant";
+	readonly abstract type: "constant" | "variable" | "expression";
 
 	/**
 	 * Adds two `Scalar`s together. If `this` and `that` are both constants
@@ -105,18 +105,6 @@ export namespace Scalar {
 	 * @extends Scalar
 	 */
 	export class Variable extends Scalar implements _Variable {
-		public add(that: Scalar) {
-			return new Scalar.Expression(BinaryOperator.ADD, this, that);
-		}
-		public sub(that: Scalar) {
-			return new Scalar.Expression(BinaryOperator.SUB, this, that);
-		}
-		public mul(that: Scalar) {
-			return new Scalar.Expression(BinaryOperator.MUL, this, that);
-		}
-		public div(that: Scalar) {
-			return new Scalar.Expression(BinaryOperator.DIV, this, that);
-		}
 		readonly type = "variable";
 		/**
 		 * Creates a variable scalar object.
@@ -124,36 +112,76 @@ export namespace Scalar {
 		constructor() {
 			super();
 		}
+
+		public add(that: Scalar) {
+			return new Scalar.Expression(BinaryOperator.ADD, this, that);
+		}
+
+		public sub(that: Scalar) {
+			return new Scalar.Expression(BinaryOperator.SUB, this, that);
+		}
+
+		public mul(that: Scalar) {
+			return new Scalar.Expression(BinaryOperator.MUL, this, that);
+		}
+
+		public div(that: Scalar) {
+			return new Scalar.Expression(BinaryOperator.DIV, this, that);
+		}
 	}
 
 	export class Expression extends Scalar implements _Expression {
 		readonly type = "expression";
+		/** `Set` of `Variable` quantities `this` depends on. */
 		readonly arg_list: Set<_Variable>;
-		readonly operands: Evaluable[];
+		/** Array of `Evaluable` quantity/quantities `this.op` operates on. */
+		readonly operands: Evaluable[] = [];
 
+		/**
+		 * Creates a scalar expression object using a root binary operation.
+		 * @param op {BinaryOperator}
+		 * @param lhs {Evaluable} The left hand side operand of the operator.
+		 * @param rhs {Evaluable} The right hand side operand of the operator.
+		 */
 		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable);
+		/**
+		 * Creates a scalar expression object using a root unary operation.
+		 * @param op {UnaryOperator}
+		 * @param arg {Evaluable} The argument of the operator.
+		 */
 		constructor(op: UnaryOperator, arg: Evaluable);
 		constructor(readonly op: Operator, a: Evaluable, b?: Evaluable) {
 			super();
 			this.arg_list = ExpressionBuilder.createArgList(a, b);
-			this.operands = [];
 			this.operands.push(a);
 			if(b !== undefined)
 				this.operands.push(b);
 		}
 
+		/**
+		 * The left hand side operand for `this.op`.
+		 * @throws If `this.op` is a `UnaryOperator`.
+		 */
 		public get lhs() {
 			if(this.operands.length === 2)
 				return this.operands[0];
 			throw "Unary operators have no left hand argument.";
 		}
 
+		/**
+		 * The right hand side operand for `this.op`.
+		 * @throws If `this.op` is a `UnaryOperator`.
+		 */
 		public get rhs() {
 			if(this.operands.length === 2)
 				return this.operands[1];
 			throw "Unary operators have no left hand argument.";
 		}
 
+		/**
+		 * The argument for `this.op`.
+		 * @throws If `this.op` is a `BinaryOperator`.
+		 */
 		public get arg() {
 			if(this.operands.length === 1)
 				return this.operands[0];
@@ -163,19 +191,31 @@ export namespace Scalar {
 		public add(that: Scalar) {
 			return new Scalar.Expression(BinaryOperator.ADD, this, that);
 		}
+
 		public sub(that: Scalar) {
-			return new Scalar.Expression(BinaryOperator.ADD, this, that);
+			return new Scalar.Expression(BinaryOperator.SUB, this, that);
 		}
+
 		public mul(that: Scalar) {
 			return new Scalar.Expression(BinaryOperator.MUL, this, that);
 		}
+
 		public div(that: Scalar) {
 			return new Scalar.Expression(BinaryOperator.DIV, this, that);
 		}
+
+		/**
+		 * Checks whether `this` scalar expression depends on the given `Variable`;
+		 * @param v {Variable}
+		 */
 		isFunctionOf(v: _Variable): boolean {
 			return this.arg_list.has(v);
 		}
 
+		/**
+		 * Evaluates `this` scalar expression at the given values of the `Variable` quantities.
+		 * @param values {Map<Variable, Constant>} The map from variables to constant values.
+		 */
 		at(values: Map<_Variable, _Constant>) {
 			const res = ExpressionBuilder.evaluateAt(this, values);
 			if(isConstant(res))
