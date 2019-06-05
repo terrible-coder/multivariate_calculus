@@ -1,3 +1,6 @@
+import { BinaryOperator } from "./operators";
+import { UnaryOperator } from "./unary";
+
 export interface Token {
 	readonly type: "operator" | "expression" | "variable" | "constant";
 }
@@ -22,27 +25,17 @@ export function isConstant(e: Evaluable): e is Constant {return e.type === "cons
 export interface Expression extends Evaluable {
 	readonly type: "expression";
 	readonly arg_list: Set<Variable>;
-	readonly op: BinaryOperator;
+	readonly op: Operator;
+	readonly operands: Evaluable[];
 	readonly lhs: Evaluable;
 	readonly rhs: Evaluable;
+	readonly arg: Evaluable;
 	isFunctionOf(v: Variable): boolean;
 	at(values: Map<Variable, Constant>): Evaluable;
 }
 export function isExpression(e: Evaluable): e is Expression {return e.type === "expression";}
 
-// export abstract class Operator implements Token {
-// 	readonly type = "operator";
-// 	abstract readonly op: string | Function;
-// 	abstract readonly operation: Function;
-// }
-export interface Operator {
-	//readonly type: "operator";
-}
-
-export type BinaryOperator = "add" | "sub" | "mul" | "div";
-export interface UnaryOperator extends Operator {
-	(a: Evaluable): Evaluable;
-}
+export type Operator = UnaryOperator | BinaryOperator;
 
 export type UnaryOperands = {
 	readonly arg: Evaluable;
