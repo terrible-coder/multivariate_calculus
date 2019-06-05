@@ -1,4 +1,6 @@
 import { Evaluable, Variable, isExpression, isVariable, Expression, Constant } from "./definitions";
+import { isBinaryOperator } from "./operators";
+import { isUnaryOperator, math } from "./unary";
 
 // type UnaryOperands = {
 // 	readonly arg: Evaluable;
@@ -197,8 +199,9 @@ export namespace ExpressionBuilder {
 	}
 
 	export function evaluateAt(exp: Expression, values: Map<Variable, Constant>) {
-		// if(typeof exp.op !== "string")
-		// 	throw "what";
-		return (simplify(exp.lhs, values)[exp.op])(simplify(exp.rhs, values));
+		if(isBinaryOperator(exp.op))
+			return simplify(exp.lhs, values)[exp.op](simplify(exp.rhs, values));
+		if(isUnaryOperator(exp.op))
+			return (<any>math[exp.op])(simplify(exp.arg, values));
 	}
 }
