@@ -1,6 +1,6 @@
 import { Scalar } from "../src/scalar";
-import { UnaryOperator as UO, sin, math } from "../src/unary";
-import { isExpression } from "../src/definitions";
+import { UnaryOperator as UO, sin, math } from "../src/core/operators/unary";
+import { isExpression } from "../src/core/definitions";
 
 const x = new Scalar.Variable();
 const y = new Scalar.Variable();

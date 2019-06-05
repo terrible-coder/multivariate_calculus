@@ -1,5 +1,5 @@
-import { Scalar } from "./scalar";
-import { Evaluable } from "./definitions";
+import { Scalar } from "../../scalar";
+import { Evaluable } from "../definitions";
 
 export class math {
 	[x: string]: any;

@@ -1,7 +1,7 @@
-import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, isConstant, isVariable, Operator } from "./definitions";
-import { BinaryOperator } from "./operators";
-import { ExpressionBuilder } from "./expression";
-import { UnaryOperator } from "./unary";
+import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, isConstant, isVariable, Operator } from "./core/definitions";
+import { BinaryOperator } from "./core/operators/binary";
+import { ExpressionBuilder } from "./core/expression";
+import { UnaryOperator } from "./core/operators/unary";
 
 /**
  * Base class to works with scalar quantities.

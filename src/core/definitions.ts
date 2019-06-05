@@ -1,5 +1,5 @@
-import { BinaryOperator } from "./operators";
-import { UnaryOperator } from "./unary";
+import { BinaryOperator } from "./operators/binary";
+import { UnaryOperator } from "./operators/unary";
 
 export interface Token {
 	readonly type: "operator" | "expression" | "variable" | "constant";

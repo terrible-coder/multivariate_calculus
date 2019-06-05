@@ -1,6 +1,6 @@
 import { Evaluable, Variable, isExpression, isVariable, Expression, Constant } from "./definitions";
-import { isBinaryOperator } from "./operators";
-import { isUnaryOperator, math } from "./unary";
+import { isBinaryOperator } from "./operators/binary";
+import { isUnaryOperator, math } from "./operators/unary";
 
 export namespace ExpressionBuilder {
 	export function createArgList(a: Evaluable, b?: Evaluable) {
