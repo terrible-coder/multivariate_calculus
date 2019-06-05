@@ -3,6 +3,7 @@ node_modules
 tests
 out
 doc
+buildcache
 
 #files
 .gitignore

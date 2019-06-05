@@ -1,8 +1,11 @@
-index.html
+# folders
 build
 @types
+node_modules
 out
 doc
-node_modules
 buildcache
+
+# files
+index.html
 vc.js
