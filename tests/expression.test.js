@@ -1,6 +1,4 @@
-const { ADD } = require("../build/operators");
-const Expression = require("../build/expression").Expression;
-const {Scalar} = require("../build/scalar");
+const { Scalar } = require("../build/scalar");
 
 const x = new Scalar.Variable();
 const y = new Scalar.Variable();
@@ -10,7 +8,7 @@ const expr2 = x.add(y);
 
 describe("Checks expression functionality", function() {
 	test("Checks dependency", function() {
-		expect(expr1).toBeInstanceOf(Expression);
+		expect(expr1).toBeInstanceOf(Scalar.Expression);
 		expect(expr1.isFunctionOf(x)).toBe(true);
 		expect(expr2.isFunctionOf(y)).toBe(true);
 	});
@@ -25,6 +23,6 @@ describe("Checks expression functionality", function() {
 		expect(expr2.at(new Map([
 			[x, two],
 			[y, two]
-		]), false)).toEqual(new Expression(ADD, two, two));
+		]), false)).toEqual(two.add(two));
 	});
 });
