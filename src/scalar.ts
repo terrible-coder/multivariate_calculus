@@ -1,6 +1,7 @@
-import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, BinaryOperator, isConstant, isVariable } from "./definitions";
-import { ADD, SUB, MUL, DIV } from "./operators";
+import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, isConstant, isVariable, Operator } from "./definitions";
+import { BinaryOperator } from "./operators";
 import { ExpressionBuilder } from "./expression";
+import { UnaryOperator } from "./unary";
 
 /**
  * Base class to works with scalar quantities.
@@ -67,7 +68,7 @@ export namespace Scalar {
 		public add(that: Scalar) {
 			if(that instanceof Scalar.Constant)
 				return new Scalar.Constant(this.value + that.value);
-			return new Scalar.Expression(ADD, this, that);
+			return new Scalar.Expression(BinaryOperator.ADD, this, that);
 		}
 
 		public sub(that: Scalar.Constant): Scalar.Constant;
@@ -75,7 +76,7 @@ export namespace Scalar {
 		public sub(that: Scalar) {
 			if(that instanceof Scalar.Constant)
 				return new Scalar.Constant(this.value - that.value);
-			return new Scalar.Expression(SUB, this, that);
+			return new Scalar.Expression(BinaryOperator.SUB, this, that);
 		}
 
 		public mul(that: Scalar.Constant): Scalar.Constant;
@@ -83,7 +84,7 @@ export namespace Scalar {
 		public mul(that: Scalar) {
 			if(that instanceof Scalar.Constant)
 				return new Scalar.Constant(this.value * that.value);
-			return new Scalar.Expression(ADD, this, that);
+			return new Scalar.Expression(BinaryOperator.MUL, this, that);
 		}
 
 		public div(that: Scalar.Constant): Scalar.Constant;
@@ -94,7 +95,7 @@ export namespace Scalar {
 					throw "Division by zero error";
 				return new Scalar.Constant(this.value / that.value);
 			}
-			return new Scalar.Expression(ADD, this, that);
+			return new Scalar.Expression(BinaryOperator.DIV, this, that);
 		}
 	}
 
@@ -105,16 +106,16 @@ export namespace Scalar {
 	 */
 	export class Variable extends Scalar implements _Variable {
 		public add(that: Scalar) {
-			return new Scalar.Expression(ADD, this, that);
+			return new Scalar.Expression(BinaryOperator.ADD, this, that);
 		}
 		public sub(that: Scalar) {
-			return new Scalar.Expression(SUB, this, that);
+			return new Scalar.Expression(BinaryOperator.SUB, this, that);
 		}
 		public mul(that: Scalar) {
-			return new Scalar.Expression(MUL, this, that);
+			return new Scalar.Expression(BinaryOperator.MUL, this, that);
 		}
 		public div(that: Scalar) {
-			return new Scalar.Expression(DIV, this, that);
+			return new Scalar.Expression(BinaryOperator.DIV, this, that);
 		}
 		readonly type = "variable";
 		/**
@@ -128,25 +129,48 @@ export namespace Scalar {
 	export class Expression extends Scalar implements _Expression {
 		readonly type = "expression";
 		readonly arg_list: Set<_Variable>;
+		readonly operands: Evaluable[];
 
-		constructor(readonly op: BinaryOperator, readonly lhs: Evaluable, readonly rhs: Evaluable) {
-		//constructor(op: UnaryOperator, arg: Evaluable);
-		//constructor(readonly op: Operator, a: Evaluable, b?: Evaluable) {
+		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable);
+		constructor(op: UnaryOperator, arg: Evaluable);
+		constructor(readonly op: Operator, a: Evaluable, b?: Evaluable) {
 			super();
-			this.arg_list = ExpressionBuilder.createArgList(lhs, rhs);
+			this.arg_list = ExpressionBuilder.createArgList(a, b);
+			this.operands = [];
+			this.operands.push(a);
+			if(b !== undefined)
+				this.operands.push(b);
+		}
+
+		public get lhs() {
+			if(this.operands.length === 2)
+				return this.operands[0];
+			throw "Unary operators have no left hand argument.";
+		}
+
+		public get rhs() {
+			if(this.operands.length === 2)
+				return this.operands[1];
+			throw "Unary operators have no left hand argument.";
+		}
+
+		public get arg() {
+			if(this.operands.length === 1)
+				return this.operands[0];
+			throw "Binary operators have two arguments.";
 		}
 
 		public add(that: Scalar) {
-			return new Scalar.Expression(ADD, this, that);
+			return new Scalar.Expression(BinaryOperator.ADD, this, that);
 		}
 		public sub(that: Scalar) {
-			return new Scalar.Expression(ADD, this, that);
+			return new Scalar.Expression(BinaryOperator.ADD, this, that);
 		}
 		public mul(that: Scalar) {
-			return new Scalar.Expression(MUL, this, that);
+			return new Scalar.Expression(BinaryOperator.MUL, this, that);
 		}
 		public div(that: Scalar) {
-			return new Scalar.Expression(DIV, this, that);
+			return new Scalar.Expression(BinaryOperator.DIV, this, that);
 		}
 		isFunctionOf(v: _Variable): boolean {
 			return this.arg_list.has(v);
