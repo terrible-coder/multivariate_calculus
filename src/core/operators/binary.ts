@@ -10,6 +10,8 @@ export enum BinaryOperator {
 	MUL = "mul",
 	/** The operator for dividing one value by another. */
 	DIV = "div",
+	/** The operator for raising a base to an exponent. */
+	POW = "pow"
 }
 
 /**

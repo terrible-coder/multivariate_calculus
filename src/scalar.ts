@@ -45,6 +45,15 @@ export abstract class Scalar implements Token, Evaluable {
 	 * @returns {Evaluable} The result of algebraic division.
 	 */
 	public abstract div(that: Scalar): Scalar;
+
+	/**
+	 * Raises `this` scalar to the power of `that`. If `this` and `that` are both constants
+	 * then numerically evaluates the exponentiation and returns a new `Scalar.Constant` object
+	 * otherwise creates an `Expression` out of them and returns the same.
+	 * @param that {Scalar} The scalar to divide `this` by.
+	 * @returns {Evaluable} The result of algebraic division.
+	 */
+	public abstract pow(that: Scalar): Scalar;
 }
 
 export namespace Scalar {
@@ -97,6 +106,17 @@ export namespace Scalar {
 			}
 			return new Scalar.Expression(BinaryOperator.DIV, this, that);
 		}
+
+		public pow(that: Scalar.Constant): Scalar.Constant;
+		public pow(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+		public pow(that: Scalar) {
+			if(that instanceof Scalar.Constant) {
+				if(this.value === 0 && that.value === 0)
+					throw "Cannot determine 0 to the power 0";
+				return new Scalar.Constant(Math.pow(this.value, that.value));
+			}
+			return new Scalar.Expression(BinaryOperator.POW, this, that);
+		}
 	}
 
 	/**
@@ -127,6 +147,10 @@ export namespace Scalar {
 
 		public div(that: Scalar) {
 			return new Scalar.Expression(BinaryOperator.DIV, this, that);
+		}
+
+		public pow(that: Scalar) {
+			return new Scalar.Expression(BinaryOperator.POW, this, that);
 		}
 	}
 
@@ -202,6 +226,10 @@ export namespace Scalar {
 
 		public div(that: Scalar) {
 			return new Scalar.Expression(BinaryOperator.DIV, this, that);
+		}
+
+		public pow(that: Scalar) {
+			return new Scalar.Expression(BinaryOperator.POW, this, that);
 		}
 
 		/**
