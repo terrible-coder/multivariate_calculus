@@ -43,7 +43,8 @@ console.log(value);
 
 Upon execution `value` should be a `Scalar.Constant` object with a constant value of `4`.
 One may choose to work with more than one variable too. There is support for scalar algebra 
-for any number of variables.
+for any number of variables. Almost all common algebraic scalar operations have been implemented.
+Submit an issue if something has been missed and should be implemented right away.
 
 This is still a work in progress. A documentation page and a browser version of this library
 is coming soon. Work is being done on building the project to make it a useful tool for
