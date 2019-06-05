@@ -53,10 +53,10 @@ Work is being done on building the project to make it a useful tool for Physics 
 - [x] Matrix operations
 - [x] Vector operations
 - [ ] Tensor operations
-- [x] Introduction of a system of variables and constants for Scalar
-- [ ] Introduction of a system of variables and constants for Matrix
-- [ ] Introduction of a system of variables and constants for Vector
-- [ ] Introduction of a system of variables and constants for Tensor
+- [x] A system of variables and constants for Scalar
+- [ ] A system of variables and constants for Matrix
+- [ ] A system of variables and constants for Vector
+- [ ] A system of variables and constants for Tensor
 - [x] Algebra of Scalar variables
 - [ ] Algebra of Matrix variables
 - [ ] Algebra of Vector variables
