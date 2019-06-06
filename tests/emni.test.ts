@@ -2,8 +2,8 @@ import { Scalar } from "../src/scalar";
 import { UnaryOperator as UO, sin, math } from "../src/core/operators/unary";
 import { isExpression } from "../src/core/definitions";
 
-const x = new Scalar.Variable();
-const y = new Scalar.Variable();
+const x = new Scalar.Variable("x");
+const y = new Scalar.Variable("y");
 const z = x.add(y);
 const w = x.sub(y);
 const z1 = z.at(new Map([
@@ -17,6 +17,8 @@ console.log(sinx.at(new Map([
 	[x, new Scalar.Constant(Math.PI/4)]
 ])));
 it("bitching", function() {
+	expect(new Scalar.Variable("x")).toBe(x);
+	expect(new Scalar.Variable("x")).toEqual(x);
 	expect(isExpression(z)).toBe(true);
 	expect(isExpression(w)).toBe(true);
 	console.log(z1);

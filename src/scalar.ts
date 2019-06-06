@@ -8,6 +8,7 @@ import { UnaryOperator } from "./core/operators/unary";
  */
 export abstract class Scalar implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
+	readonly quantity = "scalar";
 
 	/**
 	 * Adds two `Scalar`s together. If `this` and `that` are both constants
@@ -57,6 +58,7 @@ export abstract class Scalar implements Token, Evaluable {
 }
 
 export namespace Scalar {
+	const VARIABLES = new Map<string, Scalar.Variable>();
 	/**
 	 * Represents a constant scalar quantity with a fixed value.
 	 * @class
@@ -129,8 +131,11 @@ export namespace Scalar {
 		/**
 		 * Creates a variable scalar object.
 		 */
-		constructor() {
+		constructor(readonly name: string) {
 			super();
+			if(!VARIABLES.has(this.name))
+				VARIABLES.set(this.name, this);
+			return VARIABLES.get(this.name) || this;
 		}
 
 		public add(that: Scalar) {

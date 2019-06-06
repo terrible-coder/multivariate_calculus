@@ -13,6 +13,7 @@ export interface Token {
  */
 export interface Evaluable extends Token {
 	readonly type: "expression" | "variable" | "constant";
+	readonly quantity: string;
 	[x: string]: any;
 }
 /** Checks whether a given `Token` is an `Evaluable`. */
@@ -24,6 +25,7 @@ export function isEvaluable(e: Token): e is Evaluable {return e.type !== "operat
  */
 export interface Variable extends Evaluable {
 	readonly type: "variable";
+	readonly name: string;
 }
 /** Checks whether a given `Evaluable` is a variable. */
 export function isVariable(e: Evaluable): e is Variable {return e.type === "variable";}
