@@ -31,17 +31,27 @@ const A = new mcalc.Matrix(2, 3);   // [[0, 0, 0], [0, 0, 0]]
 This library allows you to work with variables too.
 ```typescript
 import { Scalar } from "multivariate_calculus"
-const x = new Scalar.Variable();
+
+const x = new Scalar.Variable("x");
+const y = new Scalar.Variable("y");
 const two = new Scalar.Constant(2);
 const three = new Scalar.Constant(3);
-const expr = x.add(two);
-const value = expr.at(new Map[
+const expr1 = x.add(two);
+const expr2 = x.add(y);
+
+const value1 = expr1.at(new Map([
 	[x, three]
-]);
-console.log(value);
+]));
+const value2 = expr2.at(new Map([
+	[y, two]
+]));
+
+console.log(value1);
 ```
 
-Upon execution `value` should be a `Scalar.Constant` object with a constant value of `4`.
+Upon execution `value1` should be a `Scalar.Constant` object with a constant value of `5`.
+Interestingly, `expr1` and `value2` have the same value: a `Scalar.Expression` object
+representing `x + 2`.
 One may choose to work with more than one variable too. There is support for scalar algebra 
 for any number of variables. Almost all common algebraic scalar operations have been implemented.
 Submit an issue if something has been missed and should be implemented right away.
