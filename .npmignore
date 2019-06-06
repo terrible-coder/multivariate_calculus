@@ -1,6 +1,7 @@
 #folders
 node_modules
 tests
+src
 out
 doc
 buildcache
@@ -11,7 +12,7 @@ package-lock.json
 jest.config.js
 tsconfig.json
 index.html
-vc.js
+mcalc.js
 
 #script files
 build.cmd
