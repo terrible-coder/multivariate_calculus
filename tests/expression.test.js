@@ -1,8 +1,8 @@
-const { scalar, Scalar } = require("../build/scalar");
+const { Scalar } = require("../build/Scalar");
 
-const x = scalar.variable("x");
-const y = scalar.variable("y");
-const two = scalar.constant(2);
+const x = Scalar.variable("x");
+const y = Scalar.variable("y");
+const two = Scalar.constant(2);
 const expr1 = x.add(two);
 const expr2 = x.add(y);
 

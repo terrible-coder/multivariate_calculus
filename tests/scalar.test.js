@@ -1,4 +1,4 @@
-const scalar = require("../build/scalar").scalar;
+const scalar = require("../build/scalar").Scalar;
 
 const a = scalar.constant(5);
 const b = scalar.constant(10);

@@ -58,6 +58,9 @@ export abstract class Scalar implements Token, Evaluable {
 }
 
 export namespace Scalar {
+	const VARIABLES = new Map<string, Scalar.Variable>();
+	const CONSTANTS = new Map<number, Scalar.Constant>();
+
 	/**
 	 * Represents a constant scalar quantity with a fixed value.
 	 * @class
@@ -254,11 +257,12 @@ export namespace Scalar {
 			return <Scalar.Expression>res;
 		}
 	}
-}
 
-export namespace scalar {
-	const VARIABLES = new Map<string, Scalar.Variable>();
-	const CONSTANTS = new Map<number, Scalar.Constant>();
+	/**
+	 * Creates a new `Scalar.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {number}
+	 */
 	export function constant(value: number) {
 		let c = CONSTANTS.get(value);
 		if(c === undefined) {
@@ -267,6 +271,12 @@ export namespace scalar {
 		}
 		return c;
 	}
+
+	/**
+	 * Creates a new `Scalar.Variable` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {number}
+	 */
 	export function variable(name: string) {
 		let v = VARIABLES.get(name);
 		if(v === undefined) {
