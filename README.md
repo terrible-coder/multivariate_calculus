@@ -32,10 +32,10 @@ This library allows you to work with variables too.
 ```typescript
 import { Scalar } from "multivariate_calculus"
 
-const x = new Scalar.Variable("x");
-const y = new Scalar.Variable("y");
-const two = new Scalar.Constant(2);
-const three = new Scalar.Constant(3);
+const x = scalar.variable("x");
+const y = scalar.variable("y");
+const two = scalar.constant(2);
+const three = scalar.constant(3);
 const expr1 = x.add(two);
 const expr2 = x.add(y);
 
@@ -52,6 +52,20 @@ console.log(value1);
 Upon execution `value1` should be a `Scalar.Constant` object with a constant value of `5`.
 Interestingly, `expr1` and `value2` have the same value: a `Scalar.Expression` object
 representing `x + 2`.
+Now it is no longer necessary to create new objects each time you want the same value or
+variable. With this way of lazy initialisation, the code takes care that the same variable
+or constant object is not created twice, avoiding the problem of having multiple copies
+of the same variable lying around in memory.
+Once you have said
+```javascript
+const x = scalar.variable("x");
+```
+any attempt made to create another variable with the same name will return the object
+created originally with the same name.
+```javascript
+const y = scalar.variable("x");
+// this is the same object as `x` created originally
+```
 One may choose to work with more than one variable too. There is support for scalar algebra 
 for any number of variables. Almost all common algebraic scalar operations have been implemented.
 Submit an issue if something has been missed and should be implemented right away.
