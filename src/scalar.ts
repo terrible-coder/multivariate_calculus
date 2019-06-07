@@ -257,9 +257,15 @@ export namespace Scalar {
 }
 
 export namespace scalar {
-	export const VARIABLES = new Map<string, Scalar.Variable>();
+	const VARIABLES = new Map<string, Scalar.Variable>();
+	const CONSTANTS = new Map<number, Scalar.Constant>();
 	export function constant(value: number) {
-		return new Scalar.Constant(value);
+		let c = CONSTANTS.get(value);
+		if(c === undefined) {
+			c = new Scalar.Constant(value);
+			CONSTANTS.set(value, c);
+		}
+		return c;
 	}
 	export function variable(name: string) {
 		let v = VARIABLES.get(name);
