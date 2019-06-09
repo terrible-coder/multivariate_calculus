@@ -169,6 +169,17 @@ export class math {
 			return new Scalar.Constant(Math.exp(x.value));
 		return new Scalar.Expression(UnaryOperator.EXP, x);
 	}
+
+	public static abs(x: number): number;
+	public static abs(x: Scalar.Constant): Scalar.Constant;
+	public static abs(x: Scalar): Scalar.Expression;
+	public static abs(x: number | Evaluable) {
+		if(typeof x === "number")
+			return Math.abs(x);
+		if(x instanceof Scalar.Constant)
+			return new Scalar.Constant(Math.abs(x.value));
+		return new Scalar.Expression(UnaryOperator.ABS, x);
+	}
 }
 
 /** The trigonometric sine function. */
@@ -201,6 +212,8 @@ export const log = math.log;
 export const ln = math.ln;
 /** The exponentiation function. */
 export const exp = math.exp;
+/** The absolute value function. */
+export const abs = math.abs;
 
 /**
  * Represents any kind of operator that only takes one operand to operate on.
@@ -230,12 +243,14 @@ export enum UnaryOperator {
 	ACOSH = "acosh",
 	/** Represents the inverse hyperbolic tangent function. */
 	ATANH = "atanh",
-	/** Represents the common logarithm function (to the base 10) */
+	/** Represents the common logarithm function (to the base 10). */
 	LOG = "log",
-	/** Represents the natural logarithm function (to the base `e`) */
+	/** Represents the natural logarithm function (to the base `e`). */
 	LN = "ln",
-	/** Represents the exponentiation function */
-	EXP = "exp"
+	/** Represents the exponentiation function. */
+	EXP = "exp",
+	/** Represents the absolute value function. */
+	ABS = "abs"
 }
 
 /**

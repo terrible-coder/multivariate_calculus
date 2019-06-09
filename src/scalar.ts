@@ -80,7 +80,7 @@ export namespace Scalar {
 		public add(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		public add(that: Scalar) {
 			if(that instanceof Scalar.Constant)
-				return new Scalar.Constant(this.value + that.value);
+				return Scalar.constant(this.value + that.value);
 			return new Scalar.Expression(BinaryOperator.ADD, this, that);
 		}
 
@@ -88,7 +88,7 @@ export namespace Scalar {
 		public sub(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		public sub(that: Scalar) {
 			if(that instanceof Scalar.Constant)
-				return new Scalar.Constant(this.value - that.value);
+				return Scalar.constant(this.value - that.value);
 			return new Scalar.Expression(BinaryOperator.SUB, this, that);
 		}
 
@@ -96,7 +96,7 @@ export namespace Scalar {
 		public mul(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		public mul(that: Scalar) {
 			if(that instanceof Scalar.Constant)
-				return new Scalar.Constant(this.value * that.value);
+				return Scalar.constant(this.value * that.value);
 			return new Scalar.Expression(BinaryOperator.MUL, this, that);
 		}
 
@@ -106,7 +106,7 @@ export namespace Scalar {
 			if(that instanceof Scalar.Constant) {
 				if(that.value === 0)
 					throw "Division by zero error";
-				return new Scalar.Constant(this.value / that.value);
+				return Scalar.constant(this.value / that.value);
 			}
 			return new Scalar.Expression(BinaryOperator.DIV, this, that);
 		}
@@ -117,7 +117,7 @@ export namespace Scalar {
 			if(that instanceof Scalar.Constant) {
 				if(this.value === 0 && that.value === 0)
 					throw "Cannot determine 0 to the power 0";
-				return new Scalar.Constant(Math.pow(this.value, that.value));
+				return Scalar.constant(Math.pow(this.value, that.value));
 			}
 			return new Scalar.Expression(BinaryOperator.POW, this, that);
 		}
@@ -203,7 +203,7 @@ export namespace Scalar {
 		public get rhs() {
 			if(this.operands.length === 2)
 				return this.operands[1];
-			throw "Unary operators have no left hand argument.";
+			throw "Unary operators have no right hand argument.";
 		}
 
 		/**
@@ -240,7 +240,7 @@ export namespace Scalar {
 		 * Checks whether `this` scalar expression depends on the given `Variable`;
 		 * @param v {Variable}
 		 */
-		isFunctionOf(v: _Variable): boolean {
+		public isFunctionOf(v: _Variable): boolean {
 			return this.arg_list.has(v);
 		}
 
@@ -248,7 +248,7 @@ export namespace Scalar {
 		 * Evaluates `this` scalar expression at the given values of the `Variable` quantities.
 		 * @param values {Map<Variable, Constant>} The map from variables to constant values.
 		 */
-		at(values: Map<_Variable, _Constant>) {
+		public at(values: Map<_Variable, _Constant>) {
 			const res = ExpressionBuilder.evaluateAt(this, values);
 			if(isConstant(res))
 				return <Scalar.Constant>res;

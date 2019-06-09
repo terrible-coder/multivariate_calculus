@@ -28,7 +28,23 @@ const mcalc = require("multivariate_calculus");
 const A = new mcalc.Matrix(2, 3);   // [[0, 0, 0], [0, 0, 0]]
 ```
 
-This library allows you to work with variables too.
+One can create and work with variables just like one would do in pen and paper.
+```javascript
+const x = Scalar.variable("x");
+```
+
+The code takes care that the same variable or constant object is not created twice,
+avoiding the problem of having multiple copies of the same variable lying around in memory.
+That is, after the previous line if we say
+```javascript
+const x_ = Scalar.variable("x");
+```
+this does not create a new object with the same name as that of `x`. Instead,
+it will return the original object that was first created with the name `"x"`.
+Essentially `x` and `x_` are pointing to the same object in memory.
+
+One may choose to work with more than one variable too. There is support for scalar algebra 
+for any number of variables.
 ```typescript
 import { Scalar } from "multivariate_calculus"
 
@@ -52,19 +68,9 @@ console.log(value1);
 Upon execution `value1` should be a `Scalar.Constant` object with a constant value of `5`.
 Interestingly, `expr1` and `value2` have the same value: a `Scalar.Expression` object
 representing `x + 2`.
-The code takes care that the same variable or constant object is not created twice,
-avoiding the problem of having multiple copies of the same variable lying around in memory.
-That is, if we say
-```javascript
-const x_ = Scalar.variable("x");
-```
-this does not create a new object with the same name as that of `x`. Instead,
-it will return the original object that was first created with the name `"x"`.
-Essentially `x` and `x_` are pointing to the same object in memory.
 
-One may choose to work with more than one variable too. There is support for scalar algebra 
-for any number of variables. Almost all common algebraic scalar operations have been implemented.
-Submit an issue if something has been missed and should be implemented right away.
+Almost all common algebraic scalar operations have been implemented.
+File an issue if something has been missed and should be implemented right away.
 
 This is still a work in progress. A documentation page and a browser version of this library
 is coming soon. Work is being done on building the project to make it a useful tool for
