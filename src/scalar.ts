@@ -8,6 +8,7 @@ import { UnaryOperator } from "./core/operators/unary";
  */
 export abstract class Scalar implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
+	readonly quantity = "scalar";
 
 	/**
 	 * Adds two `Scalar`s together. If `this` and `that` are both constants
@@ -45,9 +46,21 @@ export abstract class Scalar implements Token, Evaluable {
 	 * @returns {Evaluable} The result of algebraic division.
 	 */
 	public abstract div(that: Scalar): Scalar;
+
+	/**
+	 * Raises `this` scalar to the power of `that`. If `this` and `that` are both constants
+	 * then numerically evaluates the exponentiation and returns a new `Scalar.Constant` object
+	 * otherwise creates an `Expression` out of them and returns the same.
+	 * @param that {Scalar} The scalar to divide `this` by.
+	 * @returns {Evaluable} The result of algebraic division.
+	 */
+	public abstract pow(that: Scalar): Scalar;
 }
 
 export namespace Scalar {
+	const VARIABLES = new Map<string, Scalar.Variable>();
+	const CONSTANTS = new Map<number, Scalar.Constant>();
+
 	/**
 	 * Represents a constant scalar quantity with a fixed value.
 	 * @class
@@ -97,6 +110,17 @@ export namespace Scalar {
 			}
 			return new Scalar.Expression(BinaryOperator.DIV, this, that);
 		}
+
+		public pow(that: Scalar.Constant): Scalar.Constant;
+		public pow(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+		public pow(that: Scalar) {
+			if(that instanceof Scalar.Constant) {
+				if(this.value === 0 && that.value === 0)
+					throw "Cannot determine 0 to the power 0";
+				return new Scalar.Constant(Math.pow(this.value, that.value));
+			}
+			return new Scalar.Expression(BinaryOperator.POW, this, that);
+		}
 	}
 
 	/**
@@ -109,7 +133,7 @@ export namespace Scalar {
 		/**
 		 * Creates a variable scalar object.
 		 */
-		constructor() {
+		constructor(readonly name: string) {
 			super();
 		}
 
@@ -127,6 +151,10 @@ export namespace Scalar {
 
 		public div(that: Scalar) {
 			return new Scalar.Expression(BinaryOperator.DIV, this, that);
+		}
+
+		public pow(that: Scalar) {
+			return new Scalar.Expression(BinaryOperator.POW, this, that);
 		}
 	}
 
@@ -204,6 +232,10 @@ export namespace Scalar {
 			return new Scalar.Expression(BinaryOperator.DIV, this, that);
 		}
 
+		public pow(that: Scalar) {
+			return new Scalar.Expression(BinaryOperator.POW, this, that);
+		}
+
 		/**
 		 * Checks whether `this` scalar expression depends on the given `Variable`;
 		 * @param v {Variable}
@@ -224,5 +256,33 @@ export namespace Scalar {
 				return <Scalar.Variable>res;
 			return <Scalar.Expression>res;
 		}
+	}
+
+	/**
+	 * Creates a new `Scalar.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {number}
+	 */
+	export function constant(value: number) {
+		let c = CONSTANTS.get(value);
+		if(c === undefined) {
+			c = new Scalar.Constant(value);
+			CONSTANTS.set(value, c);
+		}
+		return c;
+	}
+
+	/**
+	 * Creates a new `Scalar.Variable` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {number}
+	 */
+	export function variable(name: string) {
+		let v = VARIABLES.get(name);
+		if(v === undefined) {
+			v = new Scalar.Variable(name);
+			VARIABLES.set(name, v);
+		}
+		return v;
 	}
 }
