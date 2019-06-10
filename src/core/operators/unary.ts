@@ -4,6 +4,18 @@ import { Evaluable } from "../definitions";
 export class math {
 	[x: string]: any;
 
+	public static neg(x: number): number;
+	public static neg(x: Scalar.Constant): Scalar.Constant;
+	public static neg(x: Scalar): Scalar.Expression;
+	public static neg(x: number | Evaluable) {
+		if(typeof x === "number")
+			return -x;
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(-x.value);
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.NEG, x);
+	}
+
 	public static sin(x: number): number;
 	public static sin(x: Scalar.Constant): Scalar.Constant;
 	public static sin(x: Scalar): Scalar.Expression;
@@ -195,8 +207,34 @@ export class math {
 		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
 			return new Scalar.Expression(UnaryOperator.ABS, x);
 	}
+
+	public static floor(x: number): number;
+	public static floor(x: Scalar.Constant): Scalar.Constant;
+	public static floor(x: Scalar): Scalar.Expression;
+	public static floor(x: number | Evaluable) {
+		if(typeof x === "number")
+			return Math.floor(x);
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.floor(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.FLOOR, x);
+	}
+
+	public static ceil(x: number): number;
+	public static ceil(x: Scalar.Constant): Scalar.Constant;
+	public static ceil(x: Scalar): Scalar.Expression;
+	public static ceil(x: number | Evaluable) {
+		if(typeof x === "number")
+			return Math.ceil(x);
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.ceil(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.CEIL, x);
+	}
 }
 
+/** The negative value of its argument. */
+export const neg = math.neg;
 /** The trigonometric sine function. */
 export const sin = math.sin;
 /** The trigonometric cosine function. */
@@ -229,11 +267,17 @@ export const ln = math.ln;
 export const exp = math.exp;
 /** The absolute value function. */
 export const abs = math.abs;
+/** The greatest integer function. */
+export const floor = math.floor;
+/** The smallest integer function. */
+export const ceil = math.ceil;
 
 /**
  * Represents any kind of operator that only takes one operand to operate on.
  */
 export enum UnaryOperator {
+	/** Represents the negative of a scalar. */
+	NEG = "neg",
 	/** Represents the trigonometric sine function. */
 	SIN = "sin",
 	/** Represents the trigonometric cosine function. */
@@ -265,7 +309,11 @@ export enum UnaryOperator {
 	/** Represents the exponentiation function. */
 	EXP = "exp",
 	/** Represents the absolute value function. */
-	ABS = "abs"
+	ABS = "abs",
+	/** Represents the greatest integer function. */
+	FLOOR = "floor",
+	/** Represents the least integer function. */
+	CEIL = "ceil"
 }
 
 /**

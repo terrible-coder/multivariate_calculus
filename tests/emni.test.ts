@@ -1,5 +1,5 @@
 import { Scalar } from "../src/scalar";
-import { abs, sin } from "../src/core/operators/unary";
+import { abs, sin, floor } from "../src/core/operators/unary";
 import { isExpression } from "../src/core/definitions";
 
 const x = Scalar.variable("x");
@@ -55,5 +55,11 @@ describe("checks Scalar variable system", function() {
 			expect(absx.at(new Map([
 				[x, Scalar.constant(i)]
 			]))).toBe(Scalar.constant(Math.abs(i)));
+	});
+
+	it("checks floor function", function() {
+		expect(floor(0)).toBe(Math.abs(0));
+		for(let i = -5; i <= 5; i += 1)
+			expect(floor(Scalar.constant(i))).toBe(Scalar.constant(Math.floor(i)));
 	});
 });
