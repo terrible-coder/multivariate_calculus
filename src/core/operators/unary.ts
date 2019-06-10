@@ -11,8 +11,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.sin(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.sin(x.value));
-		return new Scalar.Expression(UnaryOperator.SIN, x);
+			return Scalar.constant(Math.sin(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.SIN, x);
 	}
 
 	public static cos(x: number): number;
@@ -22,8 +23,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.cos(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.cos(x.value));
-		return new Scalar.Expression(UnaryOperator.COS, x);
+			return Scalar.constant(Math.cos(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.COS, x);
 	}
 
 	public static tan(x: number): number;
@@ -33,8 +35,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.tan(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.tan(x.value));
-		return new Scalar.Expression(UnaryOperator.TAN, x);
+			return Scalar.constant(Math.tan(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.TAN, x);
 	}
 
 	public static asin(x: number): number;
@@ -44,8 +47,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.asin(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.asin(x.value));
-		return new Scalar.Expression(UnaryOperator.ASIN, x);
+			return Scalar.constant(Math.asin(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.ASIN, x);
 	}
 
 	public static acos(x: number): number;
@@ -55,8 +59,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.asin(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.acos(x.value));
-		return new Scalar.Expression(UnaryOperator.ACOS, x);
+			return Scalar.constant(Math.acos(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.ACOS, x);
 	}
 
 	public static atan(x: number): number;
@@ -66,10 +71,10 @@ export class math {
 		if(typeof x === "number")
 			return Math.atan(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.atan(x.value));
-		return new Scalar.Expression(UnaryOperator.ATAN, x);
+			return Scalar.constant(Math.atan(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.ATAN, x);
 	}
-
 
 	public static sinh(x: number): number;
 	public static sinh(x: Scalar.Constant): Scalar.Constant;
@@ -78,8 +83,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.sinh(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.sinh(x.value));
-		return new Scalar.Expression(UnaryOperator.SINH, x);
+			return Scalar.constant(Math.sinh(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.SINH, x);
 	}
 
 	public static cosh(x: number): number;
@@ -89,8 +95,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.cosh(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.cosh(x.value));
-		return new Scalar.Expression(UnaryOperator.COSH, x);
+			return Scalar.constant(Math.cosh(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.COSH, x);
 	}
 
 	public static tanh(x: number): number;
@@ -100,8 +107,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.tanh(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.tanh(x.value));
-		return new Scalar.Expression(UnaryOperator.TANH, x);
+			return Scalar.constant(Math.tanh(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.TANH, x);
 	}
 
 	public static asinh(x: number): number;
@@ -111,8 +119,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.asinh(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.asinh(x.value));
-		return new Scalar.Expression(UnaryOperator.ASINH, x);
+			return Scalar.constant(Math.asinh(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.ASINH, x);
 	}
 
 	public static acosh(x: number): number;
@@ -122,8 +131,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.asinh(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.acosh(x.value));
-		return new Scalar.Expression(UnaryOperator.ACOSH, x);
+			return Scalar.constant(Math.acosh(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.ACOSH, x);
 	}
 
 	public static atanh(x: number): number;
@@ -133,8 +143,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.atanh(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.atanh(x.value));
-		return new Scalar.Expression(UnaryOperator.ATANH, x);
+			return Scalar.constant(Math.atanh(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.ATANH, x);
 	}
 
 	public static log(x: number): number;
@@ -144,8 +155,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.log10(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.log10(x.value));
-		return new Scalar.Expression(UnaryOperator.LOG, x);
+			return Scalar.constant(Math.log10(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.LOG, x);
 	}
 
 	public static ln(x: number): number;
@@ -155,8 +167,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.log(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.log(x.value));
-		return new Scalar.Expression(UnaryOperator.LN, x);
+			return Scalar.constant(Math.log(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.LN, x);
 	}
 
 	public static exp(x: number): number;
@@ -166,8 +179,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.exp(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.exp(x.value));
-		return new Scalar.Expression(UnaryOperator.EXP, x);
+			return Scalar.constant(Math.exp(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.EXP, x);
 	}
 
 	public static abs(x: number): number;
@@ -177,8 +191,9 @@ export class math {
 		if(typeof x === "number")
 			return Math.abs(x);
 		if(x instanceof Scalar.Constant)
-			return new Scalar.Constant(Math.abs(x.value));
-		return new Scalar.Expression(UnaryOperator.ABS, x);
+			return Scalar.constant(Math.abs(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.ABS, x);
 	}
 }
 

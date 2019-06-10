@@ -1,5 +1,5 @@
-import { Scalar } from "../src/Scalar";
-import { UnaryOperator as UO, sin, math } from "../src/core/operators/unary";
+import { Scalar } from "../src/scalar";
+import { abs, sin } from "../src/core/operators/unary";
 import { isExpression } from "../src/core/definitions";
 
 const x = Scalar.variable("x");
@@ -13,12 +13,7 @@ const value1 = expr1.at(new Map([
 ]));
 
 const sinx = sin(x);
-console.log(math[UO.SIN](Math.PI/2));
-console.log(math[UO.SIN](Scalar.constant(Math.PI/4)));
-console.log(sinx);
-console.log(sinx.at(new Map([
-	[x, Scalar.constant(Math.PI/4)]
-])));
+const absx = abs(x);
 
 describe("checks Scalar variable system", function() {
 	it("checks inheritance", function() {
@@ -34,5 +29,31 @@ describe("checks Scalar variable system", function() {
 
 	it("checks for expression equivalency", function() {
 		expect(value1).toEqual(expr3);
+	});
+
+	it("checks expression evaluation", function() {
+		expect(expr3.at(new Map([
+			[y, Scalar.constant(3)]
+		]))).toBe(Scalar.constant(5));
+	});
+
+	it("checks sine function", function() {
+		expect(sin(0)).toBe(Math.sin(0));
+		for(let i = 0; i < 2*Math.PI; i += 0.01)
+			expect(sin(Scalar.constant(i))).toBe(Scalar.constant(Math.sin(i)));
+		for(let i = 0; i < 2*Math.PI; i += 0.01)
+			expect(sinx.at(new Map([
+				[x, Scalar.constant(i)]
+			]))).toBe(Scalar.constant(Math.sin(i)));
+	});
+
+	it("checks absolute value", function() {
+		expect(abs(0)).toBe(Math.abs(0));
+		for(let i = -5; i <= 5; i += 1)
+			expect(abs(Scalar.constant(i))).toBe(Scalar.constant(Math.abs(i)));
+		for(let i = -5; i <= 5; i += 1)
+			expect(absx.at(new Map([
+				[x, Scalar.constant(i)]
+			]))).toBe(Scalar.constant(Math.abs(i)));
 	});
 });
