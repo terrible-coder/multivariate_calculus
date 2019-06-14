@@ -1,11 +1,12 @@
 # folders
-build
-@types
-node_modules
-out
-doc
-buildcache
+/build
+/@types
+/node_modules
+/out
+/doc
+/buildcache
+/coverage
 
 # files
-index.html
-mcalc.js
+/index.html
+/mcalc.js
