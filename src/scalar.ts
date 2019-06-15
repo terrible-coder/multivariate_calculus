@@ -60,6 +60,7 @@ export abstract class Scalar implements Token, Evaluable {
 export namespace Scalar {
 	const VARIABLES = new Map<string, Scalar.Variable>();
 	const CONSTANTS = new Map<number, Scalar.Constant>();
+	const NAMED_CONSTANTS = new Map<string, Scalar.Constant>();
 
 	/**
 	 * Represents a constant scalar quantity with a fixed value.
@@ -72,7 +73,7 @@ export namespace Scalar {
 		 * Creates a constant scalar value.
 		 * @param value {number} The fixed value of this `Constant`.
 		 */
-		constructor(readonly value: number) {
+		constructor(readonly value: number, readonly name: string = "") {
 			super();
 		}
 
@@ -263,11 +264,28 @@ export namespace Scalar {
 	 * Otherwise just returns the previously created object.
 	 * @param value {number}
 	 */
-	export function constant(value: number) {
-		let c = CONSTANTS.get(value);
-		if(c === undefined) {
-			c = new Scalar.Constant(value);
-			CONSTANTS.set(value, c);
+	export function constant(value: number): Scalar.Constant;
+	/**
+	 * Creates a new `Scalar.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {number}
+	 * @param name {string}
+	 */
+	export function constant(value: number, name: string): Scalar.Constant;
+	export function constant(value: number, name?: string) {
+		let c;
+		if(name === undefined) {
+			c = CONSTANTS.get(value);
+			if(c === undefined) {
+				c = new Scalar.Constant(value);
+				CONSTANTS.set(value, c);
+			}
+		} else {
+			c = NAMED_CONSTANTS.get(name);
+			if(c === undefined) {
+				c = new Scalar.Constant(value);
+				NAMED_CONSTANTS.set(name, c);
+			}
 		}
 		return c;
 	}

@@ -5,6 +5,7 @@ import { isExpression } from "../src/core/definitions";
 const x = Scalar.variable("x");
 const y = Scalar.variable("y");
 const two = Scalar.constant(2);
+const named = Scalar.constant(2, "a");
 const expr1 = x.add(y);
 const expr2 = x.sub(y);
 const expr3 = two.add(y);
@@ -25,6 +26,7 @@ describe("checks Scalar variable system", function() {
 	it("tests non-duplicating system", function() {
 		expect(Scalar.variable("x")).toBe(x);
 		expect(Scalar.constant(2)).toBe(two);
+		expect(named).not.toBe(two);
 	});
 
 	it("checks for expression equivalency", function() {
@@ -32,9 +34,14 @@ describe("checks Scalar variable system", function() {
 	});
 
 	it("checks expression evaluation", function() {
-		expect(expr3.at(new Map([
+		const res = expr3.at(new Map([
 			[y, Scalar.constant(3)]
-		]))).toBe(Scalar.constant(5));
+		]));
+		const expr4 = named.add(y);
+		expect(res).toBe(Scalar.constant(5));
+		expect(expr4.at(new Map([
+			[y, Scalar.constant(3)]
+		]))).toBe(res);
 	});
 
 	it("checks sine function", function() {
