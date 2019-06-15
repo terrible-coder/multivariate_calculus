@@ -15,7 +15,9 @@ export enum BinaryOperator {
 	/** The operator for evaluating dot (scalar) product of two vectors. */
 	DOT = "dot",
 	/** The operator to evaluate magnitude of a vector. */
-	MAG = "mag"
+	MAG = "mag",
+	/** The operator to scale a vector. */
+	SCALE = "scale"
 }
 
 /**

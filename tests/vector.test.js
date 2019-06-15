@@ -27,6 +27,11 @@ describe("Vector constants", function() {
 		expect(Vector.mag(B).value).toBe(Math.sqrt(3));
 	});
 
+	it("Scales", function() {
+		const scaled = A.scale(Scalar.constant(2));
+		expect(Vector.mag(scaled)).toBe(Vector.mag(A).mul(Scalar.constant(2)));
+	});
+
 	it("Unit vector", function() {
 		expect(Vector.mag(Vector.unit(random)).value).toBeCloseTo(1);
 		expect(Vector.mag(Vector.unit(B)).value).toBeCloseTo(1);
@@ -61,5 +66,20 @@ describe("Vector variable", function() {
 		expect(M.at(new Map([
 			[B, new Vector.Constant([1, 1, 1, 1, 1])]
 		]))).toBe(Scalar.constant(Math.sqrt(5)));
+	});
+
+	it("Checks multiplication by scalar", function() {
+		const x = Scalar.constant(2);
+		const y = Scalar.variable("x");
+		const a = new Vector.Variable("A");
+		const expr1 = y.mul(A);
+		const expr2 = B.scale(x);
+		expect(expr1).toBeInstanceOf(Vector.Expression);
+		expect(expr2).toBeInstanceOf(Vector.Expression);
+		expect(expr1.at(new Map([
+			[y, x]
+		]))).toEqual(expr2.at(new Map([
+			[B, A]
+		])));
 	});
 });

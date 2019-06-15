@@ -47,7 +47,7 @@ export abstract class Vector implements Token, Evaluable {
 	 * @param k {Scalar} The scale factor.
 	 * @return {Vector} The scaled vector.
 	 */
-	public abstract mul(k: Scalar): Vector;
+	public abstract scale(k: Scalar): Vector;
 
 	/**
 	 * Computes the magnitude of a given vector. If `A` vector is a constant
@@ -77,8 +77,8 @@ export abstract class Vector implements Token, Evaluable {
 	public static unit(A: Vector): Vector.Expression;
 	public static unit(A: Vector) {
 		if(A instanceof Vector.Constant)
-			return A.mul(Scalar.constant(1).div(Vector.mag(A)));
-		return new Vector.Expression(BinaryOperator.MUL, A, Scalar.constant(1).div(Vector.mag(A)));
+			return A.scale(Scalar.constant(1).div(Vector.mag(A)));
+		return new Vector.Expression(BinaryOperator.SCALE, A, Scalar.constant(1).div(Vector.mag(A)));
 	}
 }
 
@@ -138,12 +138,12 @@ export namespace Vector {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
 
-		public mul(k: Scalar.Constant): Vector.Constant;
-		public mul(k: Scalar.Variable | Scalar.Expression): Vector.Expression;
-		public mul(k: Scalar) {
+		public scale(k: Scalar.Constant): Vector.Constant;
+		public scale(k: Scalar.Variable | Scalar.Expression): Vector.Expression;
+		public scale(k: Scalar) {
 			if(k instanceof Scalar.Constant)
 				return new Vector.Constant(this.value.map(x => k.value * x));
-			return new Vector.Expression(BinaryOperator.MUL, this, k);
+			return new Vector.Expression(BinaryOperator.SCALE, this, k);
 		}
 	}
 
@@ -166,8 +166,8 @@ export namespace Vector {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
 
-		public mul(k: Scalar) {
-			return new Vector.Expression(BinaryOperator.MUL, this, k);
+		public scale(k: Scalar) {
+			return new Vector.Expression(BinaryOperator.SCALE, this, k);
 		}
 	}
 
@@ -228,8 +228,8 @@ export namespace Vector {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
 
-		public mul(k: Scalar) {
-			return new Vector.Expression(BinaryOperator.MUL, this, k);
+		public scale(k: Scalar) {
+			return new Vector.Expression(BinaryOperator.SCALE, this, k);
 		}
 
 		public isFunctionOf(v: _Variable) {

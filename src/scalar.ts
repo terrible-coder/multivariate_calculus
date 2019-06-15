@@ -2,6 +2,7 @@ import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Express
 import { BinaryOperator } from "./core/operators/binary";
 import { ExpressionBuilder } from "./core/expression";
 import { UnaryOperator } from "./core/operators/unary";
+import { Vector } from "./vector";
 
 /**
  * Base class to works with scalar quantities.
@@ -94,10 +95,17 @@ export namespace Scalar {
 
 		public mul(that: Scalar.Constant): Scalar.Constant;
 		public mul(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
-		public mul(that: Scalar) {
-			if(that instanceof Scalar.Constant)
-				return Scalar.constant(this.value * that.value);
-			return new Scalar.Expression(BinaryOperator.MUL, this, that);
+		public mul(that: Vector.Constant): Vector.Constant;
+		public mul(that: Vector.Variable | Vector.Expression): Vector.Expression;
+		public mul(that: Scalar | Vector) {
+			if(that instanceof Scalar) {
+				if(that instanceof Scalar.Constant)
+					return Scalar.constant(this.value * that.value);
+				return new Scalar.Expression(BinaryOperator.MUL, this, that);
+			}
+			if(that instanceof Vector.Constant)
+				return new Vector.Constant(that.value.map(x => this.value * x));
+			return new Vector.Expression(BinaryOperator.MUL, this, that);
 		}
 
 		public div(that: Scalar.Constant): Scalar.Constant;
@@ -145,8 +153,12 @@ export namespace Scalar {
 			return new Scalar.Expression(BinaryOperator.SUB, this, that);
 		}
 
-		public mul(that: Scalar) {
-			return new Scalar.Expression(BinaryOperator.MUL, this, that);
+		public mul(that: Scalar): Scalar.Expression;
+		public mul(that: Vector): Vector.Expression;
+		public mul(that: Scalar | Vector) {
+			if(that instanceof Scalar)
+				return new Scalar.Expression(BinaryOperator.MUL, this, that);
+			return new Vector.Expression(BinaryOperator.MUL, this, that);
 		}
 
 		public div(that: Scalar) {
@@ -224,8 +236,12 @@ export namespace Scalar {
 			return new Scalar.Expression(BinaryOperator.SUB, this, that);
 		}
 
-		public mul(that: Scalar) {
-			return new Scalar.Expression(BinaryOperator.MUL, this, that);
+		public mul(that: Scalar): Scalar.Expression;
+		public mul(that: Vector): Vector.Expression;
+		public mul(that: Scalar | Vector) {
+			if(that instanceof Scalar)
+				return new Scalar.Expression(BinaryOperator.MUL, this, that);
+			return new Vector.Expression(BinaryOperator.MUL, this, that);
 		}
 
 		public div(that: Scalar) {
