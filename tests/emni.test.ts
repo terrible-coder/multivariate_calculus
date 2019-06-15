@@ -6,13 +6,14 @@ const x = Scalar.variable("x");
 const y = Scalar.variable("y");
 const two = Scalar.constant(2);
 const named = Scalar.constant(2, "a");
+const named2 = Scalar.constant(3, "b");
 const expr1 = x.add(y);
 const expr2 = x.sub(y);
 const expr3 = two.add(y);
 const value1 = expr1.at(new Map([
 	[x, two]
 ]));
-
+console.log(named);
 const sinx = sin(x);
 const absx = abs(x);
 
@@ -42,6 +43,7 @@ describe("checks Scalar variable system", function() {
 		expect(expr4.at(new Map([
 			[y, Scalar.constant(3)]
 		]))).toBe(res);
+		expect(named.add(named2)).toBe(res);
 	});
 
 	it("checks sine function", function() {

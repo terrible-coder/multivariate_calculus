@@ -283,7 +283,7 @@ export namespace Scalar {
 		} else {
 			c = NAMED_CONSTANTS.get(name);
 			if(c === undefined) {
-				c = new Scalar.Constant(value);
+				c = new Scalar.Constant(value, name);
 				NAMED_CONSTANTS.set(name, c);
 			}
 		}
