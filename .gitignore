@@ -4,7 +4,7 @@
 /node_modules
 /out
 /doc
-/buildcache
+/cache
 /coverage
 
 # files
