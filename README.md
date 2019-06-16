@@ -89,17 +89,15 @@ is coming soon. Work is being done on building the project to make it a useful t
 Physics and Mathematics.
 
 **Features implemented:**
-- [x] Scalar operations
 - [x] Matrix operations
-- [x] Vector operations
 - [ ] Tensor operations
 - [x] A system of variables and constants for Scalar
 - [ ] A system of variables and constants for Matrix
-- [ ] A system of variables and constants for Vector
+- [x] A system of variables and constants for Vector
 - [ ] A system of variables and constants for Tensor
 - [x] Algebra of Scalar variables
 - [ ] Algebra of Matrix variables
-- [ ] Algebra of Vector variables
+- [x] Algebra of Vector variables
 - [ ] Algebra of Tensor variables
 - [ ] Calculating limits of arbitrary expressions of multiple variables
 - [ ] Evaluating partial derivatives
