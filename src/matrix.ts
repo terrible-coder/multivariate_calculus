@@ -46,7 +46,7 @@ export class Matrix {
 	}
 
 	/**
-	 * @returns An exact copy of this matrix object.
+	 * @return An exact copy of this matrix object.
 	 */
 	public copy() {
 		return new Matrix(this.elements);
@@ -63,7 +63,7 @@ export class Matrix {
 	/**
 	 * Adds two matrices algebraically.
 	 * @param that Matrix to add to this matrix.
-	 * @returns The matrix sum of the two matrices.
+	 * @return The matrix sum of the two matrices.
 	 * @throws If the orders of the matrices do not match.
 	 */
 	public add(that: Matrix) {
@@ -73,7 +73,7 @@ export class Matrix {
 	/**
 	 * Subtracts one matrix from another algebraically.
 	 * @param that Matrix to subtract from this matrix.
-	 * @returns The matrix difference of the two matrices.
+	 * @return The matrix difference of the two matrices.
 	 * @throws If the orders of the matrices do not match.
 	 */
 	public sub(that: Matrix) {
@@ -85,7 +85,7 @@ export class Matrix {
 	 * equal to the number of rows of `that` matrix. The resulting matrix has
 	 * the same number of rows as `this` matrix and the same number of columns as `that` matrix.
 	 * @param that Matrix with which to multiply.
-	 * @returns The matrix product of the two matrices.
+	 * @return The matrix product of the two matrices.
 	 */
 	public mul(that: Matrix) {
 		return Matrix.mul(this, that);

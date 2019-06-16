@@ -43,7 +43,7 @@ this does not create a new object with the same name as that of `x`. Instead,
 it will return the original object that was first created with the name `"x"`.
 Essentially `x` and `x_` are pointing to the same object in memory.
 
-One may choose to work with more than one variable too. There is support for scalar algebra 
+One may choose to work with more than one variable too. There is support for scalar algebra
 for any number of variables.
 ```typescript
 import { Scalar } from "multivariate_calculus"
@@ -71,6 +71,18 @@ representing `x + 2`.
 
 Almost all common algebraic scalar operations have been implemented.
 File an issue if something has been missed and should be implemented right away.
+
+Vector algebra has been added to this new version of the library. One can very
+simply create vector constants and vector variables.
+
+```javascript
+const i = new Vector.Constant([1, 0, 0]);
+const A = new Vector.Variable("A");
+const z = i.add(A);
+```
+
+On execution `z` will be a vector `Expression` whose value will be the
+vector sum of `A` and `i`.
 
 This is still a work in progress. A documentation page and a browser version of this library
 is coming soon. Work is being done on building the project to make it a useful tool for

@@ -11,7 +11,13 @@ export enum BinaryOperator {
 	/** The operator for dividing one value by another. */
 	DIV = "div",
 	/** The operator for raising a base to an exponent. */
-	POW = "pow"
+	POW = "pow",
+	/** The operator for evaluating dot (scalar) product of two vectors. */
+	DOT = "dot",
+	/** The operator to evaluate magnitude of a vector. */
+	MAG = "mag",
+	/** The operator to scale a vector. */
+	SCALE = "scale"
 }
 
 /**

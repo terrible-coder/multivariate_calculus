@@ -1,4 +1,4 @@
-const { Scalar } = require("../build/Scalar");
+const { Scalar } = require("../build/scalar");
 
 const x = Scalar.variable("x");
 const y = Scalar.variable("y");

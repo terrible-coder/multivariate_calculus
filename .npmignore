@@ -1,20 +1,21 @@
 #folders
 node_modules
-tests
-src
-out
-doc
-buildcache
+/tests
+/src
+/out
+/doc
+/cache
+/coverage
 
 #files
-.gitignore
-package-lock.json
-jest.config.js
-tsconfig.json
-index.html
-mcalc.js
+/.gitignore
+/package-lock.json
+/jest.config.js
+/tsconfig.json
+/index.html
+/mcalc.js
 
 #script files
-build.cmd
-test.cmd
-pack.cmd
+/build.cmd
+/test.cmd
+/pack.cmd

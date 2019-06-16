@@ -2,6 +2,7 @@ import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Express
 import { BinaryOperator } from "./core/operators/binary";
 import { ExpressionBuilder } from "./core/expression";
 import { UnaryOperator } from "./core/operators/unary";
+import { Vector } from "./vector";
 
 /**
  * Base class to works with scalar quantities.
@@ -15,7 +16,7 @@ export abstract class Scalar implements Token, Evaluable {
 	 * then numerically adds the two and returns a new `Scalar.Constant` object
 	 * otherwise creates an `Expression` out of them and returns the same.
 	 * @param that {Scalar} The scalar to add `this` with.
-	 * @returns {Evaluable} The result of algebraic addition.
+	 * @return {Scalar} The result of algebraic addition.
 	 */
 	public abstract add(that: Scalar): Scalar;
 
@@ -25,7 +26,7 @@ export abstract class Scalar implements Token, Evaluable {
 	 * `Scalar.Constant` object otherwise creates an `Expression` out of them
 	 * and returns the same.
 	 * @param that {Scalar} The scalar to subtract from `this`.
-	 * @returns {Evaluable} The result of algebraic subtraction.
+	 * @return {Scalar} The result of algebraic subtraction.
 	 */
 	public abstract sub(that: Scalar): Scalar;
 
@@ -34,7 +35,7 @@ export abstract class Scalar implements Token, Evaluable {
 	 * then numerically multiplies the two and returns a new `Scalar.Constant` object
 	 * otherwise creates an `Expression` out of them and returns the same.
 	 * @param that {Scalar} The scalar to multiply `this` with.
-	 * @returns {Evaluable} The result of algebraic multiplication.
+	 * @return {Scalar} The result of algebraic multiplication.
 	 */
 	public abstract mul(that: Scalar): Scalar;
 
@@ -43,7 +44,7 @@ export abstract class Scalar implements Token, Evaluable {
 	 * then numerically divides the two and returns a new `Scalar.Constant` object
 	 * otherwise creates an `Expression` out of them and returns the same.
 	 * @param that {Scalar} The scalar to divide `this` by.
-	 * @returns {Evaluable} The result of algebraic division.
+	 * @return {Scalar} The result of algebraic division.
 	 */
 	public abstract div(that: Scalar): Scalar;
 
@@ -52,7 +53,7 @@ export abstract class Scalar implements Token, Evaluable {
 	 * then numerically evaluates the exponentiation and returns a new `Scalar.Constant` object
 	 * otherwise creates an `Expression` out of them and returns the same.
 	 * @param that {Scalar} The scalar to divide `this` by.
-	 * @returns {Evaluable} The result of algebraic division.
+	 * @return {Scalar} The result of algebraic division.
 	 */
 	public abstract pow(that: Scalar): Scalar;
 }
@@ -94,10 +95,17 @@ export namespace Scalar {
 
 		public mul(that: Scalar.Constant): Scalar.Constant;
 		public mul(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
-		public mul(that: Scalar) {
-			if(that instanceof Scalar.Constant)
-				return Scalar.constant(this.value * that.value);
-			return new Scalar.Expression(BinaryOperator.MUL, this, that);
+		public mul(that: Vector.Constant): Vector.Constant;
+		public mul(that: Vector.Variable | Vector.Expression): Vector.Expression;
+		public mul(that: Scalar | Vector) {
+			if(that instanceof Scalar) {
+				if(that instanceof Scalar.Constant)
+					return Scalar.constant(this.value * that.value);
+				return new Scalar.Expression(BinaryOperator.MUL, this, that);
+			}
+			if(that instanceof Vector.Constant)
+				return new Vector.Constant(that.value.map(x => this.value * x));
+			return new Vector.Expression(BinaryOperator.MUL, this, that);
 		}
 
 		public div(that: Scalar.Constant): Scalar.Constant;
@@ -145,8 +153,12 @@ export namespace Scalar {
 			return new Scalar.Expression(BinaryOperator.SUB, this, that);
 		}
 
-		public mul(that: Scalar) {
-			return new Scalar.Expression(BinaryOperator.MUL, this, that);
+		public mul(that: Scalar): Scalar.Expression;
+		public mul(that: Vector): Vector.Expression;
+		public mul(that: Scalar | Vector) {
+			if(that instanceof Scalar)
+				return new Scalar.Expression(BinaryOperator.MUL, this, that);
+			return new Vector.Expression(BinaryOperator.MUL, this, that);
 		}
 
 		public div(that: Scalar) {
@@ -224,8 +236,12 @@ export namespace Scalar {
 			return new Scalar.Expression(BinaryOperator.SUB, this, that);
 		}
 
-		public mul(that: Scalar) {
-			return new Scalar.Expression(BinaryOperator.MUL, this, that);
+		public mul(that: Scalar): Scalar.Expression;
+		public mul(that: Vector): Vector.Expression;
+		public mul(that: Scalar | Vector) {
+			if(that instanceof Scalar)
+				return new Scalar.Expression(BinaryOperator.MUL, this, that);
+			return new Vector.Expression(BinaryOperator.MUL, this, that);
 		}
 
 		public div(that: Scalar) {
