@@ -3,6 +3,7 @@ const { isExpression } = require("../build/core/definitions");
 const { Scalar } = require("../build/scalar");
 
 describe("Vector constants", function() {
+	const arr = [1, 1, 2];
 	const A = new Vector.Constant([1, 1, 2]);
 	const B = new Vector.Constant([1, 1, 1]);
 	const random = new Vector.Constant([
@@ -12,6 +13,14 @@ describe("Vector constants", function() {
 		100*Math.random(),
 		100*Math.random()
 	]);
+
+	it("Gets components", function() {
+		let i;
+		for(i = 1; i <= arr.length; i++)
+			expect(A.X(i)).toBe(arr[i - 1]);
+		for(; i < 10; i++)
+			expect(A.X(i)).toBe(0);
+	});
 
 	it("Adds", function() {
 		expect(A.add(B)).toBeInstanceOf(Vector);

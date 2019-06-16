@@ -90,6 +90,11 @@ export namespace Vector {
 			super();
 		}
 
+		/**
+		 * Returns the components of `this` vector. The index values start
+		 * from `1` instead of the commonly used starting index `0`.
+		 * @param i {number} The index of the desired component.
+		 */
 		public get X() {
 			const value = this.value;
 			return function(i: number) {
