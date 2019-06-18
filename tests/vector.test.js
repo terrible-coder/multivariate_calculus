@@ -31,6 +31,12 @@ describe("Vector constants", function() {
 		expect(_=> A.dot(random)).not.toThrow();
 	});
 
+	it("Calculates cross product", function() {
+		const i = new Vector.Constant([1, 0]);
+		const j = new Vector.Constant([0, 1]);
+		expect(i.cross(j)).toEqual(new Vector.Constant([0, 0, 1]));
+	});
+
 	it("Calculates magnitude", function() {
 		expect(Vector.mag(random).value).toBeCloseTo(Math.sqrt(random.dot(random).value));
 		expect(Vector.mag(B).value).toBe(Math.sqrt(3));
@@ -66,6 +72,16 @@ describe("Vector variable", function() {
 		]));
 		expect(c_).toBeInstanceOf(Scalar);
 		expect(c_).toBe(Scalar.constant(4));
+	});
+
+	it("Calculates cross product", function() {
+		const i = new Vector.Variable();
+		const j = new Vector.Constant([0, 1]);
+		const c = i.cross(j);
+		expect(c).toBeInstanceOf(Vector.Expression);
+		expect(c.at(new Map([
+			[i, new Vector.Constant([1, 0])]
+		]))).toEqual(new Vector.Constant([0, 0, 1]));
 	});
 
 	it("Evaluates magnitude", function() {

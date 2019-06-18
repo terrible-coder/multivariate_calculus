@@ -40,6 +40,15 @@ export abstract class Vector implements Token, Evaluable {
 	public abstract dot(that: Vector): Scalar;
 
 	/**
+	 * Evaluates the vector product of `this` and `that`. If both are constants
+	 * then numerically computes the product and returns a `Vector.Constant` object
+	 * otherwise creates an `Expression` out of them and returns the same.
+	 * @param that {Vector} The scalar to subtract from `this`.
+	 * @return {Vector}
+	 */
+	public abstract cross(that: Vector): Vector;
+
+	/**
 	 * Scales, or multiplies the "size" (magnitude) of, `this` vector by given
 	 * amount. If `this` and `k` are both constants then numerically calculates
 	 * the scaled vector otherwise creates an `Expression` out of them and
@@ -85,9 +94,11 @@ export abstract class Vector implements Token, Evaluable {
 export namespace Vector {
 	export class Constant extends Vector implements _Constant {
 		readonly type = "constant";
+		private dimesion: number;
 
 		constructor(readonly value: number[]) {
 			super();
+			this.dimesion = this.value.length;
 		}
 
 		/**
@@ -143,6 +154,22 @@ export namespace Vector {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
 
+		public cross(that: Vector.Constant): Vector.Constant;
+		public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
+		public cross(that: Vector) {
+			if(this.dimesion > 3)
+				throw "Cross product defined only in 3 dimensions.";
+			if(that instanceof Vector.Constant) {
+				if(that.dimesion > 3)
+					throw "Cross product defined only in 3 dimensions.";
+				const x1 = this.X(2)*that.X(3) - this.X(3)*that.X(2);
+				const x2 = this.X(3)*that.X(1) - this.X(1)*that.X(3);
+				const x3 = this.X(1)*that.X(2) - this.X(2)*that.X(1);
+				return new Vector.Constant([x1, x2, x3]);
+			}
+			return new Vector.Expression(BinaryOperator.CROSS, this, that);
+		}
+
 		public scale(k: Scalar.Constant): Vector.Constant;
 		public scale(k: Scalar.Variable | Scalar.Expression): Vector.Expression;
 		public scale(k: Scalar) {
@@ -169,6 +196,10 @@ export namespace Vector {
 
 		public dot(that: Vector) {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
+		}
+
+		public cross(that: Vector) {
+			return new Vector.Expression(BinaryOperator.CROSS, this, that);
 		}
 
 		public scale(k: Scalar) {
@@ -231,6 +262,10 @@ export namespace Vector {
 
 		public dot(that: Vector) {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
+		}
+
+		public cross(that: Vector) {
+			return new Vector.Expression(BinaryOperator.CROSS, this, that);
 		}
 
 		public scale(k: Scalar) {
