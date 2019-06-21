@@ -77,6 +77,22 @@ export namespace Scalar {
 			super();
 		}
 
+		/**
+		 * Checks for equality of two scalar constants. Allows a tolerance of
+		 * `1e-14` for floating point numbers.
+		 * @param that {Scalar.Constant} The value to check equality with.
+		 */
+		public equals(that: Scalar.Constant): boolean;
+		/**
+		 * Checks for equality of two scalar constants.
+		 * @param that {Scalar.Constant} The value to check equality with.
+		 * @param tolerance {number} The tolerance permitted for floating point numbers.
+		 */
+		public equals(that: Scalar.Constant, tolerance: number): boolean;
+		public equals(that: Scalar.Constant, tolerance?: number) {
+			return Math.abs(this.value - that.value) < (tolerance || 1e-14);
+		}
+
 		public add(that: Scalar.Constant): Scalar.Constant;
 		public add(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		public add(that: Scalar) {
