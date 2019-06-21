@@ -266,26 +266,37 @@ export namespace Scalar {
 	 */
 	export function constant(value: number): Scalar.Constant;
 	/**
-	 * Creates a new `Scalar.Constant` object if it has not been created before.
+	 * Creates a named `Scalar.Constant` object if it has not been created before.
 	 * Otherwise just returns the previously created object.
 	 * @param value {number}
 	 * @param name {string}
 	 */
 	export function constant(value: number, name: string): Scalar.Constant;
-	export function constant(value: number, name?: string) {
+	/**
+	 * Returns a previously declared named `Scalar.Constant` object.
+	 * @param name {string}
+	 */
+	export function constant(name: string): Scalar.Constant;
+	export function constant(a: number | string, b?: string) {
 		let c;
-		if(name === undefined) {
-			c = CONSTANTS.get(value);
-			if(c === undefined) {
-				c = new Scalar.Constant(value);
-				CONSTANTS.set(value, c);
+		if(typeof a === "number") {
+			if(b === undefined) {
+				c = CONSTANTS.get(a);
+				if(c === undefined) {
+					c = new Scalar.Constant(a);
+					CONSTANTS.set(a, c);
+				}
+			} else {
+				c = NAMED_CONSTANTS.get(b);
+				if(c !== undefined)
+					throw "Attempt to redefine a constant: A constant with the same name already exists.";
+				c = new Scalar.Constant(a, b);
+				NAMED_CONSTANTS.set(b, c);
 			}
 		} else {
-			c = NAMED_CONSTANTS.get(name);
-			if(c === undefined) {
-				c = new Scalar.Constant(value, name);
-				NAMED_CONSTANTS.set(name, c);
-			}
+			c = NAMED_CONSTANTS.get(a);
+			if(c === undefined)
+				throw "No such constant defined.";
 		}
 		return c;
 	}

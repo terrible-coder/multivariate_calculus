@@ -5,19 +5,24 @@ import { isExpression } from "../src/core/definitions";
 const x = Scalar.variable("x");
 const y = Scalar.variable("y");
 const two = Scalar.constant(2);
-const named = Scalar.constant(2, "a");
-const named2 = Scalar.constant(3, "b");
+const a = Scalar.constant(2, "a");
+const b = Scalar.constant(3, "b");
 const expr1 = x.add(y);
 const expr2 = x.sub(y);
 const expr3 = two.add(y);
 const value1 = expr1.at(new Map([
 	[x, two]
 ]));
-console.log(named);
 const sinx = sin(x);
 const absx = abs(x);
 
 describe("checks Scalar variable system", function() {
+	it("Checks naming system", function() {
+		expect(Scalar.constant("a")).toBe(a);
+		expect(a).not.toBe(two);
+		expect(()=> Scalar.constant(5, "a")).toThrow();
+	});
+
 	it("checks inheritance", function() {
 		expect(isExpression(expr1)).toBe(true);
 		expect(isExpression(expr2)).toBe(true);
@@ -27,7 +32,6 @@ describe("checks Scalar variable system", function() {
 	it("tests non-duplicating system", function() {
 		expect(Scalar.variable("x")).toBe(x);
 		expect(Scalar.constant(2)).toBe(two);
-		expect(named).not.toBe(two);
 	});
 
 	it("checks for expression equivalency", function() {
@@ -38,12 +42,12 @@ describe("checks Scalar variable system", function() {
 		const res = expr3.at(new Map([
 			[y, Scalar.constant(3)]
 		]));
-		const expr4 = named.add(y);
+		const expr4 = a.add(y);
 		expect(res).toBe(Scalar.constant(5));
 		expect(expr4.at(new Map([
 			[y, Scalar.constant(3)]
 		]))).toBe(res);
-		expect(named.add(named2)).toBe(res);
+		expect(a.add(b)).toBe(res);
 	});
 
 	it("checks sine function", function() {
