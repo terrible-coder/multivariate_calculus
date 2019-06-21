@@ -37,6 +37,7 @@ export interface Constant extends Evaluable {
 	readonly type: "constant";
 	readonly value: any;
 	readonly name: string;
+	equals(that: Evaluable): boolean;
 }
 /** Checks whether a given `Evaluable` is a constant. */
 export function isConstant(e: Evaluable): e is Constant {return e.type === "constant";}
