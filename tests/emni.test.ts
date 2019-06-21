@@ -20,6 +20,7 @@ describe("checks Scalar variable system", function() {
 	it("Checks naming system", function() {
 		expect(Scalar.constant("a")).toBe(a);
 		expect(a).not.toBe(two);
+		expect(a.equals(two)).toBe(true);
 		expect(()=> Scalar.constant(5, "a")).toThrow();
 	});
 
