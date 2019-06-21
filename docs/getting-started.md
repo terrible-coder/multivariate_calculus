@@ -67,6 +67,4 @@ Once all these have been done, you are now ready to work with `multivariate_calc
 on your awesome project.
 
 ---------------------
-
-
 Created using [docsify](https://docsify.js.org/#).
