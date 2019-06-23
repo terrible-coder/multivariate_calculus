@@ -1,7 +1,11 @@
 Getting started
 ===============
 
-## Using with Node
+If you are already familiar with the nodejs environment or working in the browser,
+skip to [quick start](quick-start.md).
+
+<!-- tabs:start -->
+## **Using with Node**
 
 ### 1. Installing Nodejs
 If you want to work on your computer locally, outside the browser,
@@ -37,9 +41,7 @@ This command will create a node_modules folder which will have all our installed
 packages from npm. To verify that the library has been installed we can go under
 the node_modules folder and check if there is a folder named as multivariate_calculus.
 
----------------------
-
-## Using in browser
+## **Using in browser**
 
 ### 1. Creating index.html
 To work in the browser, the first thing one needs is an HTML file named index.html.
@@ -61,6 +63,8 @@ It is common practice to include the script tags in the header file so that all
 the code is loaded before the page begins to load. However, for very large files
 it is better to put their references at the end of the `body` tag. That way the
 page loads quicker and there is at least something for the person to see on screen.
+
+<!-- tabs:end -->
 
 ---------------------
 Once all these have been done, you are now ready to work with `multivariate_calculus`
