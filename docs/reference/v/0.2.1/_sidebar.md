@@ -1,0 +1,6 @@
+* [Scalar](reference/v/0.2.1/Scalar/)
+* [Vector](reference/v/0.2.1/Vector/)
+* [Matrix](reference/v/0.2.1/Matrix/)
+* [Binary operators](reference/v/0.2.1/operators/binary.md)
+* [Unary operators](reference/v/0.2.1/operators/unary.md)
+* [Definitions](reference/v/0.2.1/core/definitions.md)
