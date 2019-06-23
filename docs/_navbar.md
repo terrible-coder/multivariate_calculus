@@ -1,2 +1,5 @@
 * [Home](/)
 * [API](/reference/v/0.2.1/)
+* [Versions](/reference/versions.md)
+* [Issues](https://github.com/terrible-coder/multivariate_calculus/issues)
+* [NPM](https://npmjs.com/package/multivariate_calculus)
