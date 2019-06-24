@@ -6,6 +6,7 @@ describe("Vector constants", function() {
 	const arr = [1, 1, 2];
 	const A = Vector.constant([1, 1, 2]);
 	const B = Vector.constant([1, 1, 1]);
+	const a = Vector.constant([1, 1, 2], "A");
 	const random = Vector.constant([
 		100*Math.random(),
 		100*Math.random(),
@@ -13,6 +14,13 @@ describe("Vector constants", function() {
 		100*Math.random(),
 		100*Math.random()
 	]);
+
+	it("Checks naming system", function() {
+		expect(Vector.constant("A")).toBe(a);
+		expect(a).not.toBe(A);
+		expect(A.equals(a)).toBe(true);
+		expect(() => Vector.constant([1, 2], "A")).toThrow();
+	});
 
 	it("Gets components", function() {
 		let i;
