@@ -97,6 +97,14 @@ describe("Vector variable", function() {
 		]))).toBe(Scalar.constant(Math.sqrt(5)));
 	});
 
+	it("Evaluates unit vector", function() {
+		const u = Vector.unit(B);
+		expect(u).toBeInstanceOf(Vector.Expression);
+		expect(u.at(new Map([
+			[B, new Vector.Constant([2, 0])]
+		]))).toEqual(new Vector.Constant([1, 0]));
+	});
+
 	it("Checks multiplication by scalar", function() {
 		const x = Scalar.constant(2);
 		const y = Scalar.variable("x");

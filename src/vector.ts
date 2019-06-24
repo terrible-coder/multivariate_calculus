@@ -87,7 +87,7 @@ export abstract class Vector implements Token, Evaluable {
 	public static unit(A: Vector) {
 		if(A instanceof Vector.Constant)
 			return A.scale(Scalar.constant(1).div(Vector.mag(A)));
-		return new Vector.Expression(BinaryOperator.SCALE, A, Scalar.constant(1).div(Vector.mag(A)));
+		return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A);
 	}
 }
 

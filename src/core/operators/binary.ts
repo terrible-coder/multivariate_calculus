@@ -19,7 +19,9 @@ export enum BinaryOperator {
 	/** The operator to evaluate magnitude of a vector. */
 	MAG = "mag",
 	/** The operator to scale a vector. */
-	SCALE = "scale"
+	SCALE = "scale",
+	/** The operator to evaluate the unit vector along a given vector. */
+	UNIT = "unit"
 }
 
 /**
