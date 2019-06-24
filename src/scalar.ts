@@ -61,6 +61,7 @@ export abstract class Scalar implements Token, Evaluable {
 export namespace Scalar {
 	const VARIABLES = new Map<string, Scalar.Variable>();
 	const CONSTANTS = new Map<number, Scalar.Constant>();
+	const NAMED_CONSTANTS = new Map<string, Scalar.Constant>();
 
 	/**
 	 * Represents a constant scalar quantity with a fixed value.
@@ -73,8 +74,24 @@ export namespace Scalar {
 		 * Creates a constant scalar value.
 		 * @param value {number} The fixed value of this `Constant`.
 		 */
-		constructor(readonly value: number) {
+		constructor(readonly value: number, readonly name: string = "") {
 			super();
+		}
+
+		/**
+		 * Checks for equality of two scalar constants. Allows a tolerance of
+		 * `1e-14` for floating point numbers.
+		 * @param that {Scalar.Constant} The value to check equality with.
+		 */
+		public equals(that: Scalar.Constant): boolean;
+		/**
+		 * Checks for equality of two scalar constants.
+		 * @param that {Scalar.Constant} The value to check equality with.
+		 * @param tolerance {number} The tolerance permitted for floating point numbers.
+		 */
+		public equals(that: Scalar.Constant, tolerance: number): boolean;
+		public equals(that: Scalar.Constant, tolerance?: number) {
+			return Math.abs(this.value - that.value) < (tolerance || 1e-14);
 		}
 
 		public add(that: Scalar.Constant): Scalar.Constant;
@@ -279,11 +296,39 @@ export namespace Scalar {
 	 * Otherwise just returns the previously created object.
 	 * @param value {number}
 	 */
-	export function constant(value: number) {
-		let c = CONSTANTS.get(value);
-		if(c === undefined) {
-			c = new Scalar.Constant(value);
-			CONSTANTS.set(value, c);
+	export function constant(value: number): Scalar.Constant;
+	/**
+	 * Creates a named `Scalar.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {number}
+	 * @param name {string}
+	 */
+	export function constant(value: number, name: string): Scalar.Constant;
+	/**
+	 * Returns a previously declared named `Scalar.Constant` object.
+	 * @param name {string}
+	 */
+	export function constant(name: string): Scalar.Constant;
+	export function constant(a: number | string, b?: string) {
+		let c;
+		if(typeof a === "number") {
+			if(b === undefined) {
+				c = CONSTANTS.get(a);
+				if(c === undefined) {
+					c = new Scalar.Constant(a);
+					CONSTANTS.set(a, c);
+				}
+			} else {
+				c = NAMED_CONSTANTS.get(b);
+				if(c !== undefined)
+					throw "Attempt to redefine a constant: A constant with the same name already exists.";
+				c = new Scalar.Constant(a, b);
+				NAMED_CONSTANTS.set(b, c);
+			}
+		} else {
+			c = NAMED_CONSTANTS.get(a);
+			if(c === undefined)
+				throw "No such constant defined.";
 		}
 		return c;
 	}

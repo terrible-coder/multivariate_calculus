@@ -2,6 +2,7 @@ const scalar = require("../build/scalar").Scalar;
 
 const a = scalar.constant(5);
 const b = scalar.constant(10);
+const a_ = scalar.constant(Math.sqrt(5));
 
 describe("Checks algebra", function() {
 	it("Adds", function() {
@@ -15,6 +16,9 @@ describe("Checks algebra", function() {
 	});
 	it("Divides", function() {
 		expect(a.div(b)).toEqual(scalar.constant(0.5));
+	});
+	it("Checks equality", function() {
+		expect(a.equals(a_.mul(a_))).toBe(true);
 	});
 });
 

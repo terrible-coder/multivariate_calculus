@@ -96,7 +96,7 @@ export namespace Vector {
 		readonly type = "constant";
 		private dimesion: number;
 
-		constructor(readonly value: number[]) {
+		constructor(readonly value: number[], readonly name: string = "") {
 			super();
 			this.dimesion = this.value.length;
 		}
@@ -113,6 +113,26 @@ export namespace Vector {
 					throw "Indexing starts from `1`";
 				return value[i - 1] || 0;
 			}
+		}
+
+		/**
+		 * Checks for equality of two vector constants. Allows a tolerance of
+		 * `1e-14` for floating point numbers.
+		 * @param that {Vector.Constant} The value to check equality with.
+		 */
+		public equals(that: Vector.Constant): boolean;
+		/**
+		 * Checks for equality of two vector constants.
+		 * @param that {Vector.Constant} The value to check equality with.
+		 * @param tolerance {number} The tolerance permitted for floating point numbers.
+		 */
+		public equals(that: Vector.Constant, tolerance: number): boolean;
+		public equals(that: Vector.Constant, tolerance = 1e-14) {
+			const m = Math.max(this.value.length, that.value.length);
+			for(let i = 1; i <= m; i++)
+				if(Math.abs(this.X(i) - that.X(i)) >= tolerance)
+					return false;
+			return true;
 		}
 
 		public add(that: Vector.Constant): Vector.Constant;

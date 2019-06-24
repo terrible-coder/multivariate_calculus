@@ -22,6 +22,10 @@ describe("Vector constants", function() {
 			expect(A.X(i)).toBe(0);
 	});
 
+	it("Checks equality", function() {
+		expect(A.equals(new Vector.Constant(arr))).toBe(true);
+	});
+
 	it("Adds", function() {
 		expect(A.add(B)).toBeInstanceOf(Vector);
 		expect(A.add(B)).toEqual(new Vector.Constant([2, 2, 3]));

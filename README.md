@@ -6,6 +6,8 @@ It works with both TypeScript and JavaScript projects seamlessly.
 
 ## Installation
 
+If you wish to work with this library in the browser, you can download it from [here](https://github.com/terrible-coder/multivariate_calculus/releases).
+
 To install globally on your computer:
 
 	npm install multivariate_calculus --global
@@ -84,9 +86,8 @@ const z = i.add(A);
 On execution `z` will be a vector `Expression` whose value will be the
 vector sum of `A` and `i`.
 
-This is still a work in progress. A documentation page and a browser version of this library
-is coming soon. Work is being done on building the project to make it a useful tool for
-Physics and Mathematics.
+This is still a work in progress. A documentation page is coming soon. Work is
+being done on building the project to make it a useful tool for Physics and Mathematics.
 
 **Features implemented:**
 - [x] Matrix operations
