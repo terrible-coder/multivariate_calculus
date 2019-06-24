@@ -14,10 +14,14 @@ export enum BinaryOperator {
 	POW = "pow",
 	/** The operator for evaluating dot (scalar) product of two vectors. */
 	DOT = "dot",
+	/** The operator for evaluating cross (vector) product of two vectors. */
+	CROSS = "cross",
 	/** The operator to evaluate magnitude of a vector. */
 	MAG = "mag",
 	/** The operator to scale a vector. */
-	SCALE = "scale"
+	SCALE = "scale",
+	/** The operator to evaluate the unit vector along a given vector. */
+	UNIT = "unit"
 }
 
 /**

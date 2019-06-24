@@ -1,6 +1,7 @@
 const { Vector } = require("../build/vector");
 const { isExpression } = require("../build/core/definitions");
 const { Scalar } = require("../build/scalar");
+const { sqrt } = require("../build/core/operators/unary");
 
 describe("Vector constants", function() {
 	const arr = [1, 1, 2];
@@ -48,8 +49,15 @@ describe("Vector constants", function() {
 		expect(_=> A.dot(random)).not.toThrow();
 	});
 
+	it("Calculates cross product", function() {
+		const i = Vector.constant([1, 0]);
+		const j = Vector.constant([0, 1]);
+		expect(i.cross(j)).toEqual(Vector.constant([0, 0, 1]));
+	});
+
 	it("Calculates magnitude", function() {
-		expect(Vector.mag(random).value).toBeCloseTo(Math.sqrt(random.dot(random).value));
+		const mag = sqrt(random.dot(random));
+		expect(Vector.mag(random).equals(mag)).toBe(true);
 		expect(Vector.mag(B).value).toBe(Math.sqrt(3));
 	});
 
@@ -59,14 +67,15 @@ describe("Vector constants", function() {
 	});
 
 	it("Unit vector", function() {
-		expect(Vector.mag(Vector.unit(random)).value).toBeCloseTo(1);
-		expect(Vector.mag(Vector.unit(B)).value).toBeCloseTo(1);
+		const one = Scalar.constant(1);
+		expect(Vector.mag(Vector.unit(random)).equals(one)).toBe(true);
+		expect(Vector.mag(Vector.unit(B)).equals(one)).toBe(true);
 	});
 });
 
 describe("Vector variable", function() {
 	const A = Vector.constant([1, 1, 2]);
-	const B = new Vector.Variable("B");
+	const B = Vector.variable("B");
 	const C = A.dot(B);
 
 	it("Creates vector variables", function() {
@@ -77,12 +86,26 @@ describe("Vector variable", function() {
 		expect(isExpression(C)).toBe(true);
 	});
 
+	it("Checks non-duplicacy", function() {
+		expect(Vector.variable("B")).toBe(B);
+	});
+
 	it("Resolves expressions", function() {
 		const c_ = C.at(new Map([
 			[B, Vector.constant([1, 1, 1, 1, 1])]
 		]));
 		expect(c_).toBeInstanceOf(Scalar);
 		expect(c_).toBe(Scalar.constant(4));
+	});
+
+	it("Calculates cross product", function() {
+		const i = Vector.variable();
+		const j = Vector.constant([0, 1]);
+		const c = i.cross(j);
+		expect(c).toBeInstanceOf(Vector.Expression);
+		expect(c.at(new Map([
+			[i, Vector.constant([1, 0])]
+		]))).toEqual(Vector.constant([0, 0, 1]));
 	});
 
 	it("Evaluates magnitude", function() {
@@ -94,10 +117,17 @@ describe("Vector variable", function() {
 		]))).toBe(Scalar.constant(Math.sqrt(5)));
 	});
 
+	it("Evaluates unit vector", function() {
+		const u = Vector.unit(B);
+		expect(u).toBeInstanceOf(Vector.Expression);
+		expect(u.at(new Map([
+			[B, Vector.constant([2, 0])]
+		]))).toEqual(Vector.constant([1, 0]));
+	});
+
 	it("Checks multiplication by scalar", function() {
 		const x = Scalar.constant(2);
 		const y = Scalar.variable("x");
-		const a = new Vector.Variable("A");
 		const expr1 = y.mul(A);
 		const expr2 = B.scale(x);
 		expect(expr1).toBeInstanceOf(Vector.Expression);
