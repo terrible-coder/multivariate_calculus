@@ -5,15 +5,23 @@ const { sqrt } = require("../build/core/operators/unary");
 
 describe("Vector constants", function() {
 	const arr = [1, 1, 2];
-	const A = new Vector.Constant([1, 1, 2]);
-	const B = new Vector.Constant([1, 1, 1]);
-	const random = new Vector.Constant([
+	const A = Vector.constant([1, 1, 2]);
+	const B = Vector.constant([1, 1, 1]);
+	const a = Vector.constant([1, 1, 2], "A");
+	const random = Vector.constant([
 		100*Math.random(),
 		100*Math.random(),
 		100*Math.random(),
 		100*Math.random(),
 		100*Math.random()
 	]);
+
+	it("Checks naming system", function() {
+		expect(Vector.constant("A")).toBe(a);
+		expect(a).not.toBe(A);
+		expect(A.equals(a)).toBe(true);
+		expect(() => Vector.constant([1, 2], "A")).toThrow();
+	});
 
 	it("Gets components", function() {
 		let i;
@@ -24,12 +32,17 @@ describe("Vector constants", function() {
 	});
 
 	it("Checks equality", function() {
-		expect(A.equals(new Vector.Constant(arr))).toBe(true);
+		expect(A.equals(Vector.constant(arr))).toBe(true);
+	});
+
+	it("Checks non-duplicacy", function() {
+		expect(Vector.constant([arr])).toBe(A);
+		expect(Vector.constant([1, 1, 1])).toBe(B);
 	});
 
 	it("Adds", function() {
 		expect(A.add(B)).toBeInstanceOf(Vector);
-		expect(A.add(B)).toEqual(new Vector.Constant([2, 2, 3]));
+		expect(A.add(B)).toEqual(Vector.constant([2, 2, 3]));
 	});
 
 	it("generalises dot", function() {
@@ -37,9 +50,9 @@ describe("Vector constants", function() {
 	});
 
 	it("Calculates cross product", function() {
-		const i = new Vector.Constant([1, 0]);
-		const j = new Vector.Constant([0, 1]);
-		expect(i.cross(j)).toEqual(new Vector.Constant([0, 0, 1]));
+		const i = Vector.constant([1, 0]);
+		const j = Vector.constant([0, 1]);
+		expect(i.cross(j)).toEqual(Vector.constant([0, 0, 1]));
 	});
 
 	it("Calculates magnitude", function() {
@@ -61,7 +74,7 @@ describe("Vector constants", function() {
 });
 
 describe("Vector variable", function() {
-	const A = new Vector.Constant([1, 1, 2]);
+	const A = Vector.constant([1, 1, 2]);
 	const B = Vector.variable("B");
 	const C = A.dot(B);
 
@@ -79,7 +92,7 @@ describe("Vector variable", function() {
 
 	it("Resolves expressions", function() {
 		const c_ = C.at(new Map([
-			[B, new Vector.Constant([1, 1, 1, 1, 1])]
+			[B, Vector.constant([1, 1, 1, 1, 1])]
 		]));
 		expect(c_).toBeInstanceOf(Scalar);
 		expect(c_).toBe(Scalar.constant(4));
@@ -87,12 +100,12 @@ describe("Vector variable", function() {
 
 	it("Calculates cross product", function() {
 		const i = Vector.variable();
-		const j = new Vector.Constant([0, 1]);
+		const j = Vector.constant([0, 1]);
 		const c = i.cross(j);
 		expect(c).toBeInstanceOf(Vector.Expression);
 		expect(c.at(new Map([
-			[i, new Vector.Constant([1, 0])]
-		]))).toEqual(new Vector.Constant([0, 0, 1]));
+			[i, Vector.constant([1, 0])]
+		]))).toEqual(Vector.constant([0, 0, 1]));
 	});
 
 	it("Evaluates magnitude", function() {
@@ -100,7 +113,7 @@ describe("Vector variable", function() {
 		expect(M).toBeInstanceOf(Scalar);
 		expect(isExpression(M)).toBe(true);
 		expect(M.at(new Map([
-			[B, new Vector.Constant([1, 1, 1, 1, 1])]
+			[B, Vector.constant([1, 1, 1, 1, 1])]
 		]))).toBe(Scalar.constant(Math.sqrt(5)));
 	});
 
@@ -108,8 +121,8 @@ describe("Vector variable", function() {
 		const u = Vector.unit(B);
 		expect(u).toBeInstanceOf(Vector.Expression);
 		expect(u.at(new Map([
-			[B, new Vector.Constant([2, 0])]
-		]))).toEqual(new Vector.Constant([1, 0]));
+			[B, Vector.constant([2, 0])]
+		]))).toEqual(Vector.constant([1, 0]));
 	});
 
 	it("Checks multiplication by scalar", function() {

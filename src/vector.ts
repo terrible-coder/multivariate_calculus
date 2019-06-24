@@ -92,6 +92,8 @@ export abstract class Vector implements Token, Evaluable {
 }
 
 export namespace Vector {
+	const CONSTANTS = new Map<string, Vector.Constant>();
+	const NAMED_CONSTANTS = new Map<string, Vector.Constant>();
 	const VARIABLES = new Map<string, Vector.Variable>();
 
 	export class Constant extends Vector implements _Constant {
@@ -309,6 +311,50 @@ export namespace Vector {
 	}
 
 	/**
+	 * Creates a new `Vector.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {number[]}
+	 */
+	export function constant(value: number[]): Vector.Constant;
+	/**
+	 * Creates a named `Vector.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {number}
+	 * @param name {string}
+	 */
+	export function constant(value: number[], name: string): Vector.Constant;
+	/**
+	 * Returns a previously declared named `Scalar.Constant` object.
+	 * @param name {string}
+	 */
+	export function constant(name: string): Vector.Constant;
+	export function constant(a: number[] | string, b?: string) {
+		let c;
+		if(Array.isArray(a)) {
+			let i = a.length - 1;
+			for(; i >= 0; i--)
+				if(a[i] !== 0)
+					break;
+			const key = a.slice(0, i+1).join();
+			if(b === undefined) {
+				c = CONSTANTS.get(key);
+				if(c === undefined) {
+					c = new Vector.Constant(a);
+					CONSTANTS.set(key, c);
+				}
+			} else {
+				c = NAMED_CONSTANTS.get(b);
+				if(c !== undefined)
+					throw "Attempt to redefine a constant: A constant with the same name already exists.";
+				c = new Vector.Constant(a, b);
+				NAMED_CONSTANTS.set(b, c);
+			}
+		} else {
+			c = NAMED_CONSTANTS.get(a);
+			if(c === undefined)
+				throw "No such constant defined.";
+		}
+		return c;
 	 * Creates a new `Vector.Variable` object if it has not been created before.
 	 * Otherwise just returns the previously created object.
 	 * @param name {string}
