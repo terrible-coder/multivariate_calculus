@@ -196,6 +196,18 @@ export class math {
 			return new Scalar.Expression(UnaryOperator.EXP, x);
 	}
 
+	public static sqrt(x: number): number;
+	public static sqrt(x: Scalar.Constant): Scalar.Constant;
+	public static sqrt(x: Scalar): Scalar.Expression;
+	public static sqrt(x: number | Evaluable) {
+		if(typeof x === "number")
+			return Math.sqrt(x);
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.sqrt(x.value));
+		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
+			return new Scalar.Expression(UnaryOperator.SQRT, x);
+	}
+
 	public static abs(x: number): number;
 	public static abs(x: Scalar.Constant): Scalar.Constant;
 	public static abs(x: Scalar): Scalar.Expression;
@@ -265,6 +277,8 @@ export const log = math.log;
 export const ln = math.ln;
 /** The exponentiation function. */
 export const exp = math.exp;
+/** The square root function. */
+export const sqrt = math.sqrt;
 /** The absolute value function. */
 export const abs = math.abs;
 /** The greatest integer function. */
@@ -308,6 +322,8 @@ export enum UnaryOperator {
 	LN = "ln",
 	/** Represents the exponentiation function. */
 	EXP = "exp",
+	/** Represents the square root function. */
+	SQRT = "sqrt",
 	/** Represents the absolute value function. */
 	ABS = "abs",
 	/** Represents the greatest integer function. */

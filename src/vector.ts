@@ -40,6 +40,15 @@ export abstract class Vector implements Token, Evaluable {
 	public abstract dot(that: Vector): Scalar;
 
 	/**
+	 * Evaluates the vector product of `this` and `that`. If both are constants
+	 * then numerically computes the product and returns a `Vector.Constant` object
+	 * otherwise creates an `Expression` out of them and returns the same.
+	 * @param that {Vector} The scalar to subtract from `this`.
+	 * @return {Vector}
+	 */
+	public abstract cross(that: Vector): Vector;
+
+	/**
 	 * Scales, or multiplies the "size" (magnitude) of, `this` vector by given
 	 * amount. If `this` and `k` are both constants then numerically calculates
 	 * the scaled vector otherwise creates an `Expression` out of them and
@@ -78,16 +87,20 @@ export abstract class Vector implements Token, Evaluable {
 	public static unit(A: Vector) {
 		if(A instanceof Vector.Constant)
 			return A.scale(Scalar.constant(1).div(Vector.mag(A)));
-		return new Vector.Expression(BinaryOperator.SCALE, A, Scalar.constant(1).div(Vector.mag(A)));
+		return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A);
 	}
 }
 
 export namespace Vector {
+	const VARIABLES = new Map<string, Vector.Variable>();
+
 	export class Constant extends Vector implements _Constant {
 		readonly type = "constant";
+		private dimesion: number;
 
 		constructor(readonly value: number[], readonly name: string = "") {
 			super();
+			this.dimesion = this.value.length;
 		}
 
 		/**
@@ -163,6 +176,22 @@ export namespace Vector {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
 
+		public cross(that: Vector.Constant): Vector.Constant;
+		public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
+		public cross(that: Vector) {
+			if(this.dimesion > 3)
+				throw "Cross product defined only in 3 dimensions.";
+			if(that instanceof Vector.Constant) {
+				if(that.dimesion > 3)
+					throw "Cross product defined only in 3 dimensions.";
+				const x1 = this.X(2)*that.X(3) - this.X(3)*that.X(2);
+				const x2 = this.X(3)*that.X(1) - this.X(1)*that.X(3);
+				const x3 = this.X(1)*that.X(2) - this.X(2)*that.X(1);
+				return new Vector.Constant([x1, x2, x3]);
+			}
+			return new Vector.Expression(BinaryOperator.CROSS, this, that);
+		}
+
 		public scale(k: Scalar.Constant): Vector.Constant;
 		public scale(k: Scalar.Variable | Scalar.Expression): Vector.Expression;
 		public scale(k: Scalar) {
@@ -189,6 +218,10 @@ export namespace Vector {
 
 		public dot(that: Vector) {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
+		}
+
+		public cross(that: Vector) {
+			return new Vector.Expression(BinaryOperator.CROSS, this, that);
 		}
 
 		public scale(k: Scalar) {
@@ -253,6 +286,10 @@ export namespace Vector {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
 
+		public cross(that: Vector) {
+			return new Vector.Expression(BinaryOperator.CROSS, this, that);
+		}
+
 		public scale(k: Scalar) {
 			return new Vector.Expression(BinaryOperator.SCALE, this, k);
 		}
@@ -269,5 +306,19 @@ export namespace Vector {
 				return <Vector.Variable>res;
 			return <Vector.Expression>res;
 		}
+	}
+
+	/**
+	 * Creates a new `Vector.Variable` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param name {string}
+	 */
+	export function variable(name: string) {
+		let v = VARIABLES.get(name);
+		if(v === undefined) {
+			v = new Vector.Variable(name);
+			VARIABLES.set(name, v);
+		}
+		return v;
 	}
 }
