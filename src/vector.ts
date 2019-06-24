@@ -355,6 +355,9 @@ export namespace Vector {
 				throw "No such constant defined.";
 		}
 		return c;
+	}
+
+	/**
 	 * Creates a new `Vector.Variable` object if it has not been created before.
 	 * Otherwise just returns the previously created object.
 	 * @param name {string}
