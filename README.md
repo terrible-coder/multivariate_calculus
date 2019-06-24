@@ -74,12 +74,12 @@ representing `x + 2`.
 Almost all common algebraic scalar operations have been implemented.
 File an issue if something has been missed and should be implemented right away.
 
-Vector algebra has been added to this new version of the library. One can very
-simply create vector constants and vector variables.
+Vector algebra has been added to the library. One can very simply create vector
+constants and vector variables.
 
 ```javascript
-const i = new Vector.Constant([1, 0, 0]);
-const A = new Vector.Variable("A");
+const i = Vector.constant([1, 0, 0]);
+const A = Vector.variable("A");
 const z = i.add(A);
 ```
 
