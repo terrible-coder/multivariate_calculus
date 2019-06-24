@@ -4,9 +4,9 @@ const { Scalar } = require("../build/scalar");
 
 describe("Vector constants", function() {
 	const arr = [1, 1, 2];
-	const A = new Vector.Constant([1, 1, 2]);
-	const B = new Vector.Constant([1, 1, 1]);
-	const random = new Vector.Constant([
+	const A = Vector.constant([1, 1, 2]);
+	const B = Vector.constant([1, 1, 1]);
+	const random = Vector.constant([
 		100*Math.random(),
 		100*Math.random(),
 		100*Math.random(),
@@ -23,12 +23,17 @@ describe("Vector constants", function() {
 	});
 
 	it("Checks equality", function() {
-		expect(A.equals(new Vector.Constant(arr))).toBe(true);
+		expect(A.equals(Vector.constant(arr))).toBe(true);
+	});
+
+	it("Checks non-duplicacy", function() {
+		expect(Vector.constant([arr])).toBe(A);
+		expect(Vector.constant([1, 1, 1])).toBe(B);
 	});
 
 	it("Adds", function() {
 		expect(A.add(B)).toBeInstanceOf(Vector);
-		expect(A.add(B)).toEqual(new Vector.Constant([2, 2, 3]));
+		expect(A.add(B)).toEqual(Vector.constant([2, 2, 3]));
 	});
 
 	it("generalises dot", function() {
@@ -52,7 +57,7 @@ describe("Vector constants", function() {
 });
 
 describe("Vector variable", function() {
-	const A = new Vector.Constant([1, 1, 2]);
+	const A = Vector.constant([1, 1, 2]);
 	const B = new Vector.Variable("B");
 	const C = A.dot(B);
 
@@ -66,7 +71,7 @@ describe("Vector variable", function() {
 
 	it("Resolves expressions", function() {
 		const c_ = C.at(new Map([
-			[B, new Vector.Constant([1, 1, 1, 1, 1])]
+			[B, Vector.constant([1, 1, 1, 1, 1])]
 		]));
 		expect(c_).toBeInstanceOf(Scalar);
 		expect(c_).toBe(Scalar.constant(4));
@@ -77,7 +82,7 @@ describe("Vector variable", function() {
 		expect(M).toBeInstanceOf(Scalar);
 		expect(isExpression(M)).toBe(true);
 		expect(M.at(new Map([
-			[B, new Vector.Constant([1, 1, 1, 1, 1])]
+			[B, Vector.constant([1, 1, 1, 1, 1])]
 		]))).toBe(Scalar.constant(Math.sqrt(5)));
 	});
 
