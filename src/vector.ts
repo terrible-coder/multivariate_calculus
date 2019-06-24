@@ -92,6 +92,8 @@ export abstract class Vector implements Token, Evaluable {
 }
 
 export namespace Vector {
+	const VARIABLES = new Map<string, Vector.Variable>();
+
 	export class Constant extends Vector implements _Constant {
 		readonly type = "constant";
 		private dimesion: number;
@@ -304,5 +306,14 @@ export namespace Vector {
 				return <Vector.Variable>res;
 			return <Vector.Expression>res;
 		}
+	}
+
+	export function variable(name: string) {
+		let v = VARIABLES.get(name);
+		if(v === undefined) {
+			v = new Vector.Variable(name);
+			VARIABLES.set(name, v);
+		}
+		return v;
 	}
 }

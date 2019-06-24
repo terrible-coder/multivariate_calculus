@@ -62,7 +62,7 @@ describe("Vector constants", function() {
 
 describe("Vector variable", function() {
 	const A = new Vector.Constant([1, 1, 2]);
-	const B = new Vector.Variable("B");
+	const B = Vector.variable("B");
 	const C = A.dot(B);
 
 	it("Creates vector variables", function() {
@@ -71,6 +71,10 @@ describe("Vector variable", function() {
 
 	it("Creates vector expressions", function() {
 		expect(isExpression(C)).toBe(true);
+	});
+
+	it("Checks non-duplicacy", function() {
+		expect(Vector.variable("B")).toBe(B);
 	});
 
 	it("Resolves expressions", function() {
@@ -82,7 +86,7 @@ describe("Vector variable", function() {
 	});
 
 	it("Calculates cross product", function() {
-		const i = new Vector.Variable();
+		const i = Vector.variable();
 		const j = new Vector.Constant([0, 1]);
 		const c = i.cross(j);
 		expect(c).toBeInstanceOf(Vector.Expression);
@@ -111,7 +115,7 @@ describe("Vector variable", function() {
 	it("Checks multiplication by scalar", function() {
 		const x = Scalar.constant(2);
 		const y = Scalar.variable("x");
-		const a = new Vector.Variable("A");
+		const a = Vector.variable("A");
 		const expr1 = y.mul(A);
 		const expr2 = B.scale(x);
 		expect(expr1).toBeInstanceOf(Vector.Expression);
