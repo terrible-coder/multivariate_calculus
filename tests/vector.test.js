@@ -1,6 +1,7 @@
 const { Vector } = require("../build/vector");
 const { isExpression } = require("../build/core/definitions");
 const { Scalar } = require("../build/scalar");
+const { sqrt } = require("../build/core/operators/unary");
 
 describe("Vector constants", function() {
 	const arr = [1, 1, 2];
@@ -42,7 +43,8 @@ describe("Vector constants", function() {
 	});
 
 	it("Calculates magnitude", function() {
-		expect(Vector.mag(random).value).toBeCloseTo(Math.sqrt(random.dot(random).value));
+		const mag = sqrt(random.dot(random));
+		expect(Vector.mag(random).equals(mag)).toBe(true);
 		expect(Vector.mag(B).value).toBe(Math.sqrt(3));
 	});
 
@@ -52,8 +54,9 @@ describe("Vector constants", function() {
 	});
 
 	it("Unit vector", function() {
-		expect(Vector.mag(Vector.unit(random)).value).toBeCloseTo(1);
-		expect(Vector.mag(Vector.unit(B)).value).toBeCloseTo(1);
+		const one = Scalar.constant(1);
+		expect(Vector.mag(Vector.unit(random)).equals(one)).toBe(true);
+		expect(Vector.mag(Vector.unit(B)).equals(one)).toBe(true);
 	});
 });
 
