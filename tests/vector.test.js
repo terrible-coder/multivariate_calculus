@@ -115,7 +115,6 @@ describe("Vector variable", function() {
 	it("Checks multiplication by scalar", function() {
 		const x = Scalar.constant(2);
 		const y = Scalar.variable("x");
-		const a = Vector.variable("A");
 		const expr1 = y.mul(A);
 		const expr2 = B.scale(x);
 		expect(expr1).toBeInstanceOf(Vector.Expression);

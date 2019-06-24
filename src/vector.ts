@@ -308,6 +308,11 @@ export namespace Vector {
 		}
 	}
 
+	/**
+	 * Creates a new `Vector.Variable` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param name {string}
+	 */
 	export function variable(name: string) {
 		let v = VARIABLES.get(name);
 		if(v === undefined) {
