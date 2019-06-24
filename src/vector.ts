@@ -275,8 +275,23 @@ export namespace Vector {
 		}
 	}
 
+	/**
+	 * Creates a new `Vector.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {number[]}
+	 */
 	export function constant(value: number[]): Vector.Constant;
+	/**
+	 * Creates a named `Vector.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {number}
+	 * @param name {string}
+	 */
 	export function constant(value: number[], name: string): Vector.Constant;
+	/**
+	 * Returns a previously declared named `Scalar.Constant` object.
+	 * @param name {string}
+	 */
 	export function constant(name: string): Vector.Constant;
 	export function constant(a: number[] | string, b?: string) {
 		let c;
