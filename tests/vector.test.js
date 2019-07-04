@@ -26,9 +26,9 @@ describe("Vector constants", function() {
 	it("Gets components", function() {
 		let i;
 		for(i = 1; i <= arr.length; i++)
-			expect(A.X(i)).toBe(arr[i - 1]);
+			expect(A.X(i)).toBe(Scalar.constant(arr[i - 1]));
 		for(; i < 10; i++)
-			expect(A.X(i)).toBe(0);
+			expect(A.X(i).value).toBe(0);
 	});
 
 	it("Checks equality", function() {
