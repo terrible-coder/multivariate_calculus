@@ -48,7 +48,7 @@ describe("Vector constants", function() {
 	});
 
 	it("Checks non-duplicacy", function() {
-		expect(Vector.constant([arr])).toBe(A);
+		expect(Vector.constant(arr)).toBe(A);
 		expect(Vector.constant([1, 1, 1])).toBe(B);
 	});
 
