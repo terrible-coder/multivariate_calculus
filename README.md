@@ -6,6 +6,8 @@ It works with both TypeScript and JavaScript projects seamlessly.
 
 ## Installation
 
+If you wish to work with this library in the browser, you can download it from [here](https://github.com/terrible-coder/multivariate_calculus/releases).
+
 To install globally on your computer:
 
 	npm install multivariate_calculus --global
@@ -72,21 +74,20 @@ representing `x + 2`.
 Almost all common algebraic scalar operations have been implemented.
 File an issue if something has been missed and should be implemented right away.
 
-Vector algebra has been added to this new version of the library. One can very
-simply create vector constants and vector variables.
+Vector algebra has been added to the library. One can very simply create vector
+constants and vector variables.
 
 ```javascript
-const i = new Vector.Constant([1, 0, 0]);
-const A = new Vector.Variable("A");
+const i = Vector.constant([1, 0, 0]);
+const A = Vector.variable("A");
 const z = i.add(A);
 ```
 
 On execution `z` will be a vector `Expression` whose value will be the
 vector sum of `A` and `i`.
 
-This is still a work in progress. A documentation page and a browser version of this library
-is coming soon. Work is being done on building the project to make it a useful tool for
-Physics and Mathematics.
+This is still a work in progress. A documentation page is coming soon. Work is
+being done on building the project to make it a useful tool for Physics and Mathematics.
 
 **Features implemented:**
 - [x] Matrix operations
