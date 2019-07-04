@@ -70,7 +70,7 @@ export abstract class Vector implements Token, Evaluable {
 		if(A instanceof Vector.Constant) {
 			let m = 0;
 			for(let i = 1; i <= A.value.length; i++)
-				m += Math.pow(A.X(i), 2);
+				m += Math.pow(A.X(i).value, 2);
 			return Scalar.constant(Math.sqrt(m));
 		}
 		return new Scalar.Expression(BinaryOperator.MAG, <Evaluable><unknown>Vector, A);
@@ -99,9 +99,15 @@ export namespace Vector {
 	export class Constant extends Vector implements _Constant {
 		readonly type = "constant";
 		private dimesion: number;
+		readonly value: Scalar.Constant[] = [];
+		readonly name: string;
 
-		constructor(readonly value: number[], readonly name: string = "") {
+		constructor(value: Scalar.Constant[], name?: string);
+		constructor(value: number[], name?: string);
+		constructor(value: Scalar.Constant[] | number[], name = "") {
 			super();
+			this.name = name;
+			value.forEach((x: any) => this.value.push(x instanceof Scalar.Constant? x: Scalar.constant(x)));
 			this.dimesion = this.value.length;
 		}
 
@@ -115,7 +121,7 @@ export namespace Vector {
 			return function(i: number) {
 				if(i <= 0)
 					throw "Indexing starts from `1`";
-				return value[i - 1] || 0;
+				return (i <= value.length)?value[i - 1]: Scalar.constant(0);
 			}
 		}
 
@@ -134,7 +140,7 @@ export namespace Vector {
 		public equals(that: Vector.Constant, tolerance = 1e-14) {
 			const m = Math.max(this.value.length, that.value.length);
 			for(let i = 1; i <= m; i++)
-				if(Math.abs(this.X(i) - that.X(i)) >= tolerance)
+				if(Math.abs(this.X(i).value - that.X(i).value) >= tolerance)
 					return false;
 			return true;
 		}
@@ -146,8 +152,8 @@ export namespace Vector {
 				const m = Math.max(this.value.length, that.value.length);
 				const vec: number[] = [];
 				for(let i = 1; i <= m; i++)
-					vec.push(this.X(i) + that.X(i));
-				return new Vector.Constant(vec);
+					vec.push(this.X(i).value + that.X(i).value);
+				return Vector.constant(vec);
 			}
 			return new Vector.Expression(BinaryOperator.ADD, this, that);
 		}
@@ -159,8 +165,8 @@ export namespace Vector {
 				const m = Math.max(this.value.length, that.value.length);
 				const vec: number[] = [];
 				for(let i = 1; i <= m; i++)
-					vec.push(this.X(i) - that.X(i));
-				return new Vector.Constant(vec);
+					vec.push(this.X(i).value - that.X(i).value);
+				return Vector.constant(vec);
 			}
 			return new Vector.Expression(BinaryOperator.SUB, this, that);
 		}
@@ -172,7 +178,7 @@ export namespace Vector {
 				let parallel = 0;
 				const m = Math.max(this.value.length, that.value.length);
 				for(let i = 1; i <= m; i++)
-					parallel += this.X(i) * that.X(i);
+					parallel += this.X(i).value * that.X(i).value;
 				return Scalar.constant(parallel);
 			}
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
@@ -186,10 +192,13 @@ export namespace Vector {
 			if(that instanceof Vector.Constant) {
 				if(that.dimesion > 3)
 					throw "Cross product defined only in 3 dimensions.";
-				const x1 = this.X(2)*that.X(3) - this.X(3)*that.X(2);
-				const x2 = this.X(3)*that.X(1) - this.X(1)*that.X(3);
-				const x3 = this.X(1)*that.X(2) - this.X(2)*that.X(1);
-				return new Vector.Constant([x1, x2, x3]);
+				const a1 = this.X(1).value, a2 = this.X(2).value, a3 = this.X(3).value;
+				const b1 = that.X(1).value, b2 = that.X(2).value, b3 = that.X(3).value;
+				return Vector.constant([
+					a2 * b3 - a3 * b2,
+					a3 * b1 - a1 * b3,
+					a1 * b2 - a2 * b1
+				]);
 			}
 			return new Vector.Expression(BinaryOperator.CROSS, this, that);
 		}
@@ -198,7 +207,7 @@ export namespace Vector {
 		public scale(k: Scalar.Variable | Scalar.Expression): Vector.Expression;
 		public scale(k: Scalar) {
 			if(k instanceof Scalar.Constant)
-				return new Vector.Constant(this.value.map(x => k.value * x));
+				return Vector.constant(this.value.map(x => k.mul(x).value));
 			return new Vector.Expression(BinaryOperator.SCALE, this, k);
 		}
 	}
@@ -324,29 +333,49 @@ export namespace Vector {
 	 */
 	export function constant(value: number[], name: string): Vector.Constant;
 	/**
+	 * Creates a new `Vector.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {Scalar.Constant[]}
+	 */
+	export function constant(value: Scalar.Constant[]): Vector.Constant;
+	/**
+	 * Creates a named `Vector.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {Scalar.Constants[]}
+	 * @param name {string}
+	 */
+	export function constant(value: Scalar.Constant[], name: string): Vector.Constant;
+	/**
 	 * Returns a previously declared named `Scalar.Constant` object.
 	 * @param name {string}
 	 */
 	export function constant(name: string): Vector.Constant;
-	export function constant(a: number[] | string, b?: string) {
+	export function constant(a: number[] | Scalar.Constant[] | string, b?: string) {
 		let c;
 		if(Array.isArray(a)) {
-			let i = a.length - 1;
+			const values: number[] = [];
+			if(typeof a[0] === "number")
+				for(let i = 0; i < a.length; i++)
+					values.push(<number>a[i]);
+			else if(a[0] instanceof Scalar.Constant)
+				for(let i = 0; i < a.length; i++)
+					values.push((<Scalar.Constant>a[i]).value);
+			let i = values.length - 1;
 			for(; i >= 0; i--)
-				if(a[i] !== 0)
+				if(values[i] !== 0)
 					break;
-			const key = a.slice(0, i+1).join();
+			const key = values.slice(0, i+1).join();
 			if(b === undefined) {
 				c = CONSTANTS.get(key);
 				if(c === undefined) {
-					c = new Vector.Constant(a);
+					c = new Vector.Constant(values);
 					CONSTANTS.set(key, c);
 				}
 			} else {
 				c = NAMED_CONSTANTS.get(b);
 				if(c !== undefined)
 					throw "Attempt to redefine a constant: A constant with the same name already exists.";
-				c = new Vector.Constant(a, b);
+				c = new Vector.Constant(values, b);
 				NAMED_CONSTANTS.set(b, c);
 			}
 		} else {

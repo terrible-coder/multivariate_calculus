@@ -121,7 +121,7 @@ export namespace Scalar {
 				return new Scalar.Expression(BinaryOperator.MUL, this, that);
 			}
 			if(that instanceof Vector.Constant)
-				return new Vector.Constant(that.value.map(x => this.value * x));
+				return new Vector.Constant(that.value.map(x => this.value * x.value));
 			return new Vector.Expression(BinaryOperator.MUL, this, that);
 		}
 
