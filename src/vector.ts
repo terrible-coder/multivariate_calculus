@@ -333,29 +333,49 @@ export namespace Vector {
 	 */
 	export function constant(value: number[], name: string): Vector.Constant;
 	/**
+	 * Creates a new `Vector.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {Scalar.Constant[]}
+	 */
+	export function constant(value: Scalar.Constant[]): Vector.Constant;
+	/**
+	 * Creates a named `Vector.Constant` object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * @param value {Scalar.Constants[]}
+	 * @param name {string}
+	 */
+	export function constant(value: Scalar.Constant[], name: string): Vector.Constant;
+	/**
 	 * Returns a previously declared named `Scalar.Constant` object.
 	 * @param name {string}
 	 */
 	export function constant(name: string): Vector.Constant;
-	export function constant(a: number[] | string, b?: string) {
+	export function constant(a: number[] | Scalar.Constant[] | string, b?: string) {
 		let c;
 		if(Array.isArray(a)) {
-			let i = a.length - 1;
+			const values: number[] = [];
+			if(typeof a[0] === "number")
+				for(let i = 0; i < a.length; i++)
+					values.push(<number>a[i]);
+			else if(a[0] instanceof Scalar.Constant)
+				for(let i = 0; i < a.length; i++)
+					values.push((<Scalar.Constant>a[i]).value);
+			let i = values.length - 1;
 			for(; i >= 0; i--)
-				if(a[i] !== 0)
+				if(values[i] !== 0)
 					break;
-			const key = a.slice(0, i+1).join();
+			const key = values.slice(0, i+1).join();
 			if(b === undefined) {
 				c = CONSTANTS.get(key);
 				if(c === undefined) {
-					c = new Vector.Constant(a);
+					c = new Vector.Constant(values);
 					CONSTANTS.set(key, c);
 				}
 			} else {
 				c = NAMED_CONSTANTS.get(b);
 				if(c !== undefined)
 					throw "Attempt to redefine a constant: A constant with the same name already exists.";
-				c = new Vector.Constant(a, b);
+				c = new Vector.Constant(values, b);
 				NAMED_CONSTANTS.set(b, c);
 			}
 		} else {

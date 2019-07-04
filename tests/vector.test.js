@@ -23,6 +23,7 @@ describe("Vector constants", function() {
 			Scalar.constant(2)
 		];
 		expect(() => new Vector.Constant(array)).not.toThrow();
+		expect(() => Vector.constant(array)).not.toThrow();
 		const v = new Vector.Constant(array);
 		expect(v).toBeInstanceOf(Vector.Constant);
 		expect(v).toEqual(A);
