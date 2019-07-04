@@ -153,7 +153,7 @@ export namespace Vector {
 				const vec: number[] = [];
 				for(let i = 1; i <= m; i++)
 					vec.push(this.X(i).value + that.X(i).value);
-				return new Vector.Constant(vec);
+				return Vector.constant(vec);
 			}
 			return new Vector.Expression(BinaryOperator.ADD, this, that);
 		}
@@ -166,7 +166,7 @@ export namespace Vector {
 				const vec: number[] = [];
 				for(let i = 1; i <= m; i++)
 					vec.push(this.X(i).value - that.X(i).value);
-				return new Vector.Constant(vec);
+				return Vector.constant(vec);
 			}
 			return new Vector.Expression(BinaryOperator.SUB, this, that);
 		}
@@ -194,7 +194,7 @@ export namespace Vector {
 					throw "Cross product defined only in 3 dimensions.";
 				const a1 = this.X(1).value, a2 = this.X(2).value, a3 = this.X(3).value;
 				const b1 = that.X(1).value, b2 = that.X(2).value, b3 = that.X(3).value;
-				return new Vector.Constant([
+				return Vector.constant([
 					a2 * b3 - a3 * b2,
 					a3 * b1 - a1 * b3,
 					a1 * b2 - a2 * b1
@@ -207,7 +207,7 @@ export namespace Vector {
 		public scale(k: Scalar.Variable | Scalar.Expression): Vector.Expression;
 		public scale(k: Scalar) {
 			if(k instanceof Scalar.Constant)
-				return new Vector.Constant(this.value.map(x => k.mul(x).value));
+				return Vector.constant(this.value.map(x => k.mul(x).value));
 			return new Vector.Expression(BinaryOperator.SCALE, this, k);
 		}
 	}
