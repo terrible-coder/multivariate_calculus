@@ -16,6 +16,18 @@ describe("Vector constants", function() {
 		100*Math.random()
 	]);
 
+	it("Creates vectors from scalar lists", function() {
+		const array = [
+			Scalar.constant(1),
+			Scalar.constant(1),
+			Scalar.constant(2)
+		];
+		expect(() => new Vector.Constant(array)).not.toThrow();
+		const v = new Vector.Constant(array);
+		expect(v).toBeInstanceOf(Vector.Constant);
+		expect(v).toEqual(A);
+	});
+
 	it("Checks naming system", function() {
 		expect(Vector.constant("A")).toBe(a);
 		expect(a).not.toBe(A);

@@ -100,10 +100,14 @@ export namespace Vector {
 		readonly type = "constant";
 		private dimesion: number;
 		readonly value: Scalar.Constant[] = [];
+		readonly name: string;
 
-		constructor(value: number[], readonly name: string = "") {
+		constructor(value: Scalar.Constant[], name?: string);
+		constructor(value: number[], name?: string);
+		constructor(value: Scalar.Constant[] | number[], name = "") {
 			super();
-			value.forEach(x => this.value.push(Scalar.constant(x)));
+			this.name = name;
+			value.forEach((x: any) => this.value.push(x instanceof Scalar.Constant? x: Scalar.constant(x)));
 			this.dimesion = this.value.length;
 		}
 
