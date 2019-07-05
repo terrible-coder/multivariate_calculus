@@ -6,3 +6,6 @@
 	* [Expression](reference/v/0.2.1/core/definitions/Expression)
 - **Functions**
 	* [isEvaluable](reference/v/0.2.1/core/definitions/isEvaluable)
+	* [isVariable](reference/v/0.2.1/core/definitions/isVariable)
+	* [isConstant](reference/v/0.2.1/core/definitions/isConstant)
+	* [isExpression](reference/v/0.2.1/core/definitions/isExpression)
