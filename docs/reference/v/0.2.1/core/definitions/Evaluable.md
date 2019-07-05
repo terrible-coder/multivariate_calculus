@@ -11,4 +11,5 @@ implement.
 
 Field | Type | Description
 -------|-----|-----
-type | `string` | The type of Token this represents.<br>Permitted values: `"constant"`, `"variable"`, `"expression"`.
+type | `string` | The type of Token represented by implementing class.<br>Permitted values: `"constant"`, `"variable"`, `"expression"`.
+quantity | `string` | The kind of physical quantity represented by the implementing class.

@@ -10,4 +10,4 @@ implement.
 
 Field | Type | Description
 -------|-----|-----
-type | `string` | The type of Token this represents.<br>Permitted values: `"operator"`, `"constant"`, `"variable"`, `"expression"`.
+type | `string` | The type of Token represented by the implementing class.<br>Permitted values: `"operator"`, `"constant"`, `"variable"`, `"expression"`.
