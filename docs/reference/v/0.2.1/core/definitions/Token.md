@@ -6,8 +6,8 @@ A tagging interface which all classes representing some mathematical object
 whose value can be evaluated, at run time or when user suppiles the value, must
 implement.
 
-### Field summary
+### Properties
 
-Field | Type | Description
--------|-----|-----
-type | `string` | The type of Token represented by the implementing class.<br>Permitted values: `"operator"`, `"constant"`, `"variable"`, `"expression"`.
+<div class="grid-container">
+<div class="grid-item"> type </div>
+</div>

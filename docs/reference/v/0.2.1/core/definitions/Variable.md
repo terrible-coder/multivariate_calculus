@@ -10,9 +10,9 @@ depending upon the situation.
 This interface must be implemented by all classes representing varying/unknown
 values.
 
-### Field Summary
+### Properties
 
-Field | Type | Description
-------|------|------
-type | `string` | The value of this is fixed, `"variable"`.
-name | `string` | The name of the variable.
+<div class="grid-container">
+<div class="grid-item">type </div>
+<div class="grid-item">name </div>
+</div>

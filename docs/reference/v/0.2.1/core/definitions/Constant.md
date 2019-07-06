@@ -6,16 +6,16 @@ extends [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
 
 A constant is such a quantity whose value is known and remains fixed always.
 
-### Field Summary
+### Properties
 
-Field | Type | Description
-------|------|------
-type | `string` | The value of this is fixed, `"constant"`.
-value | `any` | The value represented by this object.
-name | `string` | The optional name given to this constant.
+<div class="grid-container">
+<div class="grid-item"> type </div>
+<div class="grid-item"> value </div>
+<div class="grid-item"> name </div>
+</div>
 
-### Method Summary
+### Methods
 
-Method | Return type | Description
-------|--------|--------
-equals | `boolean` | Checks for the equality of two constant quantities.
+<div class="grid-container">
+<div class="grid-item"> equals </div>
+</div>
