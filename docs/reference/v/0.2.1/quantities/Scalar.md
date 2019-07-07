@@ -11,24 +11,24 @@ coordinate axes in a given situation.
 
 ### Nested classes
 <div class="grid-container">
-<div class="grid-item"> Constant </div>
-<div class="grid-item"> Variable </div>
-<div class="grid-item"> Expression </div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar.Constant">Constant</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar.Variable">Variable</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar.Expression">Expression</a></div>
 </div>
 
 ### Properties
 <div class="grid-container">
-<div class="grid-item"> type </div>
-<div class="grid-item"> quantity </div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/type">type</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/quantity">quantity</a></div>
 </div>
 
 ### Methods
 <div class="grid-container">
-<div class="grid-item"> add </div>
-<div class="grid-item"> sub </div>
-<div class="grid-item"> mul </div>
-<div class="grid-item"> div </div>
-<div class="grid-item"> pow </div>
-<div class="grid-item"> constant </div>
-<div class="grid-item"> variable </div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/add">add</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/sub">sub</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/mul">mul</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/div">div</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/pow">pow</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/constant">constant</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/variable">variable</a></div>
 </div>
