@@ -9,5 +9,5 @@ implement.
 ### Properties
 
 <div class="grid-container">
-<div class="grid-item"> type </div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Token/type">type</a></div>
 </div>
