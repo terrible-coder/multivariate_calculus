@@ -20,18 +20,18 @@ represents.
 ### Properties
 
 <div class="grid-container">
-<div class="grid-item"> type </div>
-<div class="grid-item"> arg_list </div>
-<div class="grid-item"> op </div>
-<div class="grid-item"> operands </div>
-<div class="grid-item"> lhs </div>
-<div class="grid-item"> rhs </div>
-<div class="grid-item"> arg </div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Expression/type">type</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Expression/arg_list">arg_list</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Expression/op">op</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Expression/operands">operands</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Expression/lhs">lhs</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Expression/rhs">rhs</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Expression/arg">arg</a></div>
 </div>
 
 ### Methods
 
 <div class="grid-container">
-<div class="grid-item"> isFunctionOf </div>
-<div class="grid-item"> at </div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Expression/isFunctionOf">isFunctionOf</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Expression/at">at</a></div>
 </div>

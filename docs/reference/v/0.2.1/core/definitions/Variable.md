@@ -13,6 +13,6 @@ values.
 ### Properties
 
 <div class="grid-container">
-<div class="grid-item">type </div>
-<div class="grid-item">name </div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Variable/type">type</a></div>
+<div class="grid-item"><a href="/#/reference/v/0.2.1/core/definitions/Variable/name">name</a></div>
 </div>
