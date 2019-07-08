@@ -1,6 +1,10 @@
 ## Property type
 
+<declaration>
+
 readonly type: "operator" | "expression" | "variable" | "constant";
+
+</declaration>
 
 Stores the type of [Token](reference/v/0.2.1/core/definitions/Token)
 `this` represents. It is limited to only a few permitted values:

@@ -1,8 +1,12 @@
 Interface Constant
 ======
 
+<declaration>
+
 interface Constant<br>
 extends [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
+
+</declaration>
 
 A constant is such a quantity whose value is known and remains fixed always.
 

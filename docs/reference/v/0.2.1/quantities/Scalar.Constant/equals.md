@@ -1,6 +1,10 @@
 ## Function equals
 
+<declaration>
+
 equals(that: [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant)): boolean;
+
+</declaration>
 
 Checks whether two [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant) objects
 hold the same value.

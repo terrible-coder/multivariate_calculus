@@ -1,6 +1,10 @@
 ## Function sub
 
+<declaration>
+
 public sub(that: [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant)): [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant);
+
+</declaration>
 
 Subtracts one constant scalar from another constant scalars.
 
@@ -15,7 +19,11 @@ equal to the algebraic difference of the values of `this` and `that`.
 
 -------------------
 
+<declaration>
+
 public sub(that: [Scalar.Variable](reference/v/0.2.1/quantities/Scalar.Variable) | [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression)): [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression);
+
+</declaration>
 
 Adds a constant scalar to an unknown scalar. The unknown [Scalar](reference/v/0.2.1/quantities/Scalar) may be a
 [Scalar.Variable](reference/v/0.2.1/quantities/Scalar.Variable) object or a [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression) object.

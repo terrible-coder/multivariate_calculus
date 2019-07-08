@@ -1,6 +1,10 @@
 ## Function div
 
-public div(that: [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant)): [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant);
+<declaration>
+
+<flag>public</flag> div(that: [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant)): [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant);
+
+</declaration>
 
 Divides a constant scalar by another constant scalar.
 
@@ -15,7 +19,11 @@ equal to the quotient of dividing the value of `this` by `that`.
 
 -------------------
 
-public div(that: [Scalar.Variable](reference/v/0.2.1/quantities/Scalar.Variable) | [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression)): [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression);
+<declaration>
+
+<flag>public</flag> div(that: [Scalar.Variable](reference/v/0.2.1/quantities/Scalar.Variable) | [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression)): [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression);
+
+</declaration>
 
 Divides a constant scalar by an unknown scalar. The unknown [Scalar](reference/v/0.2.1/quantities/Scalar) may be a
 [Scalar.Variable](reference/v/0.2.1/quantities/Scalar.Variable) object or a [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression) object.

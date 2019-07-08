@@ -1,6 +1,10 @@
 ## Property rhs
 
+<declaration>
+
 readonly rhs: Evaluable;
+
+</declaration>
 
 The right hand side operand for [`this.op`](reference/v/0.2.1/quantities/Scalar.Expression/op).
 This value should be available only when [`this.op`](reference/v/0.2.1/quantities/Scalar.Expression/op)

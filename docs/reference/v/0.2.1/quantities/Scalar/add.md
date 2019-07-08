@@ -1,6 +1,10 @@
 ## Function add
 
+<declaration>
+
 public abstract add(that: Scalar): Scalar;
+
+</declaration>
 
 Adds two `Scalar`s together. If `this` and `that` are both constants
 then numerically adds the two and returns a new `Scalar.Constant` object

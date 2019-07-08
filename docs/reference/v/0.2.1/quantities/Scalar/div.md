@@ -1,6 +1,10 @@
 ## Function div
 
+<declaration>
+
 public abstract div(that: [Scalar](reference/v/0.2.1/quantities/Scalar)): [Scalar](reference/v/0.2.1/quantities/Scalar);
+
+</declaration>
 
 Divides `this` by `that`. If `this` and `that` are both constants
 then numerically divides the two and returns a new `Scalar.Constant` object

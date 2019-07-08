@@ -1,8 +1,12 @@
 Class Scalar
 ======
 
+<declaration>
+
 <span class="flag flag-abstract">abstract</span> class Scalar<br>
 implements [Token](reference/v/0.2.1/core/definitions/Token), [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
+
+</declaration>
 
 This class abstracts a scalar quantity. A scalar is a type of physical
 quantity which remains invariant under coordinate transform. What this means

@@ -1,6 +1,10 @@
 ## Function constant
 
+<declaration>
+
 export function constant(value: number): [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant);
+
+</declaration>
 
 Creates a new `Scalar.Constant` object if it has not been created before.
 Otherwise just returns the previously created object.
@@ -14,7 +18,11 @@ Otherwise just returns the previously created object.
 
 --------------
 
+<declaration>
+
 export function constant(value: number, name: string): [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant);
+
+</declaration>
 
 Defines a named `Scalar.Constant` object if it has not been created before.
 Otherwise just returns the previously created object.

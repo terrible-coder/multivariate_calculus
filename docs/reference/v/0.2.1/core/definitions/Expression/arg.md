@@ -1,6 +1,10 @@
 ## Property arg
 
+<declaration>
+
 readonly lhs: Evaluable;
+
+</declaration>
 
 The argument for [`this.op`](reference/v/0.2.1/core/definitions/Expression/op).
 This value should be available only when [`this.op`](reference/v/0.2.1/core/definitions/Expression/op)

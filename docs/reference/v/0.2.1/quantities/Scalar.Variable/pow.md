@@ -1,6 +1,10 @@
 ## Function pow
 
+<declaration>
+
 public pow(that: [Scalar](reference/v/0.2.1/quantities/Scalar)): [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression)
+
+</declaration>
 
 Raises `this` variable scalar to the exponent of another scalar. The [type](reference/v/0.2.1/core/definitions/Evaluable/type)
 of `that` does not matter, whatever it may be the result of exponentiating

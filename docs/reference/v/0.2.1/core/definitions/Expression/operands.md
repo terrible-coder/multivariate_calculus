@@ -1,6 +1,10 @@
 ## Property operands
 
+<declaration>
+
 readonly operands: Evaluable[];
+
+</declaration>
 
 Array of `Evaluable` quantity/quantities `this.op` operates on.
 In case [`this.op`](reference/v/0.2.1/core/definitions/Expression/op) is a

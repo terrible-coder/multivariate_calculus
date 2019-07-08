@@ -1,8 +1,12 @@
 Interface Evaluable
 ======
 
+<declaration>
+
 interface Evaluable<br>
 extends [Token](reference/v/0.2.1/core/definitions/Token)
+
+</declaration>
 
 A tagging interface which all classes representing some mathematical object must
 implement.

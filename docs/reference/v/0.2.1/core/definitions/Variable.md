@@ -1,8 +1,12 @@
 Interface Variable
 ======
 
+<declaration>
+
 interface Variable<br>
 extends [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
+
+</declaration>
 
 A variable is a symbolic representation of some quantity whose value we do not
 know yet. Something whose value is not fixed and could take different values

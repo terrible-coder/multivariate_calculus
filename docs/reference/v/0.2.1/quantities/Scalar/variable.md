@@ -1,6 +1,10 @@
 ## Function variable
 
+<declaration>
+
 export function variable(name: string): [Scalar.Variable](reference/v/0.2.1/quantities/Scalar.Variable)
+
+</declaration>
 
 Creates a new [Scalar.Variable](reference/v/0.2.1/quantities/Scalar.Variable) object if it has not been created before.
 Otherwise just returns the previously created object.

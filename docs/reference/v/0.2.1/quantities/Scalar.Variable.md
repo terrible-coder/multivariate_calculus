@@ -1,9 +1,13 @@
 Class Scalar.Variable
 ======
 
+<declaration>
+
 <span class="flag flag-abstract">abstract</span> class Scalar.Variable<br>
 extends [Scalar](reference/v/0.2.1/quantities/Scalar)<br>
 implements [Variable](reference/v/0.2.1/core/definitions/Variable)
+
+</declaration>
 
 This class represents an unknown or variable scalar quantity.
 

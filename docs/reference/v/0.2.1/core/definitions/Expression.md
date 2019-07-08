@@ -1,8 +1,12 @@
 Interface Expression
 ======
 
+<declaration>
+
 interface Expression<br>
 extends [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
+
+</declaration>
 
 An expression represents a concept whose value depends on one or more
 unknowns (variables). That "value" can be evaluated given the value(s) of the

@@ -1,6 +1,10 @@
 ## Property type
 
+<declaration>
+
 readonly type: "expression" | "variable" | "constant";
+
+</declaration>
 
 Stores the type of [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
 `this` represents. It is limited to only a few permitted values:
