@@ -1,0 +1,28 @@
+declaration {
+	font-family: Consolas;
+}
+
+flag {
+	padding: 2px;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+
+.flag-static {
+	color: red;
+}
+
+.flag-abstract {
+	color: rgb(82, 25, 214);
+	font-weight: bold;
+}
+
+.grid-container {
+	font-size: 15px;
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+}
+
+.grid-container a {
+	font-size: 20px;
+}
