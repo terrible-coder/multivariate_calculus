@@ -3,7 +3,7 @@ Class Scalar.Constant
 
 <span class="flag flag-abstract">abstract</span> class Scalar.Constant<br>
 extends [Scalar](reference/v/0.2.1/quantities/Scalar)<br>
-implements [Token](reference/v/0.2.1/core/definitions/Token), [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
+implements [Constant](reference/v/0.2.1/core/definitions/Constant)
 
 This class represents a constant scalar quantity.
 
