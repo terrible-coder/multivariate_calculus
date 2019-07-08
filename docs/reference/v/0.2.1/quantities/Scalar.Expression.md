@@ -3,9 +3,9 @@ Class Scalar.Expression
 
 <declaration>
 
-<flag>abstract</flag> class Scalar.Expression<br>
-<flag>extends</flag> [Scalar](reference/v/0.2.1/quantities/Scalar)<br>
-<flag>implements</flag> [Expression](reference/v/0.2.1/core/definitions/Expression)
+<flag class="class">class</flag> Scalar.Expression<br>
+<flag class="extends">extends</flag> [Scalar](reference/v/0.2.1/quantities/Scalar)<br>
+<flag class="implements">implements</flag> [Expression](reference/v/0.2.1/core/definitions/Expression)
 
 </declaration>
 

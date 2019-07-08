@@ -2,7 +2,7 @@
 
 <declaration>
 
-readonly type: "constant";
+<flag class="readonly">readonly</flag> type: "constant";
 
 </declaration>
 

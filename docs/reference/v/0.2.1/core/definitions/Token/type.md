@@ -2,7 +2,7 @@
 
 <declaration>
 
-readonly type: "operator" | "expression" | "variable" | "constant";
+<flag class="readonly">readonly</flag> type: "operator" | "expression" | "variable" | "constant";
 
 </declaration>
 

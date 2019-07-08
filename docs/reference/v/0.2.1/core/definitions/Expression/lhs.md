@@ -2,7 +2,7 @@
 
 <declaration>
 
-readonly lhs: Evaluable;
+<flag class="readonly">readonly</flag> lhs: Evaluable;
 
 </declaration>
 

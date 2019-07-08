@@ -3,8 +3,8 @@ Class Scalar
 
 <declaration>
 
-<span class="flag flag-abstract">abstract</span> class Scalar<br>
-implements [Token](reference/v/0.2.1/core/definitions/Token), [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
+<flag class="abstract">abstract</flag> <flag class="class">class</flag> Scalar<br>
+<flag class="implements">implements</flag> [Token](reference/v/0.2.1/core/definitions/Token), [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
 
 </declaration>
 

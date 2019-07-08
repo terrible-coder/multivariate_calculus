@@ -2,7 +2,7 @@
 
 <declaration>
 
-<flag>public</flag> div(that: [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant)): [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant);
+<flag class="public">public</flag> div(that: [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant)): [Scalar.Constant](reference/v/0.2.1/quantities/Scalar.Constant);
 
 </declaration>
 
@@ -21,7 +21,7 @@ equal to the quotient of dividing the value of `this` by `that`.
 
 <declaration>
 
-<flag>public</flag> div(that: [Scalar.Variable](reference/v/0.2.1/quantities/Scalar.Variable) | [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression)): [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression);
+<flag class="public">public</flag> div(that: [Scalar.Variable](reference/v/0.2.1/quantities/Scalar.Variable) | [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression)): [Scalar.Expression](reference/v/0.2.1/quantities/Scalar.Expression);
 
 </declaration>
 

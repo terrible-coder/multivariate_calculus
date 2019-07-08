@@ -3,9 +3,9 @@ Class Scalar.Constant
 
 <declaration>
 
-<flag>abstract</flag> class Scalar.Constant<br>
-<flag>extends</flag> [Scalar](reference/v/0.2.1/quantities/Scalar)<br>
-<flag>implements</flag> [Constant](reference/v/0.2.1/core/definitions/Constant)
+<flag class="class">class</flag> Scalar.Constant<br>
+<flag class="extends">extends</flag> [Scalar](reference/v/0.2.1/quantities/Scalar)<br>
+<flag class="implements">implements</flag> [Constant](reference/v/0.2.1/core/definitions/Constant)
 
 </declaration>
 

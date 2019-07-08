@@ -2,7 +2,7 @@
 
 <declaration>
 
-readonly arg_list: Set<[Variable](reference/v/0.2.1/core/definitions/Variable)>;
+<flag class="readonly">readonly</flag> arg_list: Set<[Variable](reference/v/0.2.1/core/definitions/Variable)>;
 
 </declaration>
 

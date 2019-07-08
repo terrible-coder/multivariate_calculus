@@ -4,7 +4,7 @@ Interface Variable
 <declaration>
 
 interface Variable<br>
-extends [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
+<flag class="extends">extends</flag> [Evaluable](reference/v/0.2.1/core/definitions/Evaluable)
 
 </declaration>
 

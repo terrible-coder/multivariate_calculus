@@ -2,7 +2,7 @@
 
 <declaration>
 
-readonly name: string;
+<flag class="readonly">readonly</flag> name: string;
 
 </declaration>
 

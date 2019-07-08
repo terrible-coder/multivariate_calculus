@@ -2,7 +2,7 @@
 
 <declaration>
 
-readonly type: "variable";
+<flag class="readonly">readonly</flag> type: "variable";
 
 </declaration>
 

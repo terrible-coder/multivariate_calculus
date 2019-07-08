@@ -4,7 +4,7 @@ Interface Evaluable
 <declaration>
 
 interface Evaluable<br>
-extends [Token](reference/v/0.2.1/core/definitions/Token)
+<flag class="extends">extends</flag> [Token](reference/v/0.2.1/core/definitions/Token)
 
 </declaration>
 

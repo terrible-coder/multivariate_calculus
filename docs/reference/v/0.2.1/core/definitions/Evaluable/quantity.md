@@ -2,7 +2,7 @@
 
 <declaration>
 
-readonly quantity: string;
+<flag class="readonly">readonly</flag> quantity: string;
 
 </declaration>
 

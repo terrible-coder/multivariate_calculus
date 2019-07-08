@@ -2,7 +2,7 @@
 
 <declaration>
 
-readonly operands: Evaluable[];
+<flag class="readonly">readonly</flag> operands: Evaluable[];
 
 </declaration>
 

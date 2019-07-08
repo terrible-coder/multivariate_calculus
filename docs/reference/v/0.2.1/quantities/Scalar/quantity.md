@@ -2,7 +2,7 @@
 
 <declaration>
 
-readonly quantity = "scalar";
+<flag class="readonly">readonly</flag> quantity = "scalar";
 
 </declaration>
 

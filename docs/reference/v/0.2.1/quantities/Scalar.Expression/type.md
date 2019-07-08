@@ -2,7 +2,7 @@
 
 <declaration>
 
-readonly type: "expression";
+<flag class="readonly">readonly</flag> type: "expression";
 
 </declaration>
 
