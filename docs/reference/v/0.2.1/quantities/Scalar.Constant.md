@@ -7,10 +7,14 @@ implements [Constant](reference/v/0.2.1/core/definitions/Constant)
 
 This class represents a constant scalar quantity.
 
+### Properties inherited from [Scalar](reference/v/0.2.1/quantities/Scalar)
+<div class="grid-container">
+<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/quantity">quantity</a></div>
+</div>
+
 ### Properties
 <div class="grid-container">
 <div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar.Constant/type">type</a></div>
-<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar.Constant/quantity">quantity</a></div>
 <div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar.Constant/value">value</a></div>
 <div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar.Constant/name">name</a></div>
 </div>
