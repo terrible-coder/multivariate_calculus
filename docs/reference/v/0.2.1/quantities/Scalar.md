@@ -18,7 +18,6 @@ coordinate axes in a given situation.
 
 ### Properties
 <div class="grid-container">
-<div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/type">type</a></div>
 <div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/quantity">quantity</a></div>
 </div>
 
@@ -32,3 +31,7 @@ coordinate axes in a given situation.
 <div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/constant">constant</a></div>
 <div class="grid-item"><a href="/#/reference/v/0.2.1/quantities/Scalar/variable">variable</a></div>
 </div>
+<br><br>
+
+**Properties inherited from [Evaluable](reference/v/0.2.1/core/definitions/Evaluable):**<br>
+[type](reference/v/0.2.1/core/definitions/Evaluable/type)
