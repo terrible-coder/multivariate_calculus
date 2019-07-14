@@ -128,7 +128,7 @@ export namespace Vector {
 		 * The number of dimensions `this` vector exists in.
 		 * @ignore
 		 */
-		private dimesion: number;
+		private dimension: number;
 		readonly value: Scalar.Constant[] = [];
 		/**
 		 * The name by which `this` is identified. This is optional and defaults
@@ -170,7 +170,7 @@ export namespace Vector {
 				if(x instanceof Scalar.Constant)
 					this.value.push(x);
 				else this.value.push(Scalar.constant(x));
-			this.dimesion = this.value.length;
+			this.dimension = this.value.length;
 		}
 
 		/**
@@ -315,10 +315,10 @@ export namespace Vector {
 		 */
 		public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
 		public cross(that: Vector) {
-			if(this.dimesion > 3)
+			if(this.dimension > 3)
 				throw "Cross product defined only in 3 dimensions.";
 			if(that instanceof Vector.Constant) {
-				if(that.dimesion > 3)
+				if(that.dimension > 3)
 					throw "Cross product defined only in 3 dimensions.";
 				const a1 = this.X(1).value, a2 = this.X(2).value, a3 = this.X(3).value;
 				const b1 = that.X(1).value, b2 = that.X(2).value, b3 = that.X(3).value;
