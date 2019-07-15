@@ -1,1 +1,0 @@
-* [Scalar](reference/v/0.2.1/quantities/Scalar)

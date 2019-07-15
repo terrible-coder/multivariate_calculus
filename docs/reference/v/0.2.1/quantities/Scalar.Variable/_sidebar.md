@@ -1,9 +1,0 @@
-- **Properties**
-	* [type](reference/v/0.2.1/quantities/Scalar.Variable/type)
-	* [name](reference/v/0.2.1/quantities/Scalar.Variable/name)
-- **Functions**
-	* [add](reference/v/0.2.1/quantities/Scalar.Variable/add)
-	* [sub](reference/v/0.2.1/quantities/Scalar.Variable/sub)
-	* [mul](reference/v/0.2.1/quantities/Scalar.Variable/mul)
-	* [div](reference/v/0.2.1/quantities/Scalar.Variable/div)
-	* [pow](reference/v/0.2.1/quantities/Scalar.Variable/pow)

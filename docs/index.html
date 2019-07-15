@@ -1,32 +1,347 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="default no-js">
 <head>
-  <meta charset="UTF-8">
-  <title>multivariate_calculus - Handles calculus of multiple variables in multidimensional space.</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Handles calculus of multiple variables in multidimensional space.">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
-  <link rel="stylesheet" href="style.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>multivariate_calculus</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-  <div id="app"></div>
-  <script>
-    window.$docsify = {
-      name: 'multivariate_calculus <a href=\'/#/reference/versions\'><font size=\'3.5px\'>@ <u>0.2.1</u></font></a>',
-      repo: 'https://github.com/terrible-coder/multivariate_calculus',
-      loadSidebar: true,
-      loadNavbar: true,
-      tabs: {
-        persist: true,
-        sync: true,
-        theme: 'classic',
-        tabHeadings: true
-      }
-    }
-  </script>
-  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
-  <script src="//unpkg.com/prismjs/components/prism-typescript.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">multivariate_calculus</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> multivariate_calculus</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="multivariate_calculus">multivariate_calculus</h1>
+				<p>Handles calculus of several variables in multidimensional space.
+				It works with both TypeScript and JavaScript projects seamlessly.</p>
+				<h2 id="installation">Installation</h2>
+				<p>If you wish to work with this library in the browser, you can download it from <a href="https://github.com/terrible-coder/multivariate_calculus/releases">here</a>.</p>
+				<p>To install globally on your computer:</p>
+				<pre><code><span class="hljs-symbol">npm</span> install <span class="hljs-keyword">multivariate_calculus </span>--<span class="hljs-meta">global</span></code></pre><p>If you instead want to use this package to build something of your own:</p>
+				<pre><code>npm <span class="hljs-keyword">install </span><span class="hljs-keyword">multivariate_calculus </span>--save</code></pre><h2 id="usage">Usage</h2>
+				<p>Once installed properly, you can say
+				in TypeScript:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Matrix } <span class="hljs-keyword">from</span> <span class="hljs-string">"multivariate_calculus"</span>
+<span class="hljs-keyword">const</span> A = <span class="hljs-keyword">new</span> Matrix(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>);   <span class="hljs-comment">// [[0, 0, 0], [0, 0, 0]]</span></code></pre>
+				<p>or in JavaScript:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> mcalc = <span class="hljs-built_in">require</span>(<span class="hljs-string">"multivariate_calculus"</span>);
+<span class="hljs-keyword">const</span> A = <span class="hljs-keyword">new</span> mcalc.Matrix(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>);   <span class="hljs-comment">// [[0, 0, 0], [0, 0, 0]]</span></code></pre>
+				<p>One can create and work with variables just like one would do in pen and paper.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> x = Scalar.variable(<span class="hljs-string">"x"</span>);</code></pre>
+				<p>The code takes care that the same variable or constant object is not created twice,
+					avoiding the problem of having multiple copies of the same variable lying around in memory.
+				That is, after the previous line if we say</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> x_ = Scalar.variable(<span class="hljs-string">"x"</span>);</code></pre>
+				<p>this does not create a new object with the same name as that of <code>x</code>. Instead,
+					it will return the original object that was first created with the name <code>&quot;x&quot;</code>.
+				Essentially <code>x</code> and <code>x_</code> are pointing to the same object in memory.</p>
+				<p>One may choose to work with more than one variable too. There is support for scalar algebra
+				for any number of variables.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Scalar } <span class="hljs-keyword">from</span> <span class="hljs-string">"multivariate_calculus"</span>
+
+<span class="hljs-keyword">const</span> x = Scalar.variable(<span class="hljs-string">"x"</span>);
+<span class="hljs-keyword">const</span> y = Scalar.variable(<span class="hljs-string">"y"</span>);
+<span class="hljs-keyword">const</span> two = Scalar.constant(<span class="hljs-number">2</span>);
+<span class="hljs-keyword">const</span> three = Scalar.constant(<span class="hljs-number">3</span>);
+<span class="hljs-keyword">const</span> expr1 = x.add(two);
+<span class="hljs-keyword">const</span> expr2 = x.add(y);
+
+<span class="hljs-keyword">const</span> value1 = expr1.at(<span class="hljs-keyword">new</span> Map([
+    [x, three]
+]));
+<span class="hljs-keyword">const</span> value2 = expr2.at(<span class="hljs-keyword">new</span> Map([
+    [y, two]
+]));
+
+<span class="hljs-built_in">console</span>.log(value1);</code></pre>
+				<p>Upon execution <code>value1</code> should be a <code>Scalar.Constant</code> object with a constant value of <code>5</code>.
+					Interestingly, <code>expr1</code> and <code>value2</code> have the same value: a <code>Scalar.Expression</code> object
+				representing <code>x + 2</code>.</p>
+				<p>Almost all common algebraic scalar operations have been implemented.
+				File an issue if something has been missed and should be implemented right away.</p>
+				<p>Vector algebra has been added to the library. One can very simply create vector
+				constants and vector variables.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> i = Vector.constant([<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]);
+<span class="hljs-keyword">const</span> A = Vector.variable(<span class="hljs-string">"A"</span>);
+<span class="hljs-keyword">const</span> z = i.add(A);</code></pre>
+				<p>On execution <code>z</code> will be a vector <code>Expression</code> whose value will be the
+				vector sum of <code>A</code> and <code>i</code>.</p>
+				<p>This is still a work in progress. A documentation page is coming soon. Work is
+				being done on building the project to make it a useful tool for Physics and Mathematics.</p>
+				<p><strong>Features implemented:</strong></p>
+				<ul>
+					<li><input checked="" disabled="" type="checkbox"> Matrix operations</li>
+					<li><input disabled="" type="checkbox"> Tensor operations</li>
+					<li><input checked="" disabled="" type="checkbox"> A system of variables and constants for Scalar</li>
+					<li><input disabled="" type="checkbox"> A system of variables and constants for Matrix</li>
+					<li><input checked="" disabled="" type="checkbox"> A system of variables and constants for Vector</li>
+					<li><input disabled="" type="checkbox"> A system of variables and constants for Tensor</li>
+					<li><input checked="" disabled="" type="checkbox"> Algebra of Scalar variables</li>
+					<li><input disabled="" type="checkbox"> Algebra of Matrix variables</li>
+					<li><input checked="" disabled="" type="checkbox"> Algebra of Vector variables</li>
+					<li><input disabled="" type="checkbox"> Algebra of Tensor variables</li>
+					<li><input disabled="" type="checkbox"> Calculating limits of arbitrary expressions of multiple variables</li>
+					<li><input disabled="" type="checkbox"> Evaluating partial derivatives</li>
+					<li><input disabled="" type="checkbox"> Evaluating integral with respect to single variable</li>
+					<li><input disabled="" type="checkbox"> Evaluating multiple integrals: line, surface, volume</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/expressionbuilder.html">Expression<wbr>Builder</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/binaryoperator.html" class="tsd-kind-icon">Binary<wbr>Operator</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/unaryoperator.html" class="tsd-kind-icon">Unary<wbr>Operator</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/matrix.html" class="tsd-kind-icon">Matrix</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/scalar.html" class="tsd-kind-icon">Scalar</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/tensor.html" class="tsd-kind-icon">Tensor</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/vector.html" class="tsd-kind-icon">Vector</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/constant.html" class="tsd-kind-icon">Constant</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/evaluable.html" class="tsd-kind-icon">Evaluable</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/expression.html" class="tsd-kind-icon">Expression</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/token.html" class="tsd-kind-icon">Token</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/variable.html" class="tsd-kind-icon">Variable</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#operator" class="tsd-kind-icon">Operator</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#__" class="tsd-kind-icon">__</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#abs" class="tsd-kind-icon">abs</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#acos" class="tsd-kind-icon">acos</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#acosh" class="tsd-kind-icon">acosh</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#asin" class="tsd-kind-icon">asin</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#asinh" class="tsd-kind-icon">asinh</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#atan" class="tsd-kind-icon">atan</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#atanh" class="tsd-kind-icon">atanh</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#ceil" class="tsd-kind-icon">ceil</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#cos" class="tsd-kind-icon">cos</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#cosh" class="tsd-kind-icon">cosh</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#exp" class="tsd-kind-icon">exp</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#floor" class="tsd-kind-icon">floor</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#ln" class="tsd-kind-icon">ln</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#log" class="tsd-kind-icon">log</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#neg" class="tsd-kind-icon">neg</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#sin" class="tsd-kind-icon">sin</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#sinh" class="tsd-kind-icon">sinh</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#sqrt" class="tsd-kind-icon">sqrt</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#tan" class="tsd-kind-icon">tan</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#tanh" class="tsd-kind-icon">tanh</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isbinaryoperator" class="tsd-kind-icon">is<wbr>Binary<wbr>Operator</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isconstant" class="tsd-kind-icon">is<wbr>Constant</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isevaluable" class="tsd-kind-icon">is<wbr>Evaluable</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isexpression" class="tsd-kind-icon">is<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isunaryoperator" class="tsd-kind-icon">is<wbr>Unary<wbr>Operator</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#isvalidmatrix" class="tsd-kind-icon">is<wbr>Valid<wbr>Matrix</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#isvariable" class="tsd-kind-icon">is<wbr>Variable</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
