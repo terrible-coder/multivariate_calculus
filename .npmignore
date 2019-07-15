@@ -3,7 +3,7 @@ node_modules
 /tests
 /src
 /out
-/doc
+/docs
 /cache
 /coverage
 /release
