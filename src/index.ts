@@ -1,5 +1,5 @@
 export { Matrix } from "./matrix";
-export { Vector } from "./vector";
+export { Vector, __ } from "./vector";
 export { Scalar } from "./scalar";
 export { Evaluable, isEvaluable, Constant, isConstant, Variable, isVariable, Expression, isExpression, Operator } from "./core/definitions";
 export { ExpressionBuilder } from "./core/expression";

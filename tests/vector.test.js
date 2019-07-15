@@ -1,7 +1,11 @@
-const { Vector } = require("../build/vector");
+const { Vector, __ } = require("../build/vector");
 const { isExpression } = require("../build/core/definitions");
 const { Scalar } = require("../build/scalar");
 const { sqrt } = require("../build/core/operators/unary");
+
+it("checks unknown value alias", function() {
+	expect(__).toBe(undefined);
+});
 
 describe("Vector constants", function() {
 	const arr = [1, 1, 2];
@@ -94,7 +98,7 @@ describe("Vector variable", function() {
 	it("Creates vector variables", function() {
 		expect(B).toBeInstanceOf(Vector);
 		expect(() => {
-			const G = Vector.variable("G", [1, undefined, 0, 4]);
+			const G = Vector.variable("G", [1, __, 0, 4]);
 			expect(G.X(2)).toBeInstanceOf(Scalar.Variable);
 		}).not.toThrow();
 	});

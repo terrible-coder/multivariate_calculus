@@ -5,6 +5,15 @@ import { ExpressionBuilder } from "./core/expression";
 import { Scalar } from "./scalar";
 
 /**
+ * The double underscore.
+ * 
+ * Represents any unknown value. When passed in along with other known values
+ * this gets interpreted as an unknown or a [[Variable]].
+ * @see [[Vector.variable]] for a use case example.
+ */
+export const __ = undefined;
+
+/**
  * Base class to work with vector quantities.
  * @abstract
  */
@@ -395,8 +404,8 @@ export namespace Vector {
 		constructor(name: string);
 		/**
 		 * Creates a [[Vector.Variable]] object from an array. The array may
-		 * contain known scalar constants and, for the components yet unknown,
-		 * the `undefined` value. This allows for creation of vectors whose few
+		 * contain known [[Scalar.Constants]] and, for the components yet unknown,
+		 * [[Scalar.Variable]]. This allows for creation of vectors whose few
 		 * components are known before hand and the rest are not.
 		 * 
 		 * Using the contructor directly for creating vector objects is
@@ -794,8 +803,17 @@ export namespace Vector {
 	/**
 	 * Creates a [[Vector.Variable]] object from an array. The array may
 	 * contain known scalar constants and, for the components yet unknown,
-	 * the `undefined` value. This allows for creation of vectors whose few
-	 * components are known before hand and the rest are not.
+	 * [[__]]. Passing `__` as an element of the `value` array automatically
+	 * gets interpreted as having a variable at that index. This allows for 
+	 * creation of vectors whose few components are known before hand and
+	 * the rest are not. For example,
+	 * ```javascript
+	 * const A = Vector.variable("A", [1, __, 4, __, 2]);
+	 * console.log(A);
+	 * ```
+	 * This line of code will create a vector whose 2nd and 4th components are
+	 * [[Scalar.Variable]] objects and the remaining will be [[Scalar.Constant]]
+	 * objects.
 	 * 
 	 * This is the recommended way of creating [[Vector.Variable]] objects instead of
 	 * using the constructor.
