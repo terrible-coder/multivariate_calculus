@@ -531,16 +531,33 @@ export namespace Vector {
 		readonly type = "expression";
 		readonly arg_list: Set<_Variable>;
 		readonly operands: Evaluable[] = [];
+		/**
+		 * Returns the components of `this` vector. The index values start
+		 * from `1` instead of the commonly used starting index `0`.
+		 * @param i The index of the desired component.
+		 * @return The [[Scalar]] element at given index.
+		 */
 		readonly X: (i: number) => Scalar;
 
+		/**
+		 * Creates a vector expression for a binary operator with left and right
+		 * hand side arguments.
+		 * @param op The root binary operator.
+		 * @param lhs The left hand side argument for the root operator.
+		 * @param rhs The right hand side argument for the root operator.
+		 * @param X The accessor function which defines what the `i`th element should be.
+		 */
 		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, X: (i: number) => Scalar);
+		/**
+		 * Creates a vector expression for a binary operator with left and right
+		 * hand side arguments.
+		 * @param op The root unary operator.
+		 * @param arg The argument for the root operator.
+		 * @param X The accessor function which defines what the `i`th element should be.
+		 */
 		constructor(op: UnaryOperator, arg: Evaluable, X: (i: number) => Scalar);
 		constructor(readonly op: Operator, a: Evaluable, b: Evaluable | ((i: number) => Scalar), c?: (i: number) => Scalar) {
 			super();
-			// this.arg_list = ExpressionBuilder.createArgList(a, b);
-			// this.operands.push(a);
-			// if(b !== undefined)
-			// 	this.operands.push(b);
 			if(b instanceof Function && c === undefined) {
 				this.X = b;
 				this.arg_list = ExpressionBuilder.createArgList(a);
@@ -581,20 +598,6 @@ export namespace Vector {
 				return this.operands[0];
 			throw "Binary operators have two arguments.";
 		}
-
-		// /**
-		//  * Returns the components of `this` vector. The index values start
-		//  * from `1` instead of the commonly used starting index `0`.
-		//  * @param i The index of the desired component.
-		//  * @return The [[Scalar]] element at given index.
-		//  */
-		// public get X() {
-		// 	return function(i: number) {
-		// 		if(i <= 0)
-		// 			throw "Indexing starts from `1`";
-		// 		return Scalar.variable(" ");
-		// 	}
-		// }
 
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the addition of
