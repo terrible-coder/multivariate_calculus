@@ -94,7 +94,7 @@ describe("Vector variable", function() {
 	it("Creates vector variables", function() {
 		expect(B).toBeInstanceOf(Vector);
 		expect(() => {
-			const G = new Vector.Variable("G", [1, undefined, 0, 4]);
+			const G = Vector.variable("G", [1, undefined, 0, 4]);
 			expect(G.X(2)).toBeInstanceOf(Scalar.Variable);
 		}).not.toThrow();
 	});

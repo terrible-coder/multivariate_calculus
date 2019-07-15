@@ -167,7 +167,6 @@ export namespace Vector {
 		constructor(value: Scalar.Constant[] | number[], name = "") {
 			super();
 			this.name = name;
-			//value.forEach((x: any) => this.value.push(x instanceof Scalar.Constant? x: Scalar.constant(x)));
 			for(let x of value)
 				if(x instanceof Scalar.Constant)
 					this.value.push(x);
@@ -405,26 +404,14 @@ export namespace Vector {
 		 * 
 		 * @see [[Vector.variable]]
 		 * @param name The name with which the [[Vector.Variable]] is going to be identified.
+		 * @param value The array containing the values with which to initialise the vector variable object.
 		 */
-		constructor(name: string, value: (undefined | Scalar.Constant | number)[]);
-		constructor(a: string, b?: (undefined | Scalar.Constant | number)[]) {
+		constructor(name: string, value: (Scalar.Variable | Scalar.Constant)[]);
+		constructor(a: string, b?: (Scalar.Variable | Scalar.Constant)[]) {
 			super();
 			this.name = a;
-			if(b !== undefined) {
-				let i = b.length - 1;
-				for(; i >= 0; i--)
-					if(b[i] !== Scalar.constant(0) || b[i] !== 0)
-						break;
-				for(let j = 0; j <= i; j++) {
-					const x = b[j];
-					if(x === undefined)
-						this.value.push(Scalar.variable(a + "_" + (j+1)));
-					else if(x instanceof Scalar.Constant)
-						this.value.push(x);
-					else
-						this.value.push(Scalar.constant(x));
-				}
-			}
+			if(b !== undefined)
+				this.value = b;
 		}
 
 		/**
@@ -803,10 +790,43 @@ export namespace Vector {
 	 * using the constructor.
 	 * @param name The string with which `this` object will be identified.
 	 */
-	export function variable(name: string) {
+	export function variable(name: string): Vector.Variable;
+	/**
+	 * Creates a [[Vector.Variable]] object from an array. The array may
+	 * contain known scalar constants and, for the components yet unknown,
+	 * the `undefined` value. This allows for creation of vectors whose few
+	 * components are known before hand and the rest are not.
+	 * 
+	 * This is the recommended way of creating [[Vector.Variable]] objects instead of
+	 * using the constructor.
+	 * @param name The name with which the [[Vector.Variable]] is going to be identified.
+	 * @param value The array containing the values with which to initialise the vector variable object.
+	 */
+	export function variable(name: string, value: (Scalar.Constant | undefined | number)[]): Vector.Variable;
+	export function variable(name: string, value?: (Scalar.Constant | undefined | number)[]) {
 		let v = VARIABLES.get(name);
 		if(v === undefined) {
-			v = new Vector.Variable(name);
+			if(value === undefined)
+				v = new Vector.Variable(name);
+			else {
+				const arr: (Scalar.Constant | Scalar.Variable)[] = [];
+				if(value !== undefined) {
+					let i = value.length - 1;
+					for(; i >= 0; i--)
+						if(value[i] !== Scalar.constant(0) || value[i] !== 0)
+							break;
+					for(let j = 0; j <= i; j++) {
+						const x = value[j];
+						if(x === undefined)
+							arr.push(Scalar.variable(name + "_" + (j+1)));
+						else if(x instanceof Scalar.Constant)
+							arr.push(x);
+						else
+							arr.push(Scalar.constant(x));
+					}
+				}
+				v = new Vector.Variable(name, arr);
+			}
 			VARIABLES.set(name, v);
 		}
 		return v;
