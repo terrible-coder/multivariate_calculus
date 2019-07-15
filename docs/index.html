@@ -65,79 +65,52 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<h1 id="multivariate_calculus">multivariate_calculus</h1>
-				<p>Handles calculus of several variables in multidimensional space.
-				It works with both TypeScript and JavaScript projects seamlessly.</p>
+				<p>A zero dependency libray that handles calculus of several variables in
+					multidimensional space. It works with both TypeScript and JavaScript projects
+				seamlessly.</p>
 				<h2 id="installation">Installation</h2>
+				<h4 id="browser">Browser</h4>
 				<p>If you wish to work with this library in the browser, you can download it from <a href="https://github.com/terrible-coder/multivariate_calculus/releases">here</a>.</p>
-				<p>To install globally on your computer:</p>
-				<pre><code><span class="hljs-symbol">npm</span> install <span class="hljs-keyword">multivariate_calculus </span>--<span class="hljs-meta">global</span></code></pre><p>If you instead want to use this package to build something of your own:</p>
-				<pre><code>npm <span class="hljs-keyword">install </span><span class="hljs-keyword">multivariate_calculus </span>--save</code></pre><h2 id="usage">Usage</h2>
-				<p>Once installed properly, you can say
-				in TypeScript:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Matrix } <span class="hljs-keyword">from</span> <span class="hljs-string">"multivariate_calculus"</span>
-<span class="hljs-keyword">const</span> A = <span class="hljs-keyword">new</span> Matrix(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>);   <span class="hljs-comment">// [[0, 0, 0], [0, 0, 0]]</span></code></pre>
-				<p>or in JavaScript:</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> mcalc = <span class="hljs-built_in">require</span>(<span class="hljs-string">"multivariate_calculus"</span>);
-<span class="hljs-keyword">const</span> A = <span class="hljs-keyword">new</span> mcalc.Matrix(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>);   <span class="hljs-comment">// [[0, 0, 0], [0, 0, 0]]</span></code></pre>
-				<p>One can create and work with variables just like one would do in pen and paper.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> x = Scalar.variable(<span class="hljs-string">"x"</span>);</code></pre>
-				<p>The code takes care that the same variable or constant object is not created twice,
-					avoiding the problem of having multiple copies of the same variable lying around in memory.
-				That is, after the previous line if we say</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> x_ = Scalar.variable(<span class="hljs-string">"x"</span>);</code></pre>
-				<p>this does not create a new object with the same name as that of <code>x</code>. Instead,
-					it will return the original object that was first created with the name <code>&quot;x&quot;</code>.
-				Essentially <code>x</code> and <code>x_</code> are pointing to the same object in memory.</p>
-				<p>One may choose to work with more than one variable too. There is support for scalar algebra
-				for any number of variables.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Scalar } <span class="hljs-keyword">from</span> <span class="hljs-string">"multivariate_calculus"</span>
+				<p>Once you have downloaded the file in you project folder, open up your index.html
+				file and add the following line:</p>
+				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"mcalc.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+				<p>This will tell the HTML that an external script is being referenced.
+				Now if you wish to, say, create a new constant scalar object, you can say</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> a = Scalar.constant(<span class="hljs-number">5</span>);
+<span class="hljs-built_in">console</span>.log(a);</code></pre>
+				<p>If you open up the developer console window in the browser you will be able to
+				see what the object <code>a</code> looks like.</p>
+				<hr>
+				<h4 id="node">Node</h4>
+				<p><strong>JavaScript</strong></p>
+				<p>For using this package in a nodejs environment, you first need to have <a href="https://nodejs.org/en/download/">Nodejs</a>
+					installed on your computer.
+					Once that is done, open up your project directory and create an index.js file.
+				At the top of the file copy the following line:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> mc = <span class="hljs-built_in">require</span>(<span class="hljs-string">"multivariate_calculus"</span>);</code></pre>
+				<p>This will import all the modules, classes, functions and constants from the
+					package under the name <code>mc</code>. If we try to recreate the same example from above,
+				you would have to write</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> a = mc.Scalar.constant(<span class="hljs-number">5</span>);
+<span class="hljs-built_in">console</span>.log(a);</code></pre>
+				<p>You may also avoid having to write <code>mc</code> over and over again by modifying the
+				import statement slightly</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> { Scalar } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"multivariate_calculus"</span>);</code></pre>
+				<p>This way you need not use the namespace object to access the modules, classes,
+				functions and constants. The code will look exactly like in the case of browser use.</p>
+				<p><strong>TypeScript</strong></p>
+				<p>Working in TypeScript is similar to working with plain JavaScript. However, before
+					you can start writing your code using TypeScript you need to first make sure
+					that it is installed. If you are unfamiliar with TypeScript check out their
+				<a href="http://www.typescriptlang.org/docs/home.html">documentation here</a>.</p>
+				<p>Once that is done you can now import stuff from this package by using just one
+				line at the top of your <code>.ts</code> file. To recreate the above example in TypeScript:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Scalar } <span class="hljs-keyword">from</span> <span class="hljs-string">"multivariate_calculus"</span>;
 
-<span class="hljs-keyword">const</span> x = Scalar.variable(<span class="hljs-string">"x"</span>);
-<span class="hljs-keyword">const</span> y = Scalar.variable(<span class="hljs-string">"y"</span>);
-<span class="hljs-keyword">const</span> two = Scalar.constant(<span class="hljs-number">2</span>);
-<span class="hljs-keyword">const</span> three = Scalar.constant(<span class="hljs-number">3</span>);
-<span class="hljs-keyword">const</span> expr1 = x.add(two);
-<span class="hljs-keyword">const</span> expr2 = x.add(y);
-
-<span class="hljs-keyword">const</span> value1 = expr1.at(<span class="hljs-keyword">new</span> Map([
-    [x, three]
-]));
-<span class="hljs-keyword">const</span> value2 = expr2.at(<span class="hljs-keyword">new</span> Map([
-    [y, two]
-]));
-
-<span class="hljs-built_in">console</span>.log(value1);</code></pre>
-				<p>Upon execution <code>value1</code> should be a <code>Scalar.Constant</code> object with a constant value of <code>5</code>.
-					Interestingly, <code>expr1</code> and <code>value2</code> have the same value: a <code>Scalar.Expression</code> object
-				representing <code>x + 2</code>.</p>
-				<p>Almost all common algebraic scalar operations have been implemented.
-				File an issue if something has been missed and should be implemented right away.</p>
-				<p>Vector algebra has been added to the library. One can very simply create vector
-				constants and vector variables.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> i = Vector.constant([<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]);
-<span class="hljs-keyword">const</span> A = Vector.variable(<span class="hljs-string">"A"</span>);
-<span class="hljs-keyword">const</span> z = i.add(A);</code></pre>
-				<p>On execution <code>z</code> will be a vector <code>Expression</code> whose value will be the
-				vector sum of <code>A</code> and <code>i</code>.</p>
-				<p>This is still a work in progress. A documentation page is coming soon. Work is
-				being done on building the project to make it a useful tool for Physics and Mathematics.</p>
-				<p><strong>Features implemented:</strong></p>
-				<ul>
-					<li><input checked="" disabled="" type="checkbox"> Matrix operations</li>
-					<li><input disabled="" type="checkbox"> Tensor operations</li>
-					<li><input checked="" disabled="" type="checkbox"> A system of variables and constants for Scalar</li>
-					<li><input disabled="" type="checkbox"> A system of variables and constants for Matrix</li>
-					<li><input checked="" disabled="" type="checkbox"> A system of variables and constants for Vector</li>
-					<li><input disabled="" type="checkbox"> A system of variables and constants for Tensor</li>
-					<li><input checked="" disabled="" type="checkbox"> Algebra of Scalar variables</li>
-					<li><input disabled="" type="checkbox"> Algebra of Matrix variables</li>
-					<li><input checked="" disabled="" type="checkbox"> Algebra of Vector variables</li>
-					<li><input disabled="" type="checkbox"> Algebra of Tensor variables</li>
-					<li><input disabled="" type="checkbox"> Calculating limits of arbitrary expressions of multiple variables</li>
-					<li><input disabled="" type="checkbox"> Evaluating partial derivatives</li>
-					<li><input disabled="" type="checkbox"> Evaluating integral with respect to single variable</li>
-					<li><input disabled="" type="checkbox"> Evaluating multiple integrals: line, surface, volume</li>
-				</ul>
+<span class="hljs-keyword">const</span> a = Scalar.constant(<span class="hljs-number">5</span>);
+<span class="hljs-built_in">console</span>.log(a);</code></pre>
+				<hr>
+				<p>Check out the <a href="https://terrible-coder.github.io/multivariate_calculus">documentation</a> for further readings.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
