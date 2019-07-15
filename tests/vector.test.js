@@ -93,6 +93,10 @@ describe("Vector variable", function() {
 
 	it("Creates vector variables", function() {
 		expect(B).toBeInstanceOf(Vector);
+		expect(() => {
+			const G = new Vector.Variable("G", [1, undefined, 0, 4]);
+			expect(G.X(2)).toBeInstanceOf(Scalar.Variable);
+		}).not.toThrow();
 	});
 
 	it("Creates vector expressions", function() {
@@ -112,9 +116,11 @@ describe("Vector variable", function() {
 	});
 
 	it("Calculates cross product", function() {
-		const i = Vector.variable();
+		const i = Vector.variable("i");
 		const j = Vector.constant([0, 1]);
 		const c = i.cross(j);
+		for(let I = 1; I <= 3; I++)
+			expect(c.X(I)).toBeInstanceOf(Scalar.Expression);
 		expect(c).toBeInstanceOf(Vector.Expression);
 		expect(c.at(new Map([
 			[i, Vector.constant([1, 0])]

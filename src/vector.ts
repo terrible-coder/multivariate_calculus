@@ -10,6 +10,7 @@ import { Scalar } from "./scalar";
  */
 export abstract class Vector implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
+	readonly abstract X: (i: number) => Scalar;
 	readonly quantity = "vector";
 
 	/**
@@ -98,7 +99,8 @@ export abstract class Vector implements Token, Evaluable {
 	public static unit(A: Vector) {
 		if(A instanceof Vector.Constant)
 			return A.scale(Scalar.constant(1).div(Vector.mag(A)));
-		return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A);
+		const m = Vector.mag(A);
+		return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A, (i: number) => A.X(i).div(m));
 	}
 }
 
@@ -244,7 +246,11 @@ export namespace Vector {
 					vec.push(this.X(i).value + that.X(i).value);
 				return Vector.constant(vec);
 			}
-			return new Vector.Expression(BinaryOperator.ADD, this, that);
+			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).add(that.X(i));
+			});
 		}
 
 		/**
@@ -269,7 +275,11 @@ export namespace Vector {
 					vec.push(this.X(i).value - that.X(i).value);
 				return Vector.constant(vec);
 			}
-			return new Vector.Expression(BinaryOperator.SUB, this, that);
+			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).sub(that.X(i));
+			});
 		}
 
 		/**
@@ -328,7 +338,17 @@ export namespace Vector {
 					a1 * b2 - a2 * b1
 				]);
 			}
-			return new Vector.Expression(BinaryOperator.CROSS, this, that);
+			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`.";
+				if(this.value.length > 3)
+					throw "Cross product defined only in 3 dimensions.";
+				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
+				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
+				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
+						(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
+						a1.mul(b2).sub(a2.mul(b1));
+			});
 		}
 
 		/**
@@ -348,7 +368,11 @@ export namespace Vector {
 		public scale(k: Scalar) {
 			if(k instanceof Scalar.Constant)
 				return Vector.constant(this.value.map(x => k.mul(x).value));
-			return new Vector.Expression(BinaryOperator.SCALE, this, k);
+			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).mul(k);
+			});
 		}
 	}
 
@@ -357,6 +381,8 @@ export namespace Vector {
 	 */
 	export class Variable extends Vector implements _Variable {
 		readonly type = "variable";
+		readonly name: string;
+		readonly value: (Scalar.Variable | Scalar.Constant)[] = [];
 
 		/**
 		 * Creates a [[Vector.Variable]] object.
@@ -367,8 +393,55 @@ export namespace Vector {
 		 * @see [[Vector.variable]]
 		 * @param name The name with which the [[Vector.Variable]] is going to be identified.
 		 */
-		constructor(readonly name: string) {
+		constructor(name: string);
+		/**
+		 * Creates a [[Vector.Variable]] object from an array. The array may
+		 * contain known scalar constants and, for the components yet unknown,
+		 * the `undefined` value. This allows for creation of vectors whose few
+		 * components are known before hand and the rest are not.
+		 * 
+		 * Using the contructor directly for creating vector objects is
+		 * not recommended.
+		 * 
+		 * @see [[Vector.variable]]
+		 * @param name The name with which the [[Vector.Variable]] is going to be identified.
+		 */
+		constructor(name: string, value: (undefined | Scalar.Constant | number)[]);
+		constructor(a: string, b?: (undefined | Scalar.Constant | number)[]) {
 			super();
+			this.name = a;
+			if(b !== undefined) {
+				let i = b.length - 1;
+				for(; i >= 0; i--)
+					if(b[i] !== Scalar.constant(0) || b[i] !== 0)
+						break;
+				for(let j = 0; j <= i; j++) {
+					const x = b[j];
+					if(x === undefined)
+						this.value.push(Scalar.variable(a + "_" + (j+1)));
+					else if(x instanceof Scalar.Constant)
+						this.value.push(x);
+					else
+						this.value.push(Scalar.constant(x));
+				}
+			}
+		}
+
+		/**
+		 * Returns the components of `this` vector. The index values start
+		 * from `1` instead of the commonly used starting index `0`.
+		 * @param i The index of the desired component.
+		 * @return The [[Scalar]] element at given index.
+		 */
+		public get X() {
+			const self = this;
+			return function(i: number) {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				if(self.value.length === 0)
+					return Scalar.variable(self.name + "_" + i);
+				return (i <= self.value.length)? self.value[i - 1]: Scalar.constant(0);
+			}
 		}
 
 		/**
@@ -379,7 +452,11 @@ export namespace Vector {
 		 * @return Expression for sum of `this` and `that`.
 		 */
 		public add(that: Vector) {
-			return new Vector.Expression(BinaryOperator.ADD, this, that);
+			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).add(that.X(i));
+			});
 		}
 
 		/**
@@ -390,7 +467,11 @@ export namespace Vector {
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public sub(that: Vector) {
-			return new Vector.Expression(BinaryOperator.SUB, this, that);
+			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).sub(that.X(i));
+			});
 		}
 
 		/**
@@ -414,7 +495,17 @@ export namespace Vector {
 		 * @return Expression for vector product of `this` and `that`.
 		 */
 		public cross(that: Vector) {
-			return new Vector.Expression(BinaryOperator.CROSS, this, that);
+			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`.";
+				if(this.value.length > 3)
+					throw "Cross product defined only in 3 dimensions.";
+				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
+				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
+				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
+						(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
+						a1.mul(b2).sub(a2.mul(b1));
+			});
 		}
 
 		/**
@@ -425,7 +516,11 @@ export namespace Vector {
 		 * @return Expression for scaling `this`.
 		 */
 		public scale(k: Scalar) {
-			return new Vector.Expression(BinaryOperator.SCALE, this, k);
+			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).mul(k);
+			});
 		}
 	}
 
@@ -436,15 +531,25 @@ export namespace Vector {
 		readonly type = "expression";
 		readonly arg_list: Set<_Variable>;
 		readonly operands: Evaluable[] = [];
+		readonly X: (i: number) => Scalar;
 
-		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable);
-		constructor(op: UnaryOperator, arg: Evaluable);
-		constructor(readonly op: Operator, a: Evaluable, b?: Evaluable) {
+		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, X: (i: number) => Scalar);
+		constructor(op: UnaryOperator, arg: Evaluable, X: (i: number) => Scalar);
+		constructor(readonly op: Operator, a: Evaluable, b: Evaluable | ((i: number) => Scalar), c?: (i: number) => Scalar) {
 			super();
-			this.arg_list = ExpressionBuilder.createArgList(a, b);
-			this.operands.push(a);
-			if(b !== undefined)
-				this.operands.push(b);
+			// this.arg_list = ExpressionBuilder.createArgList(a, b);
+			// this.operands.push(a);
+			// if(b !== undefined)
+			// 	this.operands.push(b);
+			if(b instanceof Function && c === undefined) {
+				this.X = b;
+				this.arg_list = ExpressionBuilder.createArgList(a);
+				this.operands.push(a);
+			} else if(!(b instanceof Function) && c instanceof Function) {
+				this.X = c;
+				this.arg_list = ExpressionBuilder.createArgList(a, b);
+				this.operands.push(a, b);
+			} else throw "Illegal argument.";
 		}
 
 		/**
@@ -477,6 +582,20 @@ export namespace Vector {
 			throw "Binary operators have two arguments.";
 		}
 
+		// /**
+		//  * Returns the components of `this` vector. The index values start
+		//  * from `1` instead of the commonly used starting index `0`.
+		//  * @param i The index of the desired component.
+		//  * @return The [[Scalar]] element at given index.
+		//  */
+		// public get X() {
+		// 	return function(i: number) {
+		// 		if(i <= 0)
+		// 			throw "Indexing starts from `1`";
+		// 		return Scalar.variable(" ");
+		// 	}
+		// }
+
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the addition of
 		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
@@ -486,7 +605,11 @@ export namespace Vector {
 		 * @return Expression for sum of `this` and `that`.
 		 */
 		public add(that: Vector) {
-			return new Vector.Expression(BinaryOperator.ADD, this, that);
+			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return this.X(i).add(that.X(i));
+			});
 		}
 
 		/**
@@ -498,7 +621,11 @@ export namespace Vector {
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public sub(that: Vector) {
-			return new Vector.Expression(BinaryOperator.SUB, this, that);
+			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return this.X(i).sub(that.X(i));
+			});
 		}
 
 		/**
@@ -524,7 +651,17 @@ export namespace Vector {
 		 * @return Expression for vector product of `this` and `that`.
 		 */
 		public cross(that: Vector) {
-			return new Vector.Expression(BinaryOperator.CROSS, this, that);
+			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`.";
+				// if(this.value.length > 3)
+				// 	throw "Cross product defined only in 3 dimensions.";
+				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
+				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
+				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
+						(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
+						a1.mul(b2).sub(a2.mul(b1));
+			});
 		}
 
 		/**
@@ -535,7 +672,11 @@ export namespace Vector {
 		 * @return Expression for scaling `this`.
 		 */
 		public scale(k: Scalar) {
-			return new Vector.Expression(BinaryOperator.SCALE, this, k);
+			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return this.X(i).mul(k);
+			});
 		}
 
 		/**
