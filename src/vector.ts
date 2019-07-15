@@ -5,66 +5,83 @@ import { ExpressionBuilder } from "./core/expression";
 import { Scalar } from "./scalar";
 
 /**
+ * The double underscore.
+ * 
+ * Represents any unknown value. When passed in along with other known values
+ * this gets interpreted as an unknown or a [[Variable]].
+ * @see [[Vector.variable]] for a use case example.
+ */
+export const __ = undefined;
+
+/**
  * Base class to work with vector quantities.
+ * @abstract
  */
 export abstract class Vector implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
+	readonly abstract X: (i: number) => Scalar;
 	readonly quantity = "vector";
 
 	/**
-	 * Adds two `Vector`s together. If `this` and `that` are both constants
-	 * then vectorially adds the two and returns a new `Vector.Constant` object
-	 * otherwise creates an `Expression` out of them and returns the same.
-	 * @param that {Vector} The scalar to add `this` with.
-	 * @return {Vector} The result of algebraic addition.
+	 * Adds two [[Vector]]s together. If `this` and `that` are both constants
+	 * then vectorially adds the two and returns a new [[Vector.Constant]] object
+	 * otherwise creates an [[Expression]] out of them and returns the same.
+	 * @param that The scalar to add `this` with.
+	 * @return The result of algebraic addition.
 	 */
 	public abstract add(that: Vector): Vector;
 
 	/**
 	 * Subtracts `that` from `this`. If `this` and `that` are both constants
 	 * then vectorially subtracts one from the other and returns a new
-	 * `Vector.Constant` object otherwise creates an `Expression` out of them
+	 * [[Vector.Constant]] object otherwise creates an [[Expression]] out of them
 	 * and returns the same.
-	 * @param that {Scalar} The scalar to subtract from `this`.
-	 * @return {Scalar} The result of algebraic subtraction.
+	 * @param that The scalar to subtract from `this`.
+	 * @return The result of algebraic subtraction.
 	 */
 	public abstract sub(that: Vector): Vector;
 
 	/**
 	 * Evaluates the scalar product of `this` and `that`. If both are constants
-	 * then numerically computes the product and returns a `Scalar.Constant` object
-	 * otherwise creates an `Expression` out of them and returns the same.
-	 * @param that {Vector} The scalar to subtract from `this`.
-	 * @return {Scalar}
+	 * then numerically computes the product and returns a [[Scalar.Constant]] object
+	 * otherwise creates an [[Expression]] out of them and returns the same.
+	 * @param that The scalar to subtract from `this`.
+	 * @return The inner product of `this` and `that`.
 	 */
 	public abstract dot(that: Vector): Scalar;
 
 	/**
 	 * Evaluates the vector product of `this` and `that`. If both are constants
-	 * then numerically computes the product and returns a `Vector.Constant` object
-	 * otherwise creates an `Expression` out of them and returns the same.
-	 * @param that {Vector} The scalar to subtract from `this`.
-	 * @return {Vector}
+	 * then numerically computes the product and returns a [[Vector.Constant]] object
+	 * otherwise creates an [[Expression]] out of them and returns the same.
+	 * @param that The scalar to subtract from `this`.
+	 * @return The vector product of `this` and `that`.
 	 */
 	public abstract cross(that: Vector): Vector;
 
 	/**
 	 * Scales, or multiplies the "size" (magnitude) of, `this` vector by given
 	 * amount. If `this` and `k` are both constants then numerically calculates
-	 * the scaled vector otherwise creates an `Expression` out of them and
+	 * the scaled vector otherwise creates an [[Expression]] out of them and
 	 * returns the same.
-	 * @param k {Scalar} The scale factor.
-	 * @return {Vector} The scaled vector.
+	 * @param k The scale factor.
+	 * @return The scaled vector.
 	 */
 	public abstract scale(k: Scalar): Vector;
 
 	/**
-	 * Computes the magnitude of a given vector. If `A` vector is a constant
-	 * vector then numerically calculates the magnitude otherwise creates a
-	 * scalar `Expression` and returns the same.
-	 * @param A {Vector}
+	 * Computes the magnitude of a constant vector numberically.
+	 * @param A The [[Vector]] whose magnitude is to be calculated.
+	 * @return The [[Scalar]] magnitude of the given [[Vector]].
 	 */
 	public static mag(A: Vector.Constant): Scalar.Constant;
+	/**
+	* Computes the magnitude of a given vector. If `A` vector is a constant
+	* vector then numerically calculates the magnitude otherwise creates a
+	* scalar [[Expression]] and returns the same.
+	* @param A The [[Vector]] whose magnitude is to be calculated.
+	* @return The [[Scalar]] magnitude of the given [[Vector]].
+	*/
 	public static mag(A: Vector): Scalar.Expression;
 	public static mag(A: Vector) {
 		if(A instanceof Vector.Constant) {
@@ -77,44 +94,100 @@ export abstract class Vector implements Token, Evaluable {
 	}
 
 	/**
-	 * For any given vector `A`, evaluates the unit vector along `A`. If `A` is
-	 * a constant then directly calculates the unit vector and returns the same
-	 * otherwise creates and returns a scalar `Expression`.
-	 * @param A {Vector}
+	 * For a given constant vector `A`, numberically evaluates the unit vector along `A`.
+	 * @param A The [[Vector.Constant]] along which the unit vector is to be calculated.
+	 * @return The unit vector along the given [[Vector]] `A`.
 	 */
 	public static unit(A: Vector.Constant): Vector.Constant;
+	/**
+	 * For a given variable vector `A`, creates an [[Expression]] for the unit vector along `A`.
+	 * @param A The [[Vector.Constant]] along which the unit vector is to be calculated.
+	 * @return The unit vector along the given [[Vector]] `A`.
+	 */
 	public static unit(A: Vector): Vector.Expression;
 	public static unit(A: Vector) {
 		if(A instanceof Vector.Constant)
 			return A.scale(Scalar.constant(1).div(Vector.mag(A)));
-		return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A);
+		const m = Vector.mag(A);
+		return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A, (i: number) => A.X(i).div(m));
 	}
 }
 
 export namespace Vector {
+	/**
+	 * A mapping from stringified vector constants to [[Vector.Constant]] objects.
+	 * @ignore
+	 */
 	const CONSTANTS = new Map<string, Vector.Constant>();
+	/**
+	 * A mapping from named vector constants to [[Vector.Constant]] objects.
+	 * @ignore
+	 */
 	const NAMED_CONSTANTS = new Map<string, Vector.Constant>();
+	/**
+	 * A mapping from name of vector variables to [[Vector.Variable]] objects.
+	 * @ignore
+	 */
 	const VARIABLES = new Map<string, Vector.Variable>();
 
+	/**
+	 * @extends [[Vector]]
+	 */
 	export class Constant extends Vector implements _Constant {
 		readonly type = "constant";
-		private dimesion: number;
+		/**
+		 * The number of dimensions `this` vector exists in.
+		 * @ignore
+		 */
+		private dimension: number;
 		readonly value: Scalar.Constant[] = [];
+		/**
+		 * The name by which `this` is identified. This is optional and defaults
+		 * to the empty string `""`.
+		 */
 		readonly name: string;
 
+		/**
+		 * Creates a [[Vector.Constant]] object from a list of [[Scalar.Constant]]
+		 * objects. One may optionally pass in a string by which `this` object
+		 * may be identified by.
+		 * 
+		 * Using the contructor directly for creating vector objects is
+		 * not recommended.
+		 * 
+		 * @see [[Vector.constant]]
+		 * @param value The fixed value `this` should represent.
+		 * @param name The name by which `this` is identified.
+		 */
 		constructor(value: Scalar.Constant[], name?: string);
+		/**
+		 * Creates a [[Vector.Constant]] object from a list of numbers.
+		 * One may optionally pass in a string by which `this` object
+		 * may be identified by.
+		 * 
+		 * Using the contructor directly for creating vector objects is
+		 * not recommended.
+		 * 
+		 * @see [[Vector.constant]]
+		 * @param value The fixed value `this` should represent.
+		 * @param name The name by which `this` is identified.
+		 */
 		constructor(value: number[], name?: string);
 		constructor(value: Scalar.Constant[] | number[], name = "") {
 			super();
 			this.name = name;
-			value.forEach((x: any) => this.value.push(x instanceof Scalar.Constant? x: Scalar.constant(x)));
-			this.dimesion = this.value.length;
+			for(let x of value)
+				if(x instanceof Scalar.Constant)
+					this.value.push(x);
+				else this.value.push(Scalar.constant(x));
+			this.dimension = this.value.length;
 		}
 
 		/**
 		 * Returns the components of `this` vector. The index values start
 		 * from `1` instead of the commonly used starting index `0`.
-		 * @param i {number} The index of the desired component.
+		 * @param i The index of the desired component.
+		 * @return The [[Scalar]] element at given index.
 		 */
 		public get X() {
 			const value = this.value;
@@ -126,15 +199,29 @@ export namespace Vector {
 		}
 
 		/**
-		 * Checks for equality of two vector constants. Allows a tolerance of
-		 * `1e-14` for floating point numbers.
-		 * @param that {Vector.Constant} The value to check equality with.
+		 * Checks for equality of two vector constants. The equality check
+		 * for floating point numbers becomes problematic in the decimal system.
+		 * The binary representation is finite and therefore even if two values
+		 * are in fact equal they may not return true by using the `==` or `===`
+		 * equality. To tackle this problem we use a tolerance value, if the
+		 * difference of the two numerical values is less than that tolerance
+		 * value then we can assume the values to be practically equal. Smaller
+		 * tolerance values will result in more accurate checks.
+		 * This function allows a default tolerance of `1e-14` for floating point numbers.
+		 * @param that The value to check equality with.
 		 */
 		public equals(that: Vector.Constant): boolean;
 		/**
-		 * Checks for equality of two vector constants.
-		 * @param that {Vector.Constant} The value to check equality with.
-		 * @param tolerance {number} The tolerance permitted for floating point numbers.
+		 * Checks for equality of two vector constants. The equality check
+		 * for floating point numbers becomes problematic in the decimal system.
+		 * The binary representation is finite and therefore even if two values
+		 * are in fact equal they may not return true by using the `==` or `===`
+		 * equality. To tackle this problem we use a tolerance value, if the
+		 * difference of the two numerical values is less than that tolerance
+		 * value then we can assume the values to be practically equal. Smaller
+		 * tolerance values will result in more accurate checks.
+		 * @param that The value to check equality with.
+		 * @param tolerance The tolerance permitted for floating point numbers.
 		 */
 		public equals(that: Vector.Constant, tolerance: number): boolean;
 		public equals(that: Vector.Constant, tolerance = 1e-14) {
@@ -145,7 +232,19 @@ export namespace Vector {
 			return true;
 		}
 
+		/**
+		 * Adds two [[Vector.Constant]] objects numerically.
+		 * @param that The [[Vector.Constant]] to add to `this`.
+		 * @return The vector sum of `this` and `that`.
+		 */
 		public add(that: Vector.Constant): Vector.Constant;
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the addition of
+		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
+		 * adding a variable vector to another vector always results in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for sum of `this` and `that`.
+		 */
 		public add(that: Vector.Variable | Vector.Expression): Vector.Expression;
 		public add(that: Vector) {
 			if(that instanceof Vector.Constant) {
@@ -155,10 +254,26 @@ export namespace Vector {
 					vec.push(this.X(i).value + that.X(i).value);
 				return Vector.constant(vec);
 			}
-			return new Vector.Expression(BinaryOperator.ADD, this, that);
+			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).add(that.X(i));
+			});
 		}
 
+		/**
+		 * Subtracts one [[Vector.Constant]] object from another numerically.
+		 * @param that The [[Vector.Constant]] to subtract from `this`.
+		 * @return The vector difference of `this` from `that`.
+		 */
 		public sub(that: Vector.Constant): Vector.Constant;
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the subtraction of
+		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
+		 * subtracting a variable vector from another vector always results in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for subtracting `that` from `this`.
+		 */
 		public sub(that: Vector.Variable | Vector.Expression): Vector.Expression;
 		public sub(that: Vector) {
 			if(that instanceof Vector.Constant) {
@@ -168,10 +283,28 @@ export namespace Vector {
 					vec.push(this.X(i).value - that.X(i).value);
 				return Vector.constant(vec);
 			}
-			return new Vector.Expression(BinaryOperator.SUB, this, that);
+			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).sub(that.X(i));
+			});
 		}
 
+		/**
+		 * Calculates the scalar product of two [[Vector.Constant]] objects
+		 * numerically.
+		 * @param that The [[Vector.Constant]] to compute scalar product with `this`.
+		 * @return The inner product of `this` and `that`.
+		 */
 		public dot(that: Vector.Constant): Scalar.Constant;
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the dot product of
+		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
+		 * dot multiplying a variable vector with another vector always results
+		 * in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for inner product of `this` and `that`.
+		 */
 		public dot(that: Vector.Variable | Vector.Expression): Scalar.Expression;
 		public dot(that: Vector) {
 			if(that instanceof Vector.Constant) {
@@ -184,13 +317,26 @@ export namespace Vector {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
 
+		/**
+		 * Calculates the vector product of two [[Vector.Constant]] objects numerically.
+		 * @param that The [[Vector.Constant]] to compute cross product with `this`.
+		 * @return The vector product of `this` and `that`.
+		 */
 		public cross(that: Vector.Constant): Vector.Constant;
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the cross product of
+		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
+		 * cross multiplying a variable vector to another vector always results
+		 * in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for vector product of `this` and `that`.
+		 */
 		public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
 		public cross(that: Vector) {
-			if(this.dimesion > 3)
+			if(this.dimension > 3)
 				throw "Cross product defined only in 3 dimensions.";
 			if(that instanceof Vector.Constant) {
-				if(that.dimesion > 3)
+				if(that.dimension > 3)
 					throw "Cross product defined only in 3 dimensions.";
 				const a1 = this.X(1).value, a2 = this.X(2).value, a3 = this.X(3).value;
 				const b1 = that.X(1).value, b2 = that.X(2).value, b3 = that.X(3).value;
@@ -200,59 +346,223 @@ export namespace Vector {
 					a1 * b2 - a2 * b1
 				]);
 			}
-			return new Vector.Expression(BinaryOperator.CROSS, this, that);
+			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`.";
+				if(this.value.length > 3)
+					throw "Cross product defined only in 3 dimensions.";
+				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
+				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
+				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
+						(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
+						a1.mul(b2).sub(a2.mul(b1));
+			});
 		}
 
+		/**
+		 * Scales `this` [[Vector.Constant]] object numerically.
+		 * @param k The scale factor.
+		 * @return The scaled vector.
+		 */
 		public scale(k: Scalar.Constant): Vector.Constant;
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the scaling of
+		 * `this` [[Vector]] object. The [[type]] of `this` does not matter because
+		 * scaling a variable vector always results in an expresion.
+		 * @param k The scale factor.
+		 * @return Expression for scaling `this`.
+		 */
 		public scale(k: Scalar.Variable | Scalar.Expression): Vector.Expression;
 		public scale(k: Scalar) {
 			if(k instanceof Scalar.Constant)
 				return Vector.constant(this.value.map(x => k.mul(x).value));
-			return new Vector.Expression(BinaryOperator.SCALE, this, k);
+			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).mul(k);
+			});
 		}
 	}
 
+	/**
+	 * @extends [[Vector]]
+	 */
 	export class Variable extends Vector implements _Variable {
 		readonly type = "variable";
+		readonly name: string;
+		readonly value: (Scalar.Variable | Scalar.Constant)[] = [];
 
-		constructor(readonly name: string) {
+		/**
+		 * Creates a [[Vector.Variable]] object.
+		 * 
+		 * Using the contructor directly for creating vector objects is
+		 * not recommended.
+		 * 
+		 * @see [[Vector.variable]]
+		 * @param name The name with which the [[Vector.Variable]] is going to be identified.
+		 */
+		constructor(name: string);
+		/**
+		 * Creates a [[Vector.Variable]] object from an array. The array may
+		 * contain known [[Scalar.Constants]] and, for the components yet unknown,
+		 * [[Scalar.Variable]]. This allows for creation of vectors whose few
+		 * components are known before hand and the rest are not.
+		 * 
+		 * Using the contructor directly for creating vector objects is
+		 * not recommended.
+		 * 
+		 * @see [[Vector.variable]]
+		 * @param name The name with which the [[Vector.Variable]] is going to be identified.
+		 * @param value The array containing the values with which to initialise the vector variable object.
+		 */
+		constructor(name: string, value: (Scalar.Variable | Scalar.Constant)[]);
+		constructor(a: string, b?: (Scalar.Variable | Scalar.Constant)[]) {
 			super();
+			this.name = a;
+			if(b !== undefined)
+				this.value = b;
 		}
 
+		/**
+		 * Returns the components of `this` vector. The index values start
+		 * from `1` instead of the commonly used starting index `0`.
+		 * @param i The index of the desired component.
+		 * @return The [[Scalar]] element at given index.
+		 */
+		public get X() {
+			const self = this;
+			return function(i: number) {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				if(self.value.length === 0)
+					return Scalar.variable(self.name + "_" + i);
+				return (i <= self.value.length)? self.value[i - 1]: Scalar.constant(0);
+			}
+		}
+
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the addition of
+		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * adding a variable vector to another vector always results in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for sum of `this` and `that`.
+		 */
 		public add(that: Vector) {
-			return new Vector.Expression(BinaryOperator.ADD, this, that);
+			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).add(that.X(i));
+			});
 		}
 
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the subtraction of
+		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * subtracting a variable vector from another vector always results in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for subtracting `that` from `this`.
+		 */
 		public sub(that: Vector) {
-			return new Vector.Expression(BinaryOperator.SUB, this, that);
+			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).sub(that.X(i));
+			});
 		}
 
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the dot product of
+		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * dot multiplying a variable vector with another vector always results
+		 * in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for inner product of `this` and `that`.
+		 */
 		public dot(that: Vector) {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
 
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the cross product of
+		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * cross multiplying a variable vector to another vector always results
+		 * in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for vector product of `this` and `that`.
+		 */
 		public cross(that: Vector) {
-			return new Vector.Expression(BinaryOperator.CROSS, this, that);
+			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`.";
+				if(this.value.length > 3)
+					throw "Cross product defined only in 3 dimensions.";
+				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
+				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
+				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
+						(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
+						a1.mul(b2).sub(a2.mul(b1));
+			});
 		}
 
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the scaling of
+		 * `this` [[Vector]] object. The [[type]] of `that` does not matter because
+		 * scaling a variable vector always results in an expresion.
+		 * @param k The scale factor.
+		 * @return Expression for scaling `this`.
+		 */
 		public scale(k: Scalar) {
-			return new Vector.Expression(BinaryOperator.SCALE, this, k);
+			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return (<Scalar>this.X(i)).mul(k);
+			});
 		}
 	}
 
+	/**
+	 * @extends [[Vector]]
+	 */
 	export class Expression extends Vector implements _Expression {
 		readonly type = "expression";
 		readonly arg_list: Set<_Variable>;
 		readonly operands: Evaluable[] = [];
+		/**
+		 * Returns the components of `this` vector. The index values start
+		 * from `1` instead of the commonly used starting index `0`.
+		 * @param i The index of the desired component.
+		 * @return The [[Scalar]] element at given index.
+		 */
+		readonly X: (i: number) => Scalar;
 
-		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable);
-		constructor(op: UnaryOperator, arg: Evaluable);
-		constructor(readonly op: Operator, a: Evaluable, b?: Evaluable) {
+		/**
+		 * Creates a vector expression for a binary operator with left and right
+		 * hand side arguments.
+		 * @param op The root binary operator.
+		 * @param lhs The left hand side argument for the root operator.
+		 * @param rhs The right hand side argument for the root operator.
+		 * @param X The accessor function which defines what the `i`th element should be.
+		 */
+		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, X: (i: number) => Scalar);
+		/**
+		 * Creates a vector expression for a binary operator with left and right
+		 * hand side arguments.
+		 * @param op The root unary operator.
+		 * @param arg The argument for the root operator.
+		 * @param X The accessor function which defines what the `i`th element should be.
+		 */
+		constructor(op: UnaryOperator, arg: Evaluable, X: (i: number) => Scalar);
+		constructor(readonly op: Operator, a: Evaluable, b: Evaluable | ((i: number) => Scalar), c?: (i: number) => Scalar) {
 			super();
-			this.arg_list = ExpressionBuilder.createArgList(a, b);
-			this.operands.push(a);
-			if(b !== undefined)
-				this.operands.push(b);
+			if(b instanceof Function && c === undefined) {
+				this.X = b;
+				this.arg_list = ExpressionBuilder.createArgList(a);
+				this.operands.push(a);
+			} else if(!(b instanceof Function) && c instanceof Function) {
+				this.X = c;
+				this.arg_list = ExpressionBuilder.createArgList(a, b);
+				this.operands.push(a, b);
+			} else throw "Illegal argument.";
 		}
 
 		/**
@@ -285,30 +595,106 @@ export namespace Vector {
 			throw "Binary operators have two arguments.";
 		}
 
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the addition of
+		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * adding an unknown vector/vector expression to another vector always
+		 * results in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for sum of `this` and `that`.
+		 */
 		public add(that: Vector) {
-			return new Vector.Expression(BinaryOperator.ADD, this, that);
+			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return this.X(i).add(that.X(i));
+			});
 		}
 
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the subtraction of
+		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * subtracting an unknown vector/vector expression from another vector
+		 * always results in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for subtracting `that` from `this`.
+		 */
 		public sub(that: Vector) {
-			return new Vector.Expression(BinaryOperator.SUB, this, that);
+			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return this.X(i).sub(that.X(i));
+			});
 		}
 
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the dot product of
+		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * dot multiplying an unknown vector/vector expression with another vector
+		 * always results
+		 * in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for inner product of `this` and `that`.
+		 */
 		public dot(that: Vector) {
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
 
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the cross product of
+		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * cross multiplying an unknown vector/vector expression to another vector
+		 * always results
+		 * in an expresion.
+		 * @param that The [[Vector]] to add to `this`.
+		 * @return Expression for vector product of `this` and `that`.
+		 */
 		public cross(that: Vector) {
-			return new Vector.Expression(BinaryOperator.CROSS, this, that);
+			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`.";
+				// if(this.value.length > 3)
+				// 	throw "Cross product defined only in 3 dimensions.";
+				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
+				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
+				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
+						(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
+						a1.mul(b2).sub(a2.mul(b1));
+			});
 		}
 
+		/**
+		 * Creates and returns a [[Vector.Expression]] for the scaling of
+		 * `this` [[Vector]] object. The [[type]] of `that` does not matter because
+		 * scaling an unknown vector/vector expression always results in an expresion.
+		 * @param k The scale factor.
+		 * @return Expression for scaling `this`.
+		 */
 		public scale(k: Scalar) {
-			return new Vector.Expression(BinaryOperator.SCALE, this, k);
+			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
+				if(i <= 0)
+					throw "Indexing starts from `1`";
+				return this.X(i).mul(k);
+			});
 		}
 
+		/**
+		 * Checks whether `this` [[Vector.Expression]] depends on a given
+		 * [[Variable]].
+		 * @param v The [[Variable]] to check against.
+		 */
 		public isFunctionOf(v: _Variable) {
 			return this.arg_list.has(v);
 		}
 
+		/**
+		 * Evaluates this [[Vector.Expression]] at the given values for the
+		 * [[Variable]] objects `this` depends on. In case `this` is not a
+		 * function of any of the variables in the mapping then `this` is returned
+		 * as is. 
+		 * @param values A map from the [[Variable]] quantities to [[Constant]] quantities.
+		 * @return The result after evaluating `this` at the given values.
+		 */
 		public at(values: Map<_Variable, _Constant>) {
 			const res = ExpressionBuilder.evaluateAt(this, values);
 			if(isConstant(res))
@@ -320,34 +706,53 @@ export namespace Vector {
 	}
 
 	/**
-	 * Creates a new `Vector.Constant` object if it has not been created before.
+	 * Creates a new [[Vector.Constant]] object from a list of numbers
+	 * if it has not been created before.
 	 * Otherwise just returns the previously created object.
-	 * @param value {number[]}
+	 * 
+	 * This is the recommended way of creating [[Vector.Constant]] objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the [[Vector.Constant]] is supposed to represent.
 	 */
 	export function constant(value: number[]): Vector.Constant;
 	/**
-	 * Creates a named `Vector.Constant` object if it has not been created before.
+	 * Defines a named [[Vector.Constant]] object from a list of numbers
+	 * if it has not been created before.
 	 * Otherwise just returns the previously created object.
-	 * @param value {number}
-	 * @param name {string}
+	 * 
+	 * This is the recommended way of creating named [[Vector.Constant]] objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the [[Vector.Constant]] is supposed to represent.
+	 * @param name The string with which `this` object is identified.
+	 * @throws Throws an error if a [[Vector.Constant]] with the same name has been defined previously.
 	 */
 	export function constant(value: number[], name: string): Vector.Constant;
 	/**
-	 * Creates a new `Vector.Constant` object if it has not been created before.
+	 * Creates a new [[Vector.Constant]] object from a list of [[Scalar.Constant]] objects
+	 * if it has not been created before.
 	 * Otherwise just returns the previously created object.
-	 * @param value {Scalar.Constant[]}
+	 * 
+	 * This is the recommended way of creating [[Vector.Constant]] objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the [[Vector.Constant]] is supposed to represent.
 	 */
 	export function constant(value: Scalar.Constant[]): Vector.Constant;
 	/**
-	 * Creates a named `Vector.Constant` object if it has not been created before.
+	 * Defines a named [[Vector.Constant]] object from a list of [[Scalar.Constant]] objects
+	 * if it has not been created before.
 	 * Otherwise just returns the previously created object.
-	 * @param value {Scalar.Constants[]}
-	 * @param name {string}
+	 * 
+	 * This is the recommended way of creating named [[Vector.Constant]] objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the [[Vector.Constant]] is supposed to represent.
+	 * @param name The string with which `this` object is identified.
+	 * 
+	 * @throws Throws an error if a [[Vector.Constant]] with the same name has been defined previously.
 	 */
 	export function constant(value: Scalar.Constant[], name: string): Vector.Constant;
 	/**
-	 * Returns a previously declared named `Scalar.Constant` object.
-	 * @param name {string}
+	 * Returns a previously declared named [[Vector.Constant]] object.
+	 * @param name The name of the named [[Vector.Constant]] object to be retrieved.
 	 */
 	export function constant(name: string): Vector.Constant;
 	export function constant(a: number[] | Scalar.Constant[] | string, b?: string) {
@@ -387,14 +792,59 @@ export namespace Vector {
 	}
 
 	/**
-	 * Creates a new `Vector.Variable` object if it has not been created before.
+	 * Creates a new [[Vector.Variable]] object if it has not been created before.
 	 * Otherwise just returns the previously created object.
-	 * @param name {string}
+	 * 
+	 * This is the recommended way of creating [[Vector.Variable]] objects instead of
+	 * using the constructor.
+	 * @param name The string with which `this` object will be identified.
 	 */
-	export function variable(name: string) {
+	export function variable(name: string): Vector.Variable;
+	/**
+	 * Creates a [[Vector.Variable]] object from an array. The array may
+	 * contain known scalar constants and, for the components yet unknown,
+	 * [[__]]. Passing `__` as an element of the `value` array automatically
+	 * gets interpreted as having a variable at that index. This allows for 
+	 * creation of vectors whose few components are known before hand and
+	 * the rest are not. For example,
+	 * ```javascript
+	 * const A = Vector.variable("A", [1, __, 4, __, 2]);
+	 * console.log(A);
+	 * ```
+	 * This line of code will create a vector whose 2nd and 4th components are
+	 * [[Scalar.Variable]] objects and the remaining will be [[Scalar.Constant]]
+	 * objects.
+	 * 
+	 * This is the recommended way of creating [[Vector.Variable]] objects instead of
+	 * using the constructor.
+	 * @param name The name with which the [[Vector.Variable]] is going to be identified.
+	 * @param value The array containing the values with which to initialise the vector variable object.
+	 */
+	export function variable(name: string, value: (Scalar.Constant | undefined | number)[]): Vector.Variable;
+	export function variable(name: string, value?: (Scalar.Constant | undefined | number)[]) {
 		let v = VARIABLES.get(name);
 		if(v === undefined) {
-			v = new Vector.Variable(name);
+			if(value === undefined)
+				v = new Vector.Variable(name);
+			else {
+				const arr: (Scalar.Constant | Scalar.Variable)[] = [];
+				if(value !== undefined) {
+					let i = value.length - 1;
+					for(; i >= 0; i--)
+						if(value[i] !== Scalar.constant(0) || value[i] !== 0)
+							break;
+					for(let j = 0; j <= i; j++) {
+						const x = value[j];
+						if(x === undefined)
+							arr.push(Scalar.variable(name + "_" + (j+1)));
+						else if(x instanceof Scalar.Constant)
+							arr.push(x);
+						else
+							arr.push(Scalar.constant(x));
+					}
+				}
+				v = new Vector.Variable(name, arr);
+			}
 			VARIABLES.set(name, v);
 		}
 		return v;

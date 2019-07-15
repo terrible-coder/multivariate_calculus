@@ -1,6 +1,9 @@
 import { Scalar } from "../../scalar";
 import { Evaluable } from "../definitions";
 
+/**
+ * @ignore
+ */
 export class math {
 	[x: string]: any;
 

@@ -1,7 +1,11 @@
-const { Vector } = require("../build/vector");
+const { Vector, __ } = require("../build/vector");
 const { isExpression } = require("../build/core/definitions");
 const { Scalar } = require("../build/scalar");
 const { sqrt } = require("../build/core/operators/unary");
+
+it("checks unknown value alias", function() {
+	expect(__).toBe(undefined);
+});
 
 describe("Vector constants", function() {
 	const arr = [1, 1, 2];
@@ -93,6 +97,10 @@ describe("Vector variable", function() {
 
 	it("Creates vector variables", function() {
 		expect(B).toBeInstanceOf(Vector);
+		expect(() => {
+			const G = Vector.variable("G", [1, __, 0, 4]);
+			expect(G.X(2)).toBeInstanceOf(Scalar.Variable);
+		}).not.toThrow();
 	});
 
 	it("Creates vector expressions", function() {
@@ -112,9 +120,11 @@ describe("Vector variable", function() {
 	});
 
 	it("Calculates cross product", function() {
-		const i = Vector.variable();
+		const i = Vector.variable("i");
 		const j = Vector.constant([0, 1]);
 		const c = i.cross(j);
+		for(let I = 1; I <= 3; I++)
+			expect(c.X(I)).toBeInstanceOf(Scalar.Expression);
 		expect(c).toBeInstanceOf(Vector.Expression);
 		expect(c.at(new Map([
 			[i, Vector.constant([1, 0])]
