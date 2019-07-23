@@ -803,7 +803,7 @@ export namespace Vector {
 	/**
 	 * Creates a [[Vector.Variable]] object from an array. The array may
 	 * contain known scalar constants and, for the components yet unknown,
-	 * [[__]]. Passing `__` as an element of the `value` array automatically
+	 * [\_\_](../globals.html#__). Passing ``__`` as an element of the `value` array automatically
 	 * gets interpreted as having a variable at that index. This allows for 
 	 * creation of vectors whose few components are known before hand and
 	 * the rest are not. For example,
