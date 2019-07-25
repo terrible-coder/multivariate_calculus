@@ -3,6 +3,7 @@ import { BinaryOperator } from "./core/operators/binary";
 import { ExpressionBuilder } from "./core/expression";
 import { UnaryOperator } from "./core/operators/unary";
 import { Vector } from "./vector";
+import { Overwrite, IndeterminateForm } from "./core/errors";
 
 /**
  * Base class to works with scalar quantities.
@@ -228,7 +229,7 @@ export namespace Scalar {
 		public div(that: Scalar) {
 			if(that instanceof Scalar.Constant) {
 				if(that.equals(Scalar.ZERO))
-					throw "Division by zero error";
+					throw new Error("Division by zero error");
 				return Scalar.constant(this.value / that.value);
 			}
 			return new Scalar.Expression(BinaryOperator.DIV, this, that);
@@ -251,7 +252,7 @@ export namespace Scalar {
 		public pow(that: Scalar) {
 			if(that instanceof Scalar.Constant) {
 				if(this.equals(Scalar.ZERO) && that.equals(Scalar.ZERO))
-					throw "Cannot determine 0 to the power 0";
+					throw new IndeterminateForm("0 raised to the power 0");
 				return Scalar.constant(Math.pow(this.value, that.value));
 			}
 			return new Scalar.Expression(BinaryOperator.POW, this, that);
@@ -382,7 +383,7 @@ export namespace Scalar {
 		public get lhs() {
 			if(this.operands.length === 2)
 				return this.operands[0];
-			throw "Unary operators have no left hand argument.";
+			throw new Error("Unary operators have no left hand argument.");
 		}
 
 		/**
@@ -392,7 +393,7 @@ export namespace Scalar {
 		public get rhs() {
 			if(this.operands.length === 2)
 				return this.operands[1];
-			throw "Unary operators have no right hand argument.";
+			throw new Error("Unary operators have no right hand argument.");
 		}
 
 		/**
@@ -402,7 +403,7 @@ export namespace Scalar {
 		public get arg() {
 			if(this.operands.length === 1)
 				return this.operands[0];
-			throw "Binary operators have two arguments.";
+			throw new Error("Binary operators have two arguments.");
 		}
 
 		/**
@@ -537,14 +538,14 @@ export namespace Scalar {
 			} else {
 				c = NAMED_CONSTANTS.get(b);
 				if(c !== undefined)
-					throw "Attempt to redefine a constant: A constant with the same name already exists.";
+					throw new Overwrite(b);
 				c = new Scalar.Constant(a, b);
 				NAMED_CONSTANTS.set(b, c);
 			}
 		} else {
 			c = NAMED_CONSTANTS.get(a);
 			if(c === undefined)
-				throw "No such constant defined.";
+				throw new Error("No such constant defined.");
 		}
 		return c;
 	}
@@ -565,3 +566,23 @@ export namespace Scalar {
 
 	export const ZERO = Scalar.constant(0);
 }
+
+/**
+ * Represents the idea of infinity.
+ */
+export const oo = Scalar.constant(Infinity);
+/**
+ * The irrational Euler's number. The derivative of the exponential function to
+ * the base of this number gives the same exponential function.
+ */
+export const e = Scalar.constant(Math.E);
+/**
+ * The circle constant pi. It is defined as the ratio of the circumference
+ * of a circle to its diameter.
+ */
+export const pi = Scalar.constant(Math.PI);
+/**
+ * The circle constant tau. It is defined as the ratio of the circumference
+ * of a circle to its radius. It is twice the value of pi.
+ */
+export const tau = Scalar.constant(2 * Math.PI);
