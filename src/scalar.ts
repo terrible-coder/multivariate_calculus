@@ -227,7 +227,7 @@ export namespace Scalar {
 		public div(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		public div(that: Scalar) {
 			if(that instanceof Scalar.Constant) {
-				if(that.value === 0)
+				if(that.equals(Scalar.ZERO))
 					throw "Division by zero error";
 				return Scalar.constant(this.value / that.value);
 			}
@@ -250,7 +250,7 @@ export namespace Scalar {
 		public pow(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		public pow(that: Scalar) {
 			if(that instanceof Scalar.Constant) {
-				if(this.value === 0 && that.value === 0)
+				if(this.equals(Scalar.ZERO) && that.equals(Scalar.ZERO))
 					throw "Cannot determine 0 to the power 0";
 				return Scalar.constant(Math.pow(this.value, that.value));
 			}
@@ -562,4 +562,6 @@ export namespace Scalar {
 		}
 		return v;
 	}
+
+	export const ZERO = Scalar.constant(0);
 }
