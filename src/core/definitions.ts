@@ -113,22 +113,3 @@ export function isExpression(e: Evaluable): e is Expression {return e.type === "
 
 /** The general operator type. */
 export type Operator = UnaryOperator | BinaryOperator;
-
-/** @ignore */
-export type UnaryOperands = {
-	readonly arg: Evaluable;
-};
-/** @ignore */
-export function isUnaryOperand(e: Object): e is UnaryOperands {
-	return e.hasOwnProperty("arg");
-}
-
-/** @ignore */
-export type BinaryOperands = {
-	readonly lhs: Evaluable;
-	readonly rhs: Evaluable;
-};
-/** @ignore */
-export function isBinaryOperand(e: Object): e is BinaryOperands {
-	return e.hasOwnProperty("lhs") && e.hasOwnProperty("rhs");
-}

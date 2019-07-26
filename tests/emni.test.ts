@@ -1,5 +1,5 @@
 import { Scalar } from "../src/scalar";
-import { abs, sin, floor } from "../src/core/operators/unary";
+import { abs, sin, floor } from "../src/core/math/functions";
 import { isExpression } from "../src/core/definitions";
 
 const x = Scalar.variable("x");
