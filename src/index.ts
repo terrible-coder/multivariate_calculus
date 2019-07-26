@@ -5,3 +5,5 @@ export { Evaluable, isEvaluable, Constant, isConstant, Variable, isVariable, Exp
 export { ExpressionBuilder } from "./core/expression";
 export { BinaryOperator, isBinaryOperator } from "./core/operators/binary";
 export { neg, sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, atanh, log, ln, exp, abs, floor, ceil, UnaryOperator, isUnaryOperator } from "./core/operators/unary";
+export * from "./core/errors";
+export * from "./core/interval";
