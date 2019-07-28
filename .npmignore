@@ -15,6 +15,7 @@ node_modules
 /tsconfig.json
 /index.html
 /mcalc.js
+/mcalc.min.js
 
 #script files
 /build.cmd
