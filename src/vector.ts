@@ -3,6 +3,7 @@ import { BinaryOperator, isBinaryOperator } from "./core/operators/binary";
 import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { ExpressionBuilder } from "./core/expression";
 import { Scalar } from "./scalar";
+import { InvalidIndex } from "./core/errors";
 
 /**
  * The double underscore.
@@ -193,7 +194,7 @@ export namespace Vector {
 			const value = this.value;
 			return function(i: number) {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				return (i <= value.length)?value[i - 1]: Scalar.constant(0);
 			}
 		}
@@ -256,7 +257,7 @@ export namespace Vector {
 			}
 			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).add(that.X(i));
 			});
 		}
@@ -285,7 +286,7 @@ export namespace Vector {
 			}
 			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).sub(that.X(i));
 			});
 		}
@@ -334,10 +335,10 @@ export namespace Vector {
 		public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
 		public cross(that: Vector) {
 			if(this.dimension > 3)
-				throw "Cross product defined only in 3 dimensions.";
+				throw new Error("Cross product defined only in 3 dimensions.");
 			if(that instanceof Vector.Constant) {
 				if(that.dimension > 3)
-					throw "Cross product defined only in 3 dimensions.";
+					throw new Error("Cross product defined only in 3 dimensions.");
 				const a1 = this.X(1).value, a2 = this.X(2).value, a3 = this.X(3).value;
 				const b1 = that.X(1).value, b2 = that.X(2).value, b3 = that.X(3).value;
 				return Vector.constant([
@@ -348,9 +349,9 @@ export namespace Vector {
 			}
 			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`.";
+					throw new InvalidIndex(i, 0);
 				if(this.value.length > 3)
-					throw "Cross product defined only in 3 dimensions.";
+					throw new Error("Cross product defined only in 3 dimensions.");
 				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
 				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
 				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
@@ -378,7 +379,7 @@ export namespace Vector {
 				return Vector.constant(this.value.map(x => k.mul(x).value));
 			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).mul(k);
 			});
 		}
@@ -433,7 +434,7 @@ export namespace Vector {
 			const self = this;
 			return function(i: number) {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				if(self.value.length === 0)
 					return Scalar.variable(self.name + "_" + i);
 				return (i <= self.value.length)? self.value[i - 1]: Scalar.constant(0);
@@ -450,7 +451,7 @@ export namespace Vector {
 		public add(that: Vector) {
 			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).add(that.X(i));
 			});
 		}
@@ -465,7 +466,7 @@ export namespace Vector {
 		public sub(that: Vector) {
 			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).sub(that.X(i));
 			});
 		}
@@ -493,9 +494,9 @@ export namespace Vector {
 		public cross(that: Vector) {
 			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`.";
+					throw new Error("Indexing starts from `1`.");
 				if(this.value.length > 3)
-					throw "Cross product defined only in 3 dimensions.";
+					throw new Error("Cross product defined only in 3 dimensions.");
 				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
 				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
 				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
@@ -514,7 +515,7 @@ export namespace Vector {
 		public scale(k: Scalar) {
 			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).mul(k);
 			});
 		}
@@ -562,7 +563,7 @@ export namespace Vector {
 				this.X = c;
 				this.arg_list = ExpressionBuilder.createArgList(a, b);
 				this.operands.push(a, b);
-			} else throw "Illegal argument.";
+			} else throw new Error("Illegal argument.");
 		}
 
 		/**
@@ -572,7 +573,7 @@ export namespace Vector {
 		public get lhs() {
 			if(isBinaryOperator(this.op))
 				return this.operands[0];
-			throw "Unary operators have no left hand argument.";
+			throw new Error("Unary operators have no left hand argument.");
 		}
 
 		/**
@@ -582,7 +583,7 @@ export namespace Vector {
 		public get rhs() {
 			if(isBinaryOperator(this.op))
 				return this.operands[1];
-			throw "Unary operators have no right hand argument.";
+			throw new Error("Unary operators have no right hand argument.");
 		}
 
 		/**
@@ -592,7 +593,7 @@ export namespace Vector {
 		public get arg() {
 			if(isUnaryOperator(this.op))
 				return this.operands[0];
-			throw "Binary operators have two arguments.";
+			throw new Error("Binary operators have two arguments.");
 		}
 
 		/**
@@ -606,7 +607,7 @@ export namespace Vector {
 		public add(that: Vector) {
 			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				return this.X(i).add(that.X(i));
 			});
 		}
@@ -622,7 +623,7 @@ export namespace Vector {
 		public sub(that: Vector) {
 			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				return this.X(i).sub(that.X(i));
 			});
 		}
@@ -652,9 +653,9 @@ export namespace Vector {
 		public cross(that: Vector) {
 			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`.";
+					throw new Error("Indexing starts from `1`.");
 				// if(this.value.length > 3)
-				// 	throw "Cross product defined only in 3 dimensions.";
+				// 	throw new Error("Cross product defined only in 3 dimensions.");
 				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
 				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
 				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
@@ -673,7 +674,7 @@ export namespace Vector {
 		public scale(k: Scalar) {
 			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
 				if(i <= 0)
-					throw "Indexing starts from `1`";
+					throw new InvalidIndex(i, 0);
 				return this.X(i).mul(k);
 			});
 		}
@@ -779,14 +780,14 @@ export namespace Vector {
 			} else {
 				c = NAMED_CONSTANTS.get(b);
 				if(c !== undefined)
-					throw "Attempt to redefine a constant: A constant with the same name already exists.";
+					throw new Error("Attempt to redefine a constant: A constant with the same name already exists.");
 				c = new Vector.Constant(values, b);
 				NAMED_CONSTANTS.set(b, c);
 			}
 		} else {
 			c = NAMED_CONSTANTS.get(a);
 			if(c === undefined)
-				throw "No such constant defined.";
+				throw new Error("No such constant defined.");
 		}
 		return c;
 	}

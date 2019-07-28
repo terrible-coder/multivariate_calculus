@@ -1,7 +1,7 @@
 const { Vector, __ } = require("../build/vector");
 const { isExpression } = require("../build/core/definitions");
 const { Scalar } = require("../build/scalar");
-const { sqrt } = require("../build/core/operators/unary");
+const { sqrt } = require("../build/core/math/functions");
 
 it("checks unknown value alias", function() {
 	expect(__).toBe(undefined);

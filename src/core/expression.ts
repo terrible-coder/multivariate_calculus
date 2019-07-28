@@ -1,6 +1,7 @@
 import { Evaluable, Variable, isExpression, isVariable, Expression, Constant } from "./definitions";
 import { isBinaryOperator } from "./operators/binary";
-import { isUnaryOperator, math } from "./operators/unary";
+import { isUnaryOperator } from "./operators/unary";
+import { math } from "./math/math";
 
 /**
  * Contains helper functions needed by any class that is an [[Expression]].
