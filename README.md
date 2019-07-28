@@ -76,3 +76,4 @@ console.log(a);
 -------------------
 
 Check out the [documentation](https://terrible-coder.github.io/multivariate_calculus) for further readings.
+If there are any issues or some changes you would like to see, [file an issue](https://github.com/terrible-coder/multivariate_calculus/issues).
