@@ -51,3 +51,14 @@ describe("Decimal numbers", function() {
 		expect(a.div(b)).toEqual(new BigNum("0.12"));
 	});
 });
+
+describe("IDK", function() {
+	it("IDK", function() {
+		const a = new BigNum("120");
+		const b = new BigNum("0.123");
+		expect(a.add(b)).toEqual(new BigNum("120.123"));
+		const a1 = new BigNum("10000");
+		const b1 = new BigNum("1");
+		expect(b1.div(a1)).toEqual(new BigNum("0.0001"));
+	});
+});

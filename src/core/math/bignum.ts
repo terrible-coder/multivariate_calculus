@@ -1,17 +1,29 @@
+import { IndeterminateForm, DivisionByZero } from "../errors";
+
+export enum RoundingMode {
+	UP,
+	DOWN,
+	HALF_UP,
+	HALF_DOWN,
+	HALF_EVEN,
+	UNNECESSARY
+}
+
 export type MathContext = {
-	accuracy: number;
+	precision: number;
+	rounding: RoundingMode
 }
 
 export class BigNum {
 
-	public context: MathContext;
+	public static DEFAULT_CONTEXT: MathContext = {
+		precision: 17,
+		rounding: RoundingMode.HALF_EVEN
+	};
 	readonly integer: string;
 	readonly decimal: string;
 
-	constructor(num: string, context?: MathContext) {
-		this.context = context || {
-			accuracy: 17
-		};
+	constructor(num: string) {
 		const parts = num.split(".");
 		if(parts.length > 2)
 			throw new Error("Number format exception.");
@@ -37,38 +49,49 @@ export class BigNum {
 		return BigInt(this.integer + this.decimal);
 	}
 
-	private get digits() {
-		return this.integer.length + this.decimal.length;
+	private get precision() {
+		return this.decimal.length;
 	}
 
 	public add(that: BigNum) {
-		const d = this.digits - that.digits;
+		const d = this.precision - that.precision;
 		const padding = BigInt(Math.pow(10, Math.abs(d)));
 		const sum = (d > 0? this.asBigInt + that.asBigInt * padding: this.asBigInt * padding + that.asBigInt).toString();
-		const i = sum.length - Math.max(this.decimal.length, that.decimal.length);
+		const precision = Math.max(this.precision, that.precision);
+		const i = sum.length - precision;
 		return new BigNum(sum.substring(0, i) + "." + sum.substring(i));
 	}
 
 	public sub(that: BigNum) {
-		const d = this.digits - that.digits;
+		const d = this.precision - that.precision;
 		const padding = BigInt(Math.pow(10, Math.abs(d)));
 		const diff = (d > 0? this.asBigInt - that.asBigInt * padding: this.asBigInt * padding - that.asBigInt).toString();
-		const i = diff.length - Math.max(this.decimal.length, that.decimal.length);
+		const precision = Math.max(this.precision, that.precision);
+		const i = diff.length - precision;
 		return new BigNum(diff.substring(0, i) + "." + diff.substring(i));
 	}
 
 	public mul(that: BigNum) {
 		const prod = (this.asBigInt * that.asBigInt).toString();
-		const i = prod.length - (this.decimal.length + that.decimal.length);
+		const precision = this.precision + that.precision;
+		const i = prod.length - precision;
 		return new BigNum(prod.substring(0, i) + "." + prod.substring(i));
 	}
 
 	public div(that: BigNum) {
-		const integer = (BigInt(this.integer) / BigInt(that.integer)).toString();
-		const i = integer === "0"? 0: integer.length;
-		const a = this.asBigInt * BigInt(Math.pow(10, this.context.accuracy));
+		if(that.integer === "0" && that.decimal === "0") {
+			if(this.integer === "0" && that.decimal === "0")
+				throw new IndeterminateForm("Cannot determine 0/0.");
+			throw new DivisionByZero("Cannot divide by zero.");
+		}
+		const p = BigNum.DEFAULT_CONTEXT.precision;
+		const raise = p - this.precision + that.precision;
+		const a = this.asBigInt * BigInt(Math.pow(10, raise));
 		const b = that.asBigInt;
-		const quo = (a / b).toString();
+		let quo = (a / b).toString();
+		if(p > quo.length)
+			quo = new Array(p - quo.length).fill("0").join("") + quo;
+		const i = quo.length - p;
 		return new BigNum(quo.substring(0, i) + "." + quo.substring(i));
 	}
 
