@@ -1,4 +1,5 @@
 import { BigNum } from "../src/core/math/bignum";
+import { IndeterminateForm, DivisionByZero } from "../src/core/errors";
 
 describe("Integer numbers", function() {
 	const a = new BigNum("144");
@@ -23,6 +24,11 @@ describe("Integer numbers", function() {
 
 	it("Divides numbers", function() {
 		expect(a.div(b)).toEqual(new BigNum("-12"));
+	});
+
+	it("Computes absolute value", function() {
+		expect(BigNum.abs(a)).toEqual(a);
+		expect(BigNum.abs(b)).toEqual(new BigNum("12"));
 	});
 });
 
@@ -52,13 +58,24 @@ describe("Decimal numbers", function() {
 	});
 });
 
-describe("IDK", function() {
-	it("IDK", function() {
+describe("Mixed values", function() {
+	it("Addition", function() {
 		const a = new BigNum("120");
 		const b = new BigNum("0.123");
 		expect(a.add(b)).toEqual(new BigNum("120.123"));
-		const a1 = new BigNum("10000");
-		const b1 = new BigNum("1");
-		expect(b1.div(a1)).toEqual(new BigNum("0.0001"));
+	});
+
+	it("Division", function() {
+		const a = new BigNum("10000");
+		const b = new BigNum("1");
+		expect(b.div(a)).toEqual(new BigNum("0.0001"));
+	});
+});
+
+describe("Throws appropriate errors", function() {
+	const zero = new BigNum("0");
+	it("Division by zero", function() {
+		expect(() => new BigNum("1").div(zero)).toThrowError(new DivisionByZero("Cannot divide by zero."));
+		expect(() => zero.div(zero)).toThrowError(new IndeterminateForm("Cannot determine 0/0."));
 	});
 });
