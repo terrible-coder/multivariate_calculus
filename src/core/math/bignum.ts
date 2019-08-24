@@ -1,8 +1,11 @@
 import { IndeterminateForm, DivisionByZero } from "../errors";
+import { abs } from "./functions";
 
 export enum RoundingMode {
 	UP,
 	DOWN,
+	CEIL,
+	FLOOR,
 	HALF_UP,
 	HALF_DOWN,
 	HALF_EVEN,
@@ -53,6 +56,67 @@ export class BigNum {
 		return this.decimal.length;
 	}
 
+	public get sign() {
+		if(this.integer === "0" && this.decimal === "0")
+			return 0;
+		if(this.integer.charAt(0) === '-')
+			return -1;
+		return 1;
+	}
+
+	public static abs(x: BigNum) {
+		return x.integer.charAt(0) === '-'? new BigNum(x.integer.substring(1) + "." + x.decimal): x;
+	}
+
+	public static round(x: BigNum, context: MathContext) {
+		const one = BigInt(1), ten = BigInt(10);
+		if(x.precision > context.precision) {
+			const diff = x.precision - context.precision;
+			const num = x.asBigInt;
+			const divider = BigInt(Math.pow(10, diff));
+			let rounded = num / divider;
+			const last = num % divider;
+			const five = BigInt(5 * Math.pow(10, diff - 1));
+			switch(context.rounding) {
+			case RoundingMode.UP:
+				if(last > 0) rounded += one;
+				else if(last < 0) rounded -= one;
+				break;
+			case RoundingMode.DOWN:
+				break;
+			case RoundingMode.CEIL:
+				if(last > 0) rounded += one;
+				break;
+			case RoundingMode.FLOOR:
+				if(last < 0) rounded -= one;
+				break;
+			case RoundingMode.HALF_DOWN:
+				if(last > five) rounded += one;
+				else if(last < -five) rounded -= one;
+				break;
+			case RoundingMode.HALF_UP:
+				if(last >= five) rounded += one;
+				else if(last <= -five) rounded -= one;
+				break;
+			case RoundingMode.HALF_EVEN:
+				if(last > five) rounded += one;
+				else if(last < -five) rounded -= one;
+				else if(abs(Number(rounded % ten)) % 2 !== 0) {
+					if(last === five) rounded += one;
+					else if(last === -five) rounded -= one;
+				}
+				break;
+			case RoundingMode.UNNECESSARY:
+				if(last > 0 || last < 0)
+					throw Error("Rounding necessary. Exact representation not known.");
+				break;
+			}
+			let r = rounded.toString();
+			const i = r.length - context.precision;
+			return new BigNum(r.substring(0, i) + "." + r.substring(i));
+		} else return x;
+	}
+
 	public add(that: BigNum) {
 		const d = this.precision - that.precision;
 		const padding = BigInt(Math.pow(10, Math.abs(d)));
@@ -79,8 +143,8 @@ export class BigNum {
 	}
 
 	public div(that: BigNum) {
-		if(that.integer === "0" && that.decimal === "0") {
-			if(this.integer === "0" && that.decimal === "0")
+		if(that.sign === 0) {
+			if(this.sign === 0)
 				throw new IndeterminateForm("Cannot determine 0/0.");
 			throw new DivisionByZero("Cannot divide by zero.");
 		}
