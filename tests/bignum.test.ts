@@ -1,0 +1,189 @@
+import { BigNum, RoundingMode, MathContext } from "../src/core/math/bignum";
+import { IndeterminateForm, DivisionByZero } from "../src/core/errors";
+
+describe("Integer numbers", function() {
+	const a = new BigNum("144");
+	const b = new BigNum("-12");
+	it("Creates new numbers", function() {
+		const num = "100";
+		const bnum = new BigNum(num);
+		expect(bnum.toString()).toBe("100.0");
+	});
+
+	it("Adds numbers", function() {
+		expect(a.add(b)).toEqual(new BigNum("132"));
+	});
+
+	it("Subtracts numbers", function() {
+		expect(a.sub(b)).toEqual(new BigNum("156"));
+	});
+
+	it("Multiplies numbers", function() {
+		expect(a.mul(b)).toEqual(new BigNum("-1728"));
+	});
+
+	it("Divides numbers", function() {
+		expect(a.div(b)).toEqual(new BigNum("-12"));
+	});
+
+	it("Computes absolute value", function() {
+		expect(BigNum.abs(a)).toEqual(a);
+		expect(BigNum.abs(b)).toEqual(new BigNum("12"));
+	});
+});
+
+describe("Decimal numbers", function() {
+	const a = new BigNum("0.144");
+	const b = new BigNum("1.2");
+	it("Creates new numbers", function() {
+		const num = "4.001";
+		const bnum = new BigNum(num);
+		expect(bnum.toString()).toBe(num);
+	});
+
+	it("Adds numbers", function() {
+		expect(a.add(b)).toEqual(new BigNum("1.344"));
+	});
+
+	it("Subtracts numbers", function() {
+		expect(a.sub(b)).toEqual(new BigNum("-1.056"));
+	});
+
+	it("Multiplies numbers", function() {
+		expect(a.mul(b)).toEqual(new BigNum("0.1728"));
+	});
+
+	it("Divides numbers", function() {
+		expect(a.div(b)).toEqual(new BigNum("0.12"));
+	});
+});
+
+describe("Mixed values", function() {
+	it("Addition", function() {
+		const a = new BigNum("120");
+		const b = new BigNum("0.123");
+		expect(a.add(b)).toEqual(new BigNum("120.123"));
+	});
+
+	it("Division", function() {
+		const a = new BigNum("10000");
+		const b = new BigNum("1");
+		expect(b.div(a)).toEqual(new BigNum("0.0001"));
+	});
+});
+
+describe("Throws appropriate errors", function() {
+	const zero = new BigNum("0");
+	it("Division by zero", function() {
+		expect(() => new BigNum("1").div(zero)).toThrowError(new DivisionByZero("Cannot divide by zero."));
+		expect(() => zero.div(zero)).toThrowError(new IndeterminateForm("Cannot determine 0/0."));
+	});
+});
+
+/*
+ * These tests have been based on the rounding algorithms defined by JAVA.
+ * To see all the rounding possibilities and read more about them go to
+ * https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html
+ */
+describe("Rounds", function() {
+	const a = ["5.5", "2.5", "1.6", "1.1", "1.0", "-1.0", "-1.1", "-1.6", "-2.5", "-5.5"];
+	it("Up", function() {
+		const b = ["6", "3", "2", "2", "1", "-1", "-2", "-2", "-3", "-6"];
+		const context = {
+			precision: 0,
+			rounding: RoundingMode.UP
+		};
+		for(let i = 0; i < 10; i++) {
+			const x = BigNum.round(new BigNum(a[i]), context);
+			expect(x).toEqual(new BigNum(b[i]));
+		}
+	});
+
+	it("Down", function() {
+		const b = ["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"];
+		const context = {
+			precision: 0,
+			rounding: RoundingMode.DOWN
+		};
+		for(let i = 0; i < 10; i++) {
+			const x = BigNum.round(new BigNum(a[i]), context);
+			expect(x).toEqual(new BigNum(b[i]));
+		}
+	});
+
+	it("Ceiling", function() {
+		const b = ["6", "3", "2", "2", "1", "-1", "-1", "-1", "-2", "-5"];
+		const context = {
+			precision: 0,
+			rounding: RoundingMode.CEIL
+		};
+		for(let i = 0; i < 10; i++) {
+			const x = BigNum.round(new BigNum(a[i]), context);
+			expect(x).toEqual(new BigNum(b[i]));
+		}
+	});
+
+	it("Floor", function() {
+		const b = ["5", "2", "1", "1", "1", "-1", "-2", "-2", "-3", "-6"];
+		const context = {
+			precision: 0,
+			rounding: RoundingMode.FLOOR
+		};
+		for(let i = 0; i < 10; i++) {
+			const x = BigNum.round(new BigNum(a[i]), context);
+			expect(x).toEqual(new BigNum(b[i]));
+		}
+	});
+
+	it("Half up", function() {
+		const b = ["6", "3", "2", "1", "1", "-1", "-1", "-2", "-3", "-6"];
+		const context = {
+			precision: 0,
+			rounding: RoundingMode.HALF_UP
+		};
+		for(let i = 0; i < 10; i++) {
+			const x = BigNum.round(new BigNum(a[i]), context);
+			expect(x).toEqual(new BigNum(b[i]));
+		}
+	});
+
+	it("Half down", function() {
+		const b = ["5", "2", "2", "1", "1", "-1", "-1", "-2", "-2", "-5"];
+		const context = {
+			precision: 0,
+			rounding: RoundingMode.HALF_DOWN
+		};
+		for(let i = 0; i < 10; i++) {
+			const x = BigNum.round(new BigNum(a[i]), context);
+			expect(x).toEqual(new BigNum(b[i]));
+		}
+	});
+
+	it("Half even", function() {
+		const b = ["6", "2", "2", "1", "1", "-1", "-1", "-2", "-2", "-6"];
+		const context = {
+			precision: 0,
+			rounding: RoundingMode.HALF_EVEN
+		};
+		for(let i = 0; i < 10; i++) {
+			const x = BigNum.round(new BigNum(a[i]), context);
+			expect(x).toEqual(new BigNum(b[i]));
+		}
+	});
+
+	it("Unnecesary", function() {
+		const context: MathContext = {
+			precision: 0,
+			rounding: RoundingMode.UNNECESSARY
+		};
+		for(let i = 0; i < 10; i++) {
+			const x = new BigNum(a[i]);
+			if(a[i] == "1.0")
+				expect(BigNum.round(x, context)).toEqual(new BigNum("1"));
+			else if(a[i] == "-1.0")
+				expect(BigNum.round(x, context)).toEqual(new BigNum("-1"));
+			else
+				expect(() => BigNum.round(x, context)).toThrow();
+		}
+	});
+});
