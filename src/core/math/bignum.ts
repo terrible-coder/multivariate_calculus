@@ -34,16 +34,46 @@ export type MathContext = {
 	rounding: RoundingMode
 }
 
-export class BigNum {
-
+export namespace MathContext {
 	/**
 	 * The default [[MathContext]] used when an exact representation cannot be
 	 * achieved for some operation.
 	 */
-	public static DEFAULT_CONTEXT: MathContext = {
+	export const DEFAULT_CONTEXT: MathContext = {
 		precision: 17,
+		rounding: RoundingMode.UP
+	};
+
+	/**
+	 * The [[MathContext]] used for high precision calculation. Stores up to
+	 * 50 places after the decimal point with [[RoundingMode.UP]] rounding algorithm.
+	 */
+	export const HIGH_PRECISION: MathContext = {
+		precision: 50,
+		rounding: RoundingMode.UP
+	};
+
+	/**
+	 * The [[MathContext]] which defines how numbers are dealt with in science.
+	 * It has slightly higher precision value than the default context with
+	 * [[RoundingMode.HALF_EVEN]] rounding algorithm.
+	 */
+	export const SCIENTIFIC: MathContext = {
+		precision: 20,
 		rounding: RoundingMode.HALF_EVEN
 	};
+
+	/**
+	 * The [[MathContext]] which defines how to deal with high precision
+	 * numbers in science. It has the same precision value as the high precision one
+	 * and [[RoundingMode.HALF_EVEN]] rounding algorithm.
+	 */
+	export const HIGH_PREC_SCIENTIFIC: MathContext = {
+		precision: 50,
+		rounding: RoundingMode.HALF_EVEN
+	};
+}
+export class BigNum {
 	/**
 	 * The integer part of the number.
 	 */
@@ -224,7 +254,7 @@ export class BigNum {
 				throw new IndeterminateForm("Cannot determine 0/0.");
 			throw new DivisionByZero("Cannot divide by zero.");
 		}
-		const p = BigNum.DEFAULT_CONTEXT.precision;
+		const p = MathContext.DEFAULT_CONTEXT.precision;
 		const raise = p - this.precision + that.precision;
 		const a = this.asBigInt * BigInt(Math.pow(10, raise));
 		const b = that.asBigInt;
