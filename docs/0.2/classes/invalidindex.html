@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DivisionByZero | multivariate_calculus</title>
+	<title>InvalidIndex | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../assets/css/main.css">
+	<link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../../assets/js/search.js" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="divisionbyzero.html">DivisionByZero</a>
+					<a href="invalidindex.html">InvalidIndex</a>
 				</li>
 			</ul>
-			<h1>Class DivisionByZero</h1>
+			<h1>Class InvalidIndex</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The error thrown when attempt is made to divide by zero.</p>
+						<p>The error thrown when some invalid index of some quantity is being accessed.
+						An invalid index would be any index which does not exist on a particular quantity.</p>
 					</div>
 				</div>
 			</section>
@@ -80,7 +81,7 @@
 						<span class="tsd-signature-type">Error</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">DivisionByZero</span>
+								<span class="target">InvalidIndex</span>
 							</li>
 						</ul>
 					</li>
@@ -93,16 +94,16 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="divisionbyzero.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="invalidindex.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="divisionbyzero.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="divisionbyzero.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="divisionbyzero.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="divisionbyzero.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="invalidindex.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="invalidindex.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="invalidindex.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="invalidindex.html#error" class="tsd-kind-icon">Error</a></li>
 							</ul>
 						</section>
 					</div>
@@ -114,32 +115,40 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Division<wbr>ByZero<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="divisionbyzero.html" class="tsd-signature-type">DivisionByZero</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Invalid<wbr>Index<span class="tsd-signature-symbol">(</span>passed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, start<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="invalidindex.html" class="tsd-signature-type">InvalidIndex</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f7504cc/src/core/errors.ts#L4">core/errors.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f7504cc/src/core/errors.ts#L50">core/errors.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a <a href="divisionbyzero.html">DivisionByZero</a> error.</p>
+									<p>Creates an <a href="invalidindex.html">InvalidIndex</a> error.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>message: <span class="tsd-signature-type">string</span></h5>
+									<h5>passed: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>The message to display.</p>
+											<p>The index value being accessed.</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>start: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The value from which indexing starts.</p>
 										</div>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="divisionbyzero.html" class="tsd-signature-type">DivisionByZero</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="invalidindex.html" class="tsd-signature-type">InvalidIndex</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -204,22 +213,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="divisionbyzero.html" class="tsd-kind-icon">Division<wbr>ByZero</a>
+						<a href="invalidindex.html" class="tsd-kind-icon">Invalid<wbr>Index</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="divisionbyzero.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="invalidindex.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="divisionbyzero.html#message" class="tsd-kind-icon">message</a>
+								<a href="invalidindex.html#message" class="tsd-kind-icon">message</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="divisionbyzero.html#name" class="tsd-kind-icon">name</a>
+								<a href="invalidindex.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="divisionbyzero.html#stack" class="tsd-kind-icon">stack</a>
+								<a href="invalidindex.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="divisionbyzero.html#error" class="tsd-kind-icon">Error</a>
+								<a href="invalidindex.html#error" class="tsd-kind-icon">Error</a>
 							</li>
 						</ul>
 					</li>
@@ -293,7 +302,7 @@
 	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<script src="../../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

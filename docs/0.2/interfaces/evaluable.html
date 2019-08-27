@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Variable | multivariate_calculus</title>
+	<title>Evaluable | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../assets/css/main.css">
+	<link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../../assets/js/search.js" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="variable.html">Variable</a>
+					<a href="evaluable.html">Evaluable</a>
 				</li>
 			</ul>
-			<h1>Interface Variable</h1>
+			<h1>Interface Evaluable</h1>
 		</div>
 	</div>
 </header>
@@ -69,10 +69,10 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A variable is a symbolic representation of some quantity whose value we do
-							not know yet. Something whose value is not fixed and could take different
-							values depending upon the situation. This interface must be implemented by
-						all classes representing varying/unknown values.</p>
+						<p>Anything that has a value or can be later assigned a value.
+							A tagging interface which all classes representing some mathematical object
+							whose value can be evaluated, at run time or when user suppiles the value,
+						must implement.</p>
 					</div>
 				</div>
 			</section>
@@ -80,10 +80,21 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="evaluable.html" class="tsd-signature-type">Evaluable</a>
+						<a href="token.html" class="tsd-signature-type">Token</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">Variable</span>
+								<span class="target">Evaluable</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="variable.html" class="tsd-signature-type">Variable</a>
+									</li>
+									<li>
+										<a href="constant.html" class="tsd-signature-type">Constant</a>
+									</li>
+									<li>
+										<a href="expression.html" class="tsd-signature-type">Expression</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</li>
@@ -92,8 +103,14 @@
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
+					<li><a href="../classes/vector.constant.html" class="tsd-signature-type">Constant</a></li>
+					<li><a href="../classes/scalar.constant.html" class="tsd-signature-type">Constant</a></li>
+					<li><a href="../classes/vector.expression.html" class="tsd-signature-type">Expression</a></li>
+					<li><a href="../classes/scalar.expression.html" class="tsd-signature-type">Expression</a></li>
+					<li><a href="../classes/scalar.html" class="tsd-signature-type">Scalar</a></li>
 					<li><a href="../classes/vector.variable.html" class="tsd-signature-type">Variable</a></li>
 					<li><a href="../classes/scalar.variable.html" class="tsd-signature-type">Variable</a></li>
+					<li><a href="../classes/vector.html" class="tsd-signature-type">Vector</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-kind-interface">
@@ -101,10 +118,10 @@
 				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>x: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A variable is a symbolic representation of some quantity whose value we do
-							not know yet. Something whose value is not fixed and could take different
-							values depending upon the situation. This interface must be implemented by
-						all classes representing varying/unknown values.</p>
+						<p>Anything that has a value or can be later assigned a value.
+							A tagging interface which all classes representing some mathematical object
+							whose value can be evaluated, at run time or when user suppiles the value,
+						must implement.</p>
 					</div>
 				</div>
 			</section>
@@ -115,9 +132,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="variable.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="variable.html#quantity" class="tsd-kind-icon">quantity</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="variable.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="evaluable.html#quantity" class="tsd-kind-icon">quantity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="evaluable.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 					</div>
@@ -126,26 +142,10 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f7504cc/src/core/definitions.ts#L41">core/definitions.ts:41</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The string with which <code>this</code> is identified by.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="quantity" class="tsd-anchor"></a>
 					<h3>quantity</h3>
 					<div class="tsd-signature tsd-kind-icon">quantity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="evaluable.html">Evaluable</a>.<a href="evaluable.html#quantity">quantity</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f7504cc/src/core/definitions.ts#L26">core/definitions.ts:26</a></li>
 						</ul>
@@ -159,13 +159,18 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="type" class="tsd-anchor"></a>
 					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"variable"</span></div>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"expression"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"variable"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"constant"</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides <a href="evaluable.html">Evaluable</a>.<a href="evaluable.html#type">type</a></p>
+						<p>Overrides <a href="token.html">Token</a>.<a href="token.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f7504cc/src/core/definitions.ts#L39">core/definitions.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f7504cc/src/core/definitions.ts#L22">core/definitions.ts:22</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The type of quantity with some way of evaluating a value <code>this</code> represents.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -182,16 +187,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="variable.html" class="tsd-kind-icon">Variable</a>
+						<a href="evaluable.html" class="tsd-kind-icon">Evaluable</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="variable.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="variable.html#quantity" class="tsd-kind-icon">quantity</a>
+								<a href="evaluable.html#quantity" class="tsd-kind-icon">quantity</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="variable.html#type" class="tsd-kind-icon">type</a>
+								<a href="evaluable.html#type" class="tsd-kind-icon">type</a>
 							</li>
 						</ul>
 					</li>
@@ -265,7 +267,7 @@
 	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<script src="../../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
