@@ -3,7 +3,8 @@ multivariate_calculus
 
 A zero dependency libray that handles calculus of several variables in
 multidimensional space. It works with both TypeScript and JavaScript projects
-seamlessly.
+seamlessly. This library is so designed that you can write your mathematics code
+as you would do maths in pen and paper.
 
 ## Installation
 
@@ -77,3 +78,6 @@ console.log(a);
 
 Check out the [documentation](https://terrible-coder.github.io/multivariate_calculus) for further readings.
 If there are any issues or some changes you would like to see, [file an issue](https://github.com/terrible-coder/multivariate_calculus/issues).
+To check out the documentation of some previous version add the generic version
+number after the URL:
+https://terrible-coder.github.io/multivariate_calculus/0.2/

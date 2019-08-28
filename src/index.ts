@@ -6,5 +6,6 @@ export * from "./core/expression";
 export * from "./core/operators/binary";
 export * from "./core/operators/unary";
 export * from "./core/math/functions";
+export * from "./core/math/bignum";
 export * from "./core/errors";
 export * from "./core/interval";
