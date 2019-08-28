@@ -265,6 +265,15 @@ export class BigNum {
 		return new BigNum(quo.substring(0, i) + "." + quo.substring(i));
 	}
 
+	static intpow(base: BigNum, index: number) {
+		if(index !== (index|0))
+			throw "Only defined for integer values of the power.";
+		let p = new BigNum("1");
+		for(let i = 0; i < index; i++)
+			p = base.mul(base);
+		return p;
+	}
+
 	/**
 	 * The string representation of the number.
 	 * @returns The string representation of this.

@@ -26,6 +26,10 @@ describe("Integer numbers", function() {
 		expect(a.div(b)).toEqual(new BigNum("-12"));
 	});
 
+	it("Raises to integer powers", function() {
+		expect(BigNum.intpow(b, 2)).toEqual(a);
+	});
+
 	it("Computes absolute value", function() {
 		expect(BigNum.abs(a)).toEqual(a);
 		expect(BigNum.abs(b)).toEqual(new BigNum("12"));
