@@ -28,6 +28,7 @@ describe("Integer numbers", function() {
 
 	it("Raises to integer powers", function() {
 		expect(BigNum.intpow(b, 2)).toEqual(a);
+		expect(BigNum.intpow(b, 3)).toEqual(new BigNum("-1728"));
 	});
 
 	it("Computes absolute value", function() {
@@ -59,6 +60,11 @@ describe("Decimal numbers", function() {
 
 	it("Divides numbers", function() {
 		expect(a.div(b)).toEqual(new BigNum("0.12"));
+	});
+
+	it("Raises to integer powers", function() {
+		expect(BigNum.intpow(b, 2)).toEqual(new BigNum("1.44"));
+		expect(BigNum.intpow(b, 3)).toEqual(new BigNum("1.728"));
 	});
 });
 
