@@ -10,6 +10,16 @@ describe("Integer numbers", function() {
 		expect(bnum.toString()).toBe("100.0");
 	});
 
+	it("Checks for equality", function() {
+		const A = new BigNum("20");
+		const B = new BigNum("20.1");
+		expect(A.equals(B)).toBe(false);
+		expect(A.equals(B, {
+			precision: 0,
+			rounding: RoundingMode.HALF_UP
+		})).toBe(true);
+	});
+
 	it("Adds numbers", function() {
 		expect(a.add(b)).toEqual(new BigNum("132"));
 	});
@@ -27,8 +37,16 @@ describe("Integer numbers", function() {
 	});
 
 	it("Raises to integer powers", function() {
+		const start = Date.now();
 		expect(BigNum.intpow(b, 2)).toEqual(a);
+		const time = Date.now() - start;
+		const start1 = Date.now();
+		const temp = Math.pow(-12, 2);
+		console.log(temp);
+		const time1 = Date.now() - start1;
 		expect(BigNum.intpow(b, 3)).toEqual(new BigNum("-1728"));
+		console.log(time, "ms");
+		console.log(time1, "ms");
 	});
 
 	it("Computes absolute value", function() {

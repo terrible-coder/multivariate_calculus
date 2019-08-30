@@ -203,6 +203,14 @@ export class BigNum {
 		} else return x;
 	}
 
+	public equals(that: BigNum): boolean;
+	public equals(that: BigNum, context: MathContext): boolean;
+	public equals(that: BigNum, context = MathContext.DEFAULT_CONTEXT) {
+		const A = BigNum.round(this, context);
+		const B = BigNum.round(that, context);
+		return A.integer === B.integer && A.decimal === B.decimal;
+	}
+
 	/**
 	 * Adds two [[BigNum]] instances.
 	 * @param that The number to add this with.
@@ -270,7 +278,7 @@ export class BigNum {
 			throw "Only defined for integer values of the power.";
 		let p = new BigNum("1");
 		for(let i = 0; i < index; i++)
-			p = base.mul(base);
+			p = p.mul(base);
 		return p;
 	}
 
