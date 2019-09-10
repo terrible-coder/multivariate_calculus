@@ -97,9 +97,12 @@ describe("Mixed values", function() {
 		const a = new BigNum("10000");
 		const b = new BigNum("1");
 		expect(b.div(a)).toEqual(new BigNum("0.0001"));
-		const a1 = new BigNum("1");
-		const b1 = new BigNum("0.000001");
-		expect(a1.div(b1)).toEqual(new BigNum("1000000"));
+		const a1 = new BigNum("0.0001");
+		const b1 = new BigNum("1");
+		expect(a1.div(b1, {
+			precision: 2,
+			rounding: RoundingMode.HALF_UP
+		})).toEqual(new BigNum("0"));
 	});
 });
 

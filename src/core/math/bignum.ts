@@ -218,7 +218,15 @@ export class BigNum {
 	 * @param that The number to add this with.
 	 * @returns The sum of the two.
 	 */
-	public add(that: BigNum) {
+	public add(that: BigNum): BigNum;
+	/**
+	 * Adds two [[BigNum]] instances according to the given [[MathContext]].
+	 * @param that The number to add this with.
+	 * @param context The [[MathContext]] object used to decide the rounding and precision of the result.
+	 * @returns The sum of the two.
+	 */
+	public add(that: BigNum, context: MathContext): BigNum;
+	public add(that: BigNum, context?: MathContext) {
 		const d = this.precision - that.precision;
 		const padding = BigInt(Math.pow(10, Math.abs(d)));
 		let sum = (d > 0? this.asBigInt + that.asBigInt * padding: this.asBigInt * padding + that.asBigInt).toString(), sgn = "";
@@ -230,7 +238,8 @@ export class BigNum {
 		if(precision > sum.length)
 			sum = new Array(precision - sum.length).fill("0").join("") + sum;
 		const i = sum.length - precision;
-		return new BigNum(sgn + sum.substring(0, i) + "." + sum.substring(i));
+		const res = new BigNum(sgn + sum.substring(0, i) + "." + sum.substring(i));
+		return context? BigNum.round(res, context) : res;
 	}
 
 	/**
@@ -238,7 +247,15 @@ export class BigNum {
 	 * @param that The number to subtract from this.
 	 * @returns The difference of the two.
 	 */
-	public sub(that: BigNum) {
+	public sub(that: BigNum): BigNum;
+	/**
+	 * Subtracts one [[BigNum]] instance from another according to the given [[MathContext]].
+	 * @param that The number to subtract from this.
+	 * @param context The [[MathContext]] object used to decide the rounding and precision of the result.
+	 * @returns The difference of the two.
+	 */
+	public sub(that: BigNum, context: MathContext): BigNum;
+	public sub(that: BigNum, context?: MathContext) {
 		const d = this.precision - that.precision;
 		const padding = BigInt(Math.pow(10, Math.abs(d)));
 		let diff = (d > 0? this.asBigInt - that.asBigInt * padding: this.asBigInt * padding - that.asBigInt).toString(), sgn = "";
@@ -250,7 +267,8 @@ export class BigNum {
 		if(precision > diff.length)
 			diff = new Array(precision - diff.length).fill("0").join("") + diff;
 		const i = diff.length - precision;
-		return new BigNum(sgn + diff.substring(0, i) + "." + diff.substring(i));
+		const res = new BigNum(sgn + diff.substring(0, i) + "." + diff.substring(i));
+		return context? BigNum.round(res, context) : res;
 	}
 
 	/**
@@ -258,7 +276,15 @@ export class BigNum {
 	 * @param that The number to multiply this with.
 	 * @returns The product of the two.
 	 */
-	public mul(that: BigNum) {
+	public mul(that: BigNum): BigNum;
+	/**
+	 * Multiplies two [[BigNum]] instances according to the given [[MathContext]].
+	 * @param that The number to multiply this with.
+	 * @param context The [[MathContext]] object used to decide the rounding and precision of the result.
+	 * @returns The product of the two.
+	 */
+	public mul(that: BigNum, context: MathContext): BigNum;
+	public mul(that: BigNum, context?: MathContext) {
 		let prod = (this.asBigInt * that.asBigInt).toString(), sgn = "";
 		const precision = this.precision + that.precision;
 		if(prod.charAt(0) === '-') {
@@ -268,7 +294,8 @@ export class BigNum {
 		if(precision > prod.length)
 			prod = new Array(precision - prod.length).fill("0").join("") + prod;
 		const i = prod.length - precision;
-		return new BigNum(sgn + prod.substring(0, i) + "." + prod.substring(i));
+		const res = new BigNum(sgn + prod.substring(0, i) + "." + prod.substring(i));
+		return context? BigNum.round(res, context) : res;
 	}
 
 	/**
@@ -276,13 +303,24 @@ export class BigNum {
 	 * @param that The number to divide this by.
 	 * @returns The quotient of the two.
 	 */
-	public div(that: BigNum) {
+	public div(that: BigNum): BigNum;
+	/**
+	 * Divides one [[BigNum]] instance by another according to the given [[MathContext]].
+	 * @param that The number to divide this by.
+	 * @param context The [[MathContext]] object used to decide the rounding and precision of the result.
+	 * @returns The quotient of the two.
+	 */
+	public div(that: BigNum, context: MathContext): BigNum;
+	public div(that: BigNum, context?: MathContext) {
 		if(that.sign === 0) {
 			if(this.sign === 0)
 				throw new IndeterminateForm("Cannot determine 0/0.");
 			throw new DivisionByZero("Cannot divide by zero.");
 		}
-		const precision = MathContext.DEFAULT_CONTEXT.precision, p1 = this.precision, p2 = that.precision;
+		const precision = context? context.precision: MathContext.DEFAULT_CONTEXT.precision;
+		const p1 = this.precision, p2 = that.precision;
+		if(precision - p1 + p2 < 0)
+			return new BigNum("0");
 		const a = this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
 		const b = that.asBigInt;
 		let quo = (a / b).toString(), sgn = "";
@@ -293,7 +331,8 @@ export class BigNum {
 		if(precision > quo.length)
 			quo = new Array(precision - quo.length).fill("0").join("") + quo;
 		const i = quo.length - precision;
-		return new BigNum(sgn + quo.substring(0, i) + "." + quo.substring(i));
+		const res = new BigNum(sgn + quo.substring(0, i) + "." + quo.substring(i));
+		return context? BigNum.round(res, context) : res;
 	}
 
 	static intpow(base: BigNum, index: number) {
