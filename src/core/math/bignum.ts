@@ -114,6 +114,8 @@ export class BigNum {
 	 * @ignore
 	 */
 	private get asBigInt() {
+		if(this.integer === "0")
+			return BigInt(this.decimal);
 		return BigInt(this.integer + this.decimal);
 	}
 
@@ -219,10 +221,16 @@ export class BigNum {
 	public add(that: BigNum) {
 		const d = this.precision - that.precision;
 		const padding = BigInt(Math.pow(10, Math.abs(d)));
-		const sum = (d > 0? this.asBigInt + that.asBigInt * padding: this.asBigInt * padding + that.asBigInt).toString();
+		let sum = (d > 0? this.asBigInt + that.asBigInt * padding: this.asBigInt * padding + that.asBigInt).toString(), sgn = "";
 		const precision = Math.max(this.precision, that.precision);
+		if(sum.charAt(0) === '-') {
+			sum = sum.substring(1);
+			sgn = "-";
+		}
+		if(precision > sum.length)
+			sum = new Array(precision - sum.length).fill("0").join("") + sum;
 		const i = sum.length - precision;
-		return new BigNum(sum.substring(0, i) + "." + sum.substring(i));
+		return new BigNum(sgn + sum.substring(0, i) + "." + sum.substring(i));
 	}
 
 	/**
@@ -233,10 +241,16 @@ export class BigNum {
 	public sub(that: BigNum) {
 		const d = this.precision - that.precision;
 		const padding = BigInt(Math.pow(10, Math.abs(d)));
-		const diff = (d > 0? this.asBigInt - that.asBigInt * padding: this.asBigInt * padding - that.asBigInt).toString();
+		let diff = (d > 0? this.asBigInt - that.asBigInt * padding: this.asBigInt * padding - that.asBigInt).toString(), sgn = "";
 		const precision = Math.max(this.precision, that.precision);
+		if(diff.charAt(0) === '-') {
+			diff = diff.substring(1);
+			sgn = "-";
+		}
+		if(precision > diff.length)
+			diff = new Array(precision - diff.length).fill("0").join("") + diff;
 		const i = diff.length - precision;
-		return new BigNum(diff.substring(0, i) + "." + diff.substring(i));
+		return new BigNum(sgn + diff.substring(0, i) + "." + diff.substring(i));
 	}
 
 	/**
@@ -245,10 +259,16 @@ export class BigNum {
 	 * @returns The product of the two.
 	 */
 	public mul(that: BigNum) {
-		const prod = (this.asBigInt * that.asBigInt).toString();
+		let prod = (this.asBigInt * that.asBigInt).toString(), sgn = "";
 		const precision = this.precision + that.precision;
+		if(prod.charAt(0) === '-') {
+			prod = prod.substring(1);
+			sgn = "-";
+		}
+		if(precision > prod.length)
+			prod = new Array(precision - prod.length).fill("0").join("") + prod;
 		const i = prod.length - precision;
-		return new BigNum(prod.substring(0, i) + "." + prod.substring(i));
+		return new BigNum(sgn + prod.substring(0, i) + "." + prod.substring(i));
 	}
 
 	/**
@@ -262,15 +282,18 @@ export class BigNum {
 				throw new IndeterminateForm("Cannot determine 0/0.");
 			throw new DivisionByZero("Cannot divide by zero.");
 		}
-		const p = MathContext.DEFAULT_CONTEXT.precision;
-		const raise = p - this.precision + that.precision;
-		const a = this.asBigInt * BigInt(Math.pow(10, raise));
+		const precision = MathContext.DEFAULT_CONTEXT.precision, p1 = this.precision, p2 = that.precision;
+		const a = this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
 		const b = that.asBigInt;
-		let quo = (a / b).toString();
-		if(p > quo.length)
-			quo = new Array(p - quo.length).fill("0").join("") + quo;
-		const i = quo.length - p;
-		return new BigNum(quo.substring(0, i) + "." + quo.substring(i));
+		let quo = (a / b).toString(), sgn = "";
+		if(quo.charAt(0) === '-') {
+			quo = quo.substring(1);
+			sgn = "-";
+		}
+		if(precision > quo.length)
+			quo = new Array(precision - quo.length).fill("0").join("") + quo;
+		const i = quo.length - precision;
+		return new BigNum(sgn + quo.substring(0, i) + "." + quo.substring(i));
 	}
 
 	static intpow(base: BigNum, index: number) {
