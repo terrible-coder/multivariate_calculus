@@ -74,6 +74,15 @@ export namespace MathContext {
 	};
 }
 export class BigNum {
+
+	/**
+	 * The default [[MathContext]] used for numerical operations related to [[BigNum]]
+	 * when a context has not been mentioned separately. Reassign this value
+	 * if you want to have all subsequent operations in some [[MathContext]]
+	 * other than [[MathContext.DEFAULT_CONTEXT]].
+	 */
+	static MODE = MathContext.DEFAULT_CONTEXT;
+
 	/**
 	 * The integer part of the number.
 	 */
@@ -207,7 +216,7 @@ export class BigNum {
 
 	public equals(that: BigNum): boolean;
 	public equals(that: BigNum, context: MathContext): boolean;
-	public equals(that: BigNum, context = MathContext.DEFAULT_CONTEXT) {
+	public equals(that: BigNum, context = BigNum.MODE) {
 		const A = BigNum.round(this, context);
 		const B = BigNum.round(that, context);
 		return A.integer === B.integer && A.decimal === B.decimal;
@@ -227,6 +236,7 @@ export class BigNum {
 	 */
 	public add(that: BigNum, context: MathContext): BigNum;
 	public add(that: BigNum, context?: MathContext) {
+		context = context || BigNum.MODE;
 		const d = this.precision - that.precision;
 		const padding = BigInt(Math.pow(10, Math.abs(d)));
 		let sum = (d > 0? this.asBigInt + that.asBigInt * padding: this.asBigInt * padding + that.asBigInt).toString(), sgn = "";
@@ -239,7 +249,7 @@ export class BigNum {
 			sum = new Array(precision - sum.length).fill("0").join("") + sum;
 		const i = sum.length - precision;
 		const res = new BigNum(sgn + sum.substring(0, i) + "." + sum.substring(i));
-		return context? BigNum.round(res, context) : res;
+		return BigNum.round(res, context);
 	}
 
 	/**
@@ -256,6 +266,7 @@ export class BigNum {
 	 */
 	public sub(that: BigNum, context: MathContext): BigNum;
 	public sub(that: BigNum, context?: MathContext) {
+		context = context || BigNum.MODE;
 		const d = this.precision - that.precision;
 		const padding = BigInt(Math.pow(10, Math.abs(d)));
 		let diff = (d > 0? this.asBigInt - that.asBigInt * padding: this.asBigInt * padding - that.asBigInt).toString(), sgn = "";
@@ -268,7 +279,7 @@ export class BigNum {
 			diff = new Array(precision - diff.length).fill("0").join("") + diff;
 		const i = diff.length - precision;
 		const res = new BigNum(sgn + diff.substring(0, i) + "." + diff.substring(i));
-		return context? BigNum.round(res, context) : res;
+		return BigNum.round(res, context);
 	}
 
 	/**
@@ -285,6 +296,7 @@ export class BigNum {
 	 */
 	public mul(that: BigNum, context: MathContext): BigNum;
 	public mul(that: BigNum, context?: MathContext) {
+		context = context || BigNum.MODE;
 		let prod = (this.asBigInt * that.asBigInt).toString(), sgn = "";
 		const precision = this.precision + that.precision;
 		if(prod.charAt(0) === '-') {
@@ -295,7 +307,7 @@ export class BigNum {
 			prod = new Array(precision - prod.length).fill("0").join("") + prod;
 		const i = prod.length - precision;
 		const res = new BigNum(sgn + prod.substring(0, i) + "." + prod.substring(i));
-		return context? BigNum.round(res, context) : res;
+		return BigNum.round(res, context);
 	}
 
 	/**
@@ -312,12 +324,13 @@ export class BigNum {
 	 */
 	public div(that: BigNum, context: MathContext): BigNum;
 	public div(that: BigNum, context?: MathContext) {
+		context = context || BigNum.MODE;
 		if(that.sign === 0) {
 			if(this.sign === 0)
 				throw new IndeterminateForm("Cannot determine 0/0.");
 			throw new DivisionByZero("Cannot divide by zero.");
 		}
-		const precision = context? context.precision: MathContext.DEFAULT_CONTEXT.precision;
+		const precision = context.precision;
 		const p1 = this.precision, p2 = that.precision;
 		if(precision - p1 + p2 < 0)
 			return new BigNum("0");
@@ -332,7 +345,7 @@ export class BigNum {
 			quo = new Array(precision - quo.length).fill("0").join("") + quo;
 		const i = quo.length - precision;
 		const res = new BigNum(sgn + quo.substring(0, i) + "." + quo.substring(i));
-		return context? BigNum.round(res, context) : res;
+		return BigNum.round(res, context);
 	}
 
 	static intpow(base: BigNum, index: number) {
