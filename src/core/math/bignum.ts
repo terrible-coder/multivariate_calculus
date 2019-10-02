@@ -76,6 +76,52 @@ export namespace MathContext {
 export class BigNum {
 
 	/**
+	 * The circle constant PI correct upto 100 decimal places.
+	 */
+	public static PI = new BigNum("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679");
+
+	/**
+	 * The constant zero.
+	 */
+	public static ZERO = new BigNum("0");
+	/**
+	 * The constant one.
+	 */
+	public static ONE = new BigNum("1");
+	/**
+	 * The constant two.
+	 */
+	public static TWO = new BigNum("2");
+	/**
+	 * The constant three.
+	 */
+	public static THREE = new BigNum("3");
+	/**
+	 * The constant four.
+	 */
+	public static FOUR = new BigNum("4");
+	/**
+	 * The constant five.
+	 */
+	public static FIVE = new BigNum("5");
+	/**
+	 * The constant six.
+	 */
+	public static SIX = new BigNum("6");
+	/**
+	 * The constant seven.
+	 */
+	public static SEVEN = new BigNum("7");
+	/**
+	 * The constant eight.
+	 */
+	public static EIGHT = new BigNum("8");
+	/**
+	 * The constant nine.
+	 */
+	public static NINE = new BigNum("9");
+
+	/**
 	 * The default [[MathContext]] used for numerical operations related to [[BigNum]]
 	 * when a context has not been mentioned separately. Reassign this value
 	 * if you want to have all subsequent operations in some [[MathContext]]
@@ -208,9 +254,15 @@ export class BigNum {
 					throw Error("Rounding necessary. Exact representation not known.");
 				break;
 			}
-			let r = rounded.toString();
+			let r = rounded.toString(), sgn = "";
+			if(r.charAt(0) === '-') {
+				r = r.substring(1);
+				sgn = "-";
+			}
+			if(context.precision > r.length)
+				r = new Array(context.precision - r.length).fill("0").join("") + r;
 			const i = r.length - context.precision;
-			return new BigNum(r.substring(0, i) + "." + r.substring(i));
+			return new BigNum(sgn + r.substring(0, i) + "." + r.substring(i));
 		} else return x;
 	}
 
