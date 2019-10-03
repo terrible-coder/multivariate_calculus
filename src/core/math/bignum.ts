@@ -204,8 +204,9 @@ export class BigNum {
 	private static pad(s: string, n: number, char: string, front=false) {
 		if(char.length > 1)
 			throw new Error("Padding string must have only one character.");
-		const padding = new Array(n).fill(char).join("")
-		return front? padding + s: s + padding;
+		// const padding = new Array(n).fill(char).join("")
+		// return front? padding + s: s + padding;
+		return front? "".padEnd(n, char) + s: s + "".padEnd(n, char);
 	}
 
 	private static align(a: BigNum, b: BigNum) {
@@ -254,7 +255,7 @@ export class BigNum {
 	 * @returns The number representing the rounded value of the argument according to the given context.
 	 */
 	public static round(x: BigNum, context: MathContext) {
-		const one = BigInt(1), ten = BigInt(10);
+		const one = BigInt("1"), ten = BigInt("10");
 		if(x.precision > context.precision) {
 			const diff = x.precision - context.precision;
 			const num = x.asBigInt;
@@ -410,6 +411,42 @@ export class BigNum {
 		for(let i = 0; i < index; i++)
 			p = p.mul(base);
 		return p;
+	}
+
+	public static sin(x: BigNum) {
+		/*
+		sin x = sum((-1)^n * x^(2n+1) / (2n+1)!, 0, infty)
+		t_n = ((-1)^n / (2n+1)!) * x^(2n+1)
+		t_n1 = ((-1)^n+1 / (2n+3)!) * x^(2n+3)
+		t_n1 = - (t_n/(2n+3)(2n+2)) * x^2
+		*/
+		const context: MathContext = {
+			precision: 30,
+			rounding: RoundingMode.UP
+		}
+		const zero = new BigNum("0"), one = new BigNum("1"), two = new BigNum("2"), three = new BigNum("3");
+		const x_sq = x.mul(x, context);
+		let sum = zero;
+		let term = x;
+		let n = zero;
+		while(true) {
+			sum = sum.add(term, context);
+			console.log(sum.toString(), n.toString());
+			const a = two.mul(n).add(three);
+			const b = two.mul(n).add(two);
+			const f = a.mul(b).mul(new BigNum("-1"));
+			const term1 = term.mul(x_sq, context).div(f, context);
+			console.log(term1.toString(), f.toString());
+			if(BigNum.abs(term1).equals(zero))
+				return BigNum.round(sum, BigNum.MODE);
+			term = term1;
+			n = n.add(one);
+		}
+	}
+
+	public static cos(x: BigNum) {
+		const piby2 = BigNum.PI.div(BigNum.TWO);
+		return BigNum.sin(piby2.sub(x));
 	}
 
 	/**
