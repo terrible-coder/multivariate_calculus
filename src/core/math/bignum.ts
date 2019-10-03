@@ -258,10 +258,10 @@ export class BigNum {
 		if(x.precision > context.precision) {
 			const diff = x.precision - context.precision;
 			const num = x.asBigInt;
-			const divider = BigInt(Math.pow(10, diff));
+			const divider = BigInt(BigNum.pad("1", diff, "0"));
 			let rounded = num / divider;
 			const last = num % divider;
-			const five = BigInt(5 * Math.pow(10, diff - 1));
+			const five = BigInt(BigNum.pad("5", diff - 1, "0"));
 			switch(context.rounding) {
 			case RoundingMode.UP:
 				if(last > 0) rounded += one;
@@ -396,12 +396,10 @@ export class BigNum {
 		}
 		const precision = context.precision;
 		const p1 = this.precision, p2 = that.precision, p = precision - p1 + p2;
-		if(p < 0)
-			return BigNum.ZERO;
-		const a = BigInt(BigNum.pad(this.asString, p, "0")); //this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
+		const a = p < 0? this.asBigInt: BigInt(BigNum.pad(this.asString, p, "0")); //this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
 		const b = that.asBigInt;
 		let quo = (a / b).toString();
-		const res = new BigNum(BigNum.decimate(quo, precision));
+		const res = new BigNum(BigNum.decimate(quo, (p < 0)? p1: precision));
 		return BigNum.round(res, context);
 	}
 
