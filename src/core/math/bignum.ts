@@ -164,14 +164,20 @@ export class BigNum {
 		this.decimal = decimal;
 	}
 
+	private get asString() {
+		if(this.integer === "0")
+			return this.decimal;
+		if(this.decimal === "" || this.decimal === "0")
+			return this.integer;
+		return this.integer + this.decimal;
+	}
+
 	/**
 	 * Returns this number as an unscaled BigInt instance.
 	 * @ignore
 	 */
 	private get asBigInt() {
-		if(this.integer === "0")
-			return BigInt(this.decimal);
-		return BigInt(this.integer + this.decimal);
+		return BigInt(this.asString);
 	}
 
 	/**
@@ -179,6 +185,8 @@ export class BigNum {
 	 * @ignore
 	 */
 	private get precision() {
+		if(this.decimal === "0")
+			return 0;
 		return this.decimal.length;
 	}
 
@@ -191,6 +199,40 @@ export class BigNum {
 		if(this.integer.charAt(0) === '-')
 			return -1;
 		return 1;
+	}
+
+	private static pad(s: string, n: number, char: string, front=false) {
+		if(char.length > 1)
+			throw new Error("Padding string must have only one character.");
+		const padding = new Array(n).fill(char).join("")
+		return front? padding + s: s + padding;
+	}
+
+	private static align(a: BigNum, b: BigNum) {
+		const pa = a.precision, pb = b.precision;
+		const d = pa - pb;
+		let aa = a.asString,
+			ba = b.asString;
+		if(d > 0)
+			ba = BigNum.pad(ba, d, "0");
+		else if(d < 0)
+			aa = BigNum.pad(aa, -d, "0");
+		return [aa, ba];
+	}
+
+	private static decimate(a: string, index: number) {
+		if(index < 0)
+			throw new Error("Cannot put decimal point at negative index.");
+		let s = a, sgn = "";
+		if(s.charAt(0) === '-') {
+			s = s.substring(1);
+			sgn = "-";
+		}
+		if(index > s.length)
+			s = "0." + BigNum.pad(s, index - s.length, "0", true);
+		else
+			s = s.substring(0, s.length - index) + "." + s.substring(s.length - index);
+		return sgn + s;
 	}
 
 	/**
@@ -254,15 +296,8 @@ export class BigNum {
 					throw Error("Rounding necessary. Exact representation not known.");
 				break;
 			}
-			let r = rounded.toString(), sgn = "";
-			if(r.charAt(0) === '-') {
-				r = r.substring(1);
-				sgn = "-";
-			}
-			if(context.precision > r.length)
-				r = new Array(context.precision - r.length).fill("0").join("") + r;
-			const i = r.length - context.precision;
-			return new BigNum(sgn + r.substring(0, i) + "." + r.substring(i));
+			let r = rounded.toString();
+			return new BigNum(BigNum.decimate(r, context.precision));
 		} else return x;
 	}
 
@@ -289,18 +324,10 @@ export class BigNum {
 	public add(that: BigNum, context: MathContext): BigNum;
 	public add(that: BigNum, context?: MathContext) {
 		context = context || BigNum.MODE;
-		const d = this.precision - that.precision;
-		const padding = BigInt(Math.pow(10, Math.abs(d)));
-		let sum = (d > 0? this.asBigInt + that.asBigInt * padding: this.asBigInt * padding + that.asBigInt).toString(), sgn = "";
+		const [a, b] = BigNum.align(this, that);
+		let sum = (BigInt(a) + BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
-		if(sum.charAt(0) === '-') {
-			sum = sum.substring(1);
-			sgn = "-";
-		}
-		if(precision > sum.length)
-			sum = new Array(precision - sum.length).fill("0").join("") + sum;
-		const i = sum.length - precision;
-		const res = new BigNum(sgn + sum.substring(0, i) + "." + sum.substring(i));
+		const res = new BigNum(BigNum.decimate(sum, precision));
 		return BigNum.round(res, context);
 	}
 
@@ -319,18 +346,10 @@ export class BigNum {
 	public sub(that: BigNum, context: MathContext): BigNum;
 	public sub(that: BigNum, context?: MathContext) {
 		context = context || BigNum.MODE;
-		const d = this.precision - that.precision;
-		const padding = BigInt(Math.pow(10, Math.abs(d)));
-		let diff = (d > 0? this.asBigInt - that.asBigInt * padding: this.asBigInt * padding - that.asBigInt).toString(), sgn = "";
+		const [a, b] = BigNum.align(this, that);
+		let sum = (BigInt(a) - BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
-		if(diff.charAt(0) === '-') {
-			diff = diff.substring(1);
-			sgn = "-";
-		}
-		if(precision > diff.length)
-			diff = new Array(precision - diff.length).fill("0").join("") + diff;
-		const i = diff.length - precision;
-		const res = new BigNum(sgn + diff.substring(0, i) + "." + diff.substring(i));
+		const res = new BigNum(BigNum.decimate(sum, precision));
 		return BigNum.round(res, context);
 	}
 
@@ -349,16 +368,9 @@ export class BigNum {
 	public mul(that: BigNum, context: MathContext): BigNum;
 	public mul(that: BigNum, context?: MathContext) {
 		context = context || BigNum.MODE;
-		let prod = (this.asBigInt * that.asBigInt).toString(), sgn = "";
+		let prod = (this.asBigInt * that.asBigInt).toString();
 		const precision = this.precision + that.precision;
-		if(prod.charAt(0) === '-') {
-			prod = prod.substring(1);
-			sgn = "-";
-		}
-		if(precision > prod.length)
-			prod = new Array(precision - prod.length).fill("0").join("") + prod;
-		const i = prod.length - precision;
-		const res = new BigNum(sgn + prod.substring(0, i) + "." + prod.substring(i));
+		const res = new BigNum(BigNum.decimate(prod, precision));
 		return BigNum.round(res, context);
 	}
 
@@ -383,27 +395,20 @@ export class BigNum {
 			throw new DivisionByZero("Cannot divide by zero.");
 		}
 		const precision = context.precision;
-		const p1 = this.precision, p2 = that.precision;
-		if(precision - p1 + p2 < 0)
-			return new BigNum("0");
-		const a = this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
+		const p1 = this.precision, p2 = that.precision, p = precision - p1 + p2;
+		if(p < 0)
+			return BigNum.ZERO;
+		const a = BigInt(BigNum.pad(this.asString, p, "0")); //this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
 		const b = that.asBigInt;
-		let quo = (a / b).toString(), sgn = "";
-		if(quo.charAt(0) === '-') {
-			quo = quo.substring(1);
-			sgn = "-";
-		}
-		if(precision > quo.length)
-			quo = new Array(precision - quo.length).fill("0").join("") + quo;
-		const i = quo.length - precision;
-		const res = new BigNum(sgn + quo.substring(0, i) + "." + quo.substring(i));
+		let quo = (a / b).toString();
+		const res = new BigNum(BigNum.decimate(quo, precision));
 		return BigNum.round(res, context);
 	}
 
 	static intpow(base: BigNum, index: number) {
 		if(index !== (index|0))
 			throw "Only defined for integer values of the power.";
-		let p = new BigNum("1");
+		let p = BigNum.ONE;
 		for(let i = 0; i < index; i++)
 			p = p.mul(base);
 		return p;
