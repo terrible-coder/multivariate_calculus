@@ -164,6 +164,10 @@ export class BigNum {
 		this.decimal = decimal;
 	}
 
+	/**
+	 * Returns this number as a single string, with no decimal point.
+	 * @ignore
+	 */
 	private get asString() {
 		if(this.integer === "0")
 			return this.decimal;
@@ -201,14 +205,30 @@ export class BigNum {
 		return 1;
 	}
 
+	/**
+	 * Given a string, adds padding to the rear or front. This is an implementation
+	 * to only aid with numerical operations where the numbers are stored as
+	 * strings. Do not use for general use.
+	 * @param s The string which is to be padded.
+	 * @param n Number of times padding string must be used.
+	 * @param char The padding string. It must be a single character string.
+	 * @param front Flag value to indicate whether to pad at front or at rear.
+	 * @ignore
+	 */
 	private static pad(s: string, n: number, char: string, front=false) {
 		if(char.length > 1)
 			throw new Error("Padding string must have only one character.");
-		// const padding = new Array(n).fill(char).join("")
-		// return front? padding + s: s + padding;
 		return front? "".padEnd(n, char) + s: s + "".padEnd(n, char);
 	}
 
+	/**
+	 * Aligns the decimal point in the given numbers by adding padding 0's
+	 * at the end of the smaller number string.
+	 * @param a 
+	 * @param b 
+	 * @returns The strings aligned according to position of decimal point.
+	 * @ignore
+	 */
 	private static align(a: BigNum, b: BigNum) {
 		const pa = a.precision, pb = b.precision;
 		const d = pa - pb;
@@ -221,6 +241,12 @@ export class BigNum {
 		return [aa, ba];
 	}
 
+	/**
+	 * Inserts a decimal point in the string at a given index. The `index`
+	 * value is calculated from the rear of the string starting from 1.
+	 * @param a The number as a string.
+	 * @param index The index from the rear.
+	 */
 	private static decimate(a: string, index: number) {
 		if(index < 0)
 			throw new Error("Cannot put decimal point at negative index.");
@@ -303,7 +329,18 @@ export class BigNum {
 		} else return x;
 	}
 
+	/**
+	 * Checks whether `this` and `that` are equal numbers. Equality is checked
+	 * only till the number of decimal places specified by [[BigNum.MODE]].
+	 * @param that The number to check against.
+	 */
 	public equals(that: BigNum): boolean;
+	/**
+	 * Checks whether `this` and `that` are equal numbers. Equality is checked
+	 * only till the number of decimal places specified by `context`.
+	 * @param that The number to check against.
+	 * @param context The [[MathContext]] value to use for equality check.
+	 */
 	public equals(that: BigNum, context: MathContext): boolean;
 	public equals(that: BigNum, context = BigNum.MODE) {
 		const A = BigNum.round(this, context);
@@ -311,6 +348,9 @@ export class BigNum {
 		return A.integer === B.integer && A.decimal === B.decimal;
 	}
 
+	/**
+	 * The negative value of `this`.
+	 */
 	public get neg() {
 		if(this.integer.charAt(0) === '-')
 			return new BigNum(this.integer.substring(1) + "." + this.decimal);
@@ -411,6 +451,13 @@ export class BigNum {
 		return BigNum.round(res, context);
 	}
 
+	/**
+	 * Raises a [[BigNum]] to an integer power. This function may be made
+	 * private in future versions. It is adviced not to use this function
+	 * except for development purposes.
+	 * @param base The base number.
+	 * @param index The index / exponent to which the base is to be raised.
+	 */
 	static intpow(base: BigNum, index: number) {
 		if(index !== (index|0))
 			throw "Only defined for integer values of the power.";
@@ -420,6 +467,10 @@ export class BigNum {
 		return p;
 	}
 
+	/**
+	 * Calculates the trigonometric sine of a given number.
+	 * @param x A number.
+	 */
 	public static sin(x: BigNum) {
 		/*
 			sin x = sum((-1)^n * x^(2n+1) / (2n+1)!, 0, infty)
@@ -448,6 +499,10 @@ export class BigNum {
 		}
 	}
 
+	/**
+	 * Calculates the trigonometric cosine of a given number.
+	 * @param x A number.
+	 */
 	public static cos(x: BigNum) {
 		const piby2 = BigNum.PI.div(BigNum.TWO);
 		return BigNum.sin(piby2.sub(x));
