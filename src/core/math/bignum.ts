@@ -262,34 +262,35 @@ export class BigNum {
 			const divider = BigInt(BigNum.pad("1", diff, "0"));
 			let rounded = num / divider;
 			const last = num % divider;
-			const five = BigInt(BigNum.pad("5", diff - 1, "0"));
+			const FIVE = BigInt(BigNum.pad("5", diff - 1, "0"));
+			const ONE = BigInt(BigNum.pad("1", diff - 1, "0"));
 			switch(context.rounding) {
 			case RoundingMode.UP:
-				if(last > 0) rounded += one;
-				else if(last < 0) rounded -= one;
+				if(last >= ONE) rounded += one;
+				else if(last <= -ONE) rounded -= one;
 				break;
 			case RoundingMode.DOWN:
 				break;
 			case RoundingMode.CEIL:
-				if(last > 0) rounded += one;
+				if(last >= ONE) rounded += one;
 				break;
 			case RoundingMode.FLOOR:
-				if(last < 0) rounded -= one;
+				if(last <= -ONE) rounded -= one;
 				break;
 			case RoundingMode.HALF_DOWN:
-				if(last > five) rounded += one;
-				else if(last < -five) rounded -= one;
+				if(last > FIVE) rounded += one;
+				else if(last < -FIVE) rounded -= one;
 				break;
 			case RoundingMode.HALF_UP:
-				if(last >= five) rounded += one;
-				else if(last <= -five) rounded -= one;
+				if(last >= FIVE) rounded += one;
+				else if(last <= -FIVE) rounded -= one;
 				break;
 			case RoundingMode.HALF_EVEN:
-				if(last > five) rounded += one;
-				else if(last < -five) rounded -= one;
+				if(last > FIVE) rounded += one;
+				else if(last < -FIVE) rounded -= one;
 				else if(abs(Number(rounded % ten)) % 2 !== 0) {
-					if(last === five) rounded += one;
-					else if(last === -five) rounded -= one;
+					if(last === FIVE) rounded += one;
+					else if(last === -FIVE) rounded -= one;
 				}
 				break;
 			case RoundingMode.UNNECESSARY:
@@ -308,6 +309,12 @@ export class BigNum {
 		const A = BigNum.round(this, context);
 		const B = BigNum.round(that, context);
 		return A.integer === B.integer && A.decimal === B.decimal;
+	}
+
+	public get neg() {
+		if(this.integer.charAt(0) === '-')
+			return new BigNum(this.integer.substring(1) + "." + this.decimal);
+		return new BigNum("-" + this.toString());
 	}
 
 	/**
@@ -415,32 +422,29 @@ export class BigNum {
 
 	public static sin(x: BigNum) {
 		/*
-		sin x = sum((-1)^n * x^(2n+1) / (2n+1)!, 0, infty)
-		t_n = ((-1)^n / (2n+1)!) * x^(2n+1)
-		t_n1 = ((-1)^n+1 / (2n+3)!) * x^(2n+3)
-		t_n1 = - (t_n/(2n+3)(2n+2)) * x^2
+			sin x = sum((-1)^n * x^(2n+1) / (2n+1)!, 0, infty)
+			t_n = ((-1)^n / (2n+1)!) * x^(2n+1)
+			t_n1 = ((-1)^n+1 / (2n+3)!) * x^(2n+3)
+			t_n1 = - (t_n/(2n+3)(2n+2)) * x^2
 		*/
 		const context: MathContext = {
-			precision: 30,
-			rounding: RoundingMode.UP
-		}
-		const zero = new BigNum("0"), one = new BigNum("1"), two = new BigNum("2"), three = new BigNum("3");
+			precision: 2 * BigNum.MODE.precision,
+			rounding: BigNum.MODE.rounding
+		};
 		const x_sq = x.mul(x, context);
-		let sum = zero;
+		let sum = BigNum.ZERO;
 		let term = x;
-		let n = zero;
+		let n = BigNum.ZERO;
 		while(true) {
 			sum = sum.add(term, context);
-			console.log(sum.toString(), n.toString());
-			const a = two.mul(n).add(three);
-			const b = two.mul(n).add(two);
-			const f = a.mul(b).mul(new BigNum("-1"));
+			const a = BigNum.TWO.mul(n, context).add(BigNum.THREE, context);
+			const b = BigNum.TWO.mul(n, context).add(BigNum.TWO, context);
+			const f = a.mul(b, context).neg;
 			const term1 = term.mul(x_sq, context).div(f, context);
-			console.log(term1.toString(), f.toString());
-			if(BigNum.abs(term1).equals(zero))
+			if(BigNum.abs(term1).equals(BigNum.ZERO, context))
 				return BigNum.round(sum, BigNum.MODE);
 			term = term1;
-			n = n.add(one);
+			n = n.add(BigNum.ONE);
 		}
 	}
 
