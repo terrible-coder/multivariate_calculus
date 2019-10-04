@@ -265,3 +265,10 @@ describe("Trigonometry", function() {
 		// });
 	});
 });
+
+describe("Exponent", function() {
+	it("exp", function() {
+		expect(BigNum.exp(BigNum.ZERO)).toEqual(BigNum.ONE);
+		expect(BigNum.exp(BigNum.ONE)).toEqual(BigNum.round(BigNum.E, BigNum.MODE));
+	});
+});

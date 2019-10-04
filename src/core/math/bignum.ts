@@ -77,8 +77,15 @@ export class BigNum {
 
 	/**
 	 * The circle constant PI correct upto 100 decimal places.
+	 * Source: [math.com](www.math.com/tables/constants/pi.htm)
 	 */
 	public static PI = new BigNum("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679");
+
+	/**
+	 * The constant Euler's number correct upto 100 decimal places.
+	 * Source: [math.com](www.math.com/tables/constants/e.htm)
+	 */
+	public static E = new BigNum("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274")
 
 	/**
 	 * The constant zero.
@@ -506,6 +513,24 @@ export class BigNum {
 	public static cos(x: BigNum) {
 		const piby2 = BigNum.PI.div(BigNum.TWO);
 		return BigNum.sin(piby2.sub(x));
+	}
+
+	public static exp(x: BigNum) {
+		const context: MathContext = {
+			precision: 2 * BigNum.MODE.precision,
+			rounding: BigNum.MODE.rounding
+		};
+		let sum = BigNum.ZERO;
+		let term = BigNum.ONE;
+		let n = BigNum.ZERO;
+		while(true) {
+			sum = sum.add(term, context);
+			const term1 = term.mul(x, context).div(n.add(BigNum.ONE, context), context);
+			if(BigNum.abs(term1).equals(BigNum.ZERO, context))
+				return BigNum.round(sum, BigNum.MODE);
+			term = term1;
+			n = n.add(BigNum.ONE);
+		}
 	}
 
 	/**
