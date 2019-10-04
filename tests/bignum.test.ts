@@ -222,6 +222,42 @@ describe("Rounds", function() {
 	});
 });
 
+describe("Comparison", function() {
+	it("Compares integers", function() {
+		const a = new BigNum("1");
+		const b = new BigNum("2");
+		expect(a.compareTo(b)).toBe(-1);
+		expect(b.compareTo(a)).toBe(1);
+	});
+
+	it("Compares fractions", function() {
+		const a = new BigNum("0.25");
+		const b = new BigNum("0.26");
+		expect(a.compareTo(b)).toBe(-1);
+		expect(b.compareTo(a)).toBe(1);
+	});
+
+	it("Compares mixed fractions", function() {
+		const a = new BigNum("1.23");
+		const b = new BigNum("1.234");
+		expect(a.compareTo(b)).toBe(-1);
+		expect(b.compareTo(a)).toBe(1);
+	});
+
+	it("Checks equality", function() {
+		const a = new BigNum("4.75");
+		const b = new BigNum("4.75");
+		expect(a.compareTo(b)).toBe(0);
+		expect(b.compareTo(a)).toBe(0);
+	});
+
+	it("Compares numerically equivalent values", function() {
+		const a = new BigNum("3.22");
+		const b = new BigNum("0.322");
+		expect(a.compareTo(b)).not.toBe(0);
+	});
+});
+
 describe("Trigonometry", function() {
 	describe("sine", function() {
 		// it("Multiples of pi", function() {

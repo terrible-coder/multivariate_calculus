@@ -336,6 +336,20 @@ export class BigNum {
 		} else return x;
 	}
 
+	public compareTo(that: BigNum) {
+		const [a, b] = BigNum.align(this, that);
+		const x = BigInt(a) - BigInt(b);
+		return x > 0? 1: x < 0? -1: 0;
+	}
+
+	public lessThan(that: BigNum) {
+		return this.compareTo(that) === -1;
+	}
+
+	public moreThan(that: BigNum) {
+		return this.compareTo(that) === 1;
+	}
+
 	/**
 	 * Checks whether `this` and `that` are equal numbers. Equality is checked
 	 * only till the number of decimal places specified by [[BigNum.MODE]].
@@ -353,6 +367,14 @@ export class BigNum {
 		const A = BigNum.round(this, context);
 		const B = BigNum.round(that, context);
 		return A.integer === B.integer && A.decimal === B.decimal;
+	}
+
+	public lessEquals(that: BigNum) {
+		return this.lessThan(that) || this.equals(that);
+	}
+
+	public moreEquals(that: BigNum) {
+		return this.moreThan(that) || this.equals(that);
 	}
 
 	/**
