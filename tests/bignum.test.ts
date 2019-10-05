@@ -312,4 +312,12 @@ describe("Logarithm", function() {
 		expect(BigNum.ln(BigNum.E)).toEqual(BigNum.ONE);
 		expect(BigNum.ln(BigNum.exp(BigNum.TWO))).toEqual(BigNum.TWO);
 	});
+
+	it("log", function() {
+		// const inv = new BigNum("0.1");
+		const ten = new BigNum("10");
+		// expect(BigNum.log(inv)).toEqual(BigNum.ONE.neg);
+		expect(BigNum.log(ten)).toEqual(BigNum.ONE);
+		expect(BigNum.log(new BigNum("100"))).toEqual(BigNum.TWO);
+	});
 });

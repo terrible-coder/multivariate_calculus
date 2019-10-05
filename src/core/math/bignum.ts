@@ -76,15 +76,24 @@ export class BigNum {
 
 	/**
 	 * The circle constant PI correct upto 100 decimal places.
-	 * Source: [math.com](www.math.com/tables/constants/pi.htm)
+	 * 
+	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
 	public static PI = new BigNum("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679");
-
 	/**
 	 * The constant Euler's number correct upto 100 decimal places.
-	 * Source: [math.com](www.math.com/tables/constants/e.htm)
+	 * 
+	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
-	public static E = new BigNum("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274")
+	public static E = new BigNum("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
+	
+	/**
+	 * The natural logarithm of 10 correct upto 100 decimal places. This comes
+	 * in vary handy for natural base to common base logarithm.
+	 * 
+	 * Source: http://paulbourke.net/miscellaneous/numbers/
+	 */
+	public static ln10 = new BigNum("2.3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983");
 
 	/**
 	 * The constant zero.
@@ -603,7 +612,7 @@ export class BigNum {
 	}
 
 	/**
-	 * Calculates the natural logarithm of a given number.
+	 * Calculates the natural logarithm (to the base `e`) of a given number.
 	 * @param x A number.
 	 */
 	public static ln(x: BigNum) {
@@ -616,6 +625,18 @@ export class BigNum {
 		if(x.lessThan(BigNum.TWO))
 			return BigNum.ln_less(x.sub(BigNum.ONE, context));
 		return newton_raphson(y => BigNum.exp(y).sub(x), y => BigNum.exp(y), BigNum.ONE);
+	}
+
+	/**
+	 * Calculates the common logarithm (to the base `10`) of a given number.
+	 * @param x A number.
+	 */
+	public static log(x: BigNum) {
+		const y = BigNum.ln(x).div(BigNum.ln10, {
+			precision: BigNum.ln10.precision,
+			rounding: BigNum.MODE.rounding
+		});
+		return BigNum.round(y, BigNum.MODE);
 	}
 
 	/**
