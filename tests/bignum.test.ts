@@ -10,6 +10,16 @@ describe("Integer numbers", function() {
 		expect(bnum.toString()).toBe("100.0");
 	});
 
+	it("Checks for equality", function() {
+		const A = new BigNum("20");
+		const B = new BigNum("20.1");
+		expect(A.equals(B)).toBe(false);
+		expect(A.equals(B, {
+			precision: 0,
+			rounding: RoundingMode.HALF_UP
+		})).toBe(true);
+	});
+
 	it("Adds numbers", function() {
 		expect(a.add(b)).toEqual(new BigNum("132"));
 	});
@@ -24,6 +34,13 @@ describe("Integer numbers", function() {
 
 	it("Divides numbers", function() {
 		expect(a.div(b)).toEqual(new BigNum("-12"));
+	});
+
+	it("Raises to integer powers", function() {
+		expect(BigNum.intpow(b, 2)).toEqual(a);
+		const temp = Math.pow(-12, 2);
+		console.log(temp);
+		expect(BigNum.intpow(b, 3)).toEqual(new BigNum("-1728"));
 	});
 
 	it("Computes absolute value", function() {
@@ -56,6 +73,11 @@ describe("Decimal numbers", function() {
 	it("Divides numbers", function() {
 		expect(a.div(b)).toEqual(new BigNum("0.12"));
 	});
+
+	it("Raises to integer powers", function() {
+		expect(BigNum.intpow(b, 2)).toEqual(new BigNum("1.44"));
+		expect(BigNum.intpow(b, 3)).toEqual(new BigNum("1.728"));
+	});
 });
 
 describe("Mixed values", function() {
@@ -69,6 +91,12 @@ describe("Mixed values", function() {
 		const a = new BigNum("10000");
 		const b = new BigNum("1");
 		expect(b.div(a)).toEqual(new BigNum("0.0001"));
+		const a1 = new BigNum("0.0001");
+		const b1 = new BigNum("1");
+		expect(a1.div(b1, {
+			precision: 2,
+			rounding: RoundingMode.HALF_UP
+		})).toEqual(new BigNum("0"));
 	});
 });
 
@@ -185,5 +213,116 @@ describe("Rounds", function() {
 			else
 				expect(() => BigNum.round(x, context)).toThrow();
 		}
+	});
+});
+
+describe("Comparison", function() {
+	it("Compares integers", function() {
+		const a = new BigNum("1");
+		const b = new BigNum("2");
+		expect(a.compareTo(b)).toBe(-1);
+		expect(b.compareTo(a)).toBe(1);
+	});
+
+	it("Compares fractions", function() {
+		const a = new BigNum("0.25");
+		const b = new BigNum("0.26");
+		expect(a.compareTo(b)).toBe(-1);
+		expect(b.compareTo(a)).toBe(1);
+	});
+
+	it("Compares mixed fractions", function() {
+		const a = new BigNum("1.23");
+		const b = new BigNum("1.234");
+		expect(a.compareTo(b)).toBe(-1);
+		expect(b.compareTo(a)).toBe(1);
+	});
+
+	it("Checks equality", function() {
+		const a = new BigNum("4.75");
+		const b = new BigNum("4.75");
+		expect(a.compareTo(b)).toBe(0);
+		expect(b.compareTo(a)).toBe(0);
+	});
+
+	it("Compares numerically equivalent values", function() {
+		const a = new BigNum("3.22");
+		const b = new BigNum("0.322");
+		expect(a.compareTo(b)).not.toBe(0);
+	});
+});
+
+describe("Trigonometry", function() {
+	describe("sine", function() {
+		// it("Multiples of pi", function() {
+		// 	for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+		// 		expect(BigNum.sin(n.mul(BigNum.PI))).toEqual(BigNum.ZERO);
+		// 	}
+		// });
+
+		it("Odd multiples of pi/2", function() {
+			const piby2 = BigNum.PI.div(BigNum.TWO);
+			let even = true;
+			for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+				const f = BigNum.TWO.mul(n).add(BigNum.ONE);
+				if(even)
+					expect(BigNum.sin(f.mul(piby2))).toEqual(BigNum.ONE);
+				else
+					expect(BigNum.sin(f.mul(piby2))).toEqual(new BigNum("-1"));
+				even = !even;
+			}
+		});
+	});
+
+	describe("cosine", function() {
+		it("Multiples of pi", function() {
+			let even = true;
+			for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+				if(even)
+					expect(BigNum.cos(n.mul(BigNum.PI))).toEqual(BigNum.ONE);
+				else
+					expect(BigNum.cos(n.mul(BigNum.PI))).toEqual(new BigNum("-1"));
+				even = !even;
+			}
+		});
+
+		// it("Odd multiples of pi/2", function() {
+		// 	const piby2 = BigNum.PI.div(BigNum.TWO);
+		// 	for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+		// 		const f = BigNum.TWO.mul(n).add(BigNum.ONE);
+		// 		expect(BigNum.cos(f.mul(piby2))).toEqual(BigNum.ZERO);
+		// 	}
+		// });
+	});
+});
+
+describe("Exponent", function() {
+	it("exp", function() {
+		expect(BigNum.exp(BigNum.ZERO)).toEqual(BigNum.ONE);
+		expect(BigNum.exp(BigNum.ONE)).toEqual(BigNum.round(BigNum.E, BigNum.MODE));
+		expect(BigNum.exp(BigNum.TWO)).toEqual(BigNum.E.mul(BigNum.E));
+	});
+
+	it("power", function() {
+		// expect(BigNum.TWO.pow(BigNum.TWO)).toEqual(BigNum.FOUR);
+		expect(BigNum.exp(BigNum.TWO)).toEqual(BigNum.E.mul(BigNum.E));
+	});
+});
+
+
+describe("Logarithm", function() {
+	it("ln", function() {
+		const e_inv = BigNum.ONE.div(BigNum.E, MathContext.HIGH_PRECISION);
+		expect(BigNum.ln(e_inv)).toEqual(BigNum.ONE.neg);
+		expect(BigNum.ln(BigNum.E)).toEqual(BigNum.ONE);
+		expect(BigNum.ln(BigNum.exp(BigNum.TWO))).toEqual(BigNum.TWO);
+	});
+
+	it("log", function() {
+		// const inv = new BigNum("0.1");
+		const ten = new BigNum("10");
+		// expect(BigNum.log(inv)).toEqual(BigNum.ONE.neg);
+		expect(BigNum.log(ten)).toEqual(BigNum.ONE);
+		expect(BigNum.log(new BigNum("100"))).toEqual(BigNum.TWO);
 	});
 });
