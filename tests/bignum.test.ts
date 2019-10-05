@@ -37,16 +37,10 @@ describe("Integer numbers", function() {
 	});
 
 	it("Raises to integer powers", function() {
-		const start = Date.now();
 		expect(BigNum.intpow(b, 2)).toEqual(a);
-		const time = Date.now() - start;
-		const start1 = Date.now();
 		const temp = Math.pow(-12, 2);
 		console.log(temp);
-		const time1 = Date.now() - start1;
 		expect(BigNum.intpow(b, 3)).toEqual(new BigNum("-1728"));
-		console.log(time, "ms");
-		console.log(time1, "ms");
 	});
 
 	it("Computes absolute value", function() {
@@ -306,5 +300,16 @@ describe("Exponent", function() {
 	it("exp", function() {
 		expect(BigNum.exp(BigNum.ZERO)).toEqual(BigNum.ONE);
 		expect(BigNum.exp(BigNum.ONE)).toEqual(BigNum.round(BigNum.E, BigNum.MODE));
+		expect(BigNum.exp(BigNum.TWO)).toEqual(BigNum.E.mul(BigNum.E));
+	});
+});
+
+
+describe("Logarithm", function() {
+	it("ln", function() {
+		const e_inv = BigNum.ONE.div(BigNum.E, MathContext.HIGH_PRECISION);
+		expect(BigNum.ln(e_inv)).toEqual(BigNum.ONE.neg);
+		expect(BigNum.ln(BigNum.E)).toEqual(BigNum.ONE);
+		expect(BigNum.ln(BigNum.exp(BigNum.TWO))).toEqual(BigNum.TWO);
 	});
 });

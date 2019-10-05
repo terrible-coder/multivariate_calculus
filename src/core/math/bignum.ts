@@ -556,10 +556,62 @@ export class BigNum {
 	}
 
 	/**
+	 * Evaluates the natural logarithm of a given number `x` (< 1).
+	 * @param x A number.
+	 */
+	static ln_less(x: BigNum) {
+		const context: MathContext = {
+			precision: 2 * BigNum.MODE.precision,
+			rounding: BigNum.MODE.rounding
+		};
+		let sum = BigNum.ZERO;
+		let term = x;
+		let n = BigNum.ONE;
+		while(true) {
+			sum = sum.add(term.div(n, context), context);
+			const term1 = term.mul(x, context).neg;
+			const term2 = term1.div(n.add(BigNum.ONE, context), context);
+			if(BigNum.abs(term2).equals(BigNum.ZERO, context))
+				return BigNum.round(sum, BigNum.MODE);
+			term = term1;
+			n = n.add(BigNum.ONE);
+		}
+	}
+
+	public static ln(x: BigNum) {
+		const context: MathContext = {
+			precision: 2 * BigNum.MODE.precision,
+			rounding: BigNum.MODE.rounding
+		};
+		if(x.lessEquals(BigNum.ZERO))
+			throw "Undefined";
+		if(x.lessThan(BigNum.TWO))
+			return BigNum.ln_less(x.sub(BigNum.ONE, context));
+		return newton_raphson(y => BigNum.exp(y).sub(x), y => BigNum.exp(y), BigNum.ONE);
+	}
+
+	/**
 	 * The string representation of the number.
 	 * @returns The string representation of this.
 	 */
 	public toString() {
 		return this.integer + "." + this.decimal;
+	}
+}
+
+function newton_raphson(f: (x: BigNum)=>BigNum, f_: (x: BigNum)=>BigNum, x: BigNum) {
+	const context: MathContext = {
+		precision: 2 * BigNum.MODE.precision,
+		rounding: BigNum.MODE.rounding
+	};
+	let X = x;
+	let Y: BigNum;
+	while(true) {
+		if(f(X).equals(BigNum.ZERO, context))
+			return BigNum.round(X, BigNum.MODE);
+		Y = new BigNum(X.toString());
+		X = X.sub(f(X).div(f_(X), context), context);
+		if(X.equals(Y))
+			return BigNum.round(X, BigNum.MODE);
 	}
 }
