@@ -1,5 +1,4 @@
 import { IndeterminateForm, DivisionByZero } from "../errors";
-import { abs } from "./functions";
 
 /**
  * Specifies a *rounding behaviour* for numerical operations on [[BigNum]]
@@ -288,15 +287,13 @@ export class BigNum {
 	 * @returns The number representing the rounded value of the argument according to the given context.
 	 */
 	public static round(x: BigNum, context: MathContext) {
-		const one = BigInt("1"), ten = BigInt("10");
 		if(x.precision > context.precision) {
-			const diff = x.precision - context.precision;
 			const num = x.asBigInt;
+			const diff = x.precision - context.precision;
 			const divider = BigInt(BigNum.pad("1", diff, "0"));
-			let rounded = num / divider;
-			const last = num % divider;
-			const FIVE = BigInt(BigNum.pad("5", diff - 1, "0"));
-			const ONE = BigInt(BigNum.pad("1", diff - 1, "0"));
+			let rounded = num / divider, last = num % divider;
+			const one = BigInt("1"), ten = BigInt("10");
+			const FIVE = BigInt(BigNum.pad("5", diff - 1, "0")), ONE = BigInt(BigNum.pad("1", diff - 1, "0"));
 			switch(context.rounding) {
 			case RoundingMode.UP:
 				if(last >= ONE) rounded += one;
@@ -321,7 +318,7 @@ export class BigNum {
 			case RoundingMode.HALF_EVEN:
 				if(last > FIVE) rounded += one;
 				else if(last < -FIVE) rounded -= one;
-				else if(abs(Number(rounded % ten)) % 2 !== 0) {
+				else if(Math.abs(Number(rounded % ten)) % 2 !== 0) {
 					if(last === FIVE) rounded += one;
 					else if(last === -FIVE) rounded -= one;
 				}
@@ -336,16 +333,31 @@ export class BigNum {
 		} else return x;
 	}
 
+	/**
+	 * The comparator function. This compares `this` to `that` and returns
+	 * * 0 if they are equal
+	 * * 1 if `this` > `that`
+	 * * -1 if `this` < `that`
+	 * @param that Number to compare with.
+	 */
 	public compareTo(that: BigNum) {
 		const [a, b] = BigNum.align(this, that);
 		const x = BigInt(a) - BigInt(b);
 		return x > 0? 1: x < 0? -1: 0;
 	}
 
+	/**
+	 * Determines whether `this` is less than `that`.
+	 * @param that Number to compare with.
+	 */
 	public lessThan(that: BigNum) {
 		return this.compareTo(that) === -1;
 	}
 
+	/**
+	 * Determines whether `this` is more than `that`.
+	 * @param that Number to compare with.
+	 */
 	public moreThan(that: BigNum) {
 		return this.compareTo(that) === 1;
 	}
@@ -369,10 +381,18 @@ export class BigNum {
 		return A.integer === B.integer && A.decimal === B.decimal;
 	}
 
+	/**
+	 * Determines whether `this` is less than or equal to `that`.
+	 * @param that Number to compare with.
+	 */
 	public lessEquals(that: BigNum) {
 		return this.lessThan(that) || this.equals(that);
 	}
 
+	/**
+	 * Determines whether `this` is more than or equal to `that`.
+	 * @param that Number to compare with.
+	 */
 	public moreEquals(that: BigNum) {
 		return this.moreThan(that) || this.equals(that);
 	}
@@ -537,6 +557,10 @@ export class BigNum {
 		return BigNum.sin(piby2.sub(x));
 	}
 
+	/**
+	 * Calculates the exponential of a given number.
+	 * @param x A number.
+	 */
 	public static exp(x: BigNum) {
 		const context: MathContext = {
 			precision: 2 * BigNum.MODE.precision,
@@ -559,7 +583,7 @@ export class BigNum {
 	 * Evaluates the natural logarithm of a given number `x` (< 1).
 	 * @param x A number.
 	 */
-	static ln_less(x: BigNum) {
+	private static ln_less(x: BigNum) {
 		const context: MathContext = {
 			precision: 2 * BigNum.MODE.precision,
 			rounding: BigNum.MODE.rounding
@@ -578,6 +602,10 @@ export class BigNum {
 		}
 	}
 
+	/**
+	 * Calculates the natural logarithm of a given number.
+	 * @param x A number.
+	 */
 	public static ln(x: BigNum) {
 		const context: MathContext = {
 			precision: 2 * BigNum.MODE.precision,
@@ -599,6 +627,16 @@ export class BigNum {
 	}
 }
 
+/**
+ * Uses the Newton-Raphson algorithm to find the root of a given equation.
+ * The exact derivative (found analytically) is assumed to be known.
+ * @param f Function whose root is to be found
+ * @param f_ The derivative of `f`.
+ * @param x The initial trial solution.
+ * @returns The root of the given function `f` correct upto the number of decimal
+ * 			places specified by the default [[MathContext]].
+ * @ignore
+ */
 function newton_raphson(f: (x: BigNum)=>BigNum, f_: (x: BigNum)=>BigNum, x: BigNum) {
 	const context: MathContext = {
 		precision: 2 * BigNum.MODE.precision,
