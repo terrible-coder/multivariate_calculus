@@ -525,6 +525,10 @@ export class BigNum {
 		return p;
 	}
 
+	public pow(ex: BigNum) {
+		return BigNum.exp(ex.mul(BigNum.ln(this)));
+	}
+
 	/**
 	 * Calculates the trigonometric sine of a given number.
 	 * @param x A number.

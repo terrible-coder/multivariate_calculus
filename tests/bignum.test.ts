@@ -302,6 +302,11 @@ describe("Exponent", function() {
 		expect(BigNum.exp(BigNum.ONE)).toEqual(BigNum.round(BigNum.E, BigNum.MODE));
 		expect(BigNum.exp(BigNum.TWO)).toEqual(BigNum.E.mul(BigNum.E));
 	});
+
+	it("power", function() {
+		// expect(BigNum.TWO.pow(BigNum.TWO)).toEqual(BigNum.FOUR);
+		expect(BigNum.exp(BigNum.TWO)).toEqual(BigNum.E.mul(BigNum.E));
+	});
 });
 
 
