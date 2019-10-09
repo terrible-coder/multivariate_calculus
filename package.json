@@ -10,9 +10,10 @@
   "main": "build/index.js",
   "types": "@types/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project ./",
     "test": "jest --config jest.config.js",
-    "pack": "browserify ./release/app.js -o mcalc.js"
+    "pack": "browserify ./release/app.js -o mcalc.js",
+    "minify": "minify mcalc.js > mcalc.min.js"
   },
   "keywords": [
     "vector",
