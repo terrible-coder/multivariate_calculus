@@ -309,8 +309,7 @@ describe("Exponent", function() {
 	});
 
 	it("power", function() {
-		// expect(BigNum.TWO.pow(BigNum.TWO)).toEqual(BigNum.FOUR);
-		expect(BigNum.exp(BigNum.TWO)).toEqual(BigNum.E.mul(BigNum.E));
+		expect(BigNum.TWO.pow(BigNum.TWO)).toEqual(BigNum.FOUR);
 	});
 });
 
