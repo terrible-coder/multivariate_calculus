@@ -552,9 +552,9 @@ export class BigNum {
 		let n = BigNum.ZERO;
 		while(true) {
 			sum = sum.add(term, context);
-			const a = BigNum.TWO.mul(n, context).add(BigNum.THREE, context);
-			const b = BigNum.TWO.mul(n, context).add(BigNum.TWO, context);
-			const f = a.mul(b, context).neg;
+			const a = BigNum.TWO.mul(n).add(BigNum.THREE);
+			const b = BigNum.TWO.mul(n).add(BigNum.TWO);
+			const f = a.mul(b).neg;
 			const term1 = term.mul(x_sq, context).div(f, context);
 			if(BigNum.abs(term1).equals(BigNum.ZERO, context))
 				return BigNum.round(sum, BigNum.MODE);
@@ -568,8 +568,31 @@ export class BigNum {
 	 * @param x A number.
 	 */
 	public static cos(x: BigNum) {
-		const piby2 = BigNum.PI.div(BigNum.TWO);
-		return BigNum.sin(piby2.sub(x));
+		/*
+			cos x = sum((-1)^n * x^(2n) / (2n)!, 0, infty)
+			t_n = (-1)^n * x^(2n) / (2n)!
+			t_n1 = (-1)^n+1 * x^(2n+2) / (2n + 2)!
+			t_n1 = - (t_n / (2n + 1)(2n + 2)) * x^2
+		*/
+		const context: MathContext = {
+			precision: 2 * BigNum.MODE.precision,
+			rounding: BigNum.MODE.rounding
+		};
+		const x_sq = x.mul(x, context);
+		let sum = BigNum.ZERO;
+		let term = BigNum.ONE;
+		let n = BigNum.ZERO;
+		while(true) {
+			sum = sum.add(term, context);
+			const a = BigNum.TWO.mul(n).add(BigNum.ONE);
+			const b = BigNum.TWO.mul(n).add(BigNum.TWO);
+			const f = a.mul(b).neg;
+			const term1 = term.mul(x_sq, context).div(f, context);
+			if(BigNum.abs(term1).equals(BigNum.ZERO, context))
+				return BigNum.round(sum, BigNum.MODE);
+			term = term1;
+			n = n.add(BigNum.ONE);
+		}
 	}
 
 	/**

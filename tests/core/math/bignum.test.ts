@@ -253,22 +253,25 @@ describe("Comparison", function() {
 });
 
 describe("Trigonometry", function() {
+	const context = MathContext.HIGH_PRECISION;
 	describe("sine", function() {
-		// it("Multiples of pi", function() {
-		// 	for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
-		// 		expect(BigNum.sin(n.mul(BigNum.PI))).toEqual(BigNum.ZERO);
-		// 	}
-		// });
+		it("Multiples of pi", function() {
+			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+				const x = n.mul(BigNum.PI, context);
+				expect(BigNum.sin(x)).toEqual(BigNum.ZERO);
+			}
+		});
 
 		it("Odd multiples of pi/2", function() {
 			const piby2 = BigNum.PI.div(BigNum.TWO);
 			let even = true;
-			for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
 				const f = BigNum.TWO.mul(n).add(BigNum.ONE);
+				const x = f.mul(piby2);
 				if(even)
-					expect(BigNum.sin(f.mul(piby2))).toEqual(BigNum.ONE);
+					expect(BigNum.sin(x)).toEqual(BigNum.ONE);
 				else
-					expect(BigNum.sin(f.mul(piby2))).toEqual(new BigNum("-1"));
+					expect(BigNum.sin(x)).toEqual(BigNum.ONE.neg);
 				even = !even;
 			}
 		});
@@ -277,22 +280,24 @@ describe("Trigonometry", function() {
 	describe("cosine", function() {
 		it("Multiples of pi", function() {
 			let even = true;
-			for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+				const x = n.mul(BigNum.PI);
 				if(even)
-					expect(BigNum.cos(n.mul(BigNum.PI))).toEqual(BigNum.ONE);
+					expect(BigNum.cos(x)).toEqual(BigNum.ONE);
 				else
-					expect(BigNum.cos(n.mul(BigNum.PI))).toEqual(new BigNum("-1"));
+					expect(BigNum.cos(x)).toEqual(BigNum.ONE.neg);
 				even = !even;
 			}
 		});
 
-		// it("Odd multiples of pi/2", function() {
-		// 	const piby2 = BigNum.PI.div(BigNum.TWO);
-		// 	for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
-		// 		const f = BigNum.TWO.mul(n).add(BigNum.ONE);
-		// 		expect(BigNum.cos(f.mul(piby2))).toEqual(BigNum.ZERO);
-		// 	}
-		// });
+		it("Odd multiples of pi/2", function() {
+			const piby2 = BigNum.PI.div(BigNum.TWO, context);
+			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+				const f = BigNum.TWO.mul(n).add(BigNum.ONE);
+				const x = f.mul(piby2, context);
+				expect(BigNum.cos(x)).toEqual(BigNum.ZERO);
+			}
+		});
 	});
 });
 
