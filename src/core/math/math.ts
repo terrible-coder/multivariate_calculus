@@ -73,7 +73,7 @@ export class math {
 	public static acos(x: Scalar): Scalar.Expression;
 	public static acos(x: number | Evaluable) {
 		if(typeof x === "number")
-			return Math.asin(x);
+			return Math.acos(x);
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.acos(x.value));
 		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
@@ -145,7 +145,7 @@ export class math {
 	public static acosh(x: Scalar): Scalar.Expression;
 	public static acosh(x: number | Evaluable) {
 		if(typeof x === "number")
-			return Math.asinh(x);
+			return Math.acosh(x);
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.acosh(x.value));
 		if(x instanceof Scalar.Variable || x instanceof Scalar.Expression)
