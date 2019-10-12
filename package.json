@@ -11,9 +11,11 @@
   "types": "@types/index.d.ts",
   "scripts": {
     "build": "tsc --project ./",
-    "test": "jest --config jest.config.js",
+    "test:all": "jest --config jest.config.js",
+    "test:only": "jest -c jest.config.js -i",
     "pack": "browserify ./release/app.js -o mcalc.js",
-    "minify": "minify mcalc.js > mcalc.min.js"
+    "minify": "minify mcalc.js > mcalc.min.js",
+    "docs": "typedoc --mode file --out ./docs/next ./src"
   },
   "keywords": [
     "vector",
