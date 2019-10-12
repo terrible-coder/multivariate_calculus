@@ -80,13 +80,14 @@ export class BigNum {
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
 	public static PI = new BigNum("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679");
+
 	/**
 	 * The constant Euler's number correct upto 100 decimal places.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
 	public static E = new BigNum("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
-	
+
 	/**
 	 * The natural logarithm of 10 correct upto 100 decimal places. This comes
 	 * in vary handy for natural base to common base logarithm.
@@ -261,6 +262,7 @@ export class BigNum {
 	 * value is calculated from the rear of the string starting from 1.
 	 * @param a The number as a string.
 	 * @param index The index from the rear.
+	 * @ignore
 	 */
 	private static decimate(a: string, index: number) {
 		if(index < 0)
@@ -595,6 +597,7 @@ export class BigNum {
 	/**
 	 * Evaluates the natural logarithm of a given number `x` (< 1).
 	 * @param x A number.
+	 * @ignore
 	 */
 	private static ln_less(x: BigNum) {
 		const context: MathContext = {

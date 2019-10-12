@@ -1,4 +1,4 @@
-const { Interval } = require("../build/core/interval");
+const { Interval } = require("../../build/core/interval");
 
 describe("Checks intervals", function() {
 	const a = 0, b = 1;

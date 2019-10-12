@@ -4,15 +4,18 @@
     "type": "git",
     "url": "https://github.com/terrible-coder/multivariate_calculus.git"
   },
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Handles calculus of multiple variables in multidimensional space.",
   "homepage": "https://terrible-coder.github.io/multivariate_calculus",
   "main": "build/index.js",
   "types": "@types/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "jest --config jest.config.js",
-    "pack": "browserify ./release/app.js -o mcalc.js"
+    "build": "tsc --project ./",
+    "test:all": "jest --config jest.config.js",
+    "test:only": "jest -c jest.config.js -i",
+    "pack": "browserify ./release/app.js -o mcalc.js",
+    "minify": "minify mcalc.js > mcalc.min.js",
+    "docs": "typedoc --mode file --out ./docs/next ./src"
   },
   "keywords": [
     "vector",

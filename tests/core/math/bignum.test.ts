@@ -1,5 +1,5 @@
-import { BigNum, RoundingMode, MathContext } from "../src/core/math/bignum";
-import { IndeterminateForm, DivisionByZero } from "../src/core/errors";
+import { BigNum, RoundingMode, MathContext } from "../../../src/core/math/bignum";
+import { IndeterminateForm, DivisionByZero } from "../../../src/core/errors";
 
 describe("Integer numbers", function() {
 	const a = new BigNum("144");
