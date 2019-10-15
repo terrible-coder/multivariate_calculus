@@ -1,3 +1,22 @@
+/*
+This file contains the text that I want to insert as the header comment.
+
+TASKS:
+1. Build
+	a. For node
+	b. For browser
+2. Test
+	a. All
+	b. Select suite(s)
+3. Create docs
+	a. Into next folder (before commit and release)
+	b. Into correct version folder (for release)
+4. Minify
+5. Add license as header
+6. Prepare
+	[1, 2a, 3b, 4, 5]
+*/
+
 const gulp = require("gulp");
 const ts = require("gulp-typescript");
 const header = require("gulp-header");
