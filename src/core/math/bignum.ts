@@ -527,7 +527,17 @@ export class BigNum {
 		return p;
 	}
 
+	/**
+	 * Raises `this` to the power of `ex`.
+	 * @param ex A number.
+	 */
 	public pow(ex: BigNum): BigNum;
+	/**
+	 * Raises `this` to the power of `ex` using the rounding and precision
+	 * settings specified by the given [[MathContext]].
+	 * @param ex A number.
+	 * @param context The context settings to use.
+	 */
 	public pow(ex: BigNum, context: MathContext): BigNum;
 	public pow(ex: BigNum, context=BigNum.MODE) {
 		const tempctx: MathContext = {
