@@ -517,13 +517,14 @@ export class BigNum {
 	 * except for development purposes.
 	 * @param base The base number.
 	 * @param index The index / exponent to which the base is to be raised.
+	 * @param context The context settings to use.
 	 */
-	static intpow(base: BigNum, index: number) {
+	static intpow(base: BigNum, index: number, context=BigNum.MODE) {
 		if(index !== (index|0))
 			throw "Only defined for integer values of the power.";
 		let p = BigNum.ONE;
 		for(let i = 0; i < index; i++)
-			p = p.mul(base);
+			p = p.mul(base, context);
 		return p;
 	}
 
@@ -540,12 +541,14 @@ export class BigNum {
 	 */
 	public pow(ex: BigNum, context: MathContext): BigNum;
 	public pow(ex: BigNum, context=BigNum.MODE) {
-		const tempctx: MathContext = {
+		if(ex.decimal === "" || ex.decimal === "0")
+			return BigNum.intpow(this, parseInt(ex.integer), context);
+		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const y = ex.mul(BigNum.ln(this, tempctx), tempctx);
-		return BigNum.round(BigNum.exp(y, tempctx), context);
+		const y = ex.mul(BigNum.ln(this, ctx), ctx);
+		return BigNum.round(BigNum.exp(y, ctx), context);
 	}
 
 	/**
@@ -567,21 +570,21 @@ export class BigNum {
 			t_n1 = ((-1)^n+1 / (2n+3)!) * x^(2n+3)
 			t_n1 = - (t_n/(2n+3)(2n+2)) * x^2
 		*/
-		const tempctx: MathContext = {
+		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const x_sq = x.mul(x, tempctx);
+		const x_sq = x.mul(x, ctx);
 		let sum = BigNum.ZERO;
 		let term = x;
 		let n = BigNum.ZERO;
 		while(true) {
-			sum = sum.add(term, tempctx);
+			sum = sum.add(term, ctx);
 			const a = BigNum.TWO.mul(n).add(BigNum.THREE);
 			const b = BigNum.TWO.mul(n).add(BigNum.TWO);
 			const f = a.mul(b).neg;
-			const term1 = term.mul(x_sq, tempctx).div(f, tempctx);
-			if(BigNum.abs(term1).equals(BigNum.ZERO, tempctx))
+			const term1 = term.mul(x_sq, ctx).div(f, ctx);
+			if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
 				return BigNum.round(sum, context);
 			term = term1;
 			n = n.add(BigNum.ONE);
@@ -607,21 +610,21 @@ export class BigNum {
 			t_n1 = (-1)^n+1 * x^(2n+2) / (2n + 2)!
 			t_n1 = - (t_n / (2n + 1)(2n + 2)) * x^2
 		*/
-		const tempctx: MathContext = {
+		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const x_sq = x.mul(x, tempctx);
+		const x_sq = x.mul(x, ctx);
 		let sum = BigNum.ZERO;
 		let term = BigNum.ONE;
 		let n = BigNum.ZERO;
 		while(true) {
-			sum = sum.add(term, tempctx);
+			sum = sum.add(term, ctx);
 			const a = BigNum.TWO.mul(n).add(BigNum.ONE);
 			const b = BigNum.TWO.mul(n).add(BigNum.TWO);
 			const f = a.mul(b).neg;
-			const term1 = term.mul(x_sq, tempctx).div(f, tempctx);
-			if(BigNum.abs(term1).equals(BigNum.ZERO, tempctx))
+			const term1 = term.mul(x_sq, ctx).div(f, ctx);
+			if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
 				return BigNum.round(sum, context);
 			term = term1;
 			n = n.add(BigNum.ONE);
@@ -641,7 +644,7 @@ export class BigNum {
 	 */
 	public static exp(x: BigNum, context: MathContext): BigNum;
 	public static exp(x: BigNum, context=BigNum.MODE) {
-		const tempctx: MathContext = {
+		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
@@ -649,9 +652,9 @@ export class BigNum {
 		let term = BigNum.ONE;
 		let n = BigNum.ZERO;
 		while(true) {
-			sum = sum.add(term, tempctx);
-			const term1 = term.mul(x, tempctx).div(n.add(BigNum.ONE), tempctx);
-			if(BigNum.abs(term1).equals(BigNum.ZERO, tempctx))
+			sum = sum.add(term, ctx);
+			const term1 = term.mul(x, ctx).div(n.add(BigNum.ONE), ctx);
+			if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
 				return BigNum.round(sum, context);
 			term = term1;
 			n = n.add(BigNum.ONE);
@@ -665,7 +668,7 @@ export class BigNum {
 	 * @ignore
 	 */
 	private static ln_less(x: BigNum, context=BigNum.MODE) {
-		const tempctx: MathContext = {
+		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
@@ -673,10 +676,10 @@ export class BigNum {
 		let term = x;
 		let n = BigNum.ONE;
 		while(true) {
-			sum = sum.add(term.div(n, tempctx), tempctx);
-			const term1 = term.mul(x, tempctx).neg;
-			const term2 = term1.div(n.add(BigNum.ONE, tempctx), tempctx);
-			if(BigNum.abs(term2).equals(BigNum.ZERO, tempctx))
+			sum = sum.add(term.div(n, ctx), ctx);
+			const term1 = term.mul(x, ctx).neg;
+			const term2 = term1.div(n.add(BigNum.ONE, ctx), ctx);
+			if(BigNum.abs(term2).equals(BigNum.ZERO, ctx))
 				return BigNum.round(sum, context);
 			term = term1;
 			n = n.add(BigNum.ONE);
@@ -697,7 +700,7 @@ export class BigNum {
 	 */
 	public static ln(x: BigNum, context: MathContext): BigNum;
 	public static ln(x: BigNum, context=BigNum.MODE) {
-		const tempctx: MathContext = {
+		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
@@ -705,14 +708,14 @@ export class BigNum {
 			throw "Undefined";
 		if(x.lessThan(BigNum.TWO))
 			return BigNum.round(
-				BigNum.ln_less(x.sub(BigNum.ONE, tempctx), tempctx),
+				BigNum.ln_less(x.sub(BigNum.ONE, ctx), ctx),
 				context
 				);
 		return BigNum.round(newton_raphson(
-			y => BigNum.exp(y, tempctx).sub(x, tempctx),
-			y => BigNum.exp(y, tempctx),
+			y => BigNum.exp(y, ctx).sub(x, ctx),
+			y => BigNum.exp(y, ctx),
 			BigNum.ONE,
-			tempctx
+			ctx
 			),
 			context);
 	}
@@ -731,11 +734,11 @@ export class BigNum {
 	 */
 	public static log(x: BigNum, context: MathContext): BigNum;
 	public static log(x: BigNum, context=BigNum.MODE) {
-		const tempctx: MathContext = {
+		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const y = BigNum.ln(x, tempctx).div(BigNum.ln10, tempctx);
+		const y = BigNum.ln(x, ctx).div(BigNum.ln10, ctx);
 		return BigNum.round(y, context);
 	}
 
@@ -759,18 +762,18 @@ export class BigNum {
  * @ignore
  */
 function newton_raphson(f: (x: BigNum)=>BigNum, f_: (x: BigNum)=>BigNum, x: BigNum, context=BigNum.MODE) {
-	const tempctx: MathContext = {
+	const ctx: MathContext = {
 		precision: 2 * context.precision,
 		rounding: context.rounding
 	};
 	let X = x;
 	let Y: BigNum;
 	while(true) {
-		if(f(X).equals(BigNum.ZERO, tempctx))
+		if(f(X).equals(BigNum.ZERO, ctx))
 			return BigNum.round(X, context);
 		Y = new BigNum(X.toString());
-		X = X.sub(f(X).div(f_(X), tempctx), tempctx);
-		if(X.equals(Y, tempctx))
+		X = X.sub(f(X).div(f_(X), ctx), ctx);
+		if(X.equals(Y, ctx))
 			return BigNum.round(X, context);
 	}
 }
