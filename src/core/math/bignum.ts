@@ -527,37 +527,52 @@ export class BigNum {
 		return p;
 	}
 
-	public pow(ex: BigNum) {
-		return BigNum.exp(ex.mul(BigNum.ln(this)));
+	public pow(ex: BigNum): BigNum;
+	public pow(ex: BigNum, context: MathContext): BigNum;
+	public pow(ex: BigNum, context=BigNum.MODE) {
+		const tempctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const y = ex.mul(BigNum.ln(this, tempctx), tempctx);
+		return BigNum.round(BigNum.exp(y, tempctx), context);
 	}
 
 	/**
 	 * Calculates the trigonometric sine of a given number.
 	 * @param x A number.
 	 */
-	public static sin(x: BigNum) {
+	public static sin(x: BigNum): BigNum;
+	/**
+	 * Calculates the trigonometric sine of a given number using the rounding
+	 * and precision settings specified by the given [[MathContext]].
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static sin(x: BigNum, context: MathContext): BigNum;
+	public static sin(x: BigNum, context=BigNum.MODE) {
 		/*
 			sin x = sum((-1)^n * x^(2n+1) / (2n+1)!, 0, infty)
 			t_n = ((-1)^n / (2n+1)!) * x^(2n+1)
 			t_n1 = ((-1)^n+1 / (2n+3)!) * x^(2n+3)
 			t_n1 = - (t_n/(2n+3)(2n+2)) * x^2
 		*/
-		const context: MathContext = {
-			precision: 2 * BigNum.MODE.precision,
-			rounding: BigNum.MODE.rounding
+		const tempctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
 		};
-		const x_sq = x.mul(x, context);
+		const x_sq = x.mul(x, tempctx);
 		let sum = BigNum.ZERO;
 		let term = x;
 		let n = BigNum.ZERO;
 		while(true) {
-			sum = sum.add(term, context);
+			sum = sum.add(term, tempctx);
 			const a = BigNum.TWO.mul(n).add(BigNum.THREE);
 			const b = BigNum.TWO.mul(n).add(BigNum.TWO);
 			const f = a.mul(b).neg;
-			const term1 = term.mul(x_sq, context).div(f, context);
-			if(BigNum.abs(term1).equals(BigNum.ZERO, context))
-				return BigNum.round(sum, BigNum.MODE);
+			const term1 = term.mul(x_sq, tempctx).div(f, tempctx);
+			if(BigNum.abs(term1).equals(BigNum.ZERO, tempctx))
+				return BigNum.round(sum, context);
 			term = term1;
 			n = n.add(BigNum.ONE);
 		}
@@ -567,29 +582,37 @@ export class BigNum {
 	 * Calculates the trigonometric cosine of a given number.
 	 * @param x A number.
 	 */
-	public static cos(x: BigNum) {
+	public static cos(x: BigNum): BigNum;
+	/**
+	 * Calculates the trigonometric cosine of a given number using the rounding
+	 * and precision settings specified by the given [[MathContext]].
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static cos(x: BigNum, context: MathContext): BigNum;
+	public static cos(x: BigNum, context=BigNum.MODE) {
 		/*
 			cos x = sum((-1)^n * x^(2n) / (2n)!, 0, infty)
 			t_n = (-1)^n * x^(2n) / (2n)!
 			t_n1 = (-1)^n+1 * x^(2n+2) / (2n + 2)!
 			t_n1 = - (t_n / (2n + 1)(2n + 2)) * x^2
 		*/
-		const context: MathContext = {
-			precision: 2 * BigNum.MODE.precision,
-			rounding: BigNum.MODE.rounding
+		const tempctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
 		};
-		const x_sq = x.mul(x, context);
+		const x_sq = x.mul(x, tempctx);
 		let sum = BigNum.ZERO;
 		let term = BigNum.ONE;
 		let n = BigNum.ZERO;
 		while(true) {
-			sum = sum.add(term, context);
+			sum = sum.add(term, tempctx);
 			const a = BigNum.TWO.mul(n).add(BigNum.ONE);
 			const b = BigNum.TWO.mul(n).add(BigNum.TWO);
 			const f = a.mul(b).neg;
-			const term1 = term.mul(x_sq, context).div(f, context);
-			if(BigNum.abs(term1).equals(BigNum.ZERO, context))
-				return BigNum.round(sum, BigNum.MODE);
+			const term1 = term.mul(x_sq, tempctx).div(f, tempctx);
+			if(BigNum.abs(term1).equals(BigNum.ZERO, tempctx))
+				return BigNum.round(sum, context);
 			term = term1;
 			n = n.add(BigNum.ONE);
 		}
@@ -599,19 +622,27 @@ export class BigNum {
 	 * Calculates the exponential of a given number.
 	 * @param x A number.
 	 */
-	public static exp(x: BigNum) {
-		const context: MathContext = {
-			precision: 2 * BigNum.MODE.precision,
-			rounding: BigNum.MODE.rounding
+	public static exp(x: BigNum): BigNum;
+	/**
+	 * Calculates the exponential of a given number using the rounding and
+	 * precision settings specified by the given [[MathContext]].
+	 * @param x A number
+	 * @param context The context settings to use.
+	 */
+	public static exp(x: BigNum, context: MathContext): BigNum;
+	public static exp(x: BigNum, context=BigNum.MODE) {
+		const tempctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
 		};
 		let sum = BigNum.ZERO;
 		let term = BigNum.ONE;
 		let n = BigNum.ZERO;
 		while(true) {
-			sum = sum.add(term, context);
-			const term1 = term.mul(x, context).div(n.add(BigNum.ONE, context), context);
-			if(BigNum.abs(term1).equals(BigNum.ZERO, context))
-				return BigNum.round(sum, BigNum.MODE);
+			sum = sum.add(term, tempctx);
+			const term1 = term.mul(x, tempctx).div(n.add(BigNum.ONE), tempctx);
+			if(BigNum.abs(term1).equals(BigNum.ZERO, tempctx))
+				return BigNum.round(sum, context);
 			term = term1;
 			n = n.add(BigNum.ONE);
 		}
@@ -620,22 +651,23 @@ export class BigNum {
 	/**
 	 * Evaluates the natural logarithm of a given number `x` (< 1).
 	 * @param x A number.
+	 * @param context Context settings to be used.
 	 * @ignore
 	 */
-	private static ln_less(x: BigNum) {
-		const context: MathContext = {
-			precision: 2 * BigNum.MODE.precision,
-			rounding: BigNum.MODE.rounding
+	private static ln_less(x: BigNum, context=BigNum.MODE) {
+		const tempctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
 		};
 		let sum = BigNum.ZERO;
 		let term = x;
 		let n = BigNum.ONE;
 		while(true) {
-			sum = sum.add(term.div(n, context), context);
-			const term1 = term.mul(x, context).neg;
-			const term2 = term1.div(n.add(BigNum.ONE, context), context);
-			if(BigNum.abs(term2).equals(BigNum.ZERO, context))
-				return BigNum.round(sum, BigNum.MODE);
+			sum = sum.add(term.div(n, tempctx), tempctx);
+			const term1 = term.mul(x, tempctx).neg;
+			const term2 = term1.div(n.add(BigNum.ONE, tempctx), tempctx);
+			if(BigNum.abs(term2).equals(BigNum.ZERO, tempctx))
+				return BigNum.round(sum, context);
 			term = term1;
 			n = n.add(BigNum.ONE);
 		}
@@ -645,28 +677,56 @@ export class BigNum {
 	 * Calculates the natural logarithm (to the base `e`) of a given number.
 	 * @param x A number.
 	 */
-	public static ln(x: BigNum) {
-		const context: MathContext = {
-			precision: 2 * BigNum.MODE.precision,
-			rounding: BigNum.MODE.rounding
+	public static ln(x: BigNum): BigNum;
+	/**
+	 * Calculates the natural logarithm (to the base `e`) of a given number
+	 * using the rounding and precision settings specified by the given
+	 * [[MathContext]].
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static ln(x: BigNum, context: MathContext): BigNum;
+	public static ln(x: BigNum, context=BigNum.MODE) {
+		const tempctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
 		};
 		if(x.lessEquals(BigNum.ZERO))
 			throw "Undefined";
 		if(x.lessThan(BigNum.TWO))
-			return BigNum.ln_less(x.sub(BigNum.ONE, context));
-		return newton_raphson(y => BigNum.exp(y).sub(x), y => BigNum.exp(y), BigNum.ONE);
+			return BigNum.round(
+				BigNum.ln_less(x.sub(BigNum.ONE, tempctx), tempctx),
+				context
+				);
+		return BigNum.round(newton_raphson(
+			y => BigNum.exp(y, tempctx).sub(x, tempctx),
+			y => BigNum.exp(y, tempctx),
+			BigNum.ONE,
+			tempctx
+			),
+			context);
 	}
 
 	/**
 	 * Calculates the common logarithm (to the base `10`) of a given number.
 	 * @param x A number.
 	 */
-	public static log(x: BigNum) {
-		const y = BigNum.ln(x).div(BigNum.ln10, {
-			precision: BigNum.ln10.precision,
-			rounding: BigNum.MODE.rounding
-		});
-		return BigNum.round(y, BigNum.MODE);
+	public static log(x: BigNum): BigNum;
+	/**
+	 * Calculates the common logarithm (to the base `10`) of a given number
+	 * using the rounding and precision settings specified by the given
+	 * [[MathContext]].
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static log(x: BigNum, context: MathContext): BigNum;
+	public static log(x: BigNum, context=BigNum.MODE) {
+		const tempctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const y = BigNum.ln(x, tempctx).div(BigNum.ln10, tempctx);
+		return BigNum.round(y, context);
 	}
 
 	/**
@@ -688,19 +748,19 @@ export class BigNum {
  * 			places specified by the default [[MathContext]].
  * @ignore
  */
-function newton_raphson(f: (x: BigNum)=>BigNum, f_: (x: BigNum)=>BigNum, x: BigNum) {
-	const context: MathContext = {
-		precision: 2 * BigNum.MODE.precision,
-		rounding: BigNum.MODE.rounding
+function newton_raphson(f: (x: BigNum)=>BigNum, f_: (x: BigNum)=>BigNum, x: BigNum, context=BigNum.MODE) {
+	const tempctx: MathContext = {
+		precision: 2 * context.precision,
+		rounding: context.rounding
 	};
 	let X = x;
 	let Y: BigNum;
 	while(true) {
-		if(f(X).equals(BigNum.ZERO, context))
-			return BigNum.round(X, BigNum.MODE);
+		if(f(X).equals(BigNum.ZERO, tempctx))
+			return BigNum.round(X, context);
 		Y = new BigNum(X.toString());
-		X = X.sub(f(X).div(f_(X), context), context);
-		if(X.equals(Y))
-			return BigNum.round(X, BigNum.MODE);
+		X = X.sub(f(X).div(f_(X), tempctx), tempctx);
+		if(X.equals(Y, tempctx))
+			return BigNum.round(X, context);
 	}
 }
