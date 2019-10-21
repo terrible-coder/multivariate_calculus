@@ -25,11 +25,22 @@ export enum RoundingMode {
 }
 
 /**
- * An object type which holds information about how many digits after the decimal
- * point must be stored and which rounding algorithm to use.
+ * An object type which holds information about the context settings that
+ * describes certain rules for certain numerical operations.
  */
 export type MathContext = {
+	/**
+	 * The number of decimal places a [[BigNum]] object should store. This does
+	 * not represent the number of significant digits in the number unlike the
+	 * JAVA implementation of the same concept.
+	 */
 	precision: number;
+	/**
+	 * The rounding algorithm that should be used for a particular numerical
+	 * operation. Care must be taken as to when the UNNECESSARY mode is used,
+	 * it will throw an exception if an exact representation of the result is
+	 * not found.
+	 */
 	rounding: RoundingMode
 }
 
@@ -72,6 +83,16 @@ export namespace MathContext {
 		rounding: RoundingMode.HALF_EVEN
 	};
 }
+
+/**
+ * Immutable, arbitrary precision decimal numbers. A BigNum consists of an
+ * integer part and a decimal part stored as string objects. The precision of
+ * the number is completely controlled by the user. A [[MathContext]] object
+ * helps to specify the number of decimal places (not significant figures) the
+ * user wants and what rounding algorithm should be used. Every operation is
+ * carried out by an intermediate result which is then rounded to the preferred
+ * number of decimal places using the preferred rounding algorithm.
+ */
 export class BigNum {
 
 	/**
@@ -418,16 +439,20 @@ export class BigNum {
 	}
 
 	/**
-	 * Adds two [[BigNum]] instances.
+	 * Adds two [[BigNum]] instances. The higher precision value of the two is
+	 * chosen as the precision for the result and rounding is according to
+	 * [[BigNum.MODE]].
 	 * @param that The number to add this with.
-	 * @returns The sum of the two.
+	 * @returns this + that.
 	 */
 	public add(that: BigNum): BigNum;
 	/**
-	 * Adds two [[BigNum]] instances according to the given [[MathContext]].
+	 * Adds two [[BigNum]] instances. The higher precision value of the two is
+	 * chosen as the precision for the result and rounding is according to the
+	 * given context settings.
 	 * @param that The number to add this with.
-	 * @param context The [[MathContext]] object used to decide the rounding and precision of the result.
-	 * @returns The sum of the two.
+	 * @param context The context settings object to use.
+	 * @returns this + that.
 	 */
 	public add(that: BigNum, context: MathContext): BigNum;
 	public add(that: BigNum, context?: MathContext) {
@@ -440,16 +465,20 @@ export class BigNum {
 	}
 
 	/**
-	 * Subtracts one [[BigNum]] instance from another.
+	 * Subtracts one [[BigNum]] instance from another. The higher precision value
+	 * of the two is chosen as the precision for the result and rounding is
+	 * according to [[BigNum.MODE]].
 	 * @param that The number to subtract from this.
-	 * @returns The difference of the two.
+	 * @returns this - that.
 	 */
 	public sub(that: BigNum): BigNum;
 	/**
-	 * Subtracts one [[BigNum]] instance from another according to the given [[MathContext]].
+	 * Subtracts one [[BigNum]] instance from another. The higher precision value
+	 * of the two is chosen as the precision for the result and rounding is
+	 * according to the given context settings.
 	 * @param that The number to subtract from this.
-	 * @param context The [[MathContext]] object used to decide the rounding and precision of the result.
-	 * @returns The difference of the two.
+	 * @param context The context settings object to use.
+	 * @returns this - that.
 	 */
 	public sub(that: BigNum, context: MathContext): BigNum;
 	public sub(that: BigNum, context?: MathContext) {
@@ -462,16 +491,20 @@ export class BigNum {
 	}
 
 	/**
-	 * Multiplies two [[BigNum]] instances.
+	 * Multiplies two [[BigNum]] instances. The sum of the precisions of the two
+	 * is chosen as the precision of the result and rounding is according to
+	 * [[BigNum.MODE]].
 	 * @param that The number to multiply this with.
-	 * @returns The product of the two.
+	 * @returns this * that.
 	 */
 	public mul(that: BigNum): BigNum;
 	/**
-	 * Multiplies two [[BigNum]] instances according to the given [[MathContext]].
+	 * Multiplies two [[BigNum]] instances. The sum of the precisions of the two
+	 * is chosen as the precision of the result and rounding is according to
+	 * the given context settings.
 	 * @param that The number to multiply this with.
-	 * @param context The [[MathContext]] object used to decide the rounding and precision of the result.
-	 * @returns The product of the two.
+	 * @param context The context settings object to use.
+	 * @returns this * that.
 	 */
 	public mul(that: BigNum, context: MathContext): BigNum;
 	public mul(that: BigNum, context?: MathContext) {
@@ -483,16 +516,18 @@ export class BigNum {
 	}
 
 	/**
-	 * Divides one [[BigNum]] instance by another.
+	 * Divides one [[BigNum]] instance by another with rounding according to
+	 * [[BigNum.MODE]].
 	 * @param that The number to divide this by.
-	 * @returns The quotient of the two.
+	 * @returns this / that.
 	 */
 	public div(that: BigNum): BigNum;
 	/**
-	 * Divides one [[BigNum]] instance by another according to the given [[MathContext]].
+	 * Divides one [[BigNum]] instance by another with rounding according to the
+	 * given context settings.
 	 * @param that The number to divide this by.
-	 * @param context The [[MathContext]] object used to decide the rounding and precision of the result.
-	 * @returns The quotient of the two.
+	 * @param context The context settings object to use.
+	 * @returns this / that.
 	 */
 	public div(that: BigNum, context: MathContext): BigNum;
 	public div(that: BigNum, context?: MathContext) {
@@ -534,10 +569,10 @@ export class BigNum {
 	 */
 	public pow(ex: BigNum): BigNum;
 	/**
-	 * Raises `this` to the power of `ex` using the rounding and precision
-	 * settings specified by the given [[MathContext]].
+	 * Raises `this` to the power of `ex` using the rounding according to the
+	 * given context settings.
 	 * @param ex A number.
-	 * @param context The context settings to use.
+	 * @param context The context settings object to use.
 	 */
 	public pow(ex: BigNum, context: MathContext): BigNum;
 	public pow(ex: BigNum, context=BigNum.MODE) {
@@ -552,13 +587,14 @@ export class BigNum {
 	}
 
 	/**
-	 * Calculates the trigonometric sine of a given number.
+	 * Calculates the trigonometric sine of a given number with rounding
+	 * according to [[BigNum.MODE]].
 	 * @param x A number.
 	 */
 	public static sin(x: BigNum): BigNum;
 	/**
-	 * Calculates the trigonometric sine of a given number using the rounding
-	 * and precision settings specified by the given [[MathContext]].
+	 * Calculates the trigonometric sine of a given number with rounding
+	 * according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -592,13 +628,14 @@ export class BigNum {
 	}
 
 	/**
-	 * Calculates the trigonometric cosine of a given number.
+	 * Calculates the trigonometric cosine of a given number with rounding
+	 * according to [[BigNum.MODE]].
 	 * @param x A number.
 	 */
 	public static cos(x: BigNum): BigNum;
 	/**
-	 * Calculates the trigonometric cosine of a given number using the rounding
-	 * and precision settings specified by the given [[MathContext]].
+	 * Calculates the trigonometric cosine of a given number with rounding
+	 * according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -632,13 +669,14 @@ export class BigNum {
 	}
 
 	/**
-	 * Calculates the exponential of a given number.
+	 * Calculates the exponential of a given number with rounding according to
+	 * [[BigNum.MODE]].
 	 * @param x A number.
 	 */
 	public static exp(x: BigNum): BigNum;
 	/**
-	 * Calculates the exponential of a given number using the rounding and
-	 * precision settings specified by the given [[MathContext]].
+	 * Calculates the exponential of a given number with rounding according to
+	 * the given context settings.
 	 * @param x A number
 	 * @param context The context settings to use.
 	 */
@@ -662,9 +700,9 @@ export class BigNum {
 	}
 
 	/**
-	 * Evaluates the natural logarithm of a given number `x` (< 1).
+	 * Evaluates the natural logarithm of a given number `x` (`|x| < 1`).
 	 * @param x A number.
-	 * @param context Context settings to be used.
+	 * @param context The context settings to use.
 	 * @ignore
 	 */
 	private static ln_less(x: BigNum, context=BigNum.MODE) {
@@ -687,14 +725,14 @@ export class BigNum {
 	}
 
 	/**
-	 * Calculates the natural logarithm (to the base `e`) of a given number.
+	 * Calculates the natural logarithm (to the base `e`) of a given number
+	 * with rounding according to [[BigNum.MODE]].
 	 * @param x A number.
 	 */
 	public static ln(x: BigNum): BigNum;
 	/**
 	 * Calculates the natural logarithm (to the base `e`) of a given number
-	 * using the rounding and precision settings specified by the given
-	 * [[MathContext]].
+	 * with rounding according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -721,13 +759,14 @@ export class BigNum {
 	}
 
 	/**
-	 * Calculates the common logarithm (to the base `10`) of a given number.
+	 * Calculates the common logarithm (to the base `10`) of a given number
+	 * with rounding according to [[BigNum.MODE]].
 	 * @param x A number.
 	 */
 	public static log(x: BigNum): BigNum;
 	/**
 	 * Calculates the common logarithm (to the base `10`) of a given number
-	 * using the rounding and precision settings specified by the given
+	 * with rounding according to the given context settings.
 	 * [[MathContext]].
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -743,8 +782,8 @@ export class BigNum {
 	}
 
 	/**
-	 * The string representation of the number.
-	 * @returns The string representation of this.
+	 * The canonical representation of the number as a string.
+	 * @returns The string representation of `this`.
 	 */
 	public toString() {
 		return this.integer + "." + this.decimal;
