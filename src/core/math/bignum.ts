@@ -205,17 +205,16 @@ export class BigNum {
 	constructor(integer: string, fraction: string);
 	constructor(a: number | string, b?: number | string) {
 		let num: string;
-		if(b === undefined) {
+		if(b === undefined)
 			if(typeof a === "number")
 				num = a.toString();
 			else num = a;
-		} else {
+		else
 			if(typeof a === "number" && typeof b === "number")
 				num = a.toString() + "." + b.toString();
 			else if(typeof a === "string" && typeof b === "string")
 				num = a + "." + b;
 			else throw new Error("Illegal arguments passed.");
-		}
 		[this.integer, this.decimal] = BigNum.parseNum(num);
 	}
 
@@ -224,10 +223,6 @@ export class BigNum {
 	 * @ignore
 	 */
 	private get asString() {
-		if(this.integer === "0")
-			return this.decimal;
-		if(this.decimal === "" || this.decimal === "0")
-			return this.integer;
 		return this.integer + this.decimal;
 	}
 
@@ -244,8 +239,6 @@ export class BigNum {
 	 * @ignore
 	 */
 	private get precision() {
-		if(this.decimal === "0")
-			return 0;
 		return this.decimal.length;
 	}
 
@@ -253,7 +246,7 @@ export class BigNum {
 	 * The sign of this number.
 	 */
 	public get sign() {
-		if(this.integer === "0" && this.decimal === "0")
+		if(this.integer === "" && this.decimal === "")
 			return 0;
 		if(this.integer.charAt(0) === '-')
 			return -1;
@@ -341,10 +334,6 @@ export class BigNum {
 				num = BigNum.decimate(num, index - exponent);
 			a = num.split(".");
 		} else a = s.split(".");
-		// if(a.length === 1)
-		// 	a.push("");
-		// a[0] = trimZeroes(a[0], "start");
-		// a[1] = trimZeroes(a[1], "end");
 		return a.length === 1? [trimZeroes(a[0], "start"), ""]:
 								[trimZeroes(a[0], "start"), trimZeroes(a[1], "end")];
 	}
@@ -882,17 +871,8 @@ function trimZeroes(s: string, pos: "end" | "start") {
 
 function isInteger(s: string, positive=false) {
 	const valids = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-	let st = "";
-	// const st = positive? (s.charAt(0) === '+'? s.substring(1): s): (s.charAt(0) in ['-', '+']? s.substring(1): s);
-	if(positive) {
-		if(s.charAt(0) === "+")
-			st = s.substring(1);
-		else st = s;
-	} else {
-		if(s.charAt(0) === "+" || s.charAt(0) === "-")
-			st = s.substring(1);
-		else st = s;
-	}
+	const ch = s.charAt(0);
+	const st = positive? (ch === '+'? s.substring(1): s): ((ch === '+' || ch === '-')? s.substring(1): s);
 	for(let x of st)
 		if(!(x in valids))
 			return false;
