@@ -23,8 +23,10 @@ const header = require("gulp-header");
 const fs = require("fs");
 const browserify = require("browserify");
 const minify = require("gulp-minify");
-const pkg = require("./package.json");
+const typedoc = require("gulp-typedoc");
 
+const pkg = require("./package.json");
+// const tsconfig = require("tsconfig.json");
 const tsProject = ts.createProject("tsconfig.json");
 
 gulp.task("build:node", function() {
@@ -61,4 +63,25 @@ gulp.task("header", function() {
 			pkg: pkg
 		}))
 		.pipe(gulp.dest("./release"));
+});
+
+gulp.task("docs:pre", function() {
+	return gulp.src(["src/**/*.ts"])
+		.pipe(typedoc({
+			// TypeScript options (see typescript docs)
+			module: tsProject.options.module,
+			target: tsProject.options.target,
+			lib: tsProject.options.lib,
+			includeDeclarations: tsProject.options.declaration,
+			// Output options (see typedoc docs)
+			out: "./docs/next",
+			// TypeDoc options (see typedoc docs)
+			name: "multivariate_calculus",
+			ignoreCompilerErrors: false,
+			entryPoint: "src/index.ts",
+			readme: "./README.md",
+			mode: "file",
+			version: true,
+			//verbose: true
+		}));
 });
