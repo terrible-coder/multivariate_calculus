@@ -204,7 +204,7 @@ export class BigNum {
 			else num = a;
 		else if(typeof a === "string" && typeof b === "string")
 			num = a + "." + b;
-		else throw new Error("Illegal arguments passed.");
+		else throw new TypeError("Illegal argument type.");
 		[this.integer, this.decimal] = BigNum.parseNum(num);
 	}
 
@@ -308,7 +308,7 @@ export class BigNum {
 	 */
 	private static parseNum(s: string) {
 		if(!isValid(s))
-			throw new Error("Illegal arguments passed.");
+			throw new TypeError("Illegal number format.");
 		let a = [];
 		if(s.indexOf('e') > -1) {
 			// The number is in scientific mode

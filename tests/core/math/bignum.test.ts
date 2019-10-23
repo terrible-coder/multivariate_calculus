@@ -151,6 +151,10 @@ describe("Throws appropriate errors", function() {
 		expect(() => new BigNum("1").div(zero)).toThrowError(new DivisionByZero("Cannot divide by zero."));
 		expect(() => zero.div(zero)).toThrowError(new IndeterminateForm("Cannot determine 0/0."));
 	});
+
+	it("Illegal number format", function() {
+		expect(() => new BigNum("1.1.1")).toThrowError(TypeError);
+	});
 });
 
 /*
