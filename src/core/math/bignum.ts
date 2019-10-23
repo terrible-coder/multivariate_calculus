@@ -824,7 +824,14 @@ export class BigNum {
 	 * @returns The string representation of `this`.
 	 */
 	public toString() {
-		return this.integer + "." + this.decimal;
+		let s = "";
+		if(this.integer === "-" && this.decimal === "")
+			s = "0.0";
+		else if(this.integer === "-")
+			s = "-0." + this.decimal;
+		else
+			s = (this.integer || "0") + "." + (this.decimal || "0");
+		return s;
 	}
 }
 
