@@ -55,8 +55,8 @@ gulp.task("header", function() {
 	const separator = license.includes("\r\n")? "\r\n": license.includes("\r")? "\r": "\n";
 	const data = license.split(separator).map(s => " * " + s + separator);
 	data.unshift("/**" + separator);
-	data.push(" */" + separator + separator);
-	return gulp.src("./mcalc.js")
+	data.push(" */" + separator);
+	return gulp.src(["./mcalc.js", "./mcalc.min.js"])
 		.pipe(header(data.join(""), {
 			pkg: pkg
 		}))
