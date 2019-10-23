@@ -4,10 +4,32 @@ import { IndeterminateForm, DivisionByZero } from "../../../src/core/errors";
 describe("Integer numbers", function() {
 	const a = new BigNum("144");
 	const b = new BigNum("-12");
-	it("Creates new numbers", function() {
-		const num = "100";
-		const bnum = new BigNum(num);
-		expect(bnum.toString()).toBe("100.0");
+	describe("Creates new numbers", function() {
+		const st = "100.0";
+		it("from number", function() {
+			const num = 100;
+			const bnum = new BigNum(num);
+			expect(bnum.toString()).toBe(st);
+		});
+		
+		describe("from string", function() {
+			it("Decimal form", function() {
+				const num = "100";
+				const bnum = new BigNum(num);
+				expect(bnum.toString()).toBe(st);
+			});
+
+			it("Scientific form", function() {
+				const num = "1e2";
+				const bnum = new BigNum(num);
+				expect(bnum.toString()).toBe(st);
+			});
+		});
+
+		it("from integer and fractional parts", function() {
+			const bnum = new BigNum("100", "0");
+			expect(bnum.toString()).toBe(st);
+		});
 	});
 
 	it("Checks for equality", function() {
@@ -52,10 +74,33 @@ describe("Integer numbers", function() {
 describe("Decimal numbers", function() {
 	const a = new BigNum("0.144");
 	const b = new BigNum("1.2");
-	it("Creates new numbers", function() {
-		const num = "4.001";
-		const bnum = new BigNum(num);
-		expect(bnum.toString()).toBe(num);
+	describe("Creates new numbers", function() {
+		const st = "40.01";
+		it("from number", function() {
+			const num = 40.01;
+			const bnum = new BigNum(num);
+			expect(bnum.toString()).toBe(st);
+		});
+
+		describe("from string", function() {
+			it("Decimal form", function() {
+				const num = "40.01";
+				const bnum = new BigNum(num);
+				expect(bnum.toString()).toBe(st);
+			});
+
+			it("Scientific form", function() {
+				const num1 = "4.001e1", num2 = "4001e-2";
+				const bnum1 = new BigNum(num1), bnum2 = new BigNum(num2);
+				expect(bnum1.toString()).toBe(st);
+				expect(bnum2.toString()).toBe(st);
+			});
+		});
+
+		it("from integer and fractional parts", function() {
+			const bnum = new BigNum("40", "01");
+			expect(bnum.toString()).toBe(st);
+		});
 	});
 
 	it("Adds numbers", function() {
