@@ -190,31 +190,21 @@ export class BigNum {
 	constructor(num: number);
 	/**
 	 * Creates a [[BigNum]] instance from the integral and fractional part
-	 * of the number. Both the arguments are expected to be integers.
-	 * @param integer The whole part of the number.
-	 * @param fraction The fractional part of the number.
-	 */
-	constructor(integer: number, fraction: number);
-	/**
-	 * Creates a [[BigNum]] instance from the integral and fractional part
 	 * of the number. Both the arguments are expected to be string
 	 * representations of integers.
 	 * @param integer The whole part of the number.
 	 * @param fraction The fractional part of the number.
 	 */
 	constructor(integer: string, fraction: string);
-	constructor(a: number | string, b?: number | string) {
+	constructor(a: number | string, b?: string) {
 		let num: string;
 		if(b === undefined)
 			if(typeof a === "number")
 				num = a.toString();
 			else num = a;
-		else
-			if(typeof a === "number" && typeof b === "number")
-				num = a.toString() + "." + b.toString();
-			else if(typeof a === "string" && typeof b === "string")
-				num = a + "." + b;
-			else throw new Error("Illegal arguments passed.");
+		else if(typeof a === "string" && typeof b === "string")
+			num = a + "." + b;
+		else throw new Error("Illegal arguments passed.");
 		[this.integer, this.decimal] = BigNum.parseNum(num);
 	}
 
@@ -326,12 +316,13 @@ export class BigNum {
 			// M is the mantissa and E is the exponent with base 10
 			const i = s.indexOf('e');
 			const mantissa = s.substring(0, i), exponent = Number(s.substring(i+1));
-			const index = mantissa.length - mantissa.indexOf('.') - 1;
+			const index = mantissa.indexOf('.');
+			const precision = index == -1? 0: mantissa.substring(index + 1).length;
 			let num = mantissa.split('.').join("");
-			if(exponent > index) {
-				num = BigNum.pad(mantissa, exponent - index, "0");
+			if(exponent > precision) {
+				num = BigNum.pad(mantissa, exponent - precision, "0");
 			} else
-				num = BigNum.decimate(num, index - exponent);
+				num = BigNum.decimate(num, precision - exponent);
 			a = num.split(".");
 		} else a = s.split(".");
 		return a.length === 1? [trimZeroes(a[0], "start"), ""]:
