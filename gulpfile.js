@@ -27,67 +27,88 @@ const typedoc = require("gulp-typedoc");
 const clean = require("gulp-clean");
 
 const pkg = require("./package.json");
-// const tsconfig = require("tsconfig.json");
 const tsProject = ts.createProject("tsconfig.json");
 
-gulp.task("build:node", function() {
-	return tsProject.src()
-		.pipe(tsProject()).js
-		.pipe(gulp.dest("./build"));
-});
+function clear(path) {
+	return function(cb) {
+		if(fs.existsSync(path))
+			return gulp.src(path, {read: false})
+				.pipe(clean());
+		console.log("Directory already clean.");
+		cb();
+	}
+}
 
-gulp.task("build:browser", function() {
-	return browserify("./release/app.js")
-		.bundle()
-		.pipe(fs.createWriteStream("./mcalc.js"));
-});
-
-gulp.task("minify", function() {
-	return gulp.src("./mcalc.js")
-		.pipe(minify({
-			ext: {
-				min: ".min.js"
-			},
-			noSource: true
-		}))
-		.pipe(gulp.dest("./"));
-});
-
-gulp.task("header", function() {
-	const license = fs.readFileSync("LICENSE.txt", "utf8");
-	const separator = license.includes("\r\n")? "\r\n": license.includes("\r")? "\r": "\n";
-	const data = license.split(separator).map(s => " * " + s + separator);
-	data.unshift("/**" + separator);
-	data.push(" */" + separator);
-	return gulp.src(["./mcalc.js", "./mcalc.min.js"])
-		.pipe(header(data.join(""), {
-			pkg: pkg
-		}))
-		.pipe(gulp.dest("./release"));
-});
-
-gulp.task("clear-doc", function() {
-	return gulp.src("docs/next", {read: false})
-		.pipe(clean());
-});
-
-gulp.task("docs:pre", function() {
-	return gulp.src(["src/**/*.ts"])
-		.pipe(typedoc({
-			// TypeScript options (see typescript docs)
-			module: tsProject.options.module,
-			target: tsProject.options.target,
-			lib: tsProject.options.lib,
-			includeDeclarations: tsProject.options.declaration,
-			// Output options (see typedoc docs)
-			out: "./docs/next",
-			// TypeDoc options (see typedoc docs)
-			name: "multivariate_calculus",
-			ignoreCompilerErrors: false,
-			entryPoint: "src/index.ts",
-			readme: "./README.md",
-			mode: "file",
-			version: true,
-			//verbose: true
-		}));
-});
+module.exports = {
+	build_node: (() => {
+			function f() {
+				return tsProject.src()
+					.pipe(tsProject()).js
+					.pipe(gulp.dest("./build"));
+			}
+			f.displayName = "build:node";
+			return f;
+		})(),
+	build_browser: (() => {
+			function f() {
+				return browserify("./release/app.js")
+					.bundle()
+					.pipe(fs.createWriteStream("./mcalc.js"));
+			}
+			f.displayName = "build:browser";
+			return f;
+		})(),
+	minify: (() => {
+			function f() {
+				return gulp.src("./mcalc.js")
+					.pipe(minify({
+						ext: {
+							min: ".min.js"
+						},
+						noSource: true
+					}))
+					.pipe(gulp.dest("./"));
+			}
+			f.displayName = "minify";
+			return f;
+		})(),
+	header: (() => {
+			function f() {
+				const license = fs.readFileSync("LICENSE.txt", "utf8");
+				const separator = license.includes("\r\n")? "\r\n": license.includes("\r")? "\r": "\n";
+				const data = license.split(separator).map(s => " * " + s + separator);
+				data.unshift("/**" + separator);
+				data.push(" */" + separator);
+				return gulp.src(["./mcalc.js", "./mcalc.min.js"])
+					.pipe(header(data.join(""), {
+						pkg: pkg
+					}))
+					.pipe(gulp.dest("./release"));
+			}
+			f.displayName = "header";
+			return f;
+		})(),
+	docsPreRelease: (() => {
+			const f = gulp.series([clear("docs/next"), function () {
+				return gulp.src(["src/**/*.ts"])
+					.pipe(typedoc({
+						// TypeScript options (see typescript docs)
+						module: tsProject.options.module,
+						target: tsProject.options.target,
+						lib: tsProject.options.lib,
+						includeDeclarations: tsProject.options.declaration,
+						// Output options (see typedoc docs)
+						out: "./docs/next",
+						// TypeDoc options (see typedoc docs)
+						name: "multivariate_calculus",
+						ignoreCompilerErrors: false,
+						entryPoint: "src/index.ts",
+						readme: "./README.md",
+						mode: "file",
+						version: true
+					}));
+			}]);
+			f.displayName = "docs:pre"
+			return f;
+		})()
+}
