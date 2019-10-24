@@ -24,6 +24,7 @@ const fs = require("fs");
 const browserify = require("browserify");
 const minify = require("gulp-minify");
 const typedoc = require("gulp-typedoc");
+const clean = require("gulp-clean");
 
 const pkg = require("./package.json");
 // const tsconfig = require("tsconfig.json");
@@ -63,6 +64,11 @@ gulp.task("header", function() {
 			pkg: pkg
 		}))
 		.pipe(gulp.dest("./release"));
+});
+
+gulp.task("clear-doc", function() {
+	return gulp.src("docs/next", {read: false})
+		.pipe(clean());
 });
 
 gulp.task("docs:pre", function() {
