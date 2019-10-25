@@ -120,14 +120,24 @@ module.exports = {
 						out: "./docs/next",
 						// TypeDoc options (see typedoc docs)
 						name: "multivariate_calculus",
-						ignoreCompilerErrors: false,
-						entryPoint: "src/index.ts",
 						readme: "./README.md",
 						mode: "file",
+						entryPoint: tsProject.options.rootDir + "/index.ts",
+						excludeExternals: true,
+						ignoreCompilerErrors: false,
 						version: true
 					}));
 			}]);
 			f.displayName = "docs:pre"
+			return f;
+		})(),
+	docsRelease: (() => {
+			const f = gulp.series([cb => {
+				if(fs.existsSync("docs/next"))
+					return gulp.src("docs/next/**/*.*").pipe(gulp.dest("docs/"));
+				cb(Error("Try `docs:pre` first before rendering production docs."));
+			},clear("docs/next")]);
+			f.displayName = "docs:release";
 			return f;
 		})(),
 	testAll: (() => {
