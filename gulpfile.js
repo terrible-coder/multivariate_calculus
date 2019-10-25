@@ -61,9 +61,12 @@ function testOnly(config) {
 const tasks = {
 	build_node: (() => {
 			function f() {
+				const compile = tsProject();
 				return tsProject.src()
-					.pipe(tsProject()).js
-					.pipe(gulp.dest("./build"));
+					.pipe(compile).js
+					.pipe(gulp.dest(tsProject.options.outDir))
+					.pipe(compile).dts
+					.pipe(gulp.dest(tsProject.options.declarationDir));
 			}
 			f.displayName = "build:node";
 			return f;
@@ -161,7 +164,6 @@ const tasks = {
 module.exports = tasks;
 
 module.exports.prepare = (() => {
-		console.log(tasks);
 		const f = gulp.series(
 			gulp.parallel(
 				clear("@types"),
