@@ -41,7 +41,7 @@ function clear(path) {
 		if(fs.existsSync(path))
 			return gulp.src(path, {read: false})
 				.pipe(clean());
-		console.log("Directory already clean.");
+		console.log(path, "already clean.");
 		cb();
 	}
 }
@@ -58,7 +58,7 @@ function testOnly(config) {
 	}, config);
 }
 
-module.exports = {
+const tasks = {
 	build_node: (() => {
 			function f() {
 				return tsProject.src()
@@ -157,3 +157,26 @@ module.exports = {
 			return f;
 		})()
 }
+
+module.exports = tasks;
+
+module.exports.prepare = (() => {
+		console.log(tasks);
+		const f = gulp.series(
+			gulp.parallel(
+				clear("@types"),
+				clear("build"),
+				clear("coverage"),
+				clear("cache")
+			),
+			tasks.build_node,
+			tasks.build_browser,
+			tasks.testAll,
+			tasks.minify,
+			tasks.header,
+			tasks.docsPreRelease,
+			tasks.docsRelease
+		);
+		f.displayName = "prepare"
+		return f;
+	})()
