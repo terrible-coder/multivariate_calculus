@@ -4,10 +4,32 @@ import { IndeterminateForm, DivisionByZero } from "../../../src/core/errors";
 describe("Integer numbers", function() {
 	const a = new BigNum("144");
 	const b = new BigNum("-12");
-	it("Creates new numbers", function() {
-		const num = "100";
-		const bnum = new BigNum(num);
-		expect(bnum.toString()).toBe("100.0");
+	describe("Creates new numbers", function() {
+		const st = "100.0";
+		it("from number", function() {
+			const num = 100;
+			const bnum = new BigNum(num);
+			expect(bnum.toString()).toBe(st);
+		});
+		
+		describe("from string", function() {
+			it("Decimal form", function() {
+				const num = "100";
+				const bnum = new BigNum(num);
+				expect(bnum.toString()).toBe(st);
+			});
+
+			it("Scientific form", function() {
+				const num = "1e2";
+				const bnum = new BigNum(num);
+				expect(bnum.toString()).toBe(st);
+			});
+		});
+
+		it("from integer and fractional parts", function() {
+			const bnum = new BigNum("100", "0");
+			expect(bnum.toString()).toBe(st);
+		});
 	});
 
 	it("Checks for equality", function() {
@@ -52,10 +74,33 @@ describe("Integer numbers", function() {
 describe("Decimal numbers", function() {
 	const a = new BigNum("0.144");
 	const b = new BigNum("1.2");
-	it("Creates new numbers", function() {
-		const num = "4.001";
-		const bnum = new BigNum(num);
-		expect(bnum.toString()).toBe(num);
+	describe("Creates new numbers", function() {
+		const st = "40.01";
+		it("from number", function() {
+			const num = 40.01;
+			const bnum = new BigNum(num);
+			expect(bnum.toString()).toBe(st);
+		});
+
+		describe("from string", function() {
+			it("Decimal form", function() {
+				const num = "40.01";
+				const bnum = new BigNum(num);
+				expect(bnum.toString()).toBe(st);
+			});
+
+			it("Scientific form", function() {
+				const num1 = "4.001e1", num2 = "4001e-2";
+				const bnum1 = new BigNum(num1), bnum2 = new BigNum(num2);
+				expect(bnum1.toString()).toBe(st);
+				expect(bnum2.toString()).toBe(st);
+			});
+		});
+
+		it("from integer and fractional parts", function() {
+			const bnum = new BigNum("40", "01");
+			expect(bnum.toString()).toBe(st);
+		});
 	});
 
 	it("Adds numbers", function() {
@@ -105,6 +150,10 @@ describe("Throws appropriate errors", function() {
 	it("Division by zero", function() {
 		expect(() => new BigNum("1").div(zero)).toThrowError(new DivisionByZero("Cannot divide by zero."));
 		expect(() => zero.div(zero)).toThrowError(new IndeterminateForm("Cannot determine 0/0."));
+	});
+
+	it("Illegal number format", function() {
+		expect(() => new BigNum("1.1.1")).toThrowError(TypeError);
 	});
 });
 
@@ -253,22 +302,25 @@ describe("Comparison", function() {
 });
 
 describe("Trigonometry", function() {
+	const context = MathContext.HIGH_PRECISION;
 	describe("sine", function() {
-		// it("Multiples of pi", function() {
-		// 	for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
-		// 		expect(BigNum.sin(n.mul(BigNum.PI))).toEqual(BigNum.ZERO);
-		// 	}
-		// });
+		it("Multiples of pi", function() {
+			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+				const x = n.mul(BigNum.PI, context);
+				expect(BigNum.sin(x)).toEqual(BigNum.ZERO);
+			}
+		});
 
 		it("Odd multiples of pi/2", function() {
 			const piby2 = BigNum.PI.div(BigNum.TWO);
 			let even = true;
-			for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
 				const f = BigNum.TWO.mul(n).add(BigNum.ONE);
+				const x = f.mul(piby2);
 				if(even)
-					expect(BigNum.sin(f.mul(piby2))).toEqual(BigNum.ONE);
+					expect(BigNum.sin(x)).toEqual(BigNum.ONE);
 				else
-					expect(BigNum.sin(f.mul(piby2))).toEqual(new BigNum("-1"));
+					expect(BigNum.sin(x)).toEqual(BigNum.ONE.neg);
 				even = !even;
 			}
 		});
@@ -277,22 +329,24 @@ describe("Trigonometry", function() {
 	describe("cosine", function() {
 		it("Multiples of pi", function() {
 			let even = true;
-			for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+				const x = n.mul(BigNum.PI);
 				if(even)
-					expect(BigNum.cos(n.mul(BigNum.PI))).toEqual(BigNum.ONE);
+					expect(BigNum.cos(x)).toEqual(BigNum.ONE);
 				else
-					expect(BigNum.cos(n.mul(BigNum.PI))).toEqual(new BigNum("-1"));
+					expect(BigNum.cos(x)).toEqual(BigNum.ONE.neg);
 				even = !even;
 			}
 		});
 
-		// it("Odd multiples of pi/2", function() {
-		// 	const piby2 = BigNum.PI.div(BigNum.TWO);
-		// 	for(let n = BigNum.ZERO; !n.equals(BigNum.NINE); n = n.add(BigNum.ONE)) {
-		// 		const f = BigNum.TWO.mul(n).add(BigNum.ONE);
-		// 		expect(BigNum.cos(f.mul(piby2))).toEqual(BigNum.ZERO);
-		// 	}
-		// });
+		it("Odd multiples of pi/2", function() {
+			const piby2 = BigNum.PI.div(BigNum.TWO, context);
+			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
+				const f = BigNum.TWO.mul(n).add(BigNum.ONE);
+				const x = f.mul(piby2, context);
+				expect(BigNum.cos(x)).toEqual(BigNum.ZERO);
+			}
+		});
 	});
 });
 
@@ -304,8 +358,7 @@ describe("Exponent", function() {
 	});
 
 	it("power", function() {
-		// expect(BigNum.TWO.pow(BigNum.TWO)).toEqual(BigNum.FOUR);
-		expect(BigNum.exp(BigNum.TWO)).toEqual(BigNum.E.mul(BigNum.E));
+		expect(BigNum.TWO.pow(BigNum.TWO)).toEqual(BigNum.FOUR);
 	});
 });
 
@@ -319,9 +372,9 @@ describe("Logarithm", function() {
 	});
 
 	it("log", function() {
-		// const inv = new BigNum("0.1");
+		const inv = new BigNum("0.1");
 		const ten = new BigNum("10");
-		// expect(BigNum.log(inv)).toEqual(BigNum.ONE.neg);
+		expect(BigNum.log(inv)).toEqual(BigNum.ONE.neg);
 		expect(BigNum.log(ten)).toEqual(BigNum.ONE);
 		expect(BigNum.log(new BigNum("100"))).toEqual(BigNum.TWO);
 	});
