@@ -30,16 +30,20 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^24.0.11",
+    "@types/node": "^12.11.7",
     "browserify": "^16.2.3",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-header": "^2.0.9",
+    "gulp-jest": "^4.0.3",
     "gulp-minify": "^3.1.0",
     "gulp-typedoc": "^2.2.2",
     "gulp-typescript": "^5.0.1",
     "jest": "^24.7.1",
+    "jest-cli": "^24.9.0",
     "ts-jest": "^24.0.2",
     "typedoc": "^0.15.0",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "yargs": "^14.2.0"
   }
 }

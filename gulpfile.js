@@ -17,6 +17,7 @@ TASKS:
 	[1, 2a, 3b, 4, 5]
 */
 
+const argv = require("yargs").argv;
 const gulp = require("gulp");
 const ts = require("gulp-typescript");
 const header = require("gulp-header");
@@ -25,8 +26,10 @@ const browserify = require("browserify");
 const minify = require("gulp-minify");
 const typedoc = require("gulp-typedoc");
 const clean = require("gulp-clean");
+const jest = require("gulp-jest").default;
 
 const pkg = require("./package.json");
+const jestconfig = require("./jest.config");
 const tsProject = ts.createProject("tsconfig.json");
 
 function clear(path) {
@@ -37,6 +40,13 @@ function clear(path) {
 		console.log("Directory already clean.");
 		cb();
 	}
+}
+
+function testOnly(config) {
+	return Object.assign({
+		testNamePattern: argv.t || argv.testNamePattern,
+		runInBand: argv.i || argv.runInBand
+	}, config);
 }
 
 module.exports = {
@@ -109,6 +119,22 @@ module.exports = {
 					}));
 			}]);
 			f.displayName = "docs:pre"
+			return f;
+		})(),
+	testAll: (() => {
+			function f() {
+				return gulp.src("tests")
+					.pipe(jest(jestconfig))
+			}
+			f.displayName = "test:all";
+			return f;
+		})(),
+	testOnly: (() => {
+			function f() {
+				return gulp.src("tests")
+					.pipe(jest(testOnly(jestconfig)))
+			}
+			f.displayName = "test:only";
 			return f;
 		})()
 }
