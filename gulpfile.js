@@ -32,6 +32,10 @@ const pkg = require("./package.json");
 const jestconfig = require("./jest.config");
 const tsProject = ts.createProject("tsconfig.json");
 
+/**
+ * Returns a gulp task of cleaning out a given path.
+ * @param {string} path A glob string to indicate which directory to clean.
+ */
 function clear(path) {
 	return function(cb) {
 		if(fs.existsSync(path))
@@ -42,6 +46,11 @@ function clear(path) {
 	}
 }
 
+/**
+ * Copies the additional options of `testNamePattern` and `runInBand` onto the
+ * given jest configuration object.
+ * @param {Object} config Test config options
+ */
 function testOnly(config) {
 	return Object.assign({
 		testNamePattern: argv.t || argv.testNamePattern,
