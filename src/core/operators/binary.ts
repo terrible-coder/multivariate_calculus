@@ -28,8 +28,9 @@ export enum BinaryOperator {
  * Checks whether the passed string has been defined as a BinaryOperator.
  */
 export function isBinaryOperator(s: string): s is BinaryOperator {
-	for(let k in BinaryOperator)
-		if(BinaryOperator[k] === s)
+	type iter = keyof typeof BinaryOperator;
+	for(let elt in BinaryOperator)
+		if(BinaryOperator[<iter>elt] === s)
 			return true;
 	return false;
 }
