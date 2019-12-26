@@ -205,7 +205,7 @@ export class BigNum {
 		else if(typeof a === "string" && typeof b === "string")
 			num = a + "." + b;
 		else throw new TypeError("Illegal argument type.");
-		[this.integer, this.decimal] = BigNum.parseNum(num);
+		[this.integer, this.decimal] = parseNum(num);
 	}
 
 	/**
@@ -244,22 +244,6 @@ export class BigNum {
 	}
 
 	/**
-	 * Given a string, adds padding to the rear or front. This is an implementation
-	 * to only aid with numerical operations where the numbers are stored as
-	 * strings. Do not use for general use.
-	 * @param s The string which is to be padded.
-	 * @param n Number of times padding string must be used.
-	 * @param char The padding string. It must be a single character string.
-	 * @param front Flag value to indicate whether to pad at front or at rear.
-	 * @ignore
-	 */
-	private static pad(s: string, n: number, char: string, front=false) {
-		if(char.length > 1)
-			throw new Error("Padding string must have only one character.");
-		return front? "".padEnd(n, char) + s: s + "".padEnd(n, char);
-	}
-
-	/**
 	 * Aligns the decimal point in the given numbers by adding padding 0's
 	 * at the end of the smaller number string.
 	 * @param a 
@@ -273,60 +257,10 @@ export class BigNum {
 		let aa = a.asString,
 			ba = b.asString;
 		if(d > 0)
-			ba = BigNum.pad(ba, d, "0");
+			ba = pad(ba, d, "0");
 		else if(d < 0)
-			aa = BigNum.pad(aa, -d, "0");
+			aa = pad(aa, -d, "0");
 		return [aa, ba];
-	}
-
-	/**
-	 * Inserts a decimal point in the string at a given index. The `index`
-	 * value is calculated from the rear of the string starting from 1.
-	 * @param a The number as a string.
-	 * @param index The index from the rear.
-	 * @ignore
-	 */
-	private static decimate(a: string, index: number) {
-		if(index < 0)
-			throw new Error("Cannot put decimal point at negative index.");
-		let s = a, sgn = "";
-		if(s.charAt(0) === '-') {
-			s = s.substring(1);
-			sgn = "-";
-		}
-		if(index > s.length)
-			s = "0." + BigNum.pad(s, index - s.length, "0", true);
-		else
-			s = s.substring(0, s.length - index) + "." + s.substring(s.length - index);
-		return sgn + s;
-	}
-
-	/**
-	 * Takes a string and parses into the format expected by the [[BigNum]] class.
-	 * @param s String representation of the number.
-	 * @returns An array where the first element is the integer part and the second is the decimal part.
-	 */
-	private static parseNum(s: string) {
-		if(!isValid(s))
-			throw new TypeError("Illegal number format.");
-		let a = [];
-		if(s.indexOf('e') > -1) {
-			// The number is in scientific mode
-			// Me-E
-			// M is the mantissa and E is the exponent with base 10
-			const i = s.indexOf('e');
-			const mantissa = s.substring(0, i), exponent = Number(s.substring(i+1));
-			const index = mantissa.indexOf('.');
-			const precision = index == -1? 0: mantissa.substring(index + 1).length;
-			let num = mantissa.split('.').join("");
-			if(exponent > precision) {
-				num = BigNum.pad(mantissa, exponent - precision, "0");
-			} else
-				num = BigNum.decimate(num, precision - exponent);
-			a = num.split(".");
-		} else a = s.split(".");
-		return a.length === 1? [trimZeroes(a[0], "start"), ""]:
-								[trimZeroes(a[0], "start"), trimZeroes(a[1], "end")];
 	}
 
 	/**
@@ -351,10 +285,10 @@ export class BigNum {
 		if(x.precision > context.precision) {
 			const num = x.asBigInt;
 			const diff = x.precision - context.precision;
-			const divider = BigInt(BigNum.pad("1", diff, "0"));
+			const divider = BigInt(pad("1", diff, "0"));
 			let rounded = num / divider, last = num % divider;
 			const one = BigInt("1"), ten = BigInt("10");
-			const FIVE = BigInt(BigNum.pad("5", diff - 1, "0")), ONE = BigInt(BigNum.pad("1", diff - 1, "0"));
+			const FIVE = BigInt(pad("5", diff - 1, "0")), ONE = BigInt(pad("1", diff - 1, "0"));
 			switch(context.rounding) {
 			case RoundingMode.UP:
 				if(last >= ONE) rounded += one;
@@ -390,7 +324,7 @@ export class BigNum {
 				break;
 			}
 			let r = rounded.toString();
-			return new BigNum(BigNum.decimate(r, context.precision));
+			return new BigNum(decimate(r, context.precision));
 		} else return x;
 	}
 
@@ -489,7 +423,7 @@ export class BigNum {
 		const [a, b] = BigNum.align(this, that);
 		let sum = (BigInt(a) + BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
-		const res = new BigNum(BigNum.decimate(sum, precision));
+		const res = new BigNum(decimate(sum, precision));
 		return BigNum.round(res, context);
 	}
 
@@ -515,7 +449,7 @@ export class BigNum {
 		const [a, b] = BigNum.align(this, that);
 		let sum = (BigInt(a) - BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
-		const res = new BigNum(BigNum.decimate(sum, precision));
+		const res = new BigNum(decimate(sum, precision));
 		return BigNum.round(res, context);
 	}
 
@@ -540,7 +474,7 @@ export class BigNum {
 		context = context || BigNum.MODE;
 		let prod = (this.asBigInt * that.asBigInt).toString();
 		const precision = this.precision + that.precision;
-		const res = new BigNum(BigNum.decimate(prod, precision));
+		const res = new BigNum(decimate(prod, precision));
 		return BigNum.round(res, context);
 	}
 
@@ -568,10 +502,10 @@ export class BigNum {
 		}
 		const precision = context.precision;
 		const p1 = this.precision, p2 = that.precision, p = precision - p1 + p2;
-		const a = p < 0? this.asBigInt: BigInt(BigNum.pad(this.asString, p, "0")); //this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
+		const a = p < 0? this.asBigInt: BigInt(pad(this.asString, p, "0")); //this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
 		const b = that.asBigInt;
 		let quo = (a / b).toString();
-		const res = new BigNum(BigNum.decimate(quo, (p < 0)? p1: precision));
+		const res = new BigNum(decimate(quo, (p < 0)? p1: precision));
 		return BigNum.round(res, context);
 	}
 
@@ -894,4 +828,71 @@ function isValid(s: string) {
 		return isDecimal(mantissa) && isInteger(exponent);
 	}
 	return isDecimal(s);
+}
+
+/**
+ * Given a string, adds padding to the rear or front. This is an implementation
+ * to only aid with numerical operations where the numbers are stored as
+ * strings. Do not use for general use.
+ * @param s The string which is to be padded.
+ * @param n Number of times padding string must be used.
+ * @param char The padding string. It must be a single character string.
+ * @param front Flag value to indicate whether to pad at front or at rear.
+ * @ignore
+ */
+function pad(s: string, n: number, char: string, front=false) {
+	if(char.length > 1)
+		throw new Error("Padding string must have only one character.");
+	return front? "".padEnd(n, char) + s: s + "".padEnd(n, char);
+}
+
+
+/**
+ * Inserts a decimal point in the string at a given index. The `index`
+ * value is calculated from the rear of the string starting from 1.
+ * @param a The number as a string.
+ * @param index The index from the rear.
+ * @ignore
+ */
+function decimate(a: string, index: number) {
+	if(index < 0)
+		throw new Error("Cannot put decimal point at negative index.");
+	let s = a, sgn = "";
+	if(s.charAt(0) === '-') {
+		s = s.substring(1);
+		sgn = "-";
+	}
+	if(index > s.length)
+		s = "0." + pad(s, index - s.length, "0", true);
+	else
+		s = s.substring(0, s.length - index) + "." + s.substring(s.length - index);
+	return sgn + s;
+}
+
+/**
+ * Takes a string and parses into the format expected by the [[BigNum]] class.
+ * @param s String representation of the number.
+ * @returns An array where the first element is the integer part and the second is the decimal part.
+ */
+function parseNum(s: string) {
+	if(!isValid(s))
+		throw new TypeError("Illegal number format.");
+	let a = [];
+	if(s.indexOf('e') > -1) {
+		// The number is in scientific mode
+		// Me-E
+		// M is the mantissa and E is the exponent with base 10
+		const i = s.indexOf('e');
+		const mantissa = s.substring(0, i), exponent = Number(s.substring(i+1));
+		const index = mantissa.indexOf('.');
+		const precision = index == -1? 0: mantissa.substring(index + 1).length;
+		let num = mantissa.split('.').join("");
+		if(exponent > precision) {
+			num = pad(mantissa, exponent - precision, "0");
+		} else
+			num = decimate(num, precision - exponent);
+		a = num.split(".");
+	} else a = s.split(".");
+	return a.length === 1? [trimZeroes(a[0], "start"), ""]:
+							[trimZeroes(a[0], "start"), trimZeroes(a[1], "end")];
 }
