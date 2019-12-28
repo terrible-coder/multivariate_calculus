@@ -693,6 +693,38 @@ export class BigNum {
 		return BigNum.round(sum, context);
 	}
 
+	private static atan_less(x: BigNum, context: MathContext) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const x_sq = x.mul(x, ctx);
+		let term = x;
+		let sum = BigNum.ZERO;
+		let n = BigNum.ZERO;
+		while(true) {
+			const temp = term.div(BigNum.TWO.mul(n).add(BigNum.ONE), ctx);
+			sum = sum.add(temp, ctx);
+			const term1 = term.mul(x_sq).neg;
+			const temp1 = term1.div(BigNum.TWO.mul(n).add(BigNum.THREE));
+			if(BigNum.abs(temp1).equals(BigNum.ZERO, ctx))
+				return BigNum.round(sum, context);
+			term = term1;
+			n = n.add(BigNum.ONE);
+		}
+	}
+
+	public static atan(x: BigNum): BigNum;
+	public static atan(x: BigNum, context: MathContext): BigNum;
+	public static atan(x: BigNum, context=BigNum.MODE) {
+		const absolute = BigNum.abs(x);
+		if(absolute.lessThan(BigNum.ONE))
+			return BigNum.atan_less(x, context);
+		else if(absolute.equals(BigNum.ONE, context))
+			return BigNum.PI.div(BigNum.FOUR, context);
+		
+	}
+
 	/**
 	 * Calculates the exponential of a given number with rounding according to
 	 * [[BigNum.MODE]].

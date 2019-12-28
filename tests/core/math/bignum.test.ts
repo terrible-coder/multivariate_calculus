@@ -356,15 +356,25 @@ describe("Trigonometry", function() {
 		});
 
 		it("positive one", function() {
-			// console.log(BigNum.abs(BigNum.ONE).moreThan(BigNum.ONE));
-			const x = BigNum.asin(new BigNum("1"));
-			console.log(x);
+			// const x = BigNum.asin(new BigNum("1"));
+			// console.log(x);
 			expect(piby2).toEqual(piby2);
 		});
 
 		// it("negative one", function() {
 		// 	expect(BigNum.asin(BigNum.ONE.neg)).toEqual(piby2.neg);
 		// });
+	});
+
+	describe("arctan", function() {
+		it("zero", function() {
+			expect(BigNum.atan(BigNum.ZERO)).toEqual(BigNum.ZERO);
+		});
+
+		it("root3", function() {
+			const root3 = BigNum.THREE.pow(new BigNum("-0.5"));
+			expect(BigNum.atan(root3)).toEqual(BigNum.PI.div(BigNum.SIX));
+		});
 	});
 });
 
