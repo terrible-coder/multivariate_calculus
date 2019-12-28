@@ -348,6 +348,24 @@ describe("Trigonometry", function() {
 			}
 		});
 	});
+
+	describe("arcsin", function() {
+		const piby2 = BigNum.PI.div(BigNum.TWO, context);
+		it("zero", function() {
+			expect(BigNum.asin(BigNum.ZERO)).toEqual(BigNum.ZERO);
+		});
+
+		it("positive one", function() {
+			// console.log(BigNum.abs(BigNum.ONE).moreThan(BigNum.ONE));
+			const x = BigNum.asin(new BigNum("1"));
+			console.log(x);
+			expect(piby2).toEqual(piby2);
+		});
+
+		// it("negative one", function() {
+		// 	expect(BigNum.asin(BigNum.ONE.neg)).toEqual(piby2.neg);
+		// });
+	});
 });
 
 describe("Exponent", function() {

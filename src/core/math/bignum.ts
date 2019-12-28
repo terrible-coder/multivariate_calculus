@@ -632,6 +632,68 @@ export class BigNum {
 	}
 
 	/**
+	 * Calculates the trigonometric tangent of a given number with rounding
+	 * according to [[BigNum.MODE]].
+	 * @param x A number.
+	 */
+	public static tan(x: BigNum): BigNum;
+	/**
+	 * Calculates the trigonometric tangent of a given number with rounding
+	 * according to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static tan(x: BigNum, context: MathContext): BigNum;
+	public static tan(x: BigNum, context=BigNum.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		return BigNum.round(BigNum.sin(x, ctx).div(BigNum.cos(x, ctx), ctx), context);
+	}
+
+	public static asin(x: BigNum): BigNum;
+	public static asin(x: BigNum, context: MathContext): BigNum;
+	public static asin(x: BigNum, context=BigNum.MODE) {
+		/*
+			asin x = sum(prod(2m+1, 0, n-1)/(n!2^n(2n+1))x^(2n+1), 0, infty)
+			t_n = ((2n-1)(2n-3)...5.3.1)/(n!2^n(2n+1))x^(2n+1)
+			t_n1 = ((2n+1)(2n-1)...5.3.1)/((n+1)!2^(n+1)(2n+3))x^(2n+3)
+			t_n1 = t_n * ((2n+1)^2/(2(n+1)(2n+3)))x^2
+		*/
+		if(BigNum.abs(x).moreThan(BigNum.ONE))
+			throw new Error("Undefined");
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		console.log("Enters function");
+		let sum = BigNum.ZERO;
+		let x_sq = x.mul(x, ctx);
+		const f = function(n: BigNum) {
+			const nxt = BigNum.TWO.mul(n).add(BigNum.ONE)
+			const a = nxt; //BigNum.intpow(nxt, 2);
+			const b = BigNum.TWO.mul(n.add(BigNum.ONE)); //.mul(BigNum.TWO.mul(n).add(BigNum.THREE));
+			const fac = a.div(b, ctx);
+			return fac; //x_sq.mul(fac, ctx);
+		}
+		let term = x;
+		let n = BigNum.ZERO;
+		let fac = BigNum.ONE;
+		while(n.lessThan(new BigNum("40"))) {
+			sum = sum.add(term, ctx);
+			fac = fac.mul(f(n));
+			const term1 = fac.mul(term, ctx).mul(x_sq, ctx).div(BigNum.TWO.mul(n).add(BigNum.ONE), ctx);
+			console.log(term1.toString());
+			if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
+				return BigNum.round(sum, context);
+			term = term1;
+			n = n.add(BigNum.ONE);
+		}
+		return BigNum.round(sum, context);
+	}
+
+	/**
 	 * Calculates the exponential of a given number with rounding according to
 	 * [[BigNum.MODE]].
 	 * @param x A number.
