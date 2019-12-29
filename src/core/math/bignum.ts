@@ -714,15 +714,44 @@ export class BigNum {
 		}
 	}
 
+	private static atan_more(x: BigNum, context: MathContext) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const x_sq = x.mul(x, ctx).neg;
+		let term = BigNum.ONE.div(x, ctx);
+		let sum = BigNum.ZERO;
+		let n = BigNum.ZERO;
+		while(true) {
+			const temp = term.div(BigNum.TWO.mul(n).add(BigNum.ONE), ctx);
+			sum = sum.add(temp, ctx);
+			console.log(sum.toString());
+			const term1 = term.div(x_sq, ctx);
+			const temp1 = term1.div(BigNum.TWO.mul(n).add(BigNum.THREE), ctx);
+			if(BigNum.abs(temp1).equals(BigNum.ZERO, ctx))
+				return sum;
+			term = term1;
+			n = n.add(BigNum.ONE);
+		}
+	}
+
 	public static atan(x: BigNum): BigNum;
 	public static atan(x: BigNum, context: MathContext): BigNum;
 	public static atan(x: BigNum, context=BigNum.MODE) {
 		const absolute = BigNum.abs(x);
+		const sgn = x.sign;
 		if(absolute.lessThan(BigNum.ONE))
 			return BigNum.atan_less(x, context);
-		else if(absolute.equals(BigNum.ONE, context))
-			return BigNum.PI.div(BigNum.FOUR, context);
-		
+		else if(absolute.equals(BigNum.ONE, context)) {
+			const piby4 = BigNum.PI.div(BigNum.FOUR, context);
+			return sgn == 1? piby4: piby4.neg;
+		}
+		else {
+			const piby2 = BigNum.PI.div(BigNum.TWO);
+			const sum = BigNum.atan_more(x, context);
+			return BigNum.round(sgn == 1? piby2.sub(sum, context): piby2.add(sum, context).neg, context);
+		}
 	}
 
 	/**

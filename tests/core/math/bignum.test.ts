@@ -371,9 +371,14 @@ describe("Trigonometry", function() {
 			expect(BigNum.atan(BigNum.ZERO)).toEqual(BigNum.ZERO);
 		});
 
-		it("root3", function() {
+		it("1/root3", function() {
 			const root3 = BigNum.THREE.pow(new BigNum("-0.5"));
 			expect(BigNum.atan(root3)).toEqual(BigNum.PI.div(BigNum.SIX));
+		});
+
+		it("root3", function() {
+			const root3 = BigNum.THREE.pow(new BigNum("0.5"));
+			expect(BigNum.atan(root3)).toEqual(BigNum.PI.div(BigNum.THREE));
 		});
 	});
 });
