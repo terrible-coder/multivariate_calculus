@@ -1,88 +1,7 @@
 import { IndeterminateForm, DivisionByZero } from "../errors";
-
-/**
- * Specifies a *rounding behaviour* for numerical operations on [[BigNum]]
- * which are capable of discarding some precision. This is based on the JAVA
- * implementation of rounding behaviour. Read more [here](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html). 
- */
-export enum RoundingMode {
-	/** Rounds the number away from 0. */
-	UP,
-	/** Rounds the number down towards 0. */
-	DOWN,
-	/** Rounds the number up towards positive infinity. */
-	CEIL,
-	/** Rounds the number down towards negative infinity. */
-	FLOOR,
-	/** Rounds towards nearest neighbour. In case it is equidistant it is rounded up. */
-	HALF_UP,
-	/** Rounds towards nearest neighbour. In case it is equidistant it is rounded down. */
-	HALF_DOWN,
-	/** Rounds towards nearest neighbour. In case it is equidistant it is rounded to nearest even number. */
-	HALF_EVEN,
-	/** Rounding mode to assert that no rounding is necessary as an exact representation is possible. */
-	UNNECESSARY
-}
-
-/**
- * An object type which holds information about the context settings that
- * describes certain rules for certain numerical operations.
- */
-export type MathContext = {
-	/**
-	 * The number of decimal places a [[BigNum]] object should store. This does
-	 * not represent the number of significant digits in the number unlike the
-	 * JAVA implementation of the same concept.
-	 */
-	precision: number;
-	/**
-	 * The rounding algorithm that should be used for a particular numerical
-	 * operation. Care must be taken as to when the UNNECESSARY mode is used,
-	 * it will throw an exception if an exact representation of the result is
-	 * not found.
-	 */
-	rounding: RoundingMode
-}
-
-export namespace MathContext {
-	/**
-	 * The default [[MathContext]] used when an exact representation cannot be
-	 * achieved for some operation.
-	 */
-	export const DEFAULT_CONTEXT: MathContext = {
-		precision: 17,
-		rounding: RoundingMode.UP
-	};
-
-	/**
-	 * The [[MathContext]] used for high precision calculation. Stores up to
-	 * 50 places after the decimal point with [[RoundingMode.UP]] rounding algorithm.
-	 */
-	export const HIGH_PRECISION: MathContext = {
-		precision: 50,
-		rounding: RoundingMode.UP
-	};
-
-	/**
-	 * The [[MathContext]] which defines how numbers are dealt with in science.
-	 * It has slightly higher precision value than the default context with
-	 * [[RoundingMode.HALF_EVEN]] rounding algorithm.
-	 */
-	export const SCIENTIFIC: MathContext = {
-		precision: 20,
-		rounding: RoundingMode.HALF_EVEN
-	};
-
-	/**
-	 * The [[MathContext]] which defines how to deal with high precision
-	 * numbers in science. It has the same precision value as the high precision one
-	 * and [[RoundingMode.HALF_EVEN]] rounding algorithm.
-	 */
-	export const HIGH_PREC_SCIENTIFIC: MathContext = {
-		precision: 50,
-		rounding: RoundingMode.HALF_EVEN
-	};
-}
+import { parseNum, pad, decimate } from "./parsers";
+import { MathContext, RoundingMode } from "./context";
+import { newton_raphson } from "./numerical";
 
 /**
  * Immutable, arbitrary precision decimal numbers. A BigNum consists of an
@@ -282,50 +201,50 @@ export class BigNum {
 	 * @returns The number representing the rounded value of the argument according to the given context.
 	 */
 	public static round(x: BigNum, context: MathContext) {
-		if(x.precision > context.precision) {
-			const num = x.asBigInt;
-			const diff = x.precision - context.precision;
-			const divider = BigInt(pad("1", diff, "0"));
-			let rounded = num / divider, last = num % divider;
-			const one = BigInt("1"), ten = BigInt("10");
-			const FIVE = BigInt(pad("5", diff - 1, "0")), ONE = BigInt(pad("1", diff - 1, "0"));
-			switch(context.rounding) {
-			case RoundingMode.UP:
-				if(last >= ONE) rounded += one;
-				else if(last <= -ONE) rounded -= one;
-				break;
-			case RoundingMode.DOWN:
-				break;
-			case RoundingMode.CEIL:
-				if(last >= ONE) rounded += one;
-				break;
-			case RoundingMode.FLOOR:
-				if(last <= -ONE) rounded -= one;
-				break;
-			case RoundingMode.HALF_DOWN:
-				if(last > FIVE) rounded += one;
-				else if(last < -FIVE) rounded -= one;
-				break;
-			case RoundingMode.HALF_UP:
-				if(last >= FIVE) rounded += one;
-				else if(last <= -FIVE) rounded -= one;
-				break;
-			case RoundingMode.HALF_EVEN:
-				if(last > FIVE) rounded += one;
-				else if(last < -FIVE) rounded -= one;
-				else if(Math.abs(Number(rounded % ten)) % 2 !== 0) {
-					if(last === FIVE) rounded += one;
-					else if(last === -FIVE) rounded -= one;
-				}
-				break;
-			case RoundingMode.UNNECESSARY:
-				if(last > 0 || last < 0)
-					throw Error("Rounding necessary. Exact representation not known.");
-				break;
+		if(x.precision <= context.precision)
+			return x;
+		const num = x.asBigInt;
+		const diff = x.precision - context.precision;
+		const divider = BigInt(pad("1", diff, "0"));
+		let rounded = num / divider, last = num % divider;
+		const one = BigInt("1"), ten = BigInt("10");
+		const FIVE = BigInt(pad("5", diff - 1, "0")), ONE = BigInt(pad("1", diff - 1, "0"));
+		switch(context.rounding) {
+		case RoundingMode.UP:
+			if(last >= ONE) rounded += one;
+			else if(last <= -ONE) rounded -= one;
+			break;
+		case RoundingMode.DOWN:
+			break;
+		case RoundingMode.CEIL:
+			if(last >= ONE) rounded += one;
+			break;
+		case RoundingMode.FLOOR:
+			if(last <= -ONE) rounded -= one;
+			break;
+		case RoundingMode.HALF_DOWN:
+			if(last > FIVE) rounded += one;
+			else if(last < -FIVE) rounded -= one;
+			break;
+		case RoundingMode.HALF_UP:
+			if(last >= FIVE) rounded += one;
+			else if(last <= -FIVE) rounded -= one;
+			break;
+		case RoundingMode.HALF_EVEN:
+			if(last > FIVE) rounded += one;
+			else if(last < -FIVE) rounded -= one;
+			else if(Math.abs(Number(rounded % ten)) % 2 !== 0) {
+				if(last === FIVE) rounded += one;
+				else if(last === -FIVE) rounded -= one;
 			}
-			let r = rounded.toString();
-			return new BigNum(decimate(r, context.precision));
-		} else return x;
+			break;
+		case RoundingMode.UNNECESSARY:
+			if(last > 0 || last < 0)
+				throw Error("Rounding necessary. Exact representation not known.");
+			break;
+		}
+		let r = rounded.toString();
+		return new BigNum(decimate(r, context.precision));
 	}
 
 	/**
@@ -563,12 +482,7 @@ export class BigNum {
 	 */
 	public static sin(x: BigNum, context: MathContext): BigNum;
 	public static sin(x: BigNum, context=BigNum.MODE) {
-		/*
-			sin x = sum((-1)^n * x^(2n+1) / (2n+1)!, 0, infty)
-			t_n = ((-1)^n / (2n+1)!) * x^(2n+1)
-			t_n1 = ((-1)^n+1 / (2n+3)!) * x^(2n+3)
-			t_n1 = - (t_n/(2n+3)(2n+2)) * x^2
-		*/
+		// using Maclaurin series for sin x
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -604,12 +518,7 @@ export class BigNum {
 	 */
 	public static cos(x: BigNum, context: MathContext): BigNum;
 	public static cos(x: BigNum, context=BigNum.MODE) {
-		/*
-			cos x = sum((-1)^n * x^(2n) / (2n)!, 0, infty)
-			t_n = (-1)^n * x^(2n) / (2n)!
-			t_n1 = (-1)^n+1 * x^(2n+2) / (2n + 2)!
-			t_n1 = - (t_n / (2n + 1)(2n + 2)) * x^2
-		*/
+		// using Maclaurin series for cos x
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -678,7 +587,6 @@ export class BigNum {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		}
-		console.log("Enters function");
 		let sum = BigNum.ZERO;
 		let x_sq = x.mul(x, ctx);
 		const f = function(n: BigNum) {
@@ -695,7 +603,6 @@ export class BigNum {
 			sum = sum.add(term, ctx);
 			fac = fac.mul(f(n));
 			const term1 = fac.mul(term, ctx).mul(x_sq, ctx).div(BigNum.TWO.mul(n).add(BigNum.ONE), ctx);
-			console.log(term1.toString());
 			if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
 				return BigNum.round(sum, context);
 			term = term1;
@@ -753,14 +660,20 @@ export class BigNum {
 		while(true) {
 			const temp = term.div(BigNum.TWO.mul(n).add(BigNum.ONE), ctx);
 			sum = sum.add(temp, ctx);
-			console.log(sum.toString());
 			const term1 = term.div(x_sq, ctx);
 			const temp1 = term1.div(BigNum.TWO.mul(n).add(BigNum.THREE), ctx);
 			if(BigNum.abs(temp1).equals(BigNum.ZERO, ctx))
-				return sum;
+				break;
 			term = term1;
 			n = n.add(BigNum.ONE);
 		}
+		const piby2 = BigNum.PI.div(BigNum.TWO, ctx);
+		let res: BigNum;
+		if(x.moreThan(BigNum.ONE))
+			res = piby2.sub(sum, ctx);
+		else
+			res = piby2.add(sum, ctx).neg;
+		return BigNum.round(res, context);
 	}
 
 	/**
@@ -777,19 +690,13 @@ export class BigNum {
 	 */
 	public static atan(x: BigNum, context: MathContext): BigNum;
 	public static atan(x: BigNum, context=BigNum.MODE) {
-		const absolute = BigNum.abs(x);
-		const sgn = x.sign;
-		if(absolute.lessThan(BigNum.ONE))
+		if(BigNum.abs(x).lessThan(BigNum.ONE))
 			return BigNum.atan_less(x, context);
-		else if(absolute.equals(BigNum.ONE, context)) {
-			const piby4 = BigNum.PI.div(BigNum.FOUR, context);
-			return sgn == 1? piby4: piby4.neg;
-		}
-		else {
-			const piby2 = BigNum.PI.div(BigNum.TWO);
-			const sum = BigNum.atan_more(x, context);
-			return BigNum.round(sgn == 1? piby2.sub(sum, context): piby2.add(sum, context).neg, context);
-		}
+		if(x.equals(BigNum.ONE, context))
+			return BigNum.PI.div(BigNum.FOUR, context);
+		if(x.equals(BigNum.ONE.neg, context))
+			return BigNum.PI.div(BigNum.FOUR, context);
+		return BigNum.atan_more(x, context);
 	}
 
 	/**
@@ -919,141 +826,4 @@ export class BigNum {
 			s = (this.integer || "0") + "." + (this.decimal || "0");
 		return s;
 	}
-}
-
-/**
- * Uses the Newton-Raphson algorithm to find the root of a given equation.
- * The exact derivative (found analytically) is assumed to be known.
- * @param f Function whose root is to be found
- * @param f_ The derivative of `f`.
- * @param x The initial trial solution.
- * @returns The root of the given function `f` correct upto the number of decimal
- * 			places specified by the default [[MathContext]].
- * @ignore
- */
-function newton_raphson(f: (x: BigNum)=>BigNum, f_: (x: BigNum)=>BigNum, x: BigNum, context=BigNum.MODE) {
-	const ctx: MathContext = {
-		precision: 2 * context.precision,
-		rounding: context.rounding
-	};
-	let X = x;
-	let Y: BigNum;
-	while(true) {
-		if(f(X).equals(BigNum.ZERO, ctx))
-			return BigNum.round(X, context);
-		Y = new BigNum(X.toString());
-		X = X.sub(f(X).div(f_(X), ctx), ctx);
-		if(X.equals(Y, ctx))
-			return BigNum.round(X, context);
-	}
-}
-
-function trimZeroes(s: string, pos: "end" | "start") {
-	let i: number;
-	if(pos === "end") {
-		for(i = s.length - 1; i >= 0; i--)
-			if(s.charAt(i) !== '0')
-				break;
-		return s.substring(0, i+1);
-	}
-	for(i = 0; i < s.length; i++)
-		if(s.charAt(i) !== '0')
-			break;
-	return s.substring(i);
-}
-
-function isInteger(s: string, positive=false) {
-	const valids = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-	const ch = s.charAt(0);
-	const st = positive? (ch === '+'? s.substring(1): s): ((ch === '+' || ch === '-')? s.substring(1): s);
-	for(let x of st)
-		if(!(x in valids))
-			return false;
-	return true;
-}
-
-function isDecimal(s: string) {
-	const parts = s.split('.');
-	if(parts.length > 2)
-		return false;
-	return parts.length === 1? isInteger(parts[0]): isInteger(parts[0]) && isInteger(parts[1], true);
-}
-
-function isValid(s: string) {
-	if(s.indexOf('e') > -1) {
-		// The number is in scientific mode
-		// Me-E
-		// M is the mantissa and E is the exponent with base 10
-		const i = s.indexOf('e');
-		const mantissa = s.substring(0, i), exponent = s.substring(i+1);
-		return isDecimal(mantissa) && isInteger(exponent);
-	}
-	return isDecimal(s);
-}
-
-/**
- * Given a string, adds padding to the rear or front. This is an implementation
- * to only aid with numerical operations where the numbers are stored as
- * strings. Do not use for general use.
- * @param s The string which is to be padded.
- * @param n Number of times padding string must be used.
- * @param char The padding string. It must be a single character string.
- * @param front Flag value to indicate whether to pad at front or at rear.
- * @ignore
- */
-function pad(s: string, n: number, char: string, front=false) {
-	if(char.length > 1)
-		throw new Error("Padding string must have only one character.");
-	return front? "".padEnd(n, char) + s: s + "".padEnd(n, char);
-}
-
-
-/**
- * Inserts a decimal point in the string at a given index. The `index`
- * value is calculated from the rear of the string starting from 1.
- * @param a The number as a string.
- * @param index The index from the rear.
- * @ignore
- */
-function decimate(a: string, index: number) {
-	if(index < 0)
-		throw new Error("Cannot put decimal point at negative index.");
-	let s = a, sgn = "";
-	if(s.charAt(0) === '-') {
-		s = s.substring(1);
-		sgn = "-";
-	}
-	if(index > s.length)
-		s = "0." + pad(s, index - s.length, "0", true);
-	else
-		s = s.substring(0, s.length - index) + "." + s.substring(s.length - index);
-	return sgn + s;
-}
-
-/**
- * Takes a string and parses into the format expected by the [[BigNum]] class.
- * @param s String representation of the number.
- * @returns An array where the first element is the integer part and the second is the decimal part.
- */
-function parseNum(s: string) {
-	if(!isValid(s))
-		throw new TypeError("Illegal number format.");
-	let a = [];
-	if(s.indexOf('e') > -1) {
-		// The number is in scientific mode
-		// Me-E
-		// M is the mantissa and E is the exponent with base 10
-		const i = s.indexOf('e');
-		const mantissa = s.substring(0, i), exponent = Number(s.substring(i+1));
-		const index = mantissa.indexOf('.');
-		const precision = index == -1? 0: mantissa.substring(index + 1).length;
-		let num = mantissa.split('.').join("");
-		if(exponent > precision) {
-			num = pad(mantissa, exponent - precision, "0");
-		} else
-			num = decimate(num, precision - exponent);
-		a = num.split(".");
-	} else a = s.split(".");
-	return a.length === 1? [trimZeroes(a[0], "start"), ""]:
-							[trimZeroes(a[0], "start"), trimZeroes(a[1], "end")];
 }
