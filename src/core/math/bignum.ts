@@ -652,7 +652,18 @@ export class BigNum {
 		return BigNum.round(BigNum.sin(x, ctx).div(BigNum.cos(x, ctx), ctx), context);
 	}
 
+	/**
+	 * Calculates the inverse trigonometric sine of a given value with rounding
+	 * according to [[BigNum.MODE]].
+	 * @param x A number.
+	 */
 	public static asin(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse trigonometric sine of a given value with rounding
+	 * according to the given context setings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static asin(x: BigNum, context: MathContext): BigNum;
 	public static asin(x: BigNum, context=BigNum.MODE) {
 		/*
@@ -693,6 +704,12 @@ export class BigNum {
 		return BigNum.round(sum, context);
 	}
 
+	/**
+	 * Calculates the atan value for a number whose magnitude (absolute value)
+	 * is less than unity.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	private static atan_less(x: BigNum, context: MathContext) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
@@ -714,6 +731,16 @@ export class BigNum {
 		}
 	}
 
+	/**
+	 * Calculates the atan value for a number whose magnitude (absolute value)
+	 * is greater than unity. This function only calculates the infinite summation
+	 * value, not the actual result of the atan function. The actual value can be
+	 * obtained easily by:
+	 * * `pi/2 - atan_more(x)` for `x >= 1`
+	 * * `-pi/2 - atan_more(x)` for `x <= -1`
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	private static atan_more(x: BigNum, context: MathContext) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
@@ -736,7 +763,18 @@ export class BigNum {
 		}
 	}
 
+	/**
+	 * Calculates the inverse trigonometric tangent of a given value with rounding
+	 * according to [[BigNum.MODE]].
+	 * @param x A number.
+	 */
 	public static atan(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse trigonometric tangent of a given value with rounding
+	 * according to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static atan(x: BigNum, context: MathContext): BigNum;
 	public static atan(x: BigNum, context=BigNum.MODE) {
 		const absolute = BigNum.abs(x);
