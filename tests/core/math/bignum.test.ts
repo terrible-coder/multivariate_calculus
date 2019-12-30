@@ -302,6 +302,24 @@ describe("Comparison", function() {
 	});
 });
 
+describe("Modulus", function() {
+	it("Integers", function() {
+		for(let i = 1; i <= 100; i++) {
+			const x = new BigNum(i);
+			expect(x.mod(BigNum.SEVEN)).toEqual(new BigNum(i%7));
+		}
+	});
+
+	it("Decimals", function() {
+		let x = BigNum.FIVE.pow(new BigNum("0.5"));
+		const y = x.sub(BigNum.TWO);
+		for(let i = 0; i < 10; i++) {
+			expect(x.mod(BigNum.TWO)).toEqual(y);
+			x = x.add(BigNum.TWO);
+		}
+	});
+});
+
 describe("Trigonometry", function() {
 	const context = MathContext.HIGH_PRECISION;
 	describe("sine", function() {

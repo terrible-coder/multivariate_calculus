@@ -429,6 +429,17 @@ export class BigNum {
 	}
 
 	/**
+	 * The modulo operator. The extended definition for non-integer numbers has
+	 * been used. For two numbers `a` and `b`,
+	 * `a mod b = a - b * floor(a/b)`
+	 * @param that A number.
+	 */
+	public mod(that: BigNum) {
+		const quo = this.div(that, {precision: 0, rounding: RoundingMode.FLOOR});
+		return this.sub(that.mul(quo));
+	}
+
+	/**
 	 * Raises a [[BigNum]] to an integer power. This function may be made
 	 * private in future versions. It is adviced not to use this function
 	 * except for development purposes.
