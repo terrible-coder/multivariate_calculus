@@ -15,21 +15,21 @@ import { newton_raphson } from "./numerical";
 export class BigNum {
 
 	/**
-	 * The circle constant PI correct upto 100 decimal places.
+	 * The circle constant \\(\pi\\) correct upto 100 decimal places.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
 	public static PI = new BigNum("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679");
 
 	/**
-	 * The constant Euler's number correct upto 100 decimal places.
+	 * The constant Euler's number (\\(e\\)) correct upto 100 decimal places.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
 	public static E = new BigNum("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
 
 	/**
-	 * The natural logarithm of 10 correct upto 100 decimal places. This comes
+	 * The natural logarithm of \\(10\\) correct upto 100 decimal places. This comes
 	 * in vary handy for natural base to common base logarithm.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
@@ -102,7 +102,7 @@ export class BigNum {
 	/**
 	 * Creates a [[BigNum]] instance from the decimal representation of the
 	 * number. This instance created will store the exact binary floating
-	 * point value of the number. Even though it uses the toString() method
+	 * point value of the number. Even though it uses the `toString()` method
 	 * to convert the number to a string it might be unpredictable at times.
 	 * @param num A numeric expression.
 	 */
@@ -430,8 +430,8 @@ export class BigNum {
 
 	/**
 	 * The modulo operator. The extended definition for non-integer numbers has
-	 * been used. For two numbers `a` and `b`,
-	 * `a mod b = a - b * floor(a/b)`
+	 * been used. For two numbers \\(a\\) and \\(b\\),
+	 * \\[a mod b = a - b\lfloor\frac{a}{b}\rfloor\\]
 	 * @param that A number.
 	 */
 	public mod(that: BigNum) {
@@ -627,6 +627,7 @@ export class BigNum {
 	 * is less than unity.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @ignore
 	 */
 	private static atan_less(x: BigNum, context: MathContext) {
 		const ctx: MathContext = {
@@ -651,13 +652,10 @@ export class BigNum {
 
 	/**
 	 * Calculates the atan value for a number whose magnitude (absolute value)
-	 * is greater than unity. This function only calculates the infinite summation
-	 * value, not the actual result of the atan function. The actual value can be
-	 * obtained easily by:
-	 * * `pi/2 - atan_more(x)` for `x >= 1`
-	 * * `-pi/2 - atan_more(x)` for `x <= -1`
+	 * is greater than unity.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @ignore
 	 */
 	private static atan_more(x: BigNum, context: MathContext) {
 		const ctx: MathContext = {
@@ -742,7 +740,7 @@ export class BigNum {
 	}
 
 	/**
-	 * Evaluates the natural logarithm of a given number `x` (`|x| < 1`).
+	 * Evaluates the natural logarithm of a given number \\(x\\)(\\(|x| < 1\\)).
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 * @ignore
@@ -767,13 +765,13 @@ export class BigNum {
 	}
 
 	/**
-	 * Calculates the natural logarithm (to the base `e`) of a given number
+	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
 	 * with rounding according to [[BigNum.MODE]].
 	 * @param x A number.
 	 */
 	public static ln(x: BigNum): BigNum;
 	/**
-	 * Calculates the natural logarithm (to the base `e`) of a given number
+	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
 	 * with rounding according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -801,13 +799,13 @@ export class BigNum {
 	}
 
 	/**
-	 * Calculates the common logarithm (to the base `10`) of a given number
+	 * Calculates the common logarithm (to the base \\(10\\)) of a given number
 	 * with rounding according to [[BigNum.MODE]].
 	 * @param x A number.
 	 */
 	public static log(x: BigNum): BigNum;
 	/**
-	 * Calculates the common logarithm (to the base `10`) of a given number
+	 * Calculates the common logarithm (to the base \\(10\\)) of a given number
 	 * with rounding according to the given context settings.
 	 * [[MathContext]].
 	 * @param x A number.
