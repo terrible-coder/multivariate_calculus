@@ -402,6 +402,39 @@ describe("Trigonometry", function() {
 	});
 });
 
+describe("Hyperbolic trigonometric", function() {
+	it("sinh", function() {
+		let x = BigNum.ZERO;
+		const alsosinh = (x: BigNum) => {
+			const ctx = MathContext.HIGH_PRECISION;
+			const a = BigNum.exp(x, ctx), b = BigNum.exp(x.neg, ctx);
+			const c = a.sub(b, ctx);
+			const res = c.div(BigNum.TWO, ctx);
+			return BigNum.round(res, BigNum.MODE);
+		}
+		for(let i = 0; i < 100; i++) {
+			expect(BigNum.sinh(x)).toEqual(alsosinh(x));
+			x = x.add(new BigNum("0.01"));
+		}
+	});
+
+	it("cosh", function() {
+		let x = BigNum.ZERO;
+		const alsocosh = (x: BigNum) => {
+			const ctx = MathContext.HIGH_PRECISION;
+			const a = BigNum.exp(x, ctx), b = BigNum.exp(x.neg, ctx);
+			const c = a.add(b, ctx);
+			const res = c.div(BigNum.TWO, ctx);
+			return BigNum.round(res, BigNum.MODE);
+		}
+		for(let i = 0; i < 100; i++) {
+			console.log("For i =", i);
+			expect(BigNum.cosh(x)).toEqual(alsocosh(x));
+			x = x.add(new BigNum("0.01"));
+		}
+	});
+});
+
 describe("Exponent", function() {
 	it("exp", function() {
 		expect(BigNum.exp(BigNum.ZERO)).toEqual(BigNum.ONE);
