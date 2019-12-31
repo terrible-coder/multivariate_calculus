@@ -574,13 +574,19 @@ export class BigNum {
 
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
-	 * according to [[BigNum.MODE]].
+	 * according to [[BigNum.MODE]]. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
 	 * @param x A number.
 	 */
 	public static asin(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
-	 * according to the given context setings.
+	 * according to the given context setings. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -622,7 +628,25 @@ export class BigNum {
 		return BigNum.round(sum, context);
 	}
 
+	/**
+	 * Calculates the inverse trigonometric cosine of a given value with rounding
+	 * according to [[BigNum.MODE]]. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static acos(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse trigonometric cosine of a given value with rounding
+	 * according to the given context settings. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static acos(x: BigNum, context: MathContext): BigNum;
 	public static acos(x: BigNum, context=BigNum.MODE) {
 		const ctx: MathContext = {
@@ -810,7 +834,24 @@ export class BigNum {
 		return BigNum.round(BigNum.sinh(x, ctx).div(BigNum.cosh(x, ctx), ctx), context);
 	}
 
+	/**
+	 * Calculates the inverse hyperbolic sine of a given value with rounding
+	 * according to [[BigNum.MODE]]. This method right now works good
+	 * only for values much smaller than unity. For values greater than unity
+	 * this method does not converge to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 */
 	public static asinh(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse hyperbolic sine of a given value with rounding
+	 * according to the given context settings. This method right now works good
+	 * only for values much smaller than unity. For values greater than unity
+	 * this method does not converge to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static asinh(x: BigNum, context: MathContext): BigNum;
 	public static asinh(x: BigNum, context=BigNum.MODE) {
 		const ctx: MathContext = {
@@ -836,7 +877,18 @@ export class BigNum {
 		}
 	}
 
+	/**
+	 * Calculates the inverse hyperbolic tangent of a given value with rounding
+	 * according to [[BigNum.MODE]].
+	 * @param x A number.
+	 */
 	public static atanh(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse hyperbolic tangent of a given value with rounding
+	 * according to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static atanh(x: BigNum, context: MathContext): BigNum;
 	public static atanh(x: BigNum, context=BigNum.MODE) {
 		const ctx: MathContext = {
