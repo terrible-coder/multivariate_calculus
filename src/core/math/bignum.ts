@@ -799,6 +799,29 @@ export class BigNum {
 		return BigNum.round(BigNum.sinh(x, ctx).div(BigNum.cosh(x, ctx), ctx), context);
 	}
 
+	public static atanh(x: BigNum): BigNum;
+	public static atanh(x: BigNum, context: MathContext): BigNum;
+	public static atanh(x: BigNum, context=BigNum.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const x_sq = x.mul(x, ctx);
+		let term = x, temp = x;
+		let sum = BigNum.ZERO;
+		let n = BigNum.ZERO;
+		while(true) {
+			sum = sum.add(temp, ctx);
+			const term1 = term.mul(x_sq, ctx);
+			const temp1 = term1.div(BigNum.TWO.mul(n).add(BigNum.THREE), ctx);
+			if(BigNum.abs(temp1).equals(BigNum.ZERO, ctx))
+				return BigNum.round(sum, context);
+			term = term1;
+			temp = temp1;
+			n = n.add(BigNum.ONE);
+		}
+	}
+
 	/**
 	 * Calculates the exponential of a given number with rounding according to
 	 * [[BigNum.MODE]].

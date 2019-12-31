@@ -444,7 +444,23 @@ describe("Hyperbolic trigonometric", function() {
 		for(let i = 0; i < 100; i++) {
 			expect(BigNum.tanh(x)).toEqual(alsotanh(x));
 			x = x.add(new BigNum("0.01"));
-		}		
+		}
+	});
+
+	it("arctanh", function() {
+		let x = BigNum.ZERO;
+		const alsoatanh = (x: BigNum) => {
+			const ctx = MathContext.HIGH_PRECISION;
+			const a = BigNum.ONE.add(x, ctx);
+			const b = BigNum.ONE.sub(x, ctx);
+			const c = BigNum.ln(a.div(b, ctx), ctx);
+			return c.div(BigNum.TWO);
+		}
+		for(let i = 0; i < 10; i++) {
+			console.log("For i =", i);
+			expect(BigNum.atanh(x)).toEqual(alsoatanh(x));
+			x = x.add(new BigNum("0.01"));
+		}
 	});
 });
 
