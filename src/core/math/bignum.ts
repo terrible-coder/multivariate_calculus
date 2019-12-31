@@ -878,6 +878,29 @@ export class BigNum {
 	}
 
 	/**
+	 * Calculates the inverse hyperbolic cos of a given value with rounding
+	 * according to [[BigNum.MODE]].
+	 * @param x A number.
+	 */
+	public static acosh(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse hyperbolic cos of a given value with rounding
+	 * according to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static acosh(x: BigNum, context: MathContext): BigNum;
+	public static acosh(x: BigNum, context=BigNum.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const a = x.mul(x, ctx).sub(BigNum.ONE, ctx).pow(new BigNum("0.5"));
+		const b = x.add(a, ctx);
+		return BigNum.ln(b, context);
+	}
+
+	/**
 	 * Calculates the inverse hyperbolic tangent of a given value with rounding
 	 * according to [[BigNum.MODE]].
 	 * @param x A number.
