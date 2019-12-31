@@ -796,7 +796,7 @@ export class BigNum {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		}
-		return BigNum.round(BigNum.sinh(x, ctx).div(BigNum.cosh(x, ctx)), context);
+		return BigNum.round(BigNum.sinh(x, ctx).div(BigNum.cosh(x, ctx), ctx), context);
 	}
 
 	/**

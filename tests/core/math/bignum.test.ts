@@ -428,10 +428,23 @@ describe("Hyperbolic trigonometric", function() {
 			return BigNum.round(res, BigNum.MODE);
 		}
 		for(let i = 0; i < 100; i++) {
-			console.log("For i =", i);
 			expect(BigNum.cosh(x)).toEqual(alsocosh(x));
 			x = x.add(new BigNum("0.01"));
 		}
+	});
+
+	it("tanh", function() {
+		let x = BigNum.ZERO;
+		const alsotanh = (x: BigNum) => {
+			const ctx = MathContext.HIGH_PRECISION;
+			const a = BigNum.exp(x, ctx), b = BigNum.exp(x.neg, ctx);
+			const res = a.sub(b, ctx).div(a.add(b, ctx), ctx);
+			return BigNum.round(res, BigNum.MODE);
+		}
+		for(let i = 0; i < 100; i++) {
+			expect(BigNum.tanh(x)).toEqual(alsotanh(x));
+			x = x.add(new BigNum("0.01"));
+		}		
 	});
 });
 
