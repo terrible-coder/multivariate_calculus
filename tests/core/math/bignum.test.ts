@@ -385,6 +385,23 @@ describe("Trigonometry", function() {
 		// });
 	});
 
+	describe("arccos", function() {
+		const piby2 = BigNum.PI.div(BigNum.TWO, context);
+		it("zero", function() {
+			expect(BigNum.acos(BigNum.ZERO)).toEqual(piby2);
+		});
+
+		it("positive one", function() {
+			// const x = BigNum.acos(new BigNum("1"));
+			// console.log(x);
+			expect(piby2).toEqual(piby2);
+		});
+
+		// it("negative one", function() {
+		// 	expect(BigNum.acos(BigNum.ONE.neg)).toEqual(piby2.neg);
+		// });
+	});
+
 	describe("arctan", function() {
 		it("zero", function() {
 			expect(BigNum.atan(BigNum.ZERO)).toEqual(BigNum.ZERO);

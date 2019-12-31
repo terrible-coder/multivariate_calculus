@@ -622,6 +622,17 @@ export class BigNum {
 		return BigNum.round(sum, context);
 	}
 
+	public static acos(x: BigNum): BigNum;
+	public static acos(x: BigNum, context: MathContext): BigNum;
+	public static acos(x: BigNum, context=BigNum.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const piby2 = BigNum.PI.div(BigNum.TWO, ctx);
+		return BigNum.round(piby2.sub(BigNum.asin(x, ctx), ctx), context);
+	}
+
 	/**
 	 * Calculates the atan value for a number whose magnitude (absolute value)
 	 * is less than unity.
