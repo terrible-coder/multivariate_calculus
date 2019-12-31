@@ -388,7 +388,7 @@ describe("Trigonometry", function() {
 	describe("arccos", function() {
 		const piby2 = BigNum.PI.div(BigNum.TWO, context);
 		it("zero", function() {
-			expect(BigNum.acos(BigNum.ZERO)).toEqual(piby2);
+			expect(BigNum.acos(BigNum.ZERO)).toEqual(BigNum.round(piby2, BigNum.MODE));
 		});
 
 		it("positive one", function() {
@@ -464,6 +464,21 @@ describe("Hyperbolic trigonometric", function() {
 		}
 	});
 
+	it("asinh", function() {
+		let x = BigNum.ZERO;
+		const alsoashinh = (x: BigNum) => {
+			const ctx = MathContext.HIGH_PRECISION;
+			const a = x.mul(x, ctx).add(BigNum.ONE).pow(new BigNum("0.5"), ctx);
+			const b = x.add(a, ctx);
+			return BigNum.ln(b);
+		}
+		for(let i = 0; i < 100; i++) {
+			console.log("For i =", i);
+			expect(BigNum.asinh(x)).toEqual(alsoashinh(x));
+			x = x.add(new BigNum("0.01"));
+		}
+	});
+
 	it("arctanh", function() {
 		let x = BigNum.ZERO;
 		const alsoatanh = (x: BigNum) => {
@@ -474,7 +489,6 @@ describe("Hyperbolic trigonometric", function() {
 			return c.div(BigNum.TWO);
 		}
 		for(let i = 0; i < 10; i++) {
-			console.log("For i =", i);
 			expect(BigNum.atanh(x)).toEqual(alsoatanh(x));
 			x = x.add(new BigNum("0.01"));
 		}
