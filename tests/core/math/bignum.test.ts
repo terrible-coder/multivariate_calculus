@@ -394,7 +394,7 @@ describe("Trigonometry", function() {
 		});
 
 		it("negative one", function() {
-			expect(BigNum.acos(BigNum.ONE.neg)).toEqual(piby2.neg);
+			expect(BigNum.acos(BigNum.ONE.neg)).toEqual(BigNum.round(BigNum.PI, BigNum.MODE));
 		});
 	});
 
