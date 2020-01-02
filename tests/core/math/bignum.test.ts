@@ -369,37 +369,33 @@ describe("Trigonometry", function() {
 	});
 
 	describe("arcsin", function() {
-		const piby2 = BigNum.PI.div(BigNum.TWO, context);
+		const piby2 = BigNum.PI.div(BigNum.TWO);
 		it("zero", function() {
 			expect(BigNum.asin(BigNum.ZERO)).toEqual(BigNum.ZERO);
 		});
 
 		it("positive one", function() {
-			// const x = BigNum.asin(new BigNum("1"));
-			// console.log(x);
-			expect(piby2).toEqual(piby2);
+			expect(BigNum.asin(BigNum.ONE)).toEqual(piby2);
 		});
 
-		// it("negative one", function() {
-		// 	expect(BigNum.asin(BigNum.ONE.neg)).toEqual(piby2.neg);
-		// });
+		it("negative one", function() {
+			expect(BigNum.asin(BigNum.ONE.neg)).toEqual(piby2.neg);
+		});
 	});
 
 	describe("arccos", function() {
-		const piby2 = BigNum.PI.div(BigNum.TWO, context);
+		const piby2 = BigNum.PI.div(BigNum.TWO);
 		it("zero", function() {
-			expect(BigNum.acos(BigNum.ZERO)).toEqual(BigNum.round(piby2, BigNum.MODE));
+			expect(BigNum.acos(BigNum.ZERO)).toEqual(piby2);
 		});
 
 		it("positive one", function() {
-			// const x = BigNum.acos(new BigNum("1"));
-			// console.log(x);
-			expect(piby2).toEqual(piby2);
+			expect(BigNum.acos(BigNum.ONE)).toEqual(BigNum.ZERO);
 		});
 
-		// it("negative one", function() {
-		// 	expect(BigNum.acos(BigNum.ONE.neg)).toEqual(piby2.neg);
-		// });
+		it("negative one", function() {
+			expect(BigNum.acos(BigNum.ONE.neg)).toEqual(piby2.neg);
+		});
 	});
 
 	describe("arctan", function() {
