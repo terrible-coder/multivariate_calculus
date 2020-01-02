@@ -991,8 +991,8 @@ export class BigNum {
 			rounding: context.rounding
 		};
 		if(x.lessEquals(BigNum.ZERO))
-			throw "Undefined";
-		if(x.lessThan(BigNum.TWO))
+			throw new Error("Undefined");
+		if(x.lessEquals(new BigNum("1.9")))
 			return BigNum.round(
 				BigNum.ln_less(x.sub(BigNum.ONE, ctx), ctx),
 				context
