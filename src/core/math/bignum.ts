@@ -817,25 +817,13 @@ export class BigNum {
 	}
 
 	/**
-	 * Calculates the inverse hyperbolic sine of a given value with rounding
-	 * according to [[BigNum.MODE]]. This method right now works good
-	 * only for values much smaller than unity. For values greater than unity
-	 * this method does not converge to the result. This will be fixed in
-	 * future updates.
-	 * @param x A number.
-	 */
-	public static asinh(x: BigNum): BigNum;
-	/**
-	 * Calculates the inverse hyperbolic sine of a given value with rounding
-	 * according to the given context settings. This method right now works good
-	 * only for values much smaller than unity. For values greater than unity
-	 * this method does not converge to the result. This will be fixed in
-	 * future updates.
+	 * Calculates the inverse hyperbolic sine for a given value (\\(x<1\\)) with
+	 * rounding according to given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @ignore
 	 */
-	public static asinh(x: BigNum, context: MathContext): BigNum;
-	public static asinh(x: BigNum, context=BigNum.MODE) {
+	private static asinh_less(x: BigNum, context: MathContext) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -857,6 +845,41 @@ export class BigNum {
 			temp = temp1;
 			n = n.add(BigNum.ONE);
 		}
+	}
+
+	/**
+	 * Calculates the inverse hyperbolic sine of a given value with rounding
+	 * according to [[BigNum.MODE]]. This method right now works good
+	 * only for values much smaller than unity. For values greater than unity
+	 * this method does not converge to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 */
+	public static asinh(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse hyperbolic sine of a given value with rounding
+	 * according to the given context settings. This method right now works good
+	 * only for values much smaller than unity. For values greater than unity
+	 * this method does not converge to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static asinh(x: BigNum, context: MathContext): BigNum;
+	public static asinh(x: BigNum, context=BigNum.MODE) {
+		if(BigNum.abs(x).lessThan(BigNum.ONE))
+			return BigNum.asinh_less(x, context);
+
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		return BigNum.round(newton_raphson(
+			y => BigNum.sinh(y, ctx).sub(x, ctx),
+			y => BigNum.cosh(y, ctx),
+			new BigNum("0.8"),
+			ctx
+		), context);
 	}
 
 	/**

@@ -460,22 +460,34 @@ describe("Hyperbolic trigonometric", function() {
 		}
 	});
 
-	it("asinh", function() {
-		let x = BigNum.ZERO;
-		const alsoashinh = (x: BigNum) => {
+	describe("asinh", function() {
+		const alsoasinh = (x: BigNum) => {
 			const ctx = MathContext.HIGH_PRECISION;
 			const a = x.mul(x, ctx).add(BigNum.ONE).pow(new BigNum("0.5"), ctx);
 			const b = x.add(a, ctx);
 			return BigNum.ln(b);
 		}
-		for(let i = 0; i < 100; i++) {
-			console.log("For i =", i);
-			expect(BigNum.asinh(x)).toEqual(alsoashinh(x));
-			x = x.add(new BigNum("0.01"));
-		}
+		
+		it("Less than one", function() {
+			let x = BigNum.ZERO;
+			for(let i = 0; i < 100; i++) {
+				expect(BigNum.asinh(x)).toEqual(alsoasinh(x));
+				x = x.add(new BigNum("0.01"));
+			}
+		});
+
+		it("More than one", function() {
+			// let x = BigNum.ONE;
+			console.log(alsoasinh(BigNum.ONE));
+			expect(1).toEqual(1);
+			// for(let i = 0; i < 1; i++) {
+			// 	console.log("For i =", i);
+			// 	x = x.add(new BigNum("0.1"))
+			// }
+		});
 	});
 
-	it("arctanh", function() {
+	it("atanh", function() {
 		let x = BigNum.ZERO;
 		const alsoatanh = (x: BigNum) => {
 			const ctx = MathContext.HIGH_PRECISION;
