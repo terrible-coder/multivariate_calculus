@@ -61,8 +61,6 @@ describe("Integer numbers", function() {
 
 	it("Raises to integer powers", function() {
 		expect(BigNum.intpow(b, 2)).toEqual(a);
-		const temp = Math.pow(-12, 2);
-		console.log(temp);
 		expect(BigNum.intpow(b, 3)).toEqual(new BigNum("-1728"));
 	});
 
@@ -460,47 +458,64 @@ describe("Hyperbolic trigonometric", function() {
 		}
 	});
 
-	describe("asinh", function() {
-		const alsoasinh = (x: BigNum) => {
-			const ctx = MathContext.HIGH_PRECISION;
-			const a = x.mul(x, ctx).add(BigNum.ONE).pow(new BigNum("0.5"), ctx);
-			const b = x.add(a, ctx);
-			return BigNum.ln(b);
-		}
+	// describe("asinh", function() {
+	// 	const alsoasinh = (x: BigNum) => {
+	// 		const ctx = MathContext.HIGH_PRECISION;
+	// 		const a = x.mul(x, ctx).add(BigNum.ONE).pow(new BigNum("0.5"), ctx);
+	// 		const b = x.add(a, ctx);
+	// 		return BigNum.ln(b);
+	// 	}
 		
-		it("Less than one", function() {
-			let x = BigNum.ZERO;
-			for(let i = 0; i < 100; i++) {
-				expect(BigNum.asinh(x)).toEqual(alsoasinh(x));
-				x = x.add(new BigNum("0.01"));
-			}
-		});
+	// 	it("Less than one", function() {
+	// 		let x = BigNum.ZERO;
+	// 		for(let i = 0; i < 100; i++) {
+	// 			expect(BigNum.asinh(x)).toEqual(alsoasinh(x));
+	// 			x = x.add(new BigNum("0.01"));
+	// 		}
+	// 	});
 
-		it("More than one", function() {
-			// let x = BigNum.ONE;
-			console.log(alsoasinh(BigNum.ONE));
-			expect(1).toEqual(1);
-			// for(let i = 0; i < 1; i++) {
-			// 	console.log("For i =", i);
-			// 	x = x.add(new BigNum("0.1"))
-			// }
-		});
-	});
+	// 	it("More than one", function() {
+	// 		// let x = BigNum.ONE;
+	// 		console.log(alsoasinh(BigNum.ONE));
+	// 		expect(1).toEqual(1);
+	// 		// for(let i = 0; i < 1; i++) {
+	// 		// 	console.log("For i =", i);
+	// 		// 	x = x.add(new BigNum("0.1"))
+	// 		// }
+	// 	});
+	// });
 
-	it("atanh", function() {
-		let x = BigNum.ZERO;
-		const alsoatanh = (x: BigNum) => {
-			const ctx = MathContext.HIGH_PRECISION;
-			const a = BigNum.ONE.add(x, ctx);
-			const b = BigNum.ONE.sub(x, ctx);
-			const c = BigNum.ln(a.div(b, ctx), ctx);
-			return c.div(BigNum.TWO);
-		}
-		for(let i = 0; i < 10; i++) {
-			expect(BigNum.atanh(x)).toEqual(alsoatanh(x));
-			x = x.add(new BigNum("0.01"));
-		}
-	});
+	// it("acosh", function() {
+	// 	const alsoacosh = (x: BigNum) => {
+	// 		const a = x.mul(x).sub(BigNum.ONE).pow(new BigNum("0.5"));
+	// 		return BigNum.ln(x.add(a));
+	// 	}
+	// 	let x = BigNum.ZERO;
+	// 	for(let i = 0; i < 100; i++) {
+	// 		expect(() => BigNum.acosh(x)).toThrow();
+	// 		x = x.add(new BigNum("0.01"));
+	// 	}
+	// 	x = BigNum.ONE;
+	// 	for(let i = 0; i < 100; i++) {
+	// 		expect(BigNum.acosh(x)).toEqual(alsoacosh(x));
+	// 		x = x.add(new BigNum("0.1"));
+	// 	}
+	// });
+
+	// it("atanh", function() {
+	// 	let x = BigNum.ZERO;
+	// 	const alsoatanh = (x: BigNum) => {
+	// 		const ctx = MathContext.HIGH_PRECISION;
+	// 		const a = BigNum.ONE.add(x, ctx);
+	// 		const b = BigNum.ONE.sub(x, ctx);
+	// 		const c = BigNum.ln(a.div(b, ctx), ctx);
+	// 		return c.div(BigNum.TWO);
+	// 	}
+	// 	for(let i = 0; i < 10; i++) {
+	// 		expect(BigNum.atanh(x)).toEqual(alsoatanh(x));
+	// 		x = x.add(new BigNum("0.01"));
+	// 	}
+	// });
 });
 
 describe("Exponent", function() {

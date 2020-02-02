@@ -469,8 +469,10 @@ export class BigNum {
 	 */
 	public pow(ex: BigNum, context: MathContext): BigNum;
 	public pow(ex: BigNum, context=BigNum.MODE) {
+		if(this.equals(BigNum.ZERO))
+			return BigNum.ZERO;
 		if(ex.decimal === "" || ex.decimal === "0")
-			return BigNum.intpow(this, parseInt(ex.integer), context);
+			return BigNum.intpow(this, parseInt(ex.integer) || 0, context);
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -794,7 +796,7 @@ export class BigNum {
 			n = n.add(BigNum.ONE);
 		}
 	}
-	
+
 	/**
 	 * Calculates the hyperbolic tangent of a given value with rounding according
 	 * to the given context settings.
@@ -816,128 +818,134 @@ export class BigNum {
 		return BigNum.round(BigNum.sinh(x, ctx).div(BigNum.cosh(x, ctx), ctx), context);
 	}
 
-	/**
-	 * Calculates the inverse hyperbolic sine for a given value (\\(x<1\\)) with
-	 * rounding according to given context settings.
-	 * @param x A number.
-	 * @param context The context settings to use.
-	 * @ignore
-	 */
-	private static asinh_less(x: BigNum, context: MathContext) {
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		}
-		const x_sq = x.mul(x, ctx);
-		let term = x, temp = x;
-		let sum = BigNum.ZERO;
-		let n = BigNum.ZERO;
-		while(true) {
-			sum = sum.add(temp, ctx);
-			const a = BigNum.TWO.mul(n).add(BigNum.ONE);
-			const b = BigNum.TWO.mul(n).add(BigNum.TWO);
-			const fac = a.div(b, ctx).neg;
-			const term1 = term.mul(fac, ctx).mul(x_sq, ctx);
-			const temp1 = term1.div(BigNum.TWO.mul(n).add(BigNum.THREE), ctx);
-			if(BigNum.abs(temp1).equals(BigNum.ZERO, ctx))
-				return BigNum.round(sum, context);
-			term = term1;
-			temp = temp1;
-			n = n.add(BigNum.ONE);
-		}
-	}
+	// /**
+	//  * Calculates the inverse hyperbolic sine for a given value (\\(x<1\\)) with
+	//  * rounding according to given context settings.
+	//  * @param x A number.
+	//  * @param context The context settings to use.
+	//  * @ignore
+	//  */
+	// private static asinh_less(x: BigNum, context: MathContext) {
+	// 	const ctx: MathContext = {
+	// 		precision: 2 * context.precision,
+	// 		rounding: context.rounding
+	// 	}
+	// 	const x_sq = x.mul(x, ctx);
+	// 	let term = x, temp = x;
+	// 	let sum = BigNum.ZERO;
+	// 	let n = BigNum.ZERO;
+	// 	while(true) {
+	// 		sum = sum.add(temp, ctx);
+	// 		const a = BigNum.TWO.mul(n).add(BigNum.ONE);
+	// 		const b = BigNum.TWO.mul(n).add(BigNum.TWO);
+	// 		const fac = a.div(b, ctx).neg;
+	// 		const term1 = term.mul(fac, ctx).mul(x_sq, ctx);
+	// 		const temp1 = term1.div(BigNum.TWO.mul(n).add(BigNum.THREE), ctx);
+	// 		if(BigNum.abs(temp1).equals(BigNum.ZERO, ctx))
+	// 			return BigNum.round(sum, context);
+	// 		term = term1;
+	// 		temp = temp1;
+	// 		n = n.add(BigNum.ONE);
+	// 	}
+	// }
 
-	/**
-	 * Calculates the inverse hyperbolic sine of a given value with rounding
-	 * according to [[BigNum.MODE]]. This method right now works good
-	 * only for values much smaller than unity. For values greater than unity
-	 * this method does not converge to the result. This will be fixed in
-	 * future updates.
-	 * @param x A number.
-	 */
-	public static asinh(x: BigNum): BigNum;
-	/**
-	 * Calculates the inverse hyperbolic sine of a given value with rounding
-	 * according to the given context settings. This method right now works good
-	 * only for values much smaller than unity. For values greater than unity
-	 * this method does not converge to the result. This will be fixed in
-	 * future updates.
-	 * @param x A number.
-	 * @param context The context settings to use.
-	 */
-	public static asinh(x: BigNum, context: MathContext): BigNum;
-	public static asinh(x: BigNum, context=BigNum.MODE) {
-		if(BigNum.abs(x).lessThan(BigNum.ONE))
-			return BigNum.asinh_less(x, context);
+	// /**
+	//  * Calculates the inverse hyperbolic sine of a given value with rounding
+	//  * according to [[BigNum.MODE]]. This method right now works good
+	//  * only for values much smaller than unity. For values greater than unity
+	//  * this method does not converge to the result. This will be fixed in
+	//  * future updates.
+	//  * @param x A number.
+	//  */
+	// public static asinh(x: BigNum): BigNum;
+	// /**
+	//  * Calculates the inverse hyperbolic sine of a given value with rounding
+	//  * according to the given context settings. This method right now works good
+	//  * only for values much smaller than unity. For values greater than unity
+	//  * this method does not converge to the result. This will be fixed in
+	//  * future updates.
+	//  * @param x A number.
+	//  * @param context The context settings to use.
+	//  */
+	// public static asinh(x: BigNum, context: MathContext): BigNum;
+	// public static asinh(x: BigNum, context=BigNum.MODE) {
+	// 	if(BigNum.abs(x).lessThan(BigNum.ONE))
+	// 		return BigNum.asinh_less(x, context);
 
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		}
-		return BigNum.round(newton_raphson(
-			y => BigNum.sinh(y, ctx).sub(x, ctx),
-			y => BigNum.cosh(y, ctx),
-			new BigNum("0.8"),
-			ctx
-		), context);
-	}
+	// 	const ctx: MathContext = {
+	// 		precision: 2 * context.precision,
+	// 		rounding: context.rounding
+	// 	}
+	// 	return BigNum.round(newton_raphson(
+	// 		y => BigNum.sinh(y, ctx).sub(x, ctx),
+	// 		y => BigNum.cosh(y, ctx),
+	// 		new BigNum("0.8"),
+	// 		ctx
+	// 	), context);
+	// }
 
-	/**
-	 * Calculates the inverse hyperbolic cos of a given value with rounding
-	 * according to [[BigNum.MODE]].
-	 * @param x A number.
-	 */
-	public static acosh(x: BigNum): BigNum;
-	/**
-	 * Calculates the inverse hyperbolic cos of a given value with rounding
-	 * according to the given context settings.
-	 * @param x A number.
-	 * @param context The context settings to use.
-	 */
-	public static acosh(x: BigNum, context: MathContext): BigNum;
-	public static acosh(x: BigNum, context=BigNum.MODE) {
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		}
-		const a = x.mul(x, ctx).sub(BigNum.ONE, ctx).pow(new BigNum("0.5"));
-		const b = x.add(a, ctx);
-		return BigNum.ln(b, context);
-	}
+	// /**
+	//  * Calculates the inverse hyperbolic cos of a given value with rounding
+	//  * according to [[BigNum.MODE]].
+	//  * @param x A number.
+	//  */
+	// public static acosh(x: BigNum): BigNum;
+	// /**
+	//  * Calculates the inverse hyperbolic cos of a given value with rounding
+	//  * according to the given context settings.
+	//  * @param x A number.
+	//  * @param context The context settings to use.
+	//  */
+	// public static acosh(x: BigNum, context: MathContext): BigNum;
+	// public static acosh(x: BigNum, context=BigNum.MODE) {
+	// 	const ctx: MathContext = {
+	// 		precision: 2 * context.precision,
+	// 		rounding: context.rounding
+	// 	}
+	// 	// const a = x.mul(x, ctx).sub(BigNum.ONE, ctx).pow(new BigNum("0.5"));
+	// 	// const b = x.add(a, ctx);
+	// 	// return BigNum.ln(b, context);
+	// 	return BigNum.round(newton_raphson(
+	// 		y => BigNum.cosh(y, ctx).sub(x, ctx),
+	// 		y => BigNum.sinh(y, ctx),
+	// 		BigNum.ONE,
+	// 		ctx
+	// 	), context);
+	// }
 
-	/**
-	 * Calculates the inverse hyperbolic tangent of a given value with rounding
-	 * according to [[BigNum.MODE]].
-	 * @param x A number.
-	 */
-	public static atanh(x: BigNum): BigNum;
-	/**
-	 * Calculates the inverse hyperbolic tangent of a given value with rounding
-	 * according to the given context settings.
-	 * @param x A number.
-	 * @param context The context settings to use.
-	 */
-	public static atanh(x: BigNum, context: MathContext): BigNum;
-	public static atanh(x: BigNum, context=BigNum.MODE) {
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		}
-		const x_sq = x.mul(x, ctx);
-		let term = x, temp = x;
-		let sum = BigNum.ZERO;
-		let n = BigNum.ZERO;
-		while(true) {
-			sum = sum.add(temp, ctx);
-			const term1 = term.mul(x_sq, ctx);
-			const temp1 = term1.div(BigNum.TWO.mul(n).add(BigNum.THREE), ctx);
-			if(BigNum.abs(temp1).equals(BigNum.ZERO, ctx))
-				return BigNum.round(sum, context);
-			term = term1;
-			temp = temp1;
-			n = n.add(BigNum.ONE);
-		}
-	}
+	// /**
+	//  * Calculates the inverse hyperbolic tangent of a given value with rounding
+	//  * according to [[BigNum.MODE]].
+	//  * @param x A number.
+	//  */
+	// public static atanh(x: BigNum): BigNum;
+	// /**
+	//  * Calculates the inverse hyperbolic tangent of a given value with rounding
+	//  * according to the given context settings.
+	//  * @param x A number.
+	//  * @param context The context settings to use.
+	//  */
+	// public static atanh(x: BigNum, context: MathContext): BigNum;
+	// public static atanh(x: BigNum, context=BigNum.MODE) {
+	// 	const ctx: MathContext = {
+	// 		precision: 2 * context.precision,
+	// 		rounding: context.rounding
+	// 	}
+	// 	const x_sq = x.mul(x, ctx);
+	// 	let term = x, temp = x;
+	// 	let sum = BigNum.ZERO;
+	// 	let n = BigNum.ZERO;
+	// 	while(true) {
+	// 		sum = sum.add(temp, ctx);
+	// 		const term1 = term.mul(x_sq, ctx);
+	// 		const temp1 = term1.div(BigNum.TWO.mul(n).add(BigNum.THREE), ctx);
+	// 		if(BigNum.abs(temp1).equals(BigNum.ZERO, ctx))
+	// 			return BigNum.round(sum, context);
+	// 		term = term1;
+	// 		temp = temp1;
+	// 		n = n.add(BigNum.ONE);
+	// 	}
+	// }
 
 	/**
 	 * Calculates the exponential of a given number with rounding according to
