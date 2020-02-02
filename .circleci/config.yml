@@ -1,9 +1,8 @@
 version: 2
 jobs:
-	build:
-		docker:
-			- image: circleci/node:10.16.1
-
-		steps:
-			- checkout
-			- run: echo "Hello world"
+  build:
+    docker:
+      - image: circleci/node:10.16.1
+    steps:
+      - checkout
+      - run: echo "Hello world"
