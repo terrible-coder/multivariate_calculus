@@ -3,6 +3,11 @@ import { parseNum, pad, decimate } from "./parsers";
 import { MathContext, RoundingMode } from "./context";
 import { newton_raphson } from "./numerical";
 
+type num1d = {
+	integer: string,
+	decimal: string
+}
+
 /**
  * Immutable, arbitrary precision decimal numbers. A BigNum consists of an
  * integer part and a decimal part stored as string objects. The precision of
@@ -19,14 +24,14 @@ export class BigNum {
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
-	public static PI = new BigNum("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679");
+	public static PI = new BigNum({integer: "3", decimal: "1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679"});
 
 	/**
 	 * The constant Euler's number (\\(e\\)) correct upto 100 decimal places.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
-	public static E = new BigNum("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
+	public static E = new BigNum({integer: "2", decimal: "7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274"});
 
 	/**
 	 * The natural logarithm of \\(10\\) correct upto 100 decimal places. This comes
@@ -34,48 +39,48 @@ export class BigNum {
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
-	public static ln10 = new BigNum("2.3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983");
+	public static ln10 = new BigNum({integer: "2", decimal: "3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983"});
 
 	/**
 	 * The constant zero.
 	 */
-	public static ZERO = new BigNum("0");
+	public static ZERO = new BigNum({integer: "0", decimal: ""});
 	/**
 	 * The constant one.
 	 */
-	public static ONE = new BigNum("1");
+	public static ONE = new BigNum({integer: "1", decimal: ""});
 	/**
 	 * The constant two.
 	 */
-	public static TWO = new BigNum("2");
+	public static TWO = new BigNum({integer: "2", decimal: ""});
 	/**
 	 * The constant three.
 	 */
-	public static THREE = new BigNum("3");
+	public static THREE = new BigNum({integer: "3", decimal: ""});
 	/**
 	 * The constant four.
 	 */
-	public static FOUR = new BigNum("4");
+	public static FOUR = new BigNum({integer: "4", decimal: ""});
 	/**
 	 * The constant five.
 	 */
-	public static FIVE = new BigNum("5");
+	public static FIVE = new BigNum({integer: "5", decimal: ""});
 	/**
 	 * The constant six.
 	 */
-	public static SIX = new BigNum("6");
+	public static SIX = new BigNum({integer: "6", decimal: ""});
 	/**
 	 * The constant seven.
 	 */
-	public static SEVEN = new BigNum("7");
+	public static SEVEN = new BigNum({integer: "7", decimal: ""});
 	/**
 	 * The constant eight.
 	 */
-	public static EIGHT = new BigNum("8");
+	public static EIGHT = new BigNum({integer: "8", decimal: ""});
 	/**
 	 * The constant nine.
 	 */
-	public static NINE = new BigNum("9");
+	public static NINE = new BigNum({integer: "9", decimal: ""});
 
 	/**
 	 * The default [[MathContext]] used for numerical operations related to [[BigNum]]
@@ -94,37 +99,39 @@ export class BigNum {
 	 */
 	readonly decimal: string;
 
-	/**
-	 * Creates a [[BigNum]] instance from the string representation of the number.
-	 * @param num The string representation of the number in decimal system.
-	 */
-	constructor(num: string);
-	/**
-	 * Creates a [[BigNum]] instance from the decimal representation of the
-	 * number. This instance created will store the exact binary floating
-	 * point value of the number. Even though it uses the `toString()` method
-	 * to convert the number to a string it might be unpredictable at times.
-	 * @param num A numeric expression.
-	 */
-	constructor(num: number);
-	/**
-	 * Creates a [[BigNum]] instance from the integral and fractional part
-	 * of the number. Both the arguments are expected to be string
-	 * representations of integers.
-	 * @param integer The whole part of the number.
-	 * @param fraction The fractional part of the number.
-	 */
-	constructor(integer: string, fraction: string);
-	constructor(a: number | string, b?: string) {
-		let num: string;
-		if(b === undefined)
-			if(typeof a === "number")
-				num = a.toString();
-			else num = a;
-		else if(typeof a === "string" && typeof b === "string")
-			num = a + "." + b;
-		else throw new TypeError("Illegal argument type.");
-		[this.integer, this.decimal] = parseNum(num);
+	// /**
+	//  * Creates a [[BigNum]] instance from the string representation of the number.
+	//  * @param num The string representation of the number in decimal system.
+	//  */
+	// constructor(num: string);
+	// /**
+	//  * Creates a [[BigNum]] instance from the decimal representation of the
+	//  * number. This instance created will store the exact binary floating
+	//  * point value of the number. Even though it uses the `toString()` method
+	//  * to convert the number to a string it might be unpredictable at times.
+	//  * @param num A numeric expression.
+	//  */
+	// constructor(num: number);
+	// /**
+	//  * Creates a [[BigNum]] instance from the integral and fractional part
+	//  * of the number. Both the arguments are expected to be string
+	//  * representations of integers.
+	//  * @param integer The whole part of the number.
+	//  * @param fraction The fractional part of the number.
+	//  */
+	// constructor(integer: string, fraction: string);
+	constructor(real: num1d) {
+		this.integer = real.integer;
+		this.decimal = real.decimal;
+		// let num: string;
+		// if(b === undefined)
+		// 	if(typeof a === "number")
+		// 		num = a.toString();
+		// 	else num = a;
+		// else if(typeof a === "string" && typeof b === "string")
+		// 	num = a + "." + b;
+		// else throw new TypeError("Illegal argument type.");
+		// [this.integer, this.decimal] = parseNum(num);
 	}
 
 	/**
@@ -188,7 +195,7 @@ export class BigNum {
 	 * @returns The absolute value of the argument.
 	 */
 	public static abs(x: BigNum) {
-		return x.integer.charAt(0) === '-'? new BigNum(x.integer.substring(1) + "." + x.decimal): x;
+		return x.integer.charAt(0) === '-'? BigNum.real(x.integer.substring(1) + "." + x.decimal): x;
 	}
 
 	/**
@@ -244,7 +251,7 @@ export class BigNum {
 			break;
 		}
 		let r = rounded.toString();
-		return new BigNum(decimate(r, context.precision));
+		return BigNum.real(decimate(r, context.precision));
 	}
 
 	/**
@@ -316,8 +323,8 @@ export class BigNum {
 	 */
 	public get neg() {
 		if(this.integer.charAt(0) === '-')
-			return new BigNum(this.integer.substring(1) + "." + this.decimal);
-		return new BigNum("-" + this.toString());
+			return BigNum.real(this.integer.substring(1) + "." + this.decimal);
+		return BigNum.real("-" + this.toString());
 	}
 
 	/**
@@ -342,7 +349,7 @@ export class BigNum {
 		const [a, b] = BigNum.align(this, that);
 		let sum = (BigInt(a) + BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
-		const res = new BigNum(decimate(sum, precision));
+		const res = BigNum.real(decimate(sum, precision));
 		return BigNum.round(res, context);
 	}
 
@@ -368,7 +375,7 @@ export class BigNum {
 		const [a, b] = BigNum.align(this, that);
 		let sum = (BigInt(a) - BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
-		const res = new BigNum(decimate(sum, precision));
+		const res = BigNum.real(decimate(sum, precision));
 		return BigNum.round(res, context);
 	}
 
@@ -393,7 +400,7 @@ export class BigNum {
 		context = context || BigNum.MODE;
 		let prod = (this.asBigInt * that.asBigInt).toString();
 		const precision = this.precision + that.precision;
-		const res = new BigNum(decimate(prod, precision));
+		const res = BigNum.real(decimate(prod, precision));
 		return BigNum.round(res, context);
 	}
 
@@ -424,7 +431,7 @@ export class BigNum {
 		const a = p < 0? this.asBigInt: BigInt(pad(this.asString, p, "0")); //this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
 		const b = that.asBigInt;
 		let quo = (a / b).toString();
-		const res = new BigNum(decimate(quo, (p < 0)? p1: precision));
+		const res = BigNum.real(decimate(quo, (p < 0)? p1: precision));
 		return BigNum.round(res, context);
 	}
 
@@ -879,7 +886,7 @@ export class BigNum {
 	// 	return BigNum.round(newton_raphson(
 	// 		y => BigNum.sinh(y, ctx).sub(x, ctx),
 	// 		y => BigNum.cosh(y, ctx),
-	// 		new BigNum("0.8"),
+	// 		BigNum.real("0.8"),
 	// 		ctx
 	// 	), context);
 	// }
@@ -902,7 +909,7 @@ export class BigNum {
 	// 		precision: 2 * context.precision,
 	// 		rounding: context.rounding
 	// 	}
-	// 	// const a = x.mul(x, ctx).sub(BigNum.ONE, ctx).pow(new BigNum("0.5"));
+	// 	// const a = x.mul(x, ctx).sub(BigNum.ONE, ctx).pow(BigNum.real("0.5"));
 	// 	// const b = x.add(a, ctx);
 	// 	// return BigNum.ln(b, context);
 	// 	return BigNum.round(newton_raphson(
@@ -1023,7 +1030,7 @@ export class BigNum {
 		};
 		if(x.lessEquals(BigNum.ZERO))
 			throw new Error("Undefined");
-		if(x.lessEquals(new BigNum("1.9")))
+		if(x.lessEquals(BigNum.real("1.9")))
 			return BigNum.round(
 				BigNum.ln_less(x.sub(BigNum.ONE, ctx), ctx),
 				context
@@ -1073,5 +1080,26 @@ export class BigNum {
 		else
 			s = (this.integer || "0") + "." + (this.decimal || "0");
 		return s;
+	}
+}
+
+export namespace BigNum {
+	export function real(num: number): BigNum;
+	export function real(num: string): BigNum;
+	export function real(integer: string, fraction: string): BigNum;
+	export function real(a: number|string, b?: string) {
+		let num: string;
+		if(b === undefined)
+			if(typeof a === "number")
+				num = a.toString();
+			else num = a;
+		else if(typeof a === "string" && typeof b === "string")
+			num = a + "." + b;
+		else throw new TypeError("Illegal argument type.");
+		const [integer, decimal] = parseNum(num);
+		return new BigNum({
+			integer: integer,
+			decimal: decimal
+		});
 	}
 }

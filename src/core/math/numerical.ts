@@ -20,7 +20,7 @@ export function newton_raphson(f: (x: BigNum) => BigNum, f_: (x: BigNum) => BigN
 	while (true) {
 		if (f(X).equals(BigNum.ZERO, ctx))
 			return BigNum.round(X, context);
-		Y = new BigNum(X.toString());
+		Y = BigNum.real(X.toString());
 		X = X.sub(f(X).div(f_(X), ctx), ctx);
 		if (X.equals(Y, ctx))
 			return BigNum.round(X, context);
