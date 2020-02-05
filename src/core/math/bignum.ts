@@ -30,7 +30,7 @@ export class BigNum {
 
 	/**
 	 * The natural logarithm of \\(10\\) correct upto 100 decimal places. This comes
-	 * in vary handy for natural base to common base logarithm.
+	 * in very handy for natural base to common base logarithm.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
