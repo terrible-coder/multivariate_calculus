@@ -41,6 +41,7 @@ export class BigNum {
 	 */
 	public static ln10 = new BigNum({integer: "2", decimal: "3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983"});
 
+
 	/**
 	 * The constant zero.
 	 */
