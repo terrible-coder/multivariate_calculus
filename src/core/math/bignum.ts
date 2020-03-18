@@ -100,39 +100,9 @@ export class BigNum {
 	 */
 	readonly decimal: string;
 
-	// /**
-	//  * Creates a [[BigNum]] instance from the string representation of the number.
-	//  * @param num The string representation of the number in decimal system.
-	//  */
-	// constructor(num: string);
-	// /**
-	//  * Creates a [[BigNum]] instance from the decimal representation of the
-	//  * number. This instance created will store the exact binary floating
-	//  * point value of the number. Even though it uses the `toString()` method
-	//  * to convert the number to a string it might be unpredictable at times.
-	//  * @param num A numeric expression.
-	//  */
-	// constructor(num: number);
-	// /**
-	//  * Creates a [[BigNum]] instance from the integral and fractional part
-	//  * of the number. Both the arguments are expected to be string
-	//  * representations of integers.
-	//  * @param integer The whole part of the number.
-	//  * @param fraction The fractional part of the number.
-	//  */
-	// constructor(integer: string, fraction: string);
 	constructor(real: num1d) {
 		this.integer = real.integer;
 		this.decimal = real.decimal;
-		// let num: string;
-		// if(b === undefined)
-		// 	if(typeof a === "number")
-		// 		num = a.toString();
-		// 	else num = a;
-		// else if(typeof a === "string" && typeof b === "string")
-		// 	num = a + "." + b;
-		// else throw new TypeError("Illegal argument type.");
-		// [this.integer, this.decimal] = parseNum(num);
 	}
 
 	/**
@@ -1085,8 +1055,26 @@ export class BigNum {
 }
 
 export namespace BigNum {
+	/**
+	 * Creates a [[BigNum]] instance from the string representation of the number.
+	 * @param num The string representation of the number in decimal system.
+	 */
 	export function real(num: number): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the decimal representation of the
+	 * number. This instance created will store the exact binary floating
+	 * point value of the number. Even though it uses the `toString()` method
+	 * to convert the number to a string it might be unpredictable at times.
+	 * @param num A numeric expression.
+	 */
 	export function real(num: string): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the integral and fractional part
+	 * of the number. Both the arguments are expected to be string
+	 * representations of integers.
+	 * @param integer The whole part of the number.
+	 * @param fraction The fractional part of the number.
+	 */
 	export function real(integer: string, fraction: string): BigNum;
 	export function real(a: number|string, b?: string) {
 		let num: string;
