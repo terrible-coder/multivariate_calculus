@@ -7,6 +7,7 @@ node_modules
 /cache
 /coverage
 /release
+/theme
 
 #files
 /.gitignore
