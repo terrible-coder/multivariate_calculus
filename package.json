@@ -15,7 +15,7 @@
     "test:only": "jest -c jest.config.js -i",
     "pack": "browserify ./release/app.js -o mcalc.js",
     "minify": "minify mcalc.js > mcalc.min.js",
-    "docs": "typedoc --mode file --out ./docs/next ./src"
+    "docs": "typedoc --theme ./theme --mode file --out ./docs/next ./src"
   },
   "keywords": [
     "vector",
@@ -39,8 +39,8 @@
     "gulp-minify": "^3.1.0",
     "gulp-typedoc": "^2.2.2",
     "gulp-typescript": "^5.0.1",
-    "jest": "^24.7.1",
-    "jest-cli": "^24.9.0",
+    "jest": "^25.1.0",
+    "jest-cli": "^25.1.0",
     "ts-jest": "^24.0.2",
     "typedoc": "^0.15.0",
     "typescript": "^3.4.5",

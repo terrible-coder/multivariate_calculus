@@ -1,5 +1,13 @@
 multivariate_calculus
 =====================
+[shields]: (https://img.shields.io)
+[![CircleCI](https://img.shields.io/circleci/build/gh/terrible-coder/multivariate_calculus/master?style=flat-square&logo=circleci)](https://www.circleci.com/gh/terrible-coder/multivariate_calculus)
+
+[![npm](https://img.shields.io/npm/v/multivariate_calculus?style=flat-square&logo=npm)](https://npmjs.com/package/multivariate_calculus)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/terrible-coder/multivariate_calculus?style=flat-square&logo=github)](https://github.com/terrible-coder/multivariate_calculus/releases/latest)
+
+[![Typescript](https://img.shields.io/badge/made_with-typescript-007ACC?style=flat-square&logo=typescript)](http://typescriptlang.org/)
+[![License](https://img.shields.io/github/license/terrible-coder/multivariate_calculus?style=flat-square)](https://opensource.org/licenses/MIT)
 
 A zero dependency libray that handles calculus of several variables in
 multidimensional space. It works with both TypeScript and JavaScript projects
