@@ -44,7 +44,7 @@ export class BigNum {
 	/**
 	 * The constant zero.
 	 */
-	public static ZERO = new BigNum({integer: "0", decimal: ""});
+	public static ZERO = new BigNum({integer: "", decimal: ""});
 	/**
 	 * The constant one.
 	 */
