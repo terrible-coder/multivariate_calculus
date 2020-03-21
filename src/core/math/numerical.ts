@@ -27,6 +27,26 @@ export function newton_raphson(f: (x: BigNum) => BigNum, f_: (x: BigNum) => BigN
 	}
 }
 
+function distinct(a: number[]) {
+	for(let i = 0; i < a.length; i++)
+		if(a.lastIndexOf(a[i]) !== i)
+			return false;
+	return true;
+}
+
+function evenPerm(mu: number[], nu: number[]) {
+	let p = 0;
+	for(let i = 0; i < mu.length; i++) {
+		const x = mu[i];
+		const index = nu.indexOf(x);
+		const jump = index - i;
+		nu.splice(index, 1);
+		nu.splice(i, 0, x);
+		p += jump;
+	}
+	return p % 2 == 0;
+}
+
 /**
  * The generalised Levi-Civita symbol for \(n\) dimensions.
  * @param args The index values for the levi-civita symbol.
@@ -40,20 +60,15 @@ export function levicivita(...values: number[] | [number[]]) {
 		args = temp;
 	else args = <Array<number>>values;
 	const n = args.length;
-	for(let i = 1; i <= n; i++)
-		if(args[i] > n)
-			throw new TypeError("Index value greater than dimension of symbol.");
-		else if(args.indexOf(i) != args.lastIndexOf(i))
-			return 0;
-	let p = 0;
-	for(let i = 1; i <= n; i++) {
-		const index = args.indexOf(i);
-		const jump = index - (i-1);
-		args.splice(index, 1);
-		args.splice(i-1, 0, i);
-		p += jump;
-	}
-	return p % 2 == 0? 1: -1;
+	let max = args[0];
+	args.forEach(x => {
+		if(x > max)
+			max = x;
+	});
+	if(max > n)
+		throw new TypeError("Index value greater than dimension of symbol.");
+	const arrange = new Array(n).fill(0).map((_, i) => i+1);
+	return !distinct(args)? 0: evenPerm(args, arrange)? 1: -1;
 }
 
 export function kronecker(i: number, j: number): 0 | 1;
@@ -62,5 +77,5 @@ export function kronecker(i: number | number[], j: number | number[]) {
 	if(typeof i === "number" && typeof j === "number")
 		return i === j ? 1: 0;
 	else if(i instanceof Array && j instanceof Array)
-		return levicivita(i) * levicivita(j);
+		return !distinct(j)? 0: evenPerm(i, j)? 1: -1;
 }
