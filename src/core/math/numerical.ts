@@ -71,7 +71,17 @@ export function levicivita(...values: number[] | [number[]]) {
 	return !distinct(args)? 0: evenPerm(args, arrange)? 1: -1;
 }
 
+/**
+ * The Kronecker delta symbol for 2 dimensions.
+ * @param i Index value.
+ * @param j Index value.
+ */
 export function kronecker(i: number, j: number): 0 | 1;
+/**
+ * The generalised Kronecker delta symbol for any number of dimensions.
+ * @param i Index values.
+ * @param j Index values.
+ */
 export function kronecker(i: number[], j: number[]): 0 | 1;
 export function kronecker(i: number | number[], j: number | number[]) {
 	if(typeof i === "number" && typeof j === "number")
