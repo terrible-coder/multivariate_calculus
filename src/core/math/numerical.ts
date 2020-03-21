@@ -27,6 +27,10 @@ export function newton_raphson(f: (x: BigNum) => BigNum, f_: (x: BigNum) => BigN
 	}
 }
 
+/**
+ * Checks whether an array contains distinct elements.
+ * @param a Array of numbers.
+ */
 function distinct(a: number[]) {
 	for(let i = 0; i < a.length; i++)
 		if(a.lastIndexOf(a[i]) !== i)
@@ -34,6 +38,12 @@ function distinct(a: number[]) {
 	return true;
 }
 
+/**
+ * Checks whether a given combination of numbers is an even permutation
+ * of the other.
+ * @param mu Combination to check against.
+ * @param nu Combination to check.
+ */
 function evenPerm(mu: number[], nu: number[]) {
 	let p = 0;
 	for(let i = 0; i < mu.length; i++) {
