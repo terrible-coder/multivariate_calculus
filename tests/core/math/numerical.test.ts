@@ -1,4 +1,4 @@
-import { levicivita } from "../../../src/core/math/numerical";
+import { levicivita, kronecker } from "../../../src/core/math/numerical";
 
 describe("Levi-Civita symbol", function() {
     it("2 dimensions", function() {
@@ -28,5 +28,17 @@ describe("Levi-Civita symbol", function() {
 
     it("Throws errors", function() {
         expect(() => levicivita(1, 2, 4)).toThrow();
+    });
+});
+
+describe("Kronecker delta symbol", function() {
+    it("2 dimensions", function() {
+        for(let i = 0; i < 10; i++)
+            for(let j = 0; j < 10; j++)
+                expect(kronecker(i, j)).toBe(i == j ? 1: 0);
+    });
+
+    it("3 dimensions", function() {
+        
     });
 });

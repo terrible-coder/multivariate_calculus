@@ -31,7 +31,14 @@ export function newton_raphson(f: (x: BigNum) => BigNum, f_: (x: BigNum) => BigN
  * The generalised Levi-Civita symbol for \(n\) dimensions.
  * @param args The index values for the levi-civita symbol.
  */
-export function levicivita(...args: number[]) {
+export function levicivita(values: number[]): 1 | 0 | -1;
+export function levicivita(...values: number[]): 1 | 0 | -1;
+export function levicivita(...values: number[] | [number[]]) {
+	let args: number[];
+	const temp = values[0];
+	if(temp instanceof Array)
+		args = temp;
+	else args = <Array<number>>values;
 	const n = args.length;
 	for(let i = 1; i <= n; i++)
 		if(args[i] > n)
@@ -47,4 +54,13 @@ export function levicivita(...args: number[]) {
 		p += jump;
 	}
 	return p % 2 == 0? 1: -1;
+}
+
+export function kronecker(i: number, j: number): 0 | 1;
+export function kronecker(i: number[], j: number[]): 0 | 1;
+export function kronecker(i: number | number[], j: number | number[]) {
+	if(typeof i === "number" && typeof j === "number")
+		return i === j ? 1: 0;
+	else if(i instanceof Array && j instanceof Array)
+		return levicivita(i) * levicivita(j);
 }
