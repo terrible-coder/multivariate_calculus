@@ -74,6 +74,10 @@ function isDecimal(s: string) {
 	return parts.length === 1 ? isInteger(parts[0]) : isInteger(parts[0]) && isInteger(parts[1], true);
 }
 
+/**
+ * Checks whether the given representation of a real number is acceptable.
+ * @param s String representation of a real number.
+ */
 function isValid(s: string) {
 	if (s.indexOf('e') > -1) {
 		// The number is in scientific mode

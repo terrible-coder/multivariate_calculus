@@ -2,12 +2,32 @@
 import { trimZeroes, align, pad } from "./parsers";
 import { Component } from "./component";
 
+/**
+ * Immutable higher dimensional numbers.
+ */
 export class BigNum {
 
+	/**
+	 * The components of the number represented by this object. The first one
+	 * (at index 0) is the real component and the rest are the components of
+	 * the imaginary units.
+	 */
 	readonly components: Component[];
+	/**
+	 * The dimension in which this number belongs. The dimension must always be
+	 * a power of 2.
+	 */
 	readonly dim: number;
 
+	/**
+	 * Creates a higher dimensional number from its components.
+	 * @param values The components of the number.
+	 */
 	constructor(...values: Component[]);
+	/**
+	 * Creates a higher dimensional number from its components.
+	 * @param values The components of the number.
+	 */
 	constructor(values: Component[]);
 	constructor(...values: Component[] | [Component[]]) {
 		let args: Component[];
