@@ -154,9 +154,9 @@ export class Component {
 		let aa = a.asString,
 			ba = b.asString;
 		if(d > 0)
-			ba = pad(ba, d, "0");
+			ba = pad(ba, d, "0", "end");
 		else if(d < 0)
-			aa = pad(aa, -d, "0");
+			aa = pad(aa, -d, "0", "end");
 		return [aa, ba];
 	}
 
@@ -183,10 +183,10 @@ export class Component {
 			return x;
 		const num = x.asBigInt;
 		const diff = x.precision - context.precision;
-		const divider = BigInt(pad("1", diff, "0"));
+		const divider = BigInt(pad("1", diff, "0", "end"));
 		let rounded = num / divider, last = num % divider;
 		const one = BigInt("1"), ten = BigInt("10");
-		const FIVE = BigInt(pad("5", diff - 1, "0")), ONE = BigInt(pad("1", diff - 1, "0"));
+		const FIVE = BigInt(pad("5", diff - 1, "0", "end")), ONE = BigInt(pad("1", diff - 1, "0", "end"));
 		switch(context.rounding) {
 		case RoundingMode.UP:
 			if(last >= ONE) rounded += one;
@@ -399,7 +399,7 @@ export class Component {
 		}
 		const precision = context.precision;
 		const p1 = this.precision, p2 = that.precision, p = precision - p1 + p2;
-		const a = p < 0? this.asBigInt: BigInt(pad(this.asString, p, "0")); //this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
+		const a = p < 0? this.asBigInt: BigInt(pad(this.asString, p, "0", "end"));
 		const b = that.asBigInt;
 		let quo = (a / b).toString();
 		const res = Component.create(decimate(quo, (p < 0)? p1: precision));

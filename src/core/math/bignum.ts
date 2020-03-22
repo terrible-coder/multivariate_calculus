@@ -1,5 +1,5 @@
 // import { MathContext } from "./context";
-import { trimZeroes } from "./parsers";
+import { trimZeroes, pad } from "./parsers";
 import { Component } from "./component";
 
 export class BigNum {
@@ -29,14 +29,11 @@ export class BigNum {
 		if(a.dim === b.dim)
 			return [a.components, b.components];
 		const diff = a.dim - b.dim;
-		const pa = a.components.slice(), pb = b.components.slice();
-		if(diff < 0) {
-			for(let i = 0; i < -diff; i++)
-				pa.push(Component.create("0"));
-		} else {
-			for(let i = 0; i < diff; i++)
-				pb.push(Component.create("0"));
-		}
+		let pa = a.components.slice(), pb = b.components.slice();
+		if(diff < 0)
+			pa = pad(pa, -diff, Component.ZERO, "end");
+		else
+			pb = pad(pb, diff, Component.ZERO, "end");
 		return [pa, pb];
 	}
 
