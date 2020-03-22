@@ -1,13 +1,6 @@
 // import { MathContext } from "./context";
+import { trimZeroes } from "./parsers";
 import { Component } from "./component";
-
-function trimZero(c: Component[]) {
-	let i: number;
-	for(i = c.length - 1; i >= 0; i--)
-		if(!c[i].equals(Component.ZERO))
-			break;
-	return c.slice(0, i+1);
-}
 
 export class BigNum {
 
@@ -22,14 +15,14 @@ export class BigNum {
 		if(temp instanceof Array)
 			args = temp;
 		else args = <Array<Component>>values;
-		args = trimZero(args);
+		args = trimZeroes<Component>(args, "end", Component.ZERO);
 		this.components = args.slice();
 		let dim = Math.log2(args.length);
 		if(dim === (dim | 0))
 			this.dim = Math.pow(2, dim);
 		else this.dim = Math.pow(2, 1 + dim | 0);
 		for(let i = args.length; i < this.dim; i++)
-			this.components.push(Component.create("0"));
+			this.components.push(Component.ZERO);
 	}
 
 	private static align(a: BigNum, b: BigNum) {
