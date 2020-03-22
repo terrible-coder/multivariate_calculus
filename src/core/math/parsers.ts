@@ -1,15 +1,44 @@
-function trimZeroes(s: string, pos: "end" | "start") {
+type C<T> = {equals(arg: T): boolean};
+
+function trimStart(s: string, zero: string): string;
+function trimStart<T>(s: C<T>[], zero: T): C<T>[];
+function trimStart<T>(s: string | C<T>[], zero: string | T) {
 	let i: number;
-	if (pos === "end") {
-		for (i = s.length - 1; i >= 0; i--)
-			if (s.charAt(i) !== '0')
+	for (i = 0; i < s.length; i++) {
+		if(typeof s === "string") {
+			if(s[i] !== zero)
 				break;
-		return s.substring(0, i + 1);
+		} else {
+			if(!s[i].equals(<T>zero))
+				break;
+		}
 	}
-	for (i = 0; i < s.length; i++)
-		if (s.charAt(i) !== '0')
-			break;
-	return s.substring(i);
+	return s.slice(i);
+}
+
+function trimEnd(s: string, zero: string): string;
+function trimEnd<T>(s: C<T>[], zero: T): C<T>[];
+function trimEnd<T>(s: string | C<T>[], zero: string | T) {
+	let i: number;
+	for(i = s.length - 1; i >= 0; i--) {
+		if(typeof s === "string") {
+			if(s[i] !== zero)
+				break;
+		} else {
+			if(!s[i].equals(<T>zero))
+				break;
+		}
+	}
+	return s.slice(0, i+1);
+}
+
+function trimZeroes(s: string, pos: "end" | "start", zero: string): string;
+function trimZeroes<T>(s: C<T>[], pos: "end" | "start", zero: C<T>[]): C<T>[];
+function trimZeroes<T>(s: string | C<T>[], pos: "end" | "start", zero: string | T) {
+	if(typeof s === "string")
+		return (pos === "end")? trimEnd(s, <string>zero): trimStart(s, <string>zero);
+	else
+		return (pos === "end")? trimEnd(s, <T>zero): trimStart(s, <T>zero);
 }
 function isInteger(s: string, positive = false) {
 	const valids = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -100,6 +129,6 @@ export function parseNum(s: string) {
 	}
 	else
 		a = s.split(".");
-	return a.length === 1 ? [trimZeroes(a[0], "start"), ""] :
-		[trimZeroes(a[0], "start"), trimZeroes(a[1], "end")];
+	return a.length === 1 ? [trimZeroes(a[0], "start", "0"), ""] :
+		[trimZeroes(a[0], "start", "0"), trimZeroes(a[1], "end", "0")];
 }
