@@ -32,7 +32,23 @@ function trimEnd<T>(s: string | Comparable<T>[], zero: string | T) {
 	return s.slice(0, i+1);
 }
 
+/**
+ * Trims unnecessary "zeroes" towards the end or beginning of a string.
+ * The "zeroes" may not be `'0'`. Any string could be passed in to
+ * indicate what character to look for when trimming.
+ * @param s String data to check.
+ * @param pos Position to trim from.
+ * @param zero Representation of zero element to trim.
+ */
 export function trimZeroes(s: string, pos: "end" | "start", zero: string): string;
+/**
+ * Trims unnecessary "zeroes" towards the end or beginning of an array.
+ * The "zeroes" may not be numerically zero. Any data could be passed in to
+ * indicate what element to look for when trimming.
+ * @param s String data to check.
+ * @param pos Position to trim from.
+ * @param zero Representation of zero element to trim.
+ */
 export function trimZeroes<T>(s: Comparable<T>[], pos: "end" | "start", zero: Comparable<T>): Comparable<T>[];
 export function trimZeroes<T>(s: string | Comparable<T>[], pos: "end" | "start", zero: string | T) {
 	if(typeof s === "string")
@@ -40,6 +56,7 @@ export function trimZeroes<T>(s: string | Comparable<T>[], pos: "end" | "start",
 	else
 		return (pos === "end")? trimEnd(s, <T>zero): trimStart(s, <T>zero);
 }
+
 function isInteger(s: string, positive = false) {
 	const valids = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 	const ch = s.charAt(0);
@@ -49,12 +66,14 @@ function isInteger(s: string, positive = false) {
 			return false;
 	return true;
 }
+
 function isDecimal(s: string) {
 	const parts = s.split('.');
 	if (parts.length > 2)
 		return false;
 	return parts.length === 1 ? isInteger(parts[0]) : isInteger(parts[0]) && isInteger(parts[1], true);
 }
+
 function isValid(s: string) {
 	if (s.indexOf('e') > -1) {
 		// The number is in scientific mode
@@ -66,6 +85,7 @@ function isValid(s: string) {
 	}
 	return isDecimal(s);
 }
+
 /**
  * Given a string, adds padding to the rear or front. This is an implementation
  * to only aid with numerical operations where the numbers are stored as
@@ -81,6 +101,7 @@ export function pad(s: string, n: number, char: string, front = false) {
 		throw new Error("Padding string must have only one character.");
 	return front ? "".padEnd(n, char) + s : s + "".padEnd(n, char);
 }
+
 /**
  * Inserts a decimal point in the string at a given index. The `index`
  * value is calculated from the rear of the string starting from 1.
@@ -102,6 +123,7 @@ export function decimate(a: string, index: number) {
 		s = s.substring(0, s.length - index) + "." + s.substring(s.length - index);
 	return sgn + s;
 }
+
 /**
  * Takes a string and parses into the format expected by the [[BigNum]] class.
  * @param s String representation of the number.
