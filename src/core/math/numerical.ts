@@ -1,5 +1,5 @@
 import { MathContext } from "./context";
-import { BigNum } from "./bignum";
+import { Component } from "./component";
 /**
  * Uses the Newton-Raphson algorithm to find the root of a given equation.
  * The exact derivative (found analytically) is assumed to be known.
@@ -10,20 +10,20 @@ import { BigNum } from "./bignum";
  * 			places specified by the default [[MathContext]].
  * @ignore
  */
-export function newton_raphson(f: (x: BigNum) => BigNum, f_: (x: BigNum) => BigNum, x: BigNum, context = BigNum.MODE) {
+export function newton_raphson(f: (x: Component) => Component, f_: (x: Component) => Component, x: Component, context = Component.MODE) {
 	const ctx: MathContext = {
 		precision: 2 * context.precision,
 		rounding: context.rounding
 	};
 	let X = x;
-	let Y: BigNum;
+	let Y: Component;
 	while (true) {
-		if (f(X).equals(BigNum.ZERO, ctx))
-			return BigNum.round(X, context);
-		Y = BigNum.real(X.toString());
+		if (f(X).equals(Component.ZERO, ctx))
+			return Component.round(X, context);
+		Y = Component.create(X.toString());
 		X = X.sub(f(X).div(f_(X), ctx), ctx);
 		if (X.equals(Y, ctx))
-			return BigNum.round(X, context);
+			return Component.round(X, context);
 	}
 }
 
