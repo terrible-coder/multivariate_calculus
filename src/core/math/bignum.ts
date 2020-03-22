@@ -36,7 +36,7 @@ export class BigNum {
 			args = temp;
 		else args = <Array<Component>>values;
 		args = trimZeroes<Component>(args, "end", Component.ZERO);
-		this.dim = Math.pow(2, Math.ceil(Math.log2(args.length)));
+		this.dim = Math.pow(2, Math.ceil(Math.log2(args.length || 1)));
 		this.components = pad(args, this.dim - args.length, Component.ZERO, "end");
 	}
 
@@ -62,6 +62,32 @@ export class BigNum {
 	 */
 	public get neg() {
 		return new BigNum(this.components.map(x => x.neg));
+	}
+
+	/**
+	 * The real part of this number.
+	 */
+	public get real() {
+		return new BigNum(this.components[0]);
+	}
+
+	/**
+	 * The imaginary part of this number.
+	 */
+	public get imag() {
+		return new BigNum([Component.ZERO].concat(this.components.slice(1)));
+	}
+
+	/**
+	 * The conjugate of `this` number.
+	 */
+	public get conj(): BigNum {
+		if(this.dim === 1)
+			return this;
+		const real = this.real.components;
+		const imag = this.imag.neg.components.slice(1);
+		const comps = real.concat(imag);
+		return new BigNum(comps);
 	}
 
 	/**

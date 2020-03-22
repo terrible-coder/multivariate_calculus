@@ -63,3 +63,55 @@ describe("Negates", function() {
 		expect(a.add(a.neg)).toEqual(new BigNum(Component.create("0")));
 	});
 });
+
+describe("Conjugates", function() {
+	describe("Real", function() {
+		it("Zero", function() {
+			const a = new BigNum(Component.ZERO);
+			expect(a.conj).toEqual(a);
+		});
+
+		it("Non-zero", function() {
+			for(let i = 1; i <= 10; i++) {
+				const sa = "" + i;
+				const sna = "-" + i;
+				const a = new BigNum(Component.create(sa));
+				const na = new BigNum(Component.create(sna));
+				expect(a.conj).toEqual(a);
+				expect(na.conj).toEqual(na);
+			}
+		});
+	});
+
+	describe("Complex", function() {
+		it("Purely imaginary", function() {
+			for(let i = 1; i <= 10; i++) {
+				const sa = "" + i;
+				const sna = "-" + i;
+				const a = new BigNum(Component.ZERO, Component.create(sa));
+				const na = new BigNum(Component.ZERO, Component.create(sna));
+				expect(a.conj).toEqual(na);
+			}
+		});
+
+		it("Real and imaginary", function() {
+			const a = Component.create("5");
+			for(let i = 1; i <= 10; i++) {
+				const b = Component.create("" + i);
+				const nb = Component.create("-" + i);
+				const z = new BigNum(a, b);
+				const z_ = new BigNum(a, nb);
+				expect(z.conj).toEqual(z_);
+			}
+		});
+
+		it("Idempotence", function() {
+			const a = Component.create("5");
+			for(let i = 1; i <= 10; i++) {
+				const b = Component.create("" + i);
+				const z = new BigNum(a, b);
+				expect(z.conj.conj).toEqual(z);
+			}
+		});
+	});
+});
