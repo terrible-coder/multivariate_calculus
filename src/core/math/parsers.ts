@@ -116,6 +116,43 @@ export function pad<T>(s: string | T[], n: number, elt: string | T, pos: "end" |
 }
 
 /**
+ * Compares two strings and aligns them to be of equal "length". The sense of
+ * length is defined by the caller function. 
+ * * If \(diff < 0\) `a` is shorter than `b` by amount \(-diff\)
+ * * If \(diff > 0\) `b` is shorter than `a` by amount \(diff\)
+ * * If \(diff = 0\) the strings are equal and returned as is.
+ * @param a 
+ * @param b 
+ * @param elt String to use to align strings.
+ * @param diff The difference of length between two strings as defined by caller.
+ */
+export function align(a: string, b: string, elt: string, diff: number): string[];
+/**
+ * Compares two arrays and aligns them to be of equal "length". The sense of
+ * length is defined by the caller function. 
+ * * If \(diff < 0\) `a` is shorter than `b` by amount \(-diff\)
+ * * If \(diff > 0\) `b` is shorter than `a` by amount \(diff\)
+ * * If \(diff = 0\) the arrays are equal and returned as is.
+ * @param a 
+ * @param b 
+ * @param elt Element to use to align arrays.
+ * @param diff The difference of length between two arrays as defined by caller.
+ */
+export function align<T>(a: T[], b: T[], elt: T, diff: number): T[][];
+export function align<T>(a: string | T[], b: string | T[], elt: string | T, diff: number) {
+	if(diff < 0) {
+		const aa = typeof a === "string"? pad(a, -diff, <string>elt, "end"): pad(a, -diff, <T>elt, "end");
+		const bb = b.slice();
+		return [aa, bb];
+	} else if(diff > 0) {
+		const aa = a.slice();
+		const bb = typeof b === "string"? pad(b, diff, <string>elt, "end"): pad(b, diff, <T>elt, "end");
+		return [aa, bb];
+	}
+	return [a, b];
+}
+
+/**
  * Inserts a decimal point in the string at a given index. The `index`
  * value is calculated from the rear of the string starting from 1.
  * @param a The number as a string.

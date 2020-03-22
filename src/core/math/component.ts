@@ -1,5 +1,5 @@
 import { IndeterminateForm, DivisionByZero } from "../errors";
-import { parseNum, pad, decimate } from "./parsers";
+import { parseNum, pad, decimate, align } from "./parsers";
 import { MathContext, RoundingMode } from "./context";
 import { newton_raphson } from "./numerical";
 
@@ -141,26 +141,6 @@ export class Component {
 	}
 
 	/**
-	 * Aligns the decimal point in the given numbers by adding padding 0's
-	 * at the end of the smaller number string.
-	 * @param a 
-	 * @param b 
-	 * @returns The strings aligned according to position of decimal point.
-	 * @ignore
-	 */
-	private static align(a: Component, b: Component) {
-		const pa = a.precision, pb = b.precision;
-		const d = pa - pb;
-		let aa = a.asString,
-			ba = b.asString;
-		if(d > 0)
-			ba = pad(ba, d, "0", "end");
-		else if(d < 0)
-			aa = pad(aa, -d, "0", "end");
-		return [aa, ba];
-	}
-
-	/**
 	 * Evaluates the absolute value of this number.
 	 * @param x The number whose absolute value is to be found.
 	 * @returns The absolute value of the argument.
@@ -233,7 +213,7 @@ export class Component {
 	 * @param that Number to compare with.
 	 */
 	public compareTo(that: Component) {
-		const [a, b] = Component.align(this, that);
+		const [a, b] = align(this.asString, that.asString, "0", this.precision - that.precision);
 		const x = BigInt(a) - BigInt(b);
 		return x > 0? 1: x < 0? -1: 0;
 	}
@@ -317,7 +297,7 @@ export class Component {
 	public add(that: Component, context: MathContext): Component;
 	public add(that: Component, context?: MathContext) {
 		context = context || Component.MODE;
-		const [a, b] = Component.align(this, that);
+		const [a, b] = align(this.asString, that.asString, "0", this.precision - that.precision);
 		let sum = (BigInt(a) + BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
 		const res = Component.create(decimate(sum, precision));
@@ -343,7 +323,7 @@ export class Component {
 	public sub(that: Component, context: MathContext): Component;
 	public sub(that: Component, context?: MathContext) {
 		context = context || Component.MODE;
-		const [a, b] = Component.align(this, that);
+		const [a, b] = align(this.asString, that.asString, "0", this.precision - that.precision);
 		let sum = (BigInt(a) - BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
 		const res = Component.create(decimate(sum, precision));

@@ -1,5 +1,5 @@
 // import { MathContext } from "./context";
-import { trimZeroes, pad } from "./parsers";
+import { trimZeroes, align } from "./parsers";
 import { Component } from "./component";
 
 export class BigNum {
@@ -25,18 +25,6 @@ export class BigNum {
 			this.components.push(Component.ZERO);
 	}
 
-	private static align(a: BigNum, b: BigNum) {
-		if(a.dim === b.dim)
-			return [a.components, b.components];
-		const diff = a.dim - b.dim;
-		let pa = a.components.slice(), pb = b.components.slice();
-		if(diff < 0)
-			pa = pad(pa, -diff, Component.ZERO, "end");
-		else
-			pb = pad(pb, diff, Component.ZERO, "end");
-		return [pa, pb];
-	}
-
 	public equal(that: BigNum) {
 		if(this.dim !== that.dim)
 			return false;
@@ -52,7 +40,7 @@ export class BigNum {
 	}
 
 	public add(that: BigNum) {
-		let [a, b] = BigNum.align(this, that);
+		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
 			sum.push(a[i].add(b[i]));
