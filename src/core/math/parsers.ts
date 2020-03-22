@@ -1,8 +1,8 @@
-type C<T> = {equals(arg: T): boolean};
+export type Comparable<T> = T & {equals(arg: T): boolean};
 
 function trimStart(s: string, zero: string): string;
-function trimStart<T>(s: C<T>[], zero: T): C<T>[];
-function trimStart<T>(s: string | C<T>[], zero: string | T) {
+function trimStart<T>(s: Comparable<T>[], zero: T): Comparable<T>[];
+function trimStart<T>(s: string | Comparable<T>[], zero: string | T) {
 	let i: number;
 	for (i = 0; i < s.length; i++) {
 		if(typeof s === "string") {
@@ -17,8 +17,8 @@ function trimStart<T>(s: string | C<T>[], zero: string | T) {
 }
 
 function trimEnd(s: string, zero: string): string;
-function trimEnd<T>(s: C<T>[], zero: T): C<T>[];
-function trimEnd<T>(s: string | C<T>[], zero: string | T) {
+function trimEnd<T>(s: Comparable<T>[], zero: T): Comparable<T>[];
+function trimEnd<T>(s: string | Comparable<T>[], zero: string | T) {
 	let i: number;
 	for(i = s.length - 1; i >= 0; i--) {
 		if(typeof s === "string") {
@@ -32,9 +32,9 @@ function trimEnd<T>(s: string | C<T>[], zero: string | T) {
 	return s.slice(0, i+1);
 }
 
-function trimZeroes(s: string, pos: "end" | "start", zero: string): string;
-function trimZeroes<T>(s: C<T>[], pos: "end" | "start", zero: C<T>[]): C<T>[];
-function trimZeroes<T>(s: string | C<T>[], pos: "end" | "start", zero: string | T) {
+export function trimZeroes(s: string, pos: "end" | "start", zero: string): string;
+export function trimZeroes<T>(s: Comparable<T>[], pos: "end" | "start", zero: Comparable<T>): Comparable<T>[];
+export function trimZeroes<T>(s: string | Comparable<T>[], pos: "end" | "start", zero: string | T) {
 	if(typeof s === "string")
 		return (pos === "end")? trimEnd(s, <string>zero): trimStart(s, <string>zero);
 	else
