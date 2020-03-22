@@ -92,14 +92,27 @@ function isValid(s: string) {
  * strings. Do not use for general use.
  * @param s The string which is to be padded.
  * @param n Number of times padding string must be used.
- * @param char The padding string. It must be a single character string.
- * @param front Flag value to indicate whether to pad at front or at rear.
+ * @param elt The padding string. It must be a single character string.
+ * @param pos Indicate whether to pad at front or at rear.
  * @ignore
  */
-export function pad(s: string, n: number, char: string, front = false) {
-	if (char.length > 1)
-		throw new Error("Padding string must have only one character.");
-	return front ? "".padEnd(n, char) + s : s + "".padEnd(n, char);
+export function pad(s: string, n: number, elt: string, pos: "end" | "start"): string;
+/**
+ * Given a string, adds padding to the rear or front. This is an implementation
+ * to only aid with numerical operations where the numbers are stored as
+ * strings. Do not use for general use.
+ * @param s The array which is to be padded.
+ * @param n Number of times padding element must be used.
+ * @param elt The padding element.
+ * @param pos Indicate whether to pad at front or at rear.
+ * @ignore
+ */
+export function pad<T>(s: T[], n: number, elt: T, pos: "end" | "start"): T[];
+export function pad<T>(s: string | T[], n: number, elt: string | T, pos: "end" | "start") {
+	if(typeof s === "string")
+		return pos === "start"? "".padEnd(n, <string>elt) + s : s + "".padEnd(n, <string>elt);
+	const padding = new Array(n).fill(0).map(() => <T>elt);
+	return pos === "end"? s.concat(padding): padding.concat(s);
 }
 
 /**
@@ -118,7 +131,7 @@ export function decimate(a: string, index: number) {
 		sgn = "-";
 	}
 	if (index > s.length)
-		s = "0." + pad(s, index - s.length, "0", true);
+		s = "0." + pad(s, index - s.length, "0", "start");
 	else
 		s = s.substring(0, s.length - index) + "." + s.substring(s.length - index);
 	return sgn + s;
@@ -142,9 +155,8 @@ export function parseNum(s: string) {
 		const index = mantissa.indexOf('.');
 		const precision = index == -1 ? 0 : mantissa.substring(index + 1).length;
 		let num = mantissa.split('.').join("");
-		if (exponent > precision) {
-			num = pad(mantissa, exponent - precision, "0");
-		}
+		if (exponent > precision)
+			num = pad(mantissa, exponent - precision, "0", "end");
 		else
 			num = decimate(num, precision - exponent);
 		a = num.split(".");
