@@ -20,6 +20,13 @@ export class BigNum {
 		this.components = pad(args, this.dim - args.length, Component.ZERO, "end");
 	}
 
+	/**
+	 * Checks whether `this` and `that` are equal numbers. Equality is defined
+	 * component wise. That is, two numbers \(a\) and \(b\) are equal
+	 * if and only if
+	 * \(a_i = b_i \forall i\)
+	 * @param that The number to check against.
+	 */
 	public equal(that: BigNum) {
 		if(this.dim !== that.dim)
 			return false;
@@ -30,10 +37,20 @@ export class BigNum {
 		return true;
 	}
 
+	/**
+	 * The negative of `this`.
+	 */
 	public get neg() {
 		return new BigNum(this.components.map(x => x.neg));
 	}
 
+	/**
+	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
+	 * That is, for two numbers \(a\) and \(b\), their addition is defined as
+	 * \(a + b = \sum_i a_i + b_i\)
+	 * @param that The number to add this with.
+	 * @returns this + that.
+	 */
 	public add(that: BigNum) {
 		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
