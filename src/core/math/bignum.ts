@@ -1,5 +1,5 @@
 // import { MathContext } from "./context";
-import { trimZeroes, align } from "./parsers";
+import { trimZeroes, align, pad } from "./parsers";
 import { Component } from "./component";
 
 export class BigNum {
@@ -16,13 +16,8 @@ export class BigNum {
 			args = temp;
 		else args = <Array<Component>>values;
 		args = trimZeroes<Component>(args, "end", Component.ZERO);
-		this.components = args.slice();
-		let dim = Math.log2(args.length);
-		if(dim === (dim | 0))
-			this.dim = Math.pow(2, dim);
-		else this.dim = Math.pow(2, 1 + dim | 0);
-		for(let i = args.length; i < this.dim; i++)
-			this.components.push(Component.ZERO);
+		this.dim = Math.pow(2, Math.ceil(Math.log2(args.length)));
+		this.components = pad(args, this.dim - args.length, Component.ZERO, "end");
 	}
 
 	public equal(that: BigNum) {
