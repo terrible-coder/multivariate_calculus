@@ -120,6 +120,11 @@ export class BigNum {
 		return new BigNum(sum);
 	}
 
+	/**
+	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
+	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
+	 * @param that The number to multiply with.
+	 */
 	public mul(that: BigNum): BigNum {
 		const zero = new BigNum(Component.ZERO);
 		if(this.equal(zero) || that.equal(zero))
