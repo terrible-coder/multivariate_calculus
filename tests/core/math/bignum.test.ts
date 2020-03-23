@@ -193,3 +193,24 @@ describe("Multiplies", function() {
 		}
 	});
 });
+
+describe("Absolute value", function() {
+	it("for 1 real", function() {
+		const a = new BigNum(Component.create("5"));
+		expect(BigNum.abs(a)).toEqual(a);
+		expect(BigNum.abs(a.neg)).toEqual(a);
+	});
+
+	it("for 2 reals", function() {
+		const a = new BigNum(Component.THREE, Component.FOUR);
+		const abs = new BigNum(Component.FIVE);
+		expect(BigNum.abs(a)).toEqual(abs);
+		expect(BigNum.abs(a.conj)).toEqual(abs);
+	});
+
+	it("zz* = |z|^2", function() {
+		const a = new BigNum(Component.THREE, Component.FOUR);
+		const mag = BigNum.abs(a);
+		expect(mag.mul(mag)).toEqual(a.mul(a.conj));
+	});
+});

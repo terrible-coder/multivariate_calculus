@@ -90,6 +90,11 @@ export class BigNum {
 		return new BigNum(comps);
 	}
 
+	public static abs(x: BigNum) {
+		const magsq = x.components.reduce((prev, curr) => prev.add(curr.pow(Component.TWO)), Component.ZERO);
+		return new BigNum(magsq.pow(Component.create("0.5")));
+	}
+
 	/**
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
 	 * That is, for two numbers \(a\) and \(b\), their addition is defined as
