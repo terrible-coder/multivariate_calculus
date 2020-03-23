@@ -89,6 +89,52 @@ describe("Subtracts", function() {
 	});
 });
 
+describe("Multiplies", function() {
+	it("for 1 real", function() {
+		const a = new BigNum(Component.create("5"));
+		const b = new BigNum(Component.create("7"));
+		const prod = new BigNum(Component.create("35"));
+		expect(a.mul(b)).toEqual(prod);
+	});
+
+	it("for 2 reals", function() {
+		const a = new BigNum(Component.create("5"), Component.create("1"));
+		const b = new BigNum(Component.create("7"), Component.create("3"));
+		const prod = new BigNum(Component.create("32"), Component.create("22"));
+		expect(a.mul(b)).toEqual(prod);
+	});
+
+	it("for 3 reals", function() {
+		const a = new BigNum(Component.ZERO, Component.create("1"), Component.create("2"));
+		const b = new BigNum(Component.ZERO, Component.create("2"), Component.create("1"));
+		const prod = new BigNum(Component.create("-4"), Component.ZERO, Component.ZERO, Component.create("-3"));
+		expect(() => a.mul(b)).not.toThrow();
+		expect(a.mul(b)).toEqual(prod);
+	});
+
+	it("for 5 reals", function() {
+		const A = new Array(5).fill(0).map(() => Component.ZERO);
+		const B = new Array(5).fill(0).map(() => Component.ZERO);
+		A[4] = Component.ONE;
+		B[1] = Component.ONE;
+		const a = new BigNum(A);
+		const b = new BigNum(B);
+		const p = new Array(5).fill(0).map(() => Component.ZERO);
+		p.push(Component.ONE.neg);
+		const prod = new BigNum(p);
+		expect(a.mul(b)).toEqual(prod);
+	});
+
+	it("i^2 = -1", function() {
+		for(let i = 1; i < 10; i++) {
+			const A = new Array(10).fill(0).map(() => Component.ZERO);
+			A[i] = Component.ONE;
+			const a = new BigNum(A);
+			expect(a.mul(a)).toEqual(new BigNum(Component.ONE.neg));
+		}
+	});
+});
+
 describe("Negates", function() {
 	it("Creates additive inverse", function() {
 		const a = new BigNum(Component.create("5"), Component.create("1"), Component.create("4"));

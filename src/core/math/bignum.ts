@@ -120,6 +120,27 @@ export class BigNum {
 		return new BigNum(sum);
 	}
 
+	public mul(that: BigNum): BigNum {
+		const zero = new BigNum(Component.ZERO);
+		if(this.equal(zero) || that.equal(zero))
+			return zero;
+		if(this.dim === 1 && that.dim === 1)
+			return new BigNum(this.components[0].mul(that.components[0]));
+		if(this.dim === 1)
+			return new BigNum(that.components.map(x => this.components[0].mul(x)));
+		if(that.dim === 1)
+			return new BigNum(this.components.map(x => x.mul(that.components[0])));
+		const n = Math.max(this.dim, that.dim);
+		const a1 = new BigNum(this.components.slice(0, n/2)), a2 = new BigNum(this.components.slice(n/2));
+		const b1 = new BigNum(that.components.slice(0, n/2)), b2 = new BigNum(that.components.slice(n/2));
+		let q1 = a1.mul(b1).sub(b2.conj.mul(a2)).components;
+		let q2 = b2.mul(a1).add(a2.mul(b1.conj)).components;
+		q1 = pad(q1, n/2-q1.length, Component.ZERO, "end");
+		q2 = pad(q2, n/2-q2.length, Component.ZERO, "end");
+		const q = new BigNum(q1.concat(q2));
+		return q;
+	}
+
 
 	// /**
 	//  * Calculates the trigonometric sine of a given number with rounding
