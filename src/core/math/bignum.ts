@@ -110,7 +110,7 @@ export class BigNum {
 	 * That is, for two numbers \(a\) and \(b\), their difference is defined as
 	 * \(a - b = \sum_i a_i - b_i\)
 	 * @param that The number to add this with.
-	 * @returns this + that.
+	 * @returns this - that.
 	 */
 	public sub(that: BigNum) {
 		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
@@ -124,6 +124,7 @@ export class BigNum {
 	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
 	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
 	 * @param that The number to multiply with.
+	 * @returns this * that.
 	 */
 	public mul(that: BigNum): BigNum {
 		const zero = new BigNum(Component.ZERO);
