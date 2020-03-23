@@ -31,21 +31,21 @@ describe("Adds", function() {
 		const a = new BigNum(Component.create("5"));
 		const b = new BigNum(Component.create("2"));
 		const sum = new BigNum(Component.create("7"));
-		expect(sum).toEqual(a.add(b));
+		expect(a.add(b)).toEqual(sum);
 	});
 
 	it("for 2 reals", function() {
 		const a = new BigNum(Component.create("5"), Component.create("1"));
 		const b = new BigNum(Component.create("2"), Component.create("3"));
 		const sum = new BigNum(Component.create("7"), Component.create("4"));
-		expect(sum).toEqual(a.add(b));
+		expect(a.add(b)).toEqual(sum);
 	});
 
 	it("for 3 reals", function() {
 		const a = new BigNum(Component.create("5"), Component.create("1"), Component.create("4"));
 		const b = new BigNum(Component.create("2"), Component.create("3"), Component.create("1"));
 		const sum = new BigNum(Component.create("7"), Component.create("4"), Component.create("5"));
-		expect(sum).toEqual(a.add(b));
+		expect(a.add(b)).toEqual(sum);
 	});
 
 	it("for mixed number of reals", function() {
@@ -53,7 +53,39 @@ describe("Adds", function() {
 		const b = new BigNum(Component.create("2"), Component.create("4"));
 		const sum = new BigNum(Component.create("7"), Component.create("4"));
 		expect(() => a.add(b)).not.toThrow();
-		expect(sum).toEqual(a.add(b));
+		expect(a.add(b)).toEqual(sum);
+	});
+});
+
+
+describe("Subtracts", function() {
+	it("for 1 real", function() {
+		const a = new BigNum(Component.create("5"));
+		const b = new BigNum(Component.create("2"));
+		const diff = new BigNum(Component.create("3"));
+		expect(a.sub(b)).toEqual(diff);
+	});
+
+	it("for 2 reals", function() {
+		const a = new BigNum(Component.create("5"), Component.create("1"));
+		const b = new BigNum(Component.create("2"), Component.create("3"));
+		const diff = new BigNum(Component.create("3"), Component.create("-2"));
+		expect(a.sub(b)).toEqual(diff);
+	});
+
+	it("for 3 reals", function() {
+		const a = new BigNum(Component.create("5"), Component.create("1"), Component.create("4"));
+		const b = new BigNum(Component.create("2"), Component.create("3"), Component.create("1"));
+		const diff = new BigNum(Component.create("3"), Component.create("-2"), Component.create("3"));
+		expect(a.sub(b)).toEqual(diff);
+	});
+
+	it("for mixed number of reals", function() {
+		const a = new BigNum(Component.create("5"));
+		const b = new BigNum(Component.create("2"), Component.create("4"));
+		const diff = new BigNum(Component.create("3"), Component.create("-4"));
+		expect(() => a.sub(b)).not.toThrow();
+		expect(a.sub(b)).toEqual(diff);
 	});
 });
 
@@ -105,7 +137,7 @@ describe("Conjugates", function() {
 			}
 		});
 
-		it("Idempotence", function() {
+		it("Involution", function() {
 			const a = Component.create("5");
 			for(let i = 1; i <= 10; i++) {
 				const b = Component.create("" + i);

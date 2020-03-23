@@ -105,6 +105,21 @@ export class BigNum {
 		return new BigNum(sum);
 	}
 
+	/**
+	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
+	 * That is, for two numbers \(a\) and \(b\), their difference is defined as
+	 * \(a - b = \sum_i a_i - b_i\)
+	 * @param that The number to add this with.
+	 * @returns this + that.
+	 */
+	public sub(that: BigNum) {
+		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
+		const sum: Component[] = [];
+		for(let i = 0; i < a.length; i++)
+			sum.push(a[i].sub(b[i]));
+		return new BigNum(sum);
+	}
+
 
 	// /**
 	//  * Calculates the trigonometric sine of a given number with rounding
