@@ -90,11 +90,21 @@ export class BigNum {
 		return new BigNum(comps);
 	}
 
+	/**
+	 * Evaluates the absolute value of a number.
+	 * @param x A number.
+	 */
 	public static abs(x: BigNum) {
 		const magsq = x.components.reduce((prev, curr) => prev.add(curr.pow(Component.TWO)), Component.ZERO);
 		return new BigNum(magsq.pow(Component.create("0.5")));
 	}
 
+	/**
+	 * Evaluates the norm of this number. Since `this` is not necessarily a real
+	 * number, the norm is defined as
+	 * \(norm a = a* a\)
+	 * where \(a*\) is the conjugate of \(a\).
+	 */
 	public get norm() {
 		return new BigNum(this.conj.mul(this).components[0].pow(Component.create("0.5")));
 	}
