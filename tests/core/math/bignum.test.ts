@@ -214,3 +214,22 @@ describe("Absolute value", function() {
 		expect(mag.mul(mag)).toEqual(a.mul(a.conj));
 	});
 });
+
+describe("Normalises", function() {
+	it("for 1 real", function() {
+		const a = new BigNum(Component.create("5"));
+		expect(a.norm).toEqual(a);
+		expect(a.neg.norm).toEqual(a);
+	});
+
+	it("for 3 reals", function() {
+		const a = new BigNum(Component.create("1"), Component.create("2"), Component.create("2"));
+		const norm = new BigNum(Component.create("3"));
+		expect(a.norm).toEqual(norm);
+	});
+
+	it("equality with absolute value function", function() {
+		const a = new BigNum(Component.create("1"), Component.create("2"), Component.create("2"), Component.create("1"), Component.create("2"), Component.create("2"));
+		expect(a.norm).toEqual(BigNum.abs(a));
+	});
+});

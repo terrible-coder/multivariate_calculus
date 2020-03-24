@@ -95,6 +95,10 @@ export class BigNum {
 		return new BigNum(magsq.pow(Component.create("0.5")));
 	}
 
+	public get norm() {
+		return new BigNum(this.conj.mul(this).components[0].pow(Component.create("0.5")));
+	}
+
 	/**
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
 	 * That is, for two numbers \(a\) and \(b\), their addition is defined as
