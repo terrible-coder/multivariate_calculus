@@ -166,6 +166,14 @@ export class BigNum {
 		return q;
 	}
 
+	/**
+	 * Calculates the multiplicative inverse of this.
+	 */
+	public get inv() {
+		const magSq = this.norm.components[0].pow(Component.TWO);
+		const scale = new BigNum(Component.ONE.div(magSq));
+		return this.conj.mul(scale);
+	}
 
 	// /**
 	//  * Calculates the trigonometric sine of a given number with rounding

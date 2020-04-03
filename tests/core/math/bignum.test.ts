@@ -260,3 +260,17 @@ describe("Normalises", function() {
 		expect(a.norm).toEqual(BigNum.abs(a));
 	});
 });
+
+describe("Inverse", function() {
+	it("for 1 real", function() {
+		const a = BigNum.real("5");
+		const inv = BigNum.real("0.2");
+		expect(a.inv).toEqual(inv);
+	});
+
+	it("for 2 reals", function() {
+		const a = BigNum.complex("3", "4");
+		const inv = BigNum.complex("0.12", "-0.16");
+		expect(a.inv).toEqual(inv);
+	});
+});
