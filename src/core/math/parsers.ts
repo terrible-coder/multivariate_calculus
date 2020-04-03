@@ -204,6 +204,12 @@ export function parseNum(s: string) {
 	}
 	else
 		a = s.split(".");
-	return a.length === 1 ? [trimZeroes(a[0], "start", "0"), ""] :
-		[trimZeroes(a[0], "start", "0"), trimZeroes(a[1], "end", "0")];
+	const sgn = a[0].charAt(0) === "-"? "-": "";
+	a[0] = sgn === "-"? a[0].substring(1): a[0];
+	a[0] = trimZeroes(a[0], "start", "0");
+	if(a.length === 1) a.push("");
+	else a[1] = trimZeroes(a[1], "end", "0");
+	if(a[0] !== "" || a[1] !== "")
+		a[0] = sgn + a[0];
+	return a;
 }
