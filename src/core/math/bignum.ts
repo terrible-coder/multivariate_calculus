@@ -619,41 +619,81 @@ export class BigNum {
 
 }
 
-// export namespace BigNum {
-// 	/**
-// 	 * Creates a [[BigNum]] instance from the string representation of the number.
-// 	 * @param num The string representation of the number in decimal system.
-// 	 */
-// 	export function real(num: number): BigNum;
-// 	/**
-// 	 * Creates a [[BigNum]] instance from the decimal representation of the
-// 	 * number. This instance created will store the exact binary floating
-// 	 * point value of the number. Even though it uses the `toString()` method
-// 	 * to convert the number to a string it might be unpredictable at times.
-// 	 * @param num A numeric expression.
-// 	 */
-// 	export function real(num: string): BigNum;
-// 	/**
-// 	 * Creates a [[BigNum]] instance from the integral and fractional part
-// 	 * of the number. Both the arguments are expected to be string
-// 	 * representations of integers.
-// 	 * @param integer The whole part of the number.
-// 	 * @param fraction The fractional part of the number.
-// 	 */
-// 	export function real(integer: string, fraction: string): BigNum;
-// 	export function real(a: number|string, b?: string) {
-// 		let num: string;
-// 		if(b === undefined)
-// 			if(typeof a === "number")
-// 				num = a.toString();
-// 			else num = a;
-// 		else if(typeof a === "string" && typeof b === "string")
-// 			num = a + "." + b;
-// 		else throw new TypeError("Illegal argument type.");
-// 		const [integer, decimal] = parseNum(num);
-// 		return new BigNum({
-// 			integer: integer,
-// 			decimal: decimal
-// 		});
-// 	}
-// }
+export namespace BigNum {
+	/**
+	 * Creates a [[BigNum]] instance from the string representation of a real number.
+	 * @param num The string representation of a real number in decimal system.
+	 */
+	export function real(num: string): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the decimal representation of a real
+	 * number. This instance created will store the exact binary floating
+	 * point value of the number. Even though it uses the `toString()` method
+	 * to convert the number to a string it might be unpredictable at times.
+	 * @param num A numeric expression.
+	 */
+	export function real(num: number): BigNum;
+	export function real(a: number|string) {
+		let num = a.toString();
+		return new BigNum(Component.create(num));
+	}
+
+	/**
+	 * Creates a [[BigNum]] instance of a complex number from the decimal representations
+	 * of the real and imaginary part. This instance will store the exact binary
+	 * floating point value of the number. Even though it uses the `toString()`
+	 * method to convert number to string it might be unpredictable at times.
+	 * @param real The real part of the number.
+	 * @param imag The imaginary part of the number.
+	 */
+	export function complex(real: number, imag: number): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the string representations of the real
+	 * and imaginary parts.
+	 * @param real The real part of the number.
+	 * @param imag The imaginary part of the number.
+	 */
+	export function complex(real: string, imag: string): BigNum;
+	export function complex(a: number|string, b: number|string) {
+		return new BigNum(Component.create(a.toString()), Component.create(b.toString()));
+	}
+
+	/**
+	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
+	 * This instance will use the exact binary floating point representations
+	 * of the components. Even though it uses the `toString()` method to convert
+	 * numbers to strings it might be unpredictable at times.
+	 * @param comps The components of the number.
+	 */
+	export function hyper(...comps: number[]): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
+	 * This instance will use the exact binary floating point representations
+	 * of the components. Even though it uses the `toString()` method to convert
+	 * numbers to strings it might be unpredictable at times.
+	 * @param comps The components of the number.
+	 */
+	export function hyper(comps: number[]): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
+	 * @param comps The components of the number.
+	 */
+	export function hyper(...comps: string[]): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
+	 * @param comps The components of the number.
+	 */
+	export function hyper(comps: string[]): BigNum;
+	export function hyper(...vals: (number | string)[] | [(number | string)[]]) {
+		let args: Component[];
+		const temp = vals[0];
+		if(temp instanceof Array)
+			args = new Array(temp.length).fill(0).map((_, i) => Component.create(temp[i].toString()));
+		else args = new Array(vals.length).fill(0).map((_, i) => Component.create(vals[i].toString()));
+		return new BigNum(args);
+	}
+}
