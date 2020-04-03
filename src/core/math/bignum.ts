@@ -692,8 +692,8 @@ export namespace BigNum {
 		let args: Component[];
 		const temp = vals[0];
 		if(temp instanceof Array)
-			args = new Array(temp.length).fill(0).map((_, i) => Component.create(temp[i].toString()));
-		else args = new Array(vals.length).fill(0).map((_, i) => Component.create(vals[i].toString()));
+			args = temp.map(x => Component.create(x.toString()));
+		else args = (<Array<string|number>>vals).map(x => Component.create(x.toString()));
 		return new BigNum(args);
 	}
 }
