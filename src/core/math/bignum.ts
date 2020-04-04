@@ -175,7 +175,18 @@ export class BigNum {
 		return this.conj.mul(scale);
 	}
 
+	/**
+	 * Divides one [[BigNum]] instance by another. This method assumes right
+	 * division. That is, the inverse of `that` is multiplied on the right.
+	 * @param that Number to divide by.
+	 */
 	public div(that: BigNum): BigNum;
+	/**
+	 * Divides one [[BigNum]] instance by another. This method multiplies the
+	 * inverse of `that` on the given "side" of `this`.
+	 * @param that Number to divide by.
+	 * @param side Side on which to divide from.
+	 */
 	public div(that: BigNum, side: "left" | "right"): BigNum;
 	public div(that: BigNum, side="right") {
 		return side === "right"? this.mul(that.inv): that.inv.mul(this);
