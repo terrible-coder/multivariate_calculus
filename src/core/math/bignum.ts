@@ -156,8 +156,8 @@ export class BigNum {
 	 * \(norm a = a* a\)
 	 * where \(a*\) is the conjugate of \(a\).
 	 */
-	private get normSq() {
-		return this.conj.mul(this);
+	private normSq(context=Component.MODE) {
+		return this.conj.mul(this, context);
 	}
 
 	/**
@@ -166,8 +166,8 @@ export class BigNum {
 	 * \(norm a = a* a\)
 	 * where \(a*\) is the conjugate of \(a\).
 	 */
-	public get norm() {
-		return new BigNum(this.conj.mul(this).components[0].pow(Component.create("0.5")));
+	public norm(context=Component.MODE) {
+		return new BigNum(this.conj.mul(this, context).components[0].pow(Component.create("0.5"), context));
 	}
 
 	/**
@@ -255,8 +255,8 @@ export class BigNum {
 			  a2 = new BigNum(this.components.slice(n/2));
 		const b1 = new BigNum(that.components.slice(0, n/2)),
 			  b2 = new BigNum(that.components.slice(n/2));
-		let q1 = a1.mul(b1, context).sub(b2.conj.mul(a2, context)).components;
-		let q2 = b2.mul(a1, context).add(a2.mul(b1.conj, context)).components;
+		let q1 = a1.mul(b1, context).sub(b2.conj.mul(a2, context), context).components;
+		let q2 = b2.mul(a1, context).add(a2.mul(b1.conj, context), context).components;
 		q1 = pad(q1, n/2-q1.length, Component.ZERO, "end");
 		q2 = pad(q2, n/2-q2.length, Component.ZERO, "end");
 		const q = new BigNum(q1.concat(q2));
@@ -266,10 +266,10 @@ export class BigNum {
 	/**
 	 * Calculates the multiplicative inverse of this.
 	 */
-	public get inv() {
-		const magSq = this.normSq.components[0];
-		const scale = new BigNum(Component.ONE.div(magSq));
-		return this.conj.mul(scale);
+	public inv(context=Component.MODE) {
+		const magSq = this.normSq(context).components[0];
+		const scale = new BigNum(Component.ONE.div(magSq, context));
+		return this.conj.mul(scale, context);
 	}
 
 	/**
@@ -320,12 +320,12 @@ export class BigNum {
 			context = b;
 		}
 		if(this.dim === 1 && that.dim === 1)
-			return new BigNum(this.components[0].div(that.components[0]));
+			return new BigNum(this.components[0].div(that.components[0], context));
 		if(that.dim === 1)
-			return new BigNum(this.components.map(x => x.div(that.components[0])));
+			return new BigNum(this.components.map(x => x.div(that.components[0], context)));
 		if(this.dim === 1)
-			return new BigNum(that.inv.components.map(x => x.div(this.components[0])));
-		return side === "right"? this.mul(that.inv, context): that.inv.mul(this, context);
+			return new BigNum(that.inv(context).components.map(x => x.div(this.components[0], context)));
+		return side === "right"? this.mul(that.inv(context), context): that.inv(context).mul(this, context);
 	}
 
 	// /**
