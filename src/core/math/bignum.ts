@@ -113,6 +113,24 @@ export class BigNum {
 	 * Evaluates the absolute value of a number correct upto the number of
 	 * places specified by [[Component.MODE]].
 	 * @param x A number.
+	 * @param context Context settings to use.
+	 */
+	public static absSq(x: BigNum): BigNum;
+	/**
+	 * Evaluates the absolute value of a number correct upto the number of
+	 * places specified by the given context settings.
+	 * @param x A number.
+	 * @param context Context settings to use.
+	 */
+	public static absSq(x: BigNum, context: MathContext): BigNum;
+	public static absSq(x: BigNum, context=Component.MODE) {
+		return new BigNum(x.components.reduce((prev, curr) => prev.add(curr.mul(curr, context), context), Component.ZERO));
+	}
+
+	/**
+	 * Evaluates the absolute value of a number correct upto the number of
+	 * places specified by [[Component.MODE]].
+	 * @param x A number.
 	 */
 	public static abs(x: BigNum): BigNum;
 	public static abs(x: BigNum, context: MathContext): BigNum;
@@ -131,6 +149,15 @@ export class BigNum {
 	 */
 	public static round(x: BigNum, context: MathContext) {
 		return new BigNum(x.components.map(comp => Component.round(comp, context)));
+	}
+
+	/**
+	 * Evaluates the square of the norm of this number. Defined as
+	 * \(norm a = a* a\)
+	 * where \(a*\) is the conjugate of \(a\).
+	 */
+	private get normSq() {
+		return this.conj.mul(this);
 	}
 
 	/**
@@ -240,7 +267,7 @@ export class BigNum {
 	 * Calculates the multiplicative inverse of this.
 	 */
 	public get inv() {
-		const magSq = this.norm.components[0].pow(Component.TWO);
+		const magSq = this.normSq.components[0];
 		const scale = new BigNum(Component.ONE.div(magSq));
 		return this.conj.mul(scale);
 	}
@@ -292,6 +319,12 @@ export class BigNum {
 			side = <"left" | "right">a;
 			context = b;
 		}
+		if(this.dim === 1 && that.dim === 1)
+			return new BigNum(this.components[0].div(that.components[0]));
+		if(that.dim === 1)
+			return new BigNum(this.components.map(x => x.div(that.components[0])));
+		if(this.dim === 1)
+			return new BigNum(that.inv.components.map(x => x.div(this.components[0])));
 		return side === "right"? this.mul(that.inv, context): that.inv.mul(this, context);
 	}
 
