@@ -122,6 +122,18 @@ export class BigNum {
 	}
 
 	/**
+	 * Rounds off a [[BigNum]] instance, component-wise, according to some
+	 * [[MathContext]]. The different rounding algorithms implemented are
+	 * identical to the ones defined by the [RoundingMode](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html)
+	 * class of JAVA.
+	 * @param x The number to be rounded off.
+	 * @param context The context settings to use for rounding.
+	 */
+	public static round(x: BigNum, context: MathContext) {
+		return new BigNum(x.components.map(comp => Component.round(comp, context)));
+	}
+
+	/**
 	 * Evaluates the norm of this number. Since `this` is not necessarily a real
 	 * number, the norm is defined as
 	 * \(norm a = a* a\)
@@ -281,7 +293,7 @@ export class BigNum {
 			context = b;
 		}
 		return side === "right"? this.mul(that.inv, context): that.inv.mul(this, context);
-	}	
+	}
 
 	// /**
 	//  * Calculates the trigonometric sine of a given number with rounding
