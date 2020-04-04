@@ -276,18 +276,36 @@ describe("Inverse", function() {
 });
 
 describe("Divides", function() {
-	it("for 1 real", function() {
+	describe("for 1 real", function() {
 		const a = BigNum.real("5");
-		expect(a.div(a)).toEqual(BigNum.real("1"));
+		it("right division", function() {
+			expect(a.div(a, "right")).toEqual(BigNum.real("1"));
+		});
+
+		it("left division", function() {
+			expect(a.div(a, "left")).toEqual(BigNum.real("1"));
+		});
 	});
 
-	it("for 2 reals", function() {
+	describe("for 2 reals", function() {
 		const a = BigNum.complex("3", "4");
-		expect(a.div(a)).toEqual(BigNum.real("1"));
+		it("right division", function() {
+			expect(a.div(a, "right")).toEqual(BigNum.real("1"));
+		});
+
+		it("left division", function() {
+			expect(a.div(a, "left")).toEqual(BigNum.real("1"));
+		});
 	});
 
-	it("for 6 reals", function() {
+	describe("for 6 reals", function() {
 		const a = BigNum.hyper("3", "3", "2", "1", "1", "1");
-		expect(a.div(a)).toEqual(BigNum.real("1"));
+		it("right division", function() {
+			expect(a.div(a, "right")).toEqual(BigNum.real("1"));
+		});
+
+		it("left division", function() {
+			expect(a.div(a, "left")).toEqual(BigNum.real("1"));
+		});
 	});
 });

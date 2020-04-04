@@ -175,8 +175,10 @@ export class BigNum {
 		return this.conj.mul(scale);
 	}
 
-	public div(that: BigNum) {
-		return this.mul(that.inv);
+	public div(that: BigNum): BigNum;
+	public div(that: BigNum, side: "left" | "right"): BigNum;
+	public div(that: BigNum, side="right") {
+		return side === "right"? this.mul(that.inv): that.inv.mul(this);
 	}	
 
 	// /**
