@@ -175,6 +175,10 @@ export class BigNum {
 		return this.conj.mul(scale);
 	}
 
+	public div(that: BigNum) {
+		return this.mul(that.inv);
+	}	
+
 	// /**
 	//  * Calculates the trigonometric sine of a given number with rounding
 	//  * according to [[Component.MODE]].
