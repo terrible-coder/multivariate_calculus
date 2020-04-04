@@ -1,6 +1,7 @@
 // import { MathContext } from "./context";
 import { trimZeroes, align, pad } from "./parsers";
 import { Component } from "./component";
+import { MathContext } from "./context";
 
 /**
  * Immutable higher dimensional numbers.
@@ -44,15 +45,33 @@ export class BigNum {
 	 * Checks whether `this` and `that` are equal numbers. Equality is defined
 	 * component wise. That is, two numbers \(a\) and \(b\) are equal
 	 * if and only if
+	 * 
 	 * \(a_i = b_i \forall i\)
+	 * 
+	 * The equality is checked only upto the number of decimal places specified
+	 * by [[Component.MODE]].
 	 * @param that The number to check against.
 	 */
-	public equals(that: BigNum) {
+	public equals(that: BigNum): boolean;
+	/**
+	 * Checks whether `this` and `that` are equal numbers. Equality is defined
+	 * component wise. That is, two numbers \(a\) and \(b\) are equal
+	 * if and only if
+	 * 
+	 * \(a_i = b_i \forall i\)
+	 * 
+	 * The equality is checked only upto the number of decimal places specified
+	 * by the given context settings.
+	 * @param that The number to check against.
+	 * @param context The context settings to use.
+	 */
+	public equals(that: BigNum, context: MathContext): boolean;
+	public equals(that: BigNum, context=Component.MODE) {
 		if(this.dim !== that.dim)
 			return false;
 		const n = that.dim;
 		for(let i = 0; i < n; i++)
-			if(!this.components[i].equals(that.components[i]))
+			if(!this.components[i].equals(that.components[i], context))
 				return false;
 		return true;
 	}
@@ -91,12 +110,15 @@ export class BigNum {
 	}
 
 	/**
-	 * Evaluates the absolute value of a number.
+	 * Evaluates the absolute value of a number correct upto the number of
+	 * places specified by [[Component.MODE]].
 	 * @param x A number.
 	 */
-	public static abs(x: BigNum) {
+	public static abs(x: BigNum): BigNum;
+	public static abs(x: BigNum, context: MathContext): BigNum;
+	public static abs(x: BigNum, context=Component.MODE) {
 		const magsq = x.components.reduce((prev, curr) => prev.add(curr.pow(Component.TWO)), Component.ZERO);
-		return new BigNum(magsq.pow(Component.create("0.5")));
+		return new BigNum(magsq.pow(Component.create("0.5"), context));
 	}
 
 	/**
@@ -113,14 +135,26 @@ export class BigNum {
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
 	 * That is, for two numbers \(a\) and \(b\), their addition is defined as
 	 * \(a + b = \sum_i a_i + b_i\)
+	 * The result is rounded according to [[Component.MODE]].
 	 * @param that The number to add this with.
 	 * @returns this + that.
 	 */
-	public add(that: BigNum) {
+	public add(that: BigNum): BigNum;
+	/**
+	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
+	 * That is, for two numbers \(a\) and \(b\), their addition is defined as
+	 * \(a + b = \sum_i a_i + b_i\)
+	 * The result is rounded according to the given context settings.
+	 * @param that The number to add this with.
+	 * @param context The context settings to use.
+	 * @returns this + that.
+	 */
+	public add(that: BigNum, context: MathContext): BigNum;
+	public add(that: BigNum, context=Component.MODE) {
 		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
-			sum.push(a[i].add(b[i]));
+			sum.push(a[i].add(b[i], context));
 		return new BigNum(sum);
 	}
 
@@ -128,38 +162,62 @@ export class BigNum {
 	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
 	 * That is, for two numbers \(a\) and \(b\), their difference is defined as
 	 * \(a - b = \sum_i a_i - b_i\)
+	 * The result is rounded according to [[Component.MODE]].
 	 * @param that The number to add this with.
 	 * @returns this - that.
 	 */
-	public sub(that: BigNum) {
+	public sub(that: BigNum): BigNum;
+	/**
+	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
+	 * That is, for two numbers \(a\) and \(b\), their difference is defined as
+	 * \(a - b = \sum_i a_i - b_i\)
+	 * The result is rounded according to the given context settings.
+	 * @param that The number to add this with.
+	 * @returns this - that.
+	 */
+	public sub(that: BigNum, context: MathContext): BigNum;
+	public sub(that: BigNum, context=Component.MODE) {
 		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
-			sum.push(a[i].sub(b[i]));
+			sum.push(a[i].sub(b[i], context));
 		return new BigNum(sum);
 	}
 
 	/**
 	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
 	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
+	 * The result is rounded according to [[Component.MDOE]].
 	 * @param that The number to multiply with.
 	 * @returns this * that.
 	 */
-	public mul(that: BigNum): BigNum {
+	public mul(that: BigNum): BigNum;
+	/**
+	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
+	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
+	 * The result is rounded according to the given context settings.
+	 * @param that The number to multiply with.
+	 * @param context The context settings to use.
+	 * @returns this * that.
+	 */
+	public mul(that: BigNum, context: MathContext): BigNum;
+	public mul(that: BigNum, context=Component.MODE) {
 		const zero = new BigNum(Component.ZERO);
 		if(this.equals(zero) || that.equals(zero))
 			return zero;
 		if(this.dim === 1 && that.dim === 1)
-			return new BigNum(this.components[0].mul(that.components[0]));
+			return new BigNum(this.components[0].mul(that.components[0], context));
 		if(this.dim === 1)
-			return new BigNum(that.components.map(x => this.components[0].mul(x)));
+			return new BigNum(that.components.map(x => this.components[0].mul(x, context)));
 		if(that.dim === 1)
-			return new BigNum(this.components.map(x => x.mul(that.components[0])));
+			return new BigNum(this.components.map(x => x.mul(that.components[0], context)));
 		const n = Math.max(this.dim, that.dim);
-		const a1 = new BigNum(this.components.slice(0, n/2)), a2 = new BigNum(this.components.slice(n/2));
-		const b1 = new BigNum(that.components.slice(0, n/2)), b2 = new BigNum(that.components.slice(n/2));
-		let q1 = a1.mul(b1).sub(b2.conj.mul(a2)).components;
-		let q2 = b2.mul(a1).add(a2.mul(b1.conj)).components;
+		const a1 = new BigNum(this.components.slice(0, n/2)),
+			  a2 = new BigNum(this.components.slice(n/2));
+		const b1 = new BigNum(that.components.slice(0, n/2)),
+			  b2 = new BigNum(that.components.slice(n/2));
+		let q1 = a1.mul(b1, context).sub(b2.conj.mul(a2, context)).components;
+		let q2 = b2.mul(a1, context).add(a2.mul(b1.conj, context)).components;
 		q1 = pad(q1, n/2-q1.length, Component.ZERO, "end");
 		q2 = pad(q2, n/2-q2.length, Component.ZERO, "end");
 		const q = new BigNum(q1.concat(q2));
@@ -178,18 +236,51 @@ export class BigNum {
 	/**
 	 * Divides one [[BigNum]] instance by another. This method assumes right
 	 * division. That is, the inverse of `that` is multiplied on the right.
+	 * The result is rounded according to [[Component.MODE]].
 	 * @param that Number to divide by.
 	 */
 	public div(that: BigNum): BigNum;
 	/**
+	 * Divides one [[BigNum]] instance by another. This method assumes right
+	 * division. That is, the inverse of `that` is multiplied on the right.
+	 * The result is rounded according to the given context settings.
+	 * @param that Number to divide by.
+	 * @param context The context settings to use.
+	 */
+	public div(that: BigNum, context: MathContext): BigNum;
+	/**
 	 * Divides one [[BigNum]] instance by another. This method multiplies the
 	 * inverse of `that` on the given "side" of `this`.
+	 * The result is rounded according to [[Component.MODE]].
 	 * @param that Number to divide by.
 	 * @param side Side on which to divide from.
 	 */
 	public div(that: BigNum, side: "left" | "right"): BigNum;
-	public div(that: BigNum, side="right") {
-		return side === "right"? this.mul(that.inv): that.inv.mul(this);
+	/**
+	 * Divides one [[BigNum]] instance by another. This method multiplies the
+	 * inverse of `that` on the given "side" of `this`.
+	 * The result is rounded according to the given context settings.
+	 * @param that Number to divide by.
+	 * @param side Side on which to divide from.
+	 * @param context The context settings to use.
+	 */
+	public div(that: BigNum, side: "left" | "right", context: MathContext): BigNum;
+	public div(that: BigNum, a?: MathContext | "left" | "right", b?: MathContext) {
+		let side: "left" | "right";
+		let context: MathContext;
+		if(b === undefined) {
+			if(typeof a === "string") {
+				side = a;
+				context = Component.MODE;
+			} else {
+				side = "right";
+				context = <MathContext>a;
+			}
+		} else {
+			side = <"left" | "right">a;
+			context = b;
+		}
+		return side === "right"? this.mul(that.inv, context): that.inv.mul(this, context);
 	}	
 
 	// /**
