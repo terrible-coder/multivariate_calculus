@@ -47,7 +47,7 @@ export class BigNum {
 	 * \(a_i = b_i \forall i\)
 	 * @param that The number to check against.
 	 */
-	public equal(that: BigNum) {
+	public equals(that: BigNum) {
 		if(this.dim !== that.dim)
 			return false;
 		const n = that.dim;
@@ -147,7 +147,7 @@ export class BigNum {
 	 */
 	public mul(that: BigNum): BigNum {
 		const zero = new BigNum(Component.ZERO);
-		if(this.equal(zero) || that.equal(zero))
+		if(this.equals(zero) || that.equals(zero))
 			return zero;
 		if(this.dim === 1 && that.dim === 1)
 			return new BigNum(this.components[0].mul(that.components[0]));
