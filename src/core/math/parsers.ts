@@ -1,33 +1,21 @@
-export type Comparable<T> = T & {equals(arg: T): boolean};
-
-function trimStart(s: string, zero: string): string;
-function trimStart<T>(s: Comparable<T>[], zero: T): Comparable<T>[];
-function trimStart<T>(s: string | Comparable<T>[], zero: string | T) {
+function trimStart(s: string, zero: (x: string, index: number) => boolean): string;
+function trimStart<T>(s: T[], zero: (x: T, index: number) => boolean): T[];
+function trimStart<T>(s: string | T[], zero: (x: string | T, index: number) => boolean) {
 	let i: number;
 	for (i = 0; i < s.length; i++) {
-		if(typeof s === "string") {
-			if(s[i] !== zero)
-				break;
-		} else {
-			if(!s[i].equals(<T>zero))
-				break;
-		}
+		if(!zero(s[i], i))
+			break;
 	}
 	return s.slice(i);
 }
 
-function trimEnd(s: string, zero: string): string;
-function trimEnd<T>(s: Comparable<T>[], zero: T): Comparable<T>[];
-function trimEnd<T>(s: string | Comparable<T>[], zero: string | T) {
+function trimEnd(s: string, zero: (x: string, index: number) => boolean): string;
+function trimEnd<T>(s: T[], zero: (x: T, index: number) => boolean): T[];
+function trimEnd<T>(s: string | T[], zero: (x: string | T, index: number) => boolean) {
 	let i: number;
 	for(i = s.length - 1; i >= 0; i--) {
-		if(typeof s === "string") {
-			if(s[i] !== zero)
-				break;
-		} else {
-			if(!s[i].equals(<T>zero))
-				break;
-		}
+		if(!zero(s[i], i))
+			break;
 	}
 	return s.slice(0, i+1);
 }
@@ -40,7 +28,7 @@ function trimEnd<T>(s: string | Comparable<T>[], zero: string | T) {
  * @param pos Position to trim from.
  * @param zero Representation of zero element to trim.
  */
-export function trimZeroes(s: string, pos: "end" | "start", zero: string): string;
+export function trimZeroes(s: string, pos: "end" | "start", zero: (x: string, index: number) => boolean): string;
 /**
  * Trims unnecessary "zeroes" towards the end or beginning of an array.
  * The "zeroes" may not be numerically zero. Any data could be passed in to
@@ -49,12 +37,12 @@ export function trimZeroes(s: string, pos: "end" | "start", zero: string): strin
  * @param pos Position to trim from.
  * @param zero Representation of zero element to trim.
  */
-export function trimZeroes<T>(s: Comparable<T>[], pos: "end" | "start", zero: Comparable<T>): Comparable<T>[];
-export function trimZeroes<T>(s: string | Comparable<T>[], pos: "end" | "start", zero: string | T) {
+export function trimZeroes<T>(s: T[], pos: "end" | "start", zero: (x: T, index: number) => boolean): T[];
+export function trimZeroes<T>(s: string | T[], pos: "end" | "start", zero: (x: string | T, index: number) => boolean) {
 	if(typeof s === "string")
-		return (pos === "end")? trimEnd(s, <string>zero): trimStart(s, <string>zero);
+		return (pos === "end")? trimEnd(s, zero): trimStart(s, zero);
 	else
-		return (pos === "end")? trimEnd(s, <T>zero): trimStart(s, <T>zero);
+		return (pos === "end")? trimEnd(s, zero): trimStart(s, zero);
 }
 
 function isInteger(s: string, positive = false) {
@@ -206,9 +194,9 @@ export function parseNum(s: string) {
 		a = s.split(".");
 	const sgn = a[0].charAt(0) === "-"? "-": "";
 	a[0] = sgn === "-"? a[0].substring(1): a[0];
-	a[0] = trimZeroes(a[0], "start", "0");
+	a[0] = trimZeroes(a[0], "start", x => x === "0");
 	if(a.length === 1) a.push("");
-	else a[1] = trimZeroes(a[1], "end", "0");
+	else a[1] = trimZeroes(a[1], "end", x => x ==="0");
 	if(a[0] !== "" || a[1] !== "")
 		a[0] = sgn + a[0];
 	return a;

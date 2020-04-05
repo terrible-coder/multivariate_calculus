@@ -36,7 +36,7 @@ export class BigNum {
 		if(temp instanceof Array)
 			args = temp;
 		else args = <Array<Component>>values;
-		args = trimZeroes<Component>(args, "end", Component.ZERO);
+		args = trimZeroes<Component>(args, "end", x => x.integer === "" && x.decimal === "");
 		this.dim = Math.pow(2, Math.ceil(Math.log2(args.length || 1)));
 		this.components = pad(args, this.dim - args.length, Component.ZERO, "end");
 	}
