@@ -242,7 +242,7 @@ export class BigNum {
 	public mul(that: BigNum, context: MathContext): BigNum;
 	public mul(that: BigNum, context=Component.MODE) {
 		const zero = new BigNum(Component.ZERO);
-		if(this.equals(zero) || that.equals(zero))
+		if(this.equals(zero, context) || that.equals(zero, context))
 			return zero;
 		if(this.dim === 1 && that.dim === 1)
 			return new BigNum(this.components[0].mul(that.components[0], context));
