@@ -311,9 +311,24 @@ describe("Divides", function() {
 });
 
 describe("Exponential", function() {
-	it("exp", function() {
+	it("for 1 real", function() {
 		expect(BigNum.exp(BigNum.real("0"))).toEqual(BigNum.real("1"));
 		expect(BigNum.exp(BigNum.real("1"))).toEqual(new BigNum(Component.round(Component.E, Component.MODE)));
 		expect(BigNum.exp(BigNum.real("2"))).toEqual(new BigNum(Component.E.mul(Component.E)));
+	});
+
+	it("for 2 reals", function() {
+		const i_pi = new BigNum(Component.ZERO, Component.PI);
+		expect(BigNum.exp(i_pi)).toEqual(BigNum.real("1").neg);
+	});
+
+	it("for 4 reals", function() {
+		const v = BigNum.hyper("0", "1", "2", "2");
+		const abs = v.norm();
+		const [c, s] = BigNum.exp(new BigNum(Component.ZERO, abs.components[0])).components;
+		const cos = new BigNum(c);
+		const sin = new BigNum(s);
+		const exp = cos.add(v.div(abs).mul(sin));
+		expect(BigNum.exp(v)).toEqual(exp);
 	});
 });
