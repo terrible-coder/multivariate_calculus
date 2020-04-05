@@ -309,3 +309,11 @@ describe("Divides", function() {
 		});
 	});
 });
+
+describe("Exponential", function() {
+	it("exp", function() {
+		expect(BigNum.exp(BigNum.real("0"))).toEqual(BigNum.real("1"));
+		expect(BigNum.exp(BigNum.real("1"))).toEqual(new BigNum(Component.round(Component.E, Component.MODE)));
+		expect(BigNum.exp(BigNum.real("2"))).toEqual(new BigNum(Component.E.mul(Component.E)));
+	});
+});

@@ -664,38 +664,38 @@ export class BigNum {
 	// 	}
 	// 	return BigNum.round(BigNum.sinh(x, ctx).div(BigNum.cosh(x, ctx), ctx), context);
 	// }
-	//
-	// /**
-	//  * Calculates the exponential of a given number with rounding according to
-	//  * [[Component.MODE]].
-	//  * @param x A number.
-	//  */
-	// public static exp(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the exponential of a given number with rounding according to
-	//  * the given context settings.
-	//  * @param x A number
-	//  * @param context The context settings to use.
-	//  */
-	// public static exp(x: BigNum, context: MathContext): BigNum;
-	// public static exp(x: BigNum, context=Component.MODE) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	};
-	// 	let sum = BigNum.ZERO;
-	// 	let term = BigNum.ONE;
-	// 	let n = BigNum.ZERO;
-	// 	while(true) {
-	// 		sum = sum.add(term, ctx);
-	// 		const term1 = term.mul(x, ctx).div(n.add(BigNum.ONE), ctx);
-	// 		if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
-	// 			return BigNum.round(sum, context);
-	// 		term = term1;
-	// 		n = n.add(BigNum.ONE);
-	// 	}
-	// }
-	//
+
+	/**
+	 * Calculates the exponential of a given number with rounding according to
+	 * [[Component.MODE]].
+	 * @param x A number.
+	 */
+	public static exp(x: BigNum): BigNum;
+	/**
+	 * Calculates the exponential of a given number with rounding according to
+	 * the given context settings.
+	 * @param x A number
+	 * @param context The context settings to use.
+	 */
+	public static exp(x: BigNum, context: MathContext): BigNum;
+	public static exp(x: BigNum, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		let sum = BigNum.real("0");
+		let term = BigNum.real("1");
+		let n = BigNum.real("0");
+		while(true) {
+			sum = sum.add(term, ctx);
+			const term1 = term.mul(x, ctx).div(n.add(BigNum.real("1")), ctx);
+			if(term1.equals(BigNum.real("0"), ctx))
+				return BigNum.round(sum, context);
+			term = term1;
+			n = n.add(BigNum.real("1"));
+		}
+	}
+
 	// /**
 	//  * Evaluates the natural logarithm of a given number \\(x\\)(\\(|x| < 1\\)).
 	//  * @param x A number.
