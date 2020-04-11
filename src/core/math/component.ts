@@ -636,6 +636,12 @@ export class Component {
 		}
 	}
 
+	/**
+	 * Computes the inverse trigonometric sine for \\(x\\) (\\(|x| < 0.5\\))
+	 * with rounding according to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	private static asin_less(x: Component, context=Component.MODE) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
@@ -662,7 +668,18 @@ export class Component {
 		}
 	}
 
+	/**
+	 * Calculates the inverse trigonometric sine of a number with rounding
+	 * according to [[Component.MODE]].
+	 * @param x A number.
+	 */
 	public static asin(x: Component): Component;
+	/**
+	 * Calculates the inverse trigonometric sine of a number with rounding
+	 * according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static asin(x: Component, context: MathContext): Component;
 	public static asin(x: Component, context=Component.MODE) {
 		if(x.lessThan(Component.ZERO))
@@ -682,7 +699,18 @@ export class Component {
 		return Component.round(res, context);
 	}
 
+	/**
+	 * Calculates the inverse trigonometric cosine of a number with rounding
+	 * according to [[Component.MODE]].
+	 * @param x A number.
+	 */
 	public static acos(x: Component): Component;
+	/**
+	 * Calculates the inverse trigonometric cosine of a number with rounding
+	 * according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static acos(x: Component, context: MathContext): Component;
 	public static acos(x: Component, context=Component.MODE) {
 		const ctx: MathContext = {
