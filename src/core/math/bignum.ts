@@ -152,22 +152,13 @@ export class BigNum {
 	}
 
 	/**
-	 * Evaluates the square of the norm of this number. Defined as
-	 * \(norm a = a* a\)
-	 * where \(a*\) is the conjugate of \(a\).
-	 */
-	private normSq(context=Component.MODE) {
-		return this.conj.mul(this, context);
-	}
-
-	/**
 	 * Evaluates the norm of this number. Since `this` is not necessarily a real
 	 * number, the norm is defined as
 	 * \(norm a = a* a\)
 	 * where \(a*\) is the conjugate of \(a\).
 	 */
 	public norm(context=Component.MODE) {
-		return new BigNum(this.conj.mul(this, context).components[0].pow(Component.create("0.5"), context));
+		return this.conj.mul(this, context);
 	}
 
 	/**
@@ -267,7 +258,7 @@ export class BigNum {
 	 * Calculates the multiplicative inverse of this.
 	 */
 	public inv(context=Component.MODE) {
-		const magSq = this.normSq(context).components[0];
+		const magSq = this.norm(context).components[0];
 		const scale = new BigNum(Component.ONE.div(magSq, context));
 		return this.conj.mul(scale, context);
 	}

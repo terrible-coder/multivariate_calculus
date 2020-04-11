@@ -244,20 +244,20 @@ describe("Absolute value", function() {
 
 describe("Normalises", function() {
 	it("for 1 real", function() {
-		const a = new BigNum(Component.create("5"));
-		expect(a.norm()).toEqual(a);
-		expect(a.neg.norm()).toEqual(a);
+		const a = new BigNum(Component.FIVE);
+		expect(a.norm()).toEqual(a.mul(a));
+		expect(a.neg.norm()).toEqual(a.mul(a));
 	});
 
 	it("for 3 reals", function() {
-		const a = new BigNum(Component.create("1"), Component.create("2"), Component.create("2"));
-		const norm = new BigNum(Component.create("3"));
+		const a = new BigNum(Component.ONE, Component.TWO, Component.TWO);
+		const norm = new BigNum(Component.NINE);
 		expect(a.norm()).toEqual(norm);
 	});
 
 	it("equality with absolute value function", function() {
-		const a = new BigNum(Component.create("1"), Component.create("2"), Component.create("2"), Component.create("1"), Component.create("2"), Component.create("2"));
-		expect(a.norm()).toEqual(BigNum.abs(a));
+		const a = new BigNum(Component.ONE, Component.TWO, Component.TWO, Component.ONE, Component.TWO, Component.TWO);
+		expect(a.norm()).toEqual(BigNum.absSq(a));
 	});
 });
 
@@ -324,7 +324,7 @@ describe("Exponential", function() {
 
 	it("for 4 reals", function() {
 		const v = BigNum.hyper("0", "1", "2", "2");
-		const abs = v.norm();
+		const abs = BigNum.abs(v);
 		const [c, s] = BigNum.exp(new BigNum(Component.ZERO, abs.components[0])).components;
 		const cos = new BigNum(c);
 		const sin = new BigNum(s);
