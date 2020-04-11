@@ -684,6 +684,25 @@ export class Component {
 		return Component.round(res, context);
 	}
 
+	public static acos(x: Component): Component;
+	public static acos(x: Component, context: MathContext): Component;
+	public static acos(x: Component, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		};
+		const half = Component.create("0.5");
+		if(Component.abs(x).lessThan(half)) {
+			const res = Component.PI.mul(half, ctx).sub(Component.asin_less(x, ctx), ctx);
+			return Component.round(res, context);
+		}
+		const z = Component.ONE.sub(x, ctx).div(Component.TWO, ctx);
+		const s = z.pow(half, ctx);
+		const temp = Component.asin_less(s, ctx);
+		const res = Component.TWO.mul(temp, ctx);
+		return Component.round(res, context);
+	}
+
 	/**
 	 * The canonical representation of the number as a string.
 	 * @returns The string representation of `this`.
