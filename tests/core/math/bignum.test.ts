@@ -350,7 +350,7 @@ describe("Logarithm", function() {
 				const ln = BigNum.ln(x);
 				expect(ln.dim).toBe(2);
 				expect(ln.components[0]).toEqual(Component.ln(x_));
-				expect(ln.components[1]).toEqual(Component.PI.div(Component.TWO));
+				expect(ln.components[1]).toEqual(Component.PI);
 			}
 		});
 	});
