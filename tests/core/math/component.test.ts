@@ -354,9 +354,10 @@ describe("Trigonometry", function() {
 		});
 
 		it("multiples of pi", function() {
-			const pi = Component.round(Component.PI, Component.MODE);
+			const context = MathContext.HIGH_PRECISION;
+			const pi = Component.PI;
 			for(let i = 0; i < 10; i++) {
-				const x = Component.create(i).mul(pi);
+				const x = Component.create(i).mul(pi, context);;
 				expect(Component.sin(x)).toEqual(Component.ZERO);
 			}
 		});

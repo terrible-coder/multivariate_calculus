@@ -576,6 +576,8 @@ export class Component {
 			rounding: context.rounding
 		};
 		x = x.mod(Component.TWO.mul(Component.PI, ctx), ctx);
+		if(Component.abs(x).equals(Component.PI, context))
+			return Component.ZERO;
 		const x_sq = x.mul(x, ctx);
 		let sum = Component.ZERO;
 		let term = x;
