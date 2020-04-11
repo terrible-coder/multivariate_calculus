@@ -407,11 +407,27 @@ export class Component {
 	 * The modulo operator. The extended definition for non-integer numbers has
 	 * been used. For two numbers \\(a\\) and \\(b\\),
 	 * \\[a mod b = a - b\lfloor\frac{a}{b}\rfloor\\]
+	 * The result is rounded according to [[Component.MODE]].
 	 * @param that A number.
 	 */
-	public mod(that: Component) {
+	public mod(that: Component): Component;
+	/**
+	 * The modulo operator. The extended definition for non-integer numbers has
+	 * been used. For two numbers \\(a\\) and \\(b\\),
+	 * \\[a mod b = a - b\lfloor\frac{a}{b}\rfloor\\]
+	 * The result is rounded according to the given context.
+	 * @param that A number.
+	 * @param context The context settings to use.
+	 */
+	public mod(that: Component, context: MathContext): Component;
+	public mod(that: Component, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
 		const quo = this.div(that, {precision: 0, rounding: RoundingMode.FLOOR});
-		return this.sub(that.mul(quo));
+		const res = this.sub(that.mul(quo, ctx), ctx);
+		return Component.round(res, context);
 	}
 
 	/**
