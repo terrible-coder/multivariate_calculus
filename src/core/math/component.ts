@@ -724,7 +724,7 @@ export class Component {
 		}
 		const z = Component.ONE.sub(x, ctx).div(Component.TWO, ctx);
 		const s = z.pow(half, ctx);
-		const temp = Component.asin_less(s, ctx);
+		const temp = Component.asin(s, ctx);
 		const res = Component.TWO.mul(temp, ctx);
 		return Component.round(res, context);
 	}
