@@ -636,6 +636,51 @@ export class Component {
 		}
 	}
 
+	private static asin_less(x: Component, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const x_sq = x.mul(x, ctx);
+		let sum = Component.ZERO;
+		let term = x;
+		let temp = x;
+		let f = Component.ONE;
+		let n = 0;
+		while(true) {
+			sum = sum.add(temp, ctx);
+			const f1 = Component.create(2*n + 3);
+			const fac = f.div(Component.create(2*n+2), ctx);
+			const term1 = term.mul(x_sq, ctx).mul(fac, ctx);
+			const temp1 = term1.div(f1, ctx);
+			console.log(temp1.toString(), sum.toString());
+			if(temp1.equals(Component.ZERO, ctx))
+				return Component.round(sum, context);
+			f = f1;
+			term = term1;
+			temp = temp1;
+			n++;
+		}
+	}
+
+	public static asin(x: Component): Component;
+	public static asin(x: Component, context: MathContext): Component;
+	public static asin(x: Component, context=Component.MODE) {
+		const half = Component.create("0.5");
+		if(x.lessThan(half))
+			return Component.asin_less(x, context);
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		};
+		const piby2 = Component.PI.div(Component.TWO, ctx);
+		const z = Component.ONE.sub(x, ctx).div(Component.TWO, ctx);
+		const s = z.pow(half, ctx);
+		const temp = Component.asin_less(s, ctx);
+		const res = piby2.sub(Component.TWO.mul(temp, ctx), ctx);
+		return Component.round(res, context);
+	}
+
 	/**
 	 * The canonical representation of the number as a string.
 	 * @returns The string representation of `this`.
