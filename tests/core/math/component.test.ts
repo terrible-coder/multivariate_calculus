@@ -342,3 +342,23 @@ describe("Logarithm", function() {
 		expect(Component.ln(Component.create("0.1"))).toEqual(Component.round(Component.ln10.neg, Component.MODE));
 	});
 });
+
+describe("Trigonometry", function() {
+	describe("sin", function() {
+		it("odd multiples of pi/2", function() {
+			const piby2 = Component.PI.div(Component.TWO);
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(2*i+1).mul(piby2);
+				expect(Component.sin(x)).toEqual(i%2 == 0? Component.ONE: Component.ONE.neg);
+			}
+		});
+
+		it("multiples of pi", function() {
+			const pi = Component.round(Component.PI, Component.MODE);
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(i).mul(pi);
+				expect(Component.sin(x)).toEqual(Component.ZERO);
+			}
+		});
+	});
+});
