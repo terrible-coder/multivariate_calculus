@@ -327,6 +327,11 @@ describe("Exponential", function() {
 		// expect(Component.exp(Component.ONE.neg)).toEqual(Component.ONE.div(Component.E));
 		// expect(Component.exp(Component.TWO.neg)).toEqual(Component.ONE.div(E2));
 	});
+
+	it("pow", function() {
+		expect(Component.TWO.pow(Component.TWO)).toEqual(Component.FOUR);
+		expect(Component.create("25").pow(Component.create("0.5"))).toEqual(Component.FIVE);
+	});
 });
 
 describe("Logarithm", function() {
