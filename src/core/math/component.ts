@@ -567,7 +567,17 @@ export class Component {
 		return Component.round(res, context);
 	}
 
+	/**
+	 * Calculates the trigonometric sine with rounding according to [[Component.MODE]].
+	 * @param x A number.
+	 */
 	public static sin(x: Component): Component;
+	/**
+	 * Calculates the trigonometric sine with rounding according to the given
+	 * context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static sin(x: Component, context: MathContext): Component;
 	public static sin(x: Component, context=Component.MODE) {
 		const ctx: MathContext = {
@@ -592,7 +602,18 @@ export class Component {
 		}
 	}
 
+	/**
+	 * Calculates the trigonometric cosine with rounding according to
+	 * [[Component.MODE]].
+	 * @param x A number.
+	 */
 	public static cos(x: Component): Component;
+	/**
+	 * Calculates the trigonometric cosine with rounding according to the given
+	 * context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static cos(x: Component, context: MathContext): Component;
 	public static cos(x: Component, context=Component.MODE) {
 		const ctx: MathContext = {
