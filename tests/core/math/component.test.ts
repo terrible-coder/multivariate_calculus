@@ -344,7 +344,8 @@ describe("Logarithm", function() {
 });
 
 describe("Trigonometry", function() {
-	describe("sin", function() {
+	const context = MathContext.HIGH_PRECISION;
+	describe("sine", function() {
 		it("odd multiples of pi/2", function() {
 			const piby2 = Component.PI.div(Component.TWO);
 			for(let i = 0; i < 10; i++) {
@@ -354,11 +355,29 @@ describe("Trigonometry", function() {
 		});
 
 		it("multiples of pi", function() {
-			const context = MathContext.HIGH_PRECISION;
 			const pi = Component.PI;
 			for(let i = 0; i < 10; i++) {
 				const x = Component.create(i).mul(pi, context);;
 				expect(Component.sin(x)).toEqual(Component.ZERO);
+			}
+		});
+	});
+
+	describe("cosine", function() {
+		it("Multiples of pi", function() {
+			const pi = Component.PI;
+			for(let n = 0; n < 10; n++) {
+				const x = Component.create(n).mul(pi);
+				expect(Component.cos(x)).toEqual(n%2 == 0? Component.ONE: Component.ONE.neg);
+			}
+		});
+
+		it("Odd multiples of pi/2", function() {
+			const piby2 = Component.PI.div(Component.TWO, context);
+			for(let n = 0; n < 10; n++) {
+				const f = Component.create(2 * n + 1);
+				const x = f.mul(piby2, context);
+				expect(Component.cos(x)).toEqual(Component.ZERO);
 			}
 		});
 	});
