@@ -256,16 +256,20 @@ export class Component {
 	 * Determines whether `this` is less than or equal to `that`.
 	 * @param that Number to compare with.
 	 */
-	public lessEquals(that: Component) {
-		return this.lessThan(that) || this.equals(that);
+	public lessEquals(that: Component): boolean;
+	public lessEquals(that: Component, context: MathContext): boolean;
+	public lessEquals(that: Component, context=Component.MODE) {
+		return this.lessThan(that) || this.equals(that, context);
 	}
 
 	/**
 	 * Determines whether `this` is more than or equal to `that`.
 	 * @param that Number to compare with.
 	 */
-	public moreEquals(that: Component) {
-		return this.moreThan(that) || this.equals(that);
+	public moreEquals(that: Component): boolean;
+	public moreEquals(that: Component, context: MathContext): boolean;
+	public moreEquals(that: Component, context=Component.MODE) {
+		return this.moreThan(that) || this.equals(that, context);
 	}
 
 	/**
