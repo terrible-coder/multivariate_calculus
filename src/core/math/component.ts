@@ -558,7 +558,6 @@ export class Component {
 		while(true) {
 			f = x.div(tenk, ctx).sub(Component.ONE, ctx);
 			const abs = Component.abs(f);
-			console.log(k, f.toString(), abs.toString());
 			if(abs.lessEquals(limit, ctx))
 				break;
 			tenk = tenk.mul(ten);
@@ -584,7 +583,6 @@ export class Component {
 		let n = 0;
 		while(true) {
 			sum = sum.add(term, ctx);
-			console.log(sum.toString(), term.toString());
 			const f = Component.create((2 * n + 2) * (2 * n + 3));
 			const term1 = term.mul(x_sq, ctx).div(f, ctx).neg;
 			if(term1.equals(Component.ZERO, ctx))
