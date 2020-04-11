@@ -512,7 +512,7 @@ export class Component {
 	 */
 	public static ln(x: Component, context: MathContext): Component;
 	public static ln(x: Component, context=Component.MODE) {
-		if(x.lessEquals(Component.ZERO))
+		if(x.lessEquals(Component.ZERO, context))
 			throw new TypeError("Undefined.");
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
@@ -529,7 +529,7 @@ export class Component {
 			f = x.div(tenk, ctx).sub(Component.ONE, ctx);
 			const abs = Component.abs(f);
 			console.log(k, f.toString(), abs.toString());
-			if(abs.lessEquals(limit))
+			if(abs.lessEquals(limit, ctx))
 				break;
 			tenk = tenk.mul(ten);
 			k++;
