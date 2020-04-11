@@ -666,12 +666,11 @@ export class Component {
 	public static asin(x: Component): Component;
 	public static asin(x: Component, context: MathContext): Component;
 	public static asin(x: Component, context=Component.MODE) {
+		if(x.lessThan(Component.ZERO))
+			return Component.asin(x.neg).neg;
 		const half = Component.create("0.5");
-		if(Component.abs(x).lessThan(half)) {
-			const sgn = x.sign;
-			const res = Component.asin_less(x, context)
-			return sgn === -1? res.neg: res;
-		}
+		if(x.lessThan(half))
+			return Component.asin_less(x, context);
 		const ctx: MathContext = {
 			precision: context.precision + 5,
 			rounding: context.rounding
