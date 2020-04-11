@@ -575,7 +575,7 @@ export class Component {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		x = x.mod(Component.TWO.mul(Component.PI, ctx));
+		x = x.mod(Component.TWO.mul(Component.PI, ctx), ctx);
 		const x_sq = x.mul(x, ctx);
 		let sum = Component.ZERO;
 		let term = x;

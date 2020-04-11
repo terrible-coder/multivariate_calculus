@@ -1,4 +1,5 @@
 export * from "./core/math/context";
+export * from "./core/math/component";
 export * from "./core/math/bignum";
 export * from "./core/math/functions";
 export { levicivita, kronecker } from "./core/math/numerical";
