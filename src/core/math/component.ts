@@ -1,7 +1,6 @@
 import { IndeterminateForm, DivisionByZero } from "../errors";
 import { parseNum, pad, decimate, align } from "./parsers";
 import { MathContext, RoundingMode } from "./context";
-import { newton_raphson } from "./numerical";
 
 type num1d = {
 	integer: string,
@@ -509,24 +508,30 @@ export class Component {
 	 */
 	public static ln(x: Component, context: MathContext): Component;
 	public static ln(x: Component, context=Component.MODE) {
+		if(x.lessEquals(Component.ZERO))
+			throw new TypeError("Undefined.");
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		if(x.lessEquals(Component.ZERO))
-			throw new Error("Undefined");
-		if(x.lessEquals(Component.create("1.9")))
-			return Component.round(
-				Component.ln_less(x.sub(Component.ONE, ctx), ctx),
-				context
-				);
-		return Component.round(newton_raphson(
-			y => Component.exp(y, ctx).sub(x, ctx),
-			y => Component.exp(y, ctx),
-			Component.ONE,
-			ctx
-			),
-			context);
+		if(x.lessThan(Component.ONE))
+			return Component.round(Component.ln(Component.ONE.div(x, ctx)).neg, context);
+		const ten = Component.create("10");
+		const limit = Component.create("0.9");
+		let k = x.integer.length - 1;
+		let tenk = Component.intpow(ten, k);
+		let f: Component;
+		while(true) {
+			f = x.div(tenk, ctx).sub(Component.ONE, ctx);
+			const abs = Component.abs(f);
+			console.log(k, f.toString(), abs.toString());
+			if(abs.lessEquals(limit))
+				break;
+			tenk = tenk.mul(ten);
+			k++;
+		}
+		const res = Component.create(k).mul(Component.ln10, ctx).add(Component.ln_less(f, ctx), ctx);
+		return Component.round(res, context);
 	}
 
 	/**
