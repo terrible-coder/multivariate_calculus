@@ -317,3 +317,23 @@ describe("Modulus", function() {
 		}
 	});
 });
+
+describe("Exponential", function() {
+	it("exp", function() {
+		const E = Component.round(Component.E, Component.MODE);
+		const E2 = Component.E.mul(Component.E);
+		expect(Component.exp(Component.ONE)).toEqual(E);
+		expect(Component.exp(Component.TWO)).toEqual(E2);
+		// expect(Component.exp(Component.ONE.neg)).toEqual(Component.ONE.div(Component.E));
+		// expect(Component.exp(Component.TWO.neg)).toEqual(Component.ONE.div(E2));
+	});
+});
+
+describe("Logarithm", function() {
+	it("ln", function() {
+		expect(() => Component.ln(Component.ZERO)).toThrow();
+		expect(Component.ln(Component.ONE)).toEqual(Component.ZERO);
+		expect(Component.ln(Component.create("10"))).toEqual(Component.round(Component.ln10, Component.MODE));
+		expect(Component.ln(Component.create("0.1"))).toEqual(Component.round(Component.ln10.neg, Component.MODE));
+	});
+});
