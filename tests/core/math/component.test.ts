@@ -382,3 +382,24 @@ describe("Trigonometry", function() {
 		});
 	});
 });
+
+describe("Inverse trigonometry", function() {
+	const values = [
+		"0",
+		"0.10016742116155980",
+		"0.20135792079033080",
+		"0.30469265401539751",
+		"0.41151684606748802",
+		"0.52359877559829888",
+		"0.64350110879328439",
+		"0.77539749661075307",
+		"0.92729521800161224",
+		"1.11976951499863419"
+	];
+	describe("arcsine", function() {
+		for(let i = 0; i < values.length; i++) {
+			const x = Component.create("0." + i);
+			expect(Component.asin(x)).toEqual(Component.create(values[i]));
+		}
+	});
+});
