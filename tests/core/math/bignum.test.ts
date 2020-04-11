@@ -332,3 +332,26 @@ describe("Exponential", function() {
 		expect(BigNum.exp(v)).toEqual(exp);
 	});
 });
+
+describe("Logarithm", function() {
+	describe("ln", function() {
+		it("for positive reals", function() {
+			for(let i = 1; i < 10; i++) {
+				const x = BigNum.real(i);
+				const x_ = Component.create(i);
+				expect(BigNum.ln(x).components[0]).toEqual(Component.ln(x_))
+			}
+		});
+
+		it("for negative reals", function() {
+			for(let i = 1; i < 10; i++) {
+				const x = BigNum.real(i).neg;
+				const x_ = Component.create(i);
+				const ln = BigNum.ln(x);
+				expect(ln.dim).toBe(2);
+				expect(ln.components[0]).toEqual(Component.ln(x_));
+				expect(ln.components[1]).toEqual(Component.PI.div(Component.TWO));
+			}
+		});
+	});
+});
