@@ -653,7 +653,6 @@ export class Component {
 			const fac = f.div(Component.create(2*n+2), ctx);
 			const term1 = term.mul(x_sq, ctx).mul(fac, ctx);
 			const temp1 = term1.div(f1, ctx);
-			console.log(temp1.toString(), sum.toString());
 			if(temp1.equals(Component.ZERO, ctx))
 				return Component.round(sum, context);
 			f = f1;
