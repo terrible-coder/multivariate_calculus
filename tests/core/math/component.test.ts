@@ -399,7 +399,9 @@ describe("Inverse trigonometry", function() {
 		];
 		for(let i = 0; i < values.length; i++) {
 			const x = Component.create("0." + i);
-			expect(Component.asin(x)).toEqual(Component.create(values[i]));
+			const asin = Component.create(values[i]);
+			expect(Component.asin(x)).toEqual(asin);
+			expect(Component.asin(x.neg)).toEqual(asin.neg);
 		}
 	});
 
