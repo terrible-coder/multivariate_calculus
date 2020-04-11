@@ -711,41 +711,37 @@ export class BigNum {
 	// 		n = n.add(BigNum.ONE);
 	// 	}
 	// }
-	//
-	// /**
-	//  * Calculates the natural logarithm (to the base \\(e\\)) of a given number
-	//  * with rounding according to [[Component.MODE]].
-	//  * @param x A number.
-	//  */
-	// public static ln(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the natural logarithm (to the base \\(e\\)) of a given number
-	//  * with rounding according to the given context settings.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static ln(x: BigNum, context: MathContext): BigNum;
-	// public static ln(x: BigNum, context=Component.MODE) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	};
-	// 	if(x.lessEquals(BigNum.ZERO))
-	// 		throw new Error("Undefined");
-	// 	if(x.lessEquals(BigNum.real("1.9")))
-	// 		return BigNum.round(
-	// 			BigNum.ln_less(x.sub(BigNum.ONE, ctx), ctx),
-	// 			context
-	// 			);
-	// 	return BigNum.round(newton_raphson(
-	// 		y => BigNum.exp(y, ctx).sub(x, ctx),
-	// 		y => BigNum.exp(y, ctx),
-	// 		BigNum.ONE,
-	// 		ctx
-	// 		),
-	// 		context);
-	// }
-	//
+
+	/**
+	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
+	 * with rounding according to [[Component.MODE]].
+	 * @param x A number.
+	 */
+	public static ln(x: BigNum): BigNum;
+	/**
+	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
+	 * with rounding according to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static ln(x: BigNum, context: MathContext): BigNum;
+	public static ln(x: BigNum, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const r = BigNum.abs(x, ctx);
+		const real = new BigNum(Component.ln(r.components[0], ctx));
+		const u = x.div(r, ctx);
+		const u0 = u.components[0]; //cos(theta)
+		const sin2 = Component.ONE.sub(u0.pow(Component.TWO, ctx), ctx);
+		const sin = new BigNum(sin2.pow(Component.create("0.5"), ctx));
+		const theta = new BigNum(Component.acos(u0, ctx));
+		const v = sin.equals(BigNum.real("0"), ctx)? BigNum.complex("0", "1"): u.imag.div(sin, ctx);
+		const res = real.add(theta.mul(v, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
 	// /**
 	//  * Calculates the common logarithm (to the base \\(10\\)) of a given number
 	//  * with rounding according to [[Component.MODE]].
