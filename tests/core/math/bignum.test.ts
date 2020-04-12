@@ -353,5 +353,25 @@ describe("Logarithm", function() {
 				expect(ln.components[1]).toEqual(Component.round(Component.PI, Component.MODE));
 			}
 		});
+
+		it("for 2 reals", function() {
+			const lnroot2 = Component.ln(Component.TWO.pow(Component.create("0.5")));
+			const piby4 = Component.PI.mul(Component.create("0.25"));
+			const pi3by4 = Component.PI.mul(Component.create("0.75"));
+			const values = [
+				BigNum.complex("1", "1"),
+				BigNum.complex("1", "-1"),
+				BigNum.complex("-1", "1"),
+				BigNum.complex("-1", "-1")
+			];
+			const logs = [
+				new BigNum(lnroot2, piby4),
+				new BigNum(lnroot2, piby4.neg),
+				new BigNum(lnroot2, pi3by4),
+				new BigNum(lnroot2, pi3by4.neg)
+			];
+			for(let i = 0; i < values.length; i++)
+				expect(BigNum.ln(values[i])).toEqual(logs[i]);
+		});
 	});
 });
