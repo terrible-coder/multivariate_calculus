@@ -373,5 +373,12 @@ describe("Logarithm", function() {
 			for(let i = 0; i < values.length; i++)
 				expect(BigNum.ln(values[i])).toEqual(logs[i]);
 		});
+
+		it("for 6 reals", function() {
+			const piby2 = Component.PI.div(Component.TWO);
+			const x = BigNum.hyper("0", "3", "2", "1", "1", "1").div(BigNum.real("4"));
+			const log = new BigNum(piby2).mul(x);
+			expect(BigNum.ln(x)).toEqual(log);
+		});
 	});
 });
