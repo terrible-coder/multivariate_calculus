@@ -427,10 +427,17 @@ describe("Inverse trigonometry", function() {
 
 describe("Hyperbolic trigonometry", function() {
 	it("sinh", function() {
+		const alsosinh = (x: Component) => {
+			const ctx: MathContext = {
+				precision: 2 * Component.MODE.precision,
+				rounding: Component.MODE.rounding
+			}
+			const res = Component.exp(x, ctx).sub(Component.exp(x.neg, ctx)).div(Component.TWO, ctx);
+			return Component.round(res, Component.MODE);
+		}
 		for(let i = 0; i < 10; i++) {
 			const x = Component.create(i);
-			const sinh = Component.exp(x).sub(Component.exp(x.neg)).div(Component.TWO);
-			expect(Component.sinh(x)).toEqual(sinh);
+			expect(Component.sinh(x)).toEqual(alsosinh(x));
 		}
 	});
 });
