@@ -424,3 +424,13 @@ describe("Inverse trigonometry", function() {
 		expect(Component.acos(Component.ONE)).toEqual(Component.ZERO);
 	});
 });
+
+describe("Hyperbolic trigonometry", function() {
+	it("sinh", function() {
+		for(let i = 0; i < 10; i++) {
+			const x = Component.create(i);
+			const sinh = Component.exp(x).sub(Component.exp(x.neg)).div(Component.TWO);
+			expect(Component.sinh(x)).toEqual(sinh);
+		}
+	});
+});
