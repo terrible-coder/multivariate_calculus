@@ -319,42 +319,34 @@ export class BigNum {
 		return side === "right"? this.mul(that.inv(context), context): that.inv(context).mul(this, context);
 	}
 
-	// /**
-	//  * Calculates the trigonometric sine of a given number with rounding
-	//  * according to [[Component.MODE]].
-	//  * @param x A number.
-	//  */
-	// public static sin(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the trigonometric sine of a given number with rounding
-	//  * according to the given context settings.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static sin(x: BigNum, context: MathContext): BigNum;
-	// public static sin(x: BigNum, context=Component.MODE) {
-	// 	// using Maclaurin series for sin x
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	};
-	// 	const x_sq = x.mul(x, ctx);
-	// 	let sum = BigNum.ZERO;
-	// 	let term = x;
-	// 	let n = BigNum.ZERO;
-	// 	while(true) {
-	// 		sum = sum.add(term, ctx);
-	// 		const a = BigNum.TWO.mul(n).add(BigNum.THREE);
-	// 		const b = BigNum.TWO.mul(n).add(BigNum.TWO);
-	// 		const f = a.mul(b).neg;
-	// 		const term1 = term.mul(x_sq, ctx).div(f, ctx);
-	// 		if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
-	// 			return BigNum.round(sum, context);
-	// 		term = term1;
-	// 		n = n.add(BigNum.ONE);
-	// 	}
-	// }
-	//
+	/**
+	 * Calculates the trigonometric sine of a given number with rounding
+	 * according to [[Component.MODE]].
+	 * @param x A number.
+	 */
+	public static sin(x: BigNum): BigNum;
+	/**
+	 * Calculates the trigonometric sine of a given number with rounding
+	 * according to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static sin(x: BigNum, context: MathContext): BigNum;
+	public static sin(x: BigNum, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const a = x.real.components[0];
+		const v = x.imag;
+		const theta = BigNum.abs(v).components[0];
+		const real = new BigNum(Component.sin(a, ctx).mul(Component.cosh(theta, ctx), ctx));
+		const imag = new BigNum(Component.cos(a, ctx).mul(Component.sinh(theta, ctx), ctx));
+		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.real("0"): v.div(new BigNum(theta), ctx);
+		const res = real.add(v_.mul(imag, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
 	// /**
 	//  * Calculates the trigonometric cosine of a given number with rounding
 	//  * according to [[Component.MODE]].
