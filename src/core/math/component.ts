@@ -751,6 +751,28 @@ export class Component {
 		}
 	}
 
+	public static cosh(x: Component): Component;
+	public static cosh(x: Component, context: MathContext): Component;
+	public static cosh(x: Component, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const x_sq = x.mul(x, ctx);
+		let sum = Component.ZERO;
+		let term = Component.ONE;
+		let n = 0;
+		while(true) {
+			sum = sum.add(term, ctx);
+			const f = Component.create((2*n + 1) * (2*n + 2));
+			const term1 = term.mul(x_sq, ctx).div(f, ctx);
+			if(term1.equals(Component.ZERO, ctx))
+				return Component.round(sum, context);
+			term = term1;
+			n++;
+		}
+	}
+
 	/**
 	 * The canonical representation of the number as a string.
 	 * @returns The string representation of `this`.
