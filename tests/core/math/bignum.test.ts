@@ -382,3 +382,44 @@ describe("Logarithm", function() {
 		});
 	});
 });
+
+describe("Trigonometry", function() {
+	describe("sine", function() {
+		it("for 1 real", function() {
+			for(let i = 0; i < 10; i++) {
+				const x = BigNum.real(i);
+				const x_ = Component.create(i);
+				const res = BigNum.sin(x);
+				expect(res.dim).toBe(1);
+				expect(res.components[0]).toEqual(Component.sin(x_));
+			}
+		});
+
+		it("for complex", function() {
+			const values = [
+				BigNum.complex("0", "1"),
+				BigNum.complex("0", "-1"),
+				BigNum.complex("1", "1")
+			];
+			const sins = [
+				new BigNum(Component.ZERO, Component.sinh(Component.ONE)),
+				new BigNum(Component.ZERO, Component.sinh(Component.ONE.neg)),
+				(function(x: BigNum) {
+					const ctx = {
+						precision: 2 * Component.MODE.precision,
+						rounding: Component.MODE.rounding
+					};
+					const a = x.mul(BigNum.complex("0", "1"), ctx);
+					const num = BigNum.exp(a, ctx).sub(BigNum.exp(a.neg, ctx), ctx);
+					const res = num.div(BigNum.complex("0", "2"), ctx);
+					return BigNum.round(res, Component.MODE);
+				})(values[2])
+			];
+			for(let i = 0; i < values.length; i++) {
+				const res = BigNum.sin(values[i]);
+				expect(res.dim).toBe(2);
+				expect(res).toEqual(sins[i]);
+			}
+		});
+	});
+});
