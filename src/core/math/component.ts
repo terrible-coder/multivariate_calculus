@@ -729,7 +729,16 @@ export class Component {
 		return Component.round(res, context);
 	}
 
+	/**
+	 * Calculates the hyperbolic sine with rounding according to [[Component.MODE]].
+	 * @param x A number.
+	 */
 	public static sinh(x: Component): Component;
+	/**
+	 * Calculates the hyperbolic sine with rounding according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static sinh(x: Component, context: MathContext): Component;
 	public static sinh(x: Component, context=Component.MODE) {
 		const ctx: MathContext = {
@@ -751,7 +760,16 @@ export class Component {
 		}
 	}
 
+	/**
+	 * Calculates the hyperbolic cosine with rounding according to [[Component.MODE]].
+	 * @param x A number.
+	 */
 	public static cosh(x: Component): Component;
+	/**
+	 * Calculates the hyperbolic cosine with rounding according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static cosh(x: Component, context: MathContext): Component;
 	public static cosh(x: Component, context=Component.MODE) {
 		const ctx: MathContext = {
