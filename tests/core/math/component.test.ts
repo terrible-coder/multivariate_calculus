@@ -440,4 +440,19 @@ describe("Hyperbolic trigonometry", function() {
 			expect(Component.sinh(x)).toEqual(alsosinh(x));
 		}
 	});
+
+	it("cosh", function() {
+		const alsocosh = (x: Component) => {
+			const ctx: MathContext = {
+				precision: 2 * Component.MODE.precision,
+				rounding: Component.MODE.rounding
+			}
+			const res = Component.exp(x, ctx).add(Component.exp(x.neg, ctx)).div(Component.TWO, ctx);
+			return Component.round(res, Component.MODE);
+		}
+		for(let i = 0; i < 10; i++) {
+			const x = Component.create(i);
+			expect(Component.cosh(x)).toEqual(alsocosh(x));
+		}
+	});
 });
