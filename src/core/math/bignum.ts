@@ -549,97 +549,72 @@ export class BigNum {
 	// 		return BigNum.PI.div(BigNum.FOUR, context);
 	// 	return BigNum.atan_more(x, context);
 	// }
-	//
-	// /**
-	//  * Calculates the hyperbolic sine of a given value with rounding according
-	//  * to [[Component.MODE]].
-	//  * @param x A number.
-	//  */
-	// public static sinh(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the hyperbolic sine of a given value with rounding according
-	//  * to the given context settings.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static sinh(x: BigNum, context: MathContext): BigNum;
-	// public static sinh(x: BigNum, context=Component.MODE) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	}
-	// 	const x_sq = x.mul(x, ctx);
-	// 	let sum = BigNum.ZERO;
-	// 	let term = x;
-	// 	let n = BigNum.ZERO;
-	// 	while(true) {
-	// 		sum = sum.add(term, ctx);
-	// 		const a = BigNum.TWO.mul(n).add(BigNum.TWO);
-	// 		const b = BigNum.TWO.mul(n).add(BigNum.THREE);
-	// 		const fac = a.mul(b);
-	// 		const term1 = term.mul(x_sq, ctx).div(fac, ctx);
-	// 		if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
-	// 			return BigNum.round(sum, context);
-	// 		term = term1;
-	// 		n = n.add(BigNum.ONE);
-	// 	}
-	// }
-	//
-	// /**
-	//  * Calculates the hyperbolic cosine of a given value with rounding according
-	//  * to [[Component.MODE]].
-	//  * @param x A number.
-	//  */
-	// public static cosh(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the hyperbolic cosine of a given value with rounding according
-	//  * to the given context settings.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static cosh(x: BigNum, context: MathContext): BigNum;
-	// public static cosh(x: BigNum, context=Component.MODE) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	}
-	// 	const x_sq = x.mul(x, ctx);
-	// 	let sum = BigNum.ZERO;
-	// 	let term = BigNum.ONE;
-	// 	let n = BigNum.ZERO;
-	// 	while(true) {
-	// 		sum = sum.add(term, ctx);
-	// 		const a = BigNum.TWO.mul(n).add(BigNum.TWO);
-	// 		const b = BigNum.TWO.mul(n).add(BigNum.ONE);
-	// 		const fac = a.mul(b);
-	// 		const term1 = term.mul(x_sq, ctx).div(fac, ctx);
-	// 		if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
-	// 			return BigNum.round(sum, context);
-	// 		term = term1;
-	// 		n = n.add(BigNum.ONE);
-	// 	}
-	// }
-	//
-	// /**
-	//  * Calculates the hyperbolic tangent of a given value with rounding according
-	//  * to the given context settings.
-	//  * @param x A number.
-	//  */
-	// public static tanh(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the hyperbolic tangent of a given value with rounding according
-	//  * to the given context settings.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static tanh(x: BigNum, context: MathContext): BigNum;
-	// public static tanh(x: BigNum, context=Component.MODE) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	}
-	// 	return BigNum.round(BigNum.sinh(x, ctx).div(BigNum.cosh(x, ctx), ctx), context);
-	// }
+
+	/**
+	 * Calculates the hyperbolic sine of a given value with rounding according
+	 * to [[Component.MODE]].
+	 * @param x A number.
+	 */
+	public static sinh(x: BigNum): BigNum;
+	/**
+	 * Calculates the hyperbolic sine of a given value with rounding according
+	 * to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static sinh(x: BigNum, context: MathContext): BigNum;
+	public static sinh(x: BigNum, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const res = BigNum.exp(x, ctx).sub(BigNum.exp(x.neg, ctx), ctx).div(BigNum.real("2"), ctx);
+		return BigNum.round(res, context);
+	}
+
+	/**
+	 * Calculates the hyperbolic cosine of a given value with rounding according
+	 * to [[Component.MODE]].
+	 * @param x A number.
+	 */
+	public static cosh(x: BigNum): BigNum;
+	/**
+	 * Calculates the hyperbolic cosine of a given value with rounding according
+	 * to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static cosh(x: BigNum, context: MathContext): BigNum;
+	public static cosh(x: BigNum, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const res = BigNum.exp(x, ctx).add(BigNum.exp(x.neg, ctx), ctx).div(BigNum.real("2"), ctx);
+		return BigNum.round(res, context);
+	}
+
+	/**
+	 * Calculates the hyperbolic tangent of a given value with rounding according
+	 * to the given context settings.
+	 * @param x A number.
+	 */
+	public static tanh(x: BigNum): BigNum;
+	/**
+	 * Calculates the hyperbolic tangent of a given value with rounding according
+	 * to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static tanh(x: BigNum, context: MathContext): BigNum;
+	public static tanh(x: BigNum, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const res = BigNum.sinh(x, ctx).div(BigNum.cosh(x, ctx), ctx);
+		return BigNum.round(res, context);
+	}
 
 	/**
 	 * Calculates the exponential of a given number with rounding according to
