@@ -375,26 +375,27 @@ export class BigNum {
 		return BigNum.round(res, context);
 	}
 
-	// /**
-	//  * Calculates the trigonometric tangent of a given number with rounding
-	//  * according to [[Component.MODE]].
-	//  * @param x A number.
-	//  */
-	// public static tan(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the trigonometric tangent of a given number with rounding
-	//  * according to the given context settings.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static tan(x: BigNum, context: MathContext): BigNum;
-	// public static tan(x: BigNum, context=Component.MODE) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	}
-	// 	return BigNum.round(BigNum.sin(x, ctx).div(BigNum.cos(x, ctx), ctx), context);
-	// }
+	/**
+	 * Calculates the trigonometric tangent of a given number with rounding
+	 * according to [[Component.MODE]].
+	 * @param x A number.
+	 */
+	public static tan(x: BigNum): BigNum;
+	/**
+	 * Calculates the trigonometric tangent of a given number with rounding
+	 * according to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static tan(x: BigNum, context: MathContext): BigNum;
+	public static tan(x: BigNum, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const res = BigNum.sin(x, ctx).div(BigNum.cos(x, ctx), ctx);
+		return BigNum.round(res, context);
+	}
 	//
 	// /**
 	//  * Calculates the inverse trigonometric sine of a given value with rounding
