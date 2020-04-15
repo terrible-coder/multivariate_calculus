@@ -647,31 +647,6 @@ export class BigNum {
 		}
 	}
 
-	// /**
-	//  * Evaluates the natural logarithm of a given number \\(x\\)(\\(|x| < 1\\)).
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  * @ignore
-	//  */
-	// private static ln_less(x: BigNum, context=Component.MODE) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	};
-	// 	let sum = BigNum.ZERO;
-	// 	let term = x;
-	// 	let n = BigNum.ONE;
-	// 	while(true) {
-	// 		sum = sum.add(term.div(n, ctx), ctx);
-	// 		const term1 = term.mul(x, ctx).neg;
-	// 		const term2 = term1.div(n.add(BigNum.ONE, ctx), ctx);
-	// 		if(BigNum.abs(term2).equals(BigNum.ZERO, ctx))
-	// 			return BigNum.round(sum, context);
-	// 		term = term1;
-	// 		n = n.add(BigNum.ONE);
-	// 	}
-	// }
-
 	/**
 	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
 	 * with rounding according to [[Component.MODE]].
