@@ -456,3 +456,19 @@ describe("Hyperbolic trigonometry", function() {
 		}
 	});
 });
+
+describe("Inverse hyperbolic trigonometry", function() {
+	it("asinh", function() {
+		for(let i = 0; i < 10; i++) {
+			const x = Component.create(i);
+			expect(Component.asinh(Component.sinh(x))).toEqual(x);
+		}
+	});
+
+	it("acosh", function() {
+		for(let i = 0; i < 10; i++) {
+			const x = Component.create(i);
+			expect(Component.acosh(Component.cosh(x))).toEqual(x);
+		}
+	});
+});
