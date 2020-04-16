@@ -791,6 +791,34 @@ export class Component {
 		}
 	}
 
+	public static asinh(x: Component): Component;
+	public static asinh(x: Component, context: MathContext): Component;
+	public static asinh(x: Component, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const a = x;
+		const b = x.pow(Component.TWO, ctx).add(Component.ONE, ctx).pow(Component.create("0.5"), ctx);
+		const exp = a.add(b, ctx);
+		const res = Component.ln(exp, ctx);
+		return Component.round(res, context);
+	}
+
+	public static acosh(x: Component): Component;
+	public static acosh(x: Component, context: MathContext): Component;
+	public static acosh(x: Component, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const a = x;
+		const b = x.pow(Component.TWO, ctx).sub(Component.ONE, ctx).pow(Component.create("0.5"), ctx);
+		const exp = a.add(b, ctx);
+		const res = Component.ln(exp, ctx);
+		return Component.round(res, context);
+	}
+
 	/**
 	 * The canonical representation of the number as a string.
 	 * @returns The string representation of `this`.
