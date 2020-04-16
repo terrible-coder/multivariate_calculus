@@ -458,17 +458,32 @@ describe("Hyperbolic trigonometry", function() {
 });
 
 describe("Inverse hyperbolic trigonometry", function() {
+	const ctx = {
+		precision: 2 * Component.MODE.precision,
+		rounding: Component.MODE.rounding
+	}
+
 	it("asinh", function() {
+		const identity = (x: Component) => {
+			const sinh = Component.sinh(x, ctx);
+			const asinh = Component.asinh(sinh, ctx);
+			return Component.round(asinh, Component.MODE);
+		}
 		for(let i = 0; i < 10; i++) {
 			const x = Component.create(i);
-			expect(Component.asinh(Component.sinh(x))).toEqual(x);
+			expect(identity(x)).toEqual(x);
 		}
 	});
 
 	it("acosh", function() {
+		const identity = (x: Component) => {
+			const cosh = Component.cosh(x, ctx);
+			const acosh = Component.acosh(cosh, ctx);
+			return Component.round(acosh, Component.MODE);
+		}
 		for(let i = 0; i < 10; i++) {
 			const x = Component.create(i);
-			expect(Component.acosh(Component.cosh(x))).toEqual(x);
+			expect(identity(x)).toEqual(x);
 		}
 	});
 });
