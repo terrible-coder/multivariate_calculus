@@ -791,7 +791,17 @@ export class Component {
 		}
 	}
 
+	/**
+	 * Calculates the inverse hyperbolic sine with rounding according to [[Component.MODE]].
+	 * @param x A number.
+	 */
 	public static asinh(x: Component): Component;
+	/**
+	 * Calculates the inverse hyperbolic sine with rounding according to the
+	 * given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static asinh(x: Component, context: MathContext): Component;
 	public static asinh(x: Component, context=Component.MODE) {
 		const ctx: MathContext = {
@@ -805,7 +815,18 @@ export class Component {
 		return Component.round(res, context);
 	}
 
+	/**
+	 * Calculates the inverse hyperbolic cosine with rounding according to
+	 * [[Component.MODE]].
+	 * @param x A number.
+	 */
 	public static acosh(x: Component): Component;
+	/**
+	 * Calculates the inverse hyperbolic cosine with rounding according to the
+	 * given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static acosh(x: Component, context: MathContext): Component;
 	public static acosh(x: Component, context=Component.MODE) {
 		const ctx: MathContext = {
