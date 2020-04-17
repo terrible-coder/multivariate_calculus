@@ -396,74 +396,98 @@ export class BigNum {
 		const res = BigNum.sin(x, ctx).div(BigNum.cos(x, ctx), ctx);
 		return BigNum.round(res, context);
 	}
-	//
-	// /**
-	//  * Calculates the inverse trigonometric sine of a given value with rounding
-	//  * according to [[Component.MODE]]. This method right now works good
-	//  * only for values much smaller than unity. For values close to unity
-	//  * this method converges very slowly to the result. This will be fixed in
-	//  * future updates.
-	//  * @param x A number.
-	//  */
-	// public static asin(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the inverse trigonometric sine of a given value with rounding
-	//  * according to the given context setings. This method right now works good
-	//  * only for values much smaller than unity. For values close to unity
-	//  * this method converges very slowly to the result. This will be fixed in
-	//  * future updates.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static asin(x: BigNum, context: MathContext): BigNum;
-	// public static asin(x: BigNum, context=Component.MODE) {
-	// 	if(BigNum.abs(x).moreThan(BigNum.ONE))
-	// 		throw new Error("Undefined");
-	// 	if(x.equals(BigNum.ONE, context))
-	// 		return BigNum.PI.div(BigNum.TWO, context);
-	// 	if(x.equals(BigNum.ONE.neg, context))
-	// 		return BigNum.PI.div(BigNum.TWO, context).neg;
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	}
-	// 	return BigNum.round(newton_raphson(
-	// 		y => BigNum.sin(y, ctx).sub(x, ctx),
-	// 		y => BigNum.cos(y, ctx),
-	// 		BigNum.ZERO,
-	// 		ctx
-	// 		), context);
-	// }
-	//
-	// /**
-	//  * Calculates the inverse trigonometric cosine of a given value with rounding
-	//  * according to [[Component.MODE]]. This method right now works good
-	//  * only for values much smaller than unity. For values close to unity
-	//  * this method converges very slowly to the result. This will be fixed in
-	//  * future updates.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static acos(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the inverse trigonometric cosine of a given value with rounding
-	//  * according to the given context settings. This method right now works good
-	//  * only for values much smaller than unity. For values close to unity
-	//  * this method converges very slowly to the result. This will be fixed in
-	//  * future updates.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static acos(x: BigNum, context: MathContext): BigNum;
-	// public static acos(x: BigNum, context=Component.MODE) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	}
-	// 	const piby2 = BigNum.PI.div(BigNum.TWO, ctx);
-	// 	return BigNum.round(piby2.sub(BigNum.asin(x, ctx), ctx), context);
-	// }
-	//
+
+	/**
+	 * Helper function for inverse trig functions. Transforms the product into
+	 * a sum (\\(\alpha\\)) and difference (\\(\beta\\)).
+	 * @param x The absolute value of real part.
+	 * @param y The absolute value of imaginary part.
+	 * @param ctx The context settings to use.
+	 */
+	private static alpha_beta(x: Component, y: Component, ctx: MathContext) {
+		const one = Component.ONE, two = Component.TWO, half = Component.create("0.5");
+		const alpha2 = x.add(one, ctx).pow(two, ctx).add(y.pow(two, ctx), ctx);
+		const beta2 = x.sub(one, ctx).pow(two, ctx).add(y.pow(two, ctx), ctx);
+		const alpha = alpha2.pow(half, ctx);
+		const beta = beta2.pow(half, ctx);
+		return [alpha, beta];
+	}
+
+	/**
+	 * Calculates the inverse trigonometric sine of a given value with rounding
+	 * according to [[Component.MODE]]. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 */
+	public static asin(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse trigonometric sine of a given value with rounding
+	 * according to the given context setings. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static asin(x: BigNum, context: MathContext): BigNum;
+	public static asin(x: BigNum, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const a = x.real.components[0];
+		const v = x.imag;
+		const theta = BigNum.abs(v).components[0];
+		const [alpha, beta] = BigNum.alpha_beta(a, theta, ctx);
+		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
+		const sin = alpha.sub(beta, ctx).div(Component.TWO, ctx);
+		const real = new BigNum(Component.asin(sin, ctx));
+		const imag = new BigNum(Component.acosh(cosh, ctx));
+		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
+		const res = real.add(v_.mul(imag, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
+	/**
+	 * Calculates the inverse trigonometric cosine of a given value with rounding
+	 * according to [[Component.MODE]]. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static acos(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse trigonometric cosine of a given value with rounding
+	 * according to the given context settings. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static acos(x: BigNum, context: MathContext): BigNum;
+	public static acos(x: BigNum, context=Component.MODE) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const a = x.real.components[0];
+		const v = x.imag;
+		const theta = BigNum.abs(v).components[0];
+		const [alpha, beta] = BigNum.alpha_beta(a, theta, ctx);
+		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
+		const cos = alpha.sub(beta, ctx).div(Component.TWO, ctx);
+		const real = new BigNum(Component.acos(cos, ctx));
+		const imag = new BigNum(Component.acosh(cosh, ctx));
+		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
+		const res = real.add(v_.mul(imag, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
 	// /**
 	//  * Calculates the atan value for a number whose magnitude (absolute value)
 	//  * is less than unity.
