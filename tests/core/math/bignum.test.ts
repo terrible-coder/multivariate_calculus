@@ -461,3 +461,41 @@ describe("Trigonometry", function() {
 		});
 	});
 });
+
+describe("Inverse trigonometry", function() {
+	describe("asin", function() {
+		it("for real", function() {
+			const three = Component.THREE, two = Component.TWO, half = Component.create("0.5");
+			const values = [
+				BigNum.real("1"),
+				BigNum.real("-1"),
+				BigNum.real("2")
+			];
+			const asins = [
+				new BigNum(Component.PI.div(two)),
+				new BigNum(Component.PI.div(two)).neg,
+				new BigNum(Component.PI.div(two), Component.ln(two.add(three.pow(half))))
+			];
+			for(let i = 0; i < values.length; i++)
+				expect(BigNum.asin(values[i])).toEqual(asins[i]);
+		});
+	});
+
+	describe("acos", function() {
+		it("for real", function() {
+			const three = Component.THREE, two = Component.TWO, half = Component.create("0.5");
+			const values = [
+				BigNum.real("1"),
+				BigNum.real("-1"),
+				BigNum.real("2")
+			];
+			const acoss = [
+				new BigNum(Component.ZERO),
+				new BigNum(Component.round(Component.PI, Component.MODE)),
+				new BigNum(Component.ZERO, Component.ln(two.add(three.pow(half))))
+			];
+			for(let i = 0; i < values.length; i++)
+				expect(BigNum.acos(values[i])).toEqual(acoss[i]);
+		});
+	});
+});
