@@ -1,6 +1,7 @@
 import { trimZeroes, align, pad } from "./parsers";
 import { Component } from "./component";
 import { MathContext } from "./context";
+import { mathenv } from "../env";
 
 /**
  * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
@@ -65,7 +66,7 @@ export class BigNum {
 	 * \\(a_i = b_i \quad \forall i\\)
 	 * 
 	 * The equality is checked only upto the number of decimal places specified
-	 * by [[Component.MODE]].
+	 * by [[mathenv.mode]].
 	 * @param that The number to check against.
 	 */
 	public equals(that: BigNum): boolean;
@@ -82,7 +83,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public equals(that: BigNum, context: MathContext): boolean;
-	public equals(that: BigNum, context=Component.MODE) {
+	public equals(that: BigNum, context=mathenv.mode) {
 		if(this.dim !== that.dim)
 			return false;
 		const n = that.dim;
@@ -127,7 +128,7 @@ export class BigNum {
 
 	/**
 	 * Evaluates the absolute value of a number correct upto the number of
-	 * places specified by [[Component.MODE]].
+	 * places specified by [[mathenv.mode]].
 	 * @param x A number.
 	 * @param context Context settings to use.
 	 */
@@ -139,18 +140,18 @@ export class BigNum {
 	 * @param context Context settings to use.
 	 */
 	public static absSq(x: BigNum, context: MathContext): BigNum;
-	public static absSq(x: BigNum, context=Component.MODE) {
+	public static absSq(x: BigNum, context=mathenv.mode) {
 		return new BigNum(x.components.reduce((prev, curr) => prev.add(curr.mul(curr, context), context), Component.ZERO));
 	}
 
 	/**
 	 * Evaluates the absolute value of a number correct upto the number of
-	 * places specified by [[Component.MODE]].
+	 * places specified by [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static abs(x: BigNum): BigNum;
 	public static abs(x: BigNum, context: MathContext): BigNum;
-	public static abs(x: BigNum, context=Component.MODE) {
+	public static abs(x: BigNum, context=mathenv.mode) {
 		const magsq = x.components.reduce((prev, curr) => prev.add(curr.pow(Component.TWO)), Component.ZERO);
 		return new BigNum(magsq.pow(Component.create("0.5"), context));
 	}
@@ -173,7 +174,7 @@ export class BigNum {
 	 * \\(\mathit{norm} a = a* a\\)
 	 * where \\(a*\\) is the conjugate of \\(a\\).
 	 */
-	public norm(context=Component.MODE) {
+	public norm(context=mathenv.mode) {
 		return this.conj.mul(this, context);
 	}
 
@@ -183,7 +184,7 @@ export class BigNum {
 	 * 
 	 * \\(a + b = \sum_i a_i + b_i\\)
 	 * 
-	 * The result is rounded according to [[Component.MODE]].
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that The number to add this with.
 	 * @returns this + that.
 	 */
@@ -200,7 +201,7 @@ export class BigNum {
 	 * @returns this + that.
 	 */
 	public add(that: BigNum, context: MathContext): BigNum;
-	public add(that: BigNum, context=Component.MODE) {
+	public add(that: BigNum, context=mathenv.mode) {
 		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
@@ -214,7 +215,7 @@ export class BigNum {
 	 * 
 	 * \\(a - b = \sum_i a_i - b_i\\)
 	 * 
-	 * The result is rounded according to [[Component.MODE]].
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that The number to add this with.
 	 * @returns this - that.
 	 */
@@ -230,7 +231,7 @@ export class BigNum {
 	 * @returns this - that.
 	 */
 	public sub(that: BigNum, context: MathContext): BigNum;
-	public sub(that: BigNum, context=Component.MODE) {
+	public sub(that: BigNum, context=mathenv.mode) {
 		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
@@ -255,7 +256,7 @@ export class BigNum {
 	 * @returns this * that.
 	 */
 	public mul(that: BigNum, context: MathContext): BigNum;
-	public mul(that: BigNum, context=Component.MODE) {
+	public mul(that: BigNum, context=mathenv.mode) {
 		const zero = new BigNum(Component.ZERO);
 		if(this.equals(zero, context) || that.equals(zero, context))
 			return zero;
@@ -281,7 +282,7 @@ export class BigNum {
 	/**
 	 * Calculates the multiplicative inverse of this.
 	 */
-	public inv(context=Component.MODE) {
+	public inv(context=mathenv.mode) {
 		const magSq = this.norm(context).components[0];
 		const scale = new BigNum(Component.ONE.div(magSq, context));
 		return this.conj.mul(scale, context);
@@ -290,7 +291,7 @@ export class BigNum {
 	/**
 	 * Divides one [[BigNum]] instance by another. This method assumes right
 	 * division. That is, the inverse of `that` is multiplied on the right.
-	 * The result is rounded according to [[Component.MODE]].
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that Number to divide by.
 	 */
 	public div(that: BigNum): BigNum;
@@ -305,7 +306,7 @@ export class BigNum {
 	/**
 	 * Divides one [[BigNum]] instance by another. This method multiplies the
 	 * inverse of `that` on the given "side" of `this`.
-	 * The result is rounded according to [[Component.MODE]].
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that Number to divide by.
 	 * @param side Side on which to divide from.
 	 */
@@ -325,7 +326,7 @@ export class BigNum {
 		if(b === undefined) {
 			if(typeof a === "string") {
 				side = a;
-				context = Component.MODE;
+				context = mathenv.mode;
 			} else {
 				side = "right";
 				context = <MathContext>a;
@@ -345,7 +346,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the trigonometric sine of a given number with rounding
-	 * according to [[Component.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static sin(x: BigNum): BigNum;
@@ -356,7 +357,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static sin(x: BigNum, context: MathContext): BigNum;
-	public static sin(x: BigNum, context=Component.MODE) {
+	public static sin(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -373,7 +374,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the trigonometric cosine of a given number with rounding
-	 * according to [[Component.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static cos(x: BigNum): BigNum;
@@ -384,7 +385,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static cos(x: BigNum, context: MathContext): BigNum;
-	public static cos(x: BigNum, context=Component.MODE) {
+	public static cos(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -401,7 +402,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the trigonometric tangent of a given number with rounding
-	 * according to [[Component.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static tan(x: BigNum): BigNum;
@@ -412,7 +413,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static tan(x: BigNum, context: MathContext): BigNum;
-	public static tan(x: BigNum, context=Component.MODE) {
+	public static tan(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -439,7 +440,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
-	 * according to [[Component.MODE]]. This method right now works good
+	 * according to [[mathenv.mode]]. This method right now works good
 	 * only for values much smaller than unity. For values close to unity
 	 * this method converges very slowly to the result. This will be fixed in
 	 * future updates.
@@ -456,7 +457,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static asin(x: BigNum, context: MathContext): BigNum;
-	public static asin(x: BigNum, context=Component.MODE) {
+	public static asin(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -476,7 +477,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the inverse trigonometric cosine of a given value with rounding
-	 * according to [[Component.MODE]]. This method right now works good
+	 * according to [[mathenv.mode]]. This method right now works good
 	 * only for values much smaller than unity. For values close to unity
 	 * this method converges very slowly to the result. This will be fixed in
 	 * future updates.
@@ -494,7 +495,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static acos(x: BigNum, context: MathContext): BigNum;
-	public static acos(x: BigNum, context=Component.MODE) {
+	public static acos(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -514,7 +515,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the hyperbolic sine of a given value with rounding according
-	 * to [[Component.MODE]].
+	 * to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static sinh(x: BigNum): BigNum;
@@ -525,7 +526,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static sinh(x: BigNum, context: MathContext): BigNum;
-	public static sinh(x: BigNum, context=Component.MODE) {
+	public static sinh(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -536,7 +537,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the hyperbolic cosine of a given value with rounding according
-	 * to [[Component.MODE]].
+	 * to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static cosh(x: BigNum): BigNum;
@@ -547,7 +548,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static cosh(x: BigNum, context: MathContext): BigNum;
-	public static cosh(x: BigNum, context=Component.MODE) {
+	public static cosh(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -569,7 +570,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static tanh(x: BigNum, context: MathContext): BigNum;
-	public static tanh(x: BigNum, context=Component.MODE) {
+	public static tanh(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -580,7 +581,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the exponential of a given number with rounding according to
-	 * [[Component.MODE]].
+	 * [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static exp(x: BigNum): BigNum;
@@ -591,7 +592,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static exp(x: BigNum, context: MathContext): BigNum;
-	public static exp(x: BigNum, context=Component.MODE) {
+	public static exp(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -611,7 +612,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
-	 * with rounding according to [[Component.MODE]].
+	 * with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static ln(x: BigNum): BigNum;
@@ -622,7 +623,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static ln(x: BigNum, context: MathContext): BigNum;
-	public static ln(x: BigNum, context=Component.MODE) {
+	public static ln(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -641,7 +642,7 @@ export class BigNum {
 
 	// /**
 	//  * Calculates the common logarithm (to the base \\(10\\)) of a given number
-	//  * with rounding according to [[Component.MODE]].
+	//  * with rounding according to [[mathenv.mode]].
 	//  * @param x A number.
 	//  */
 	// public static log(x: BigNum): BigNum;
@@ -653,7 +654,7 @@ export class BigNum {
 	//  * @param context The context settings to use.
 	//  */
 	// public static log(x: BigNum, context: MathContext): BigNum;
-	// public static log(x: BigNum, context=Component.MODE) {
+	// public static log(x: BigNum, context=mathenv.mode) {
 	// 	const ctx: MathContext = {
 	// 		precision: 2 * context.precision,
 	// 		rounding: context.rounding

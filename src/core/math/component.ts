@@ -1,6 +1,7 @@
 import { IndeterminateForm, DivisionByZero } from "../errors";
 import { parseNum, pad, decimate, align } from "./parsers";
 import { MathContext, RoundingMode } from "./context";
+import { mathenv } from "../env";
 
 type num1d = {
 	integer: string,
@@ -81,14 +82,6 @@ export class Component {
 	 * The constant nine.
 	 */
 	public static NINE = new Component({integer: "9", decimal: ""});
-
-	/**
-	 * The default [[MathContext]] used for numerical operations related to [[Component]]
-	 * when a context has not been mentioned separately. Reassign this value
-	 * if you want to have all subsequent operations in some [[MathContext]]
-	 * other than [[MathContext.DEFAULT_CONTEXT]].
-	 */
-	static MODE = MathContext.DEFAULT_CONTEXT;
 
 	/**
 	 * The integer part of the number.
@@ -235,7 +228,7 @@ export class Component {
 
 	/**
 	 * Checks whether `this` and `that` are equal numbers. Equality is checked
-	 * only till the number of decimal places specified by [[Component.MODE]].
+	 * only till the number of decimal places specified by [[mathenv.mode]].
 	 * @param that The number to check against.
 	 */
 	public equals(that: Component): boolean;
@@ -246,7 +239,7 @@ export class Component {
 	 * @param context The [[MathContext]] value to use for equality check.
 	 */
 	public equals(that: Component, context: MathContext): boolean;
-	public equals(that: Component, context = Component.MODE) {
+	public equals(that: Component, context = mathenv.mode) {
 		const A = Component.round(this, context);
 		const B = Component.round(that, context);
 		return A.integer === B.integer && A.decimal === B.decimal;
@@ -254,7 +247,7 @@ export class Component {
 
 	/**
 	 * Determines whether `this` is less than or equal to `that`. Equality is
-	 * check according to [[Component.MODE]].
+	 * check according to [[mathenv.mode]].
 	 * @param that Number to compare with.
 	 */
 	public lessEquals(that: Component): boolean;
@@ -265,13 +258,13 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public lessEquals(that: Component, context: MathContext): boolean;
-	public lessEquals(that: Component, context=Component.MODE) {
+	public lessEquals(that: Component, context=mathenv.mode) {
 		return this.lessThan(that) || this.equals(that, context);
 	}
 
 	/**
 	 * Determines whether `this` is more than or equal to `that`. Equality is
-	 * checked according to [[Component.MODE]].
+	 * checked according to [[mathenv.mode]].
 	 * @param that Number to compare with.
 	 */
 	public moreEquals(that: Component): boolean;
@@ -282,7 +275,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public moreEquals(that: Component, context: MathContext): boolean;
-	public moreEquals(that: Component, context=Component.MODE) {
+	public moreEquals(that: Component, context=mathenv.mode) {
 		return this.moreThan(that) || this.equals(that, context);
 	}
 
@@ -298,7 +291,7 @@ export class Component {
 	/**
 	 * Adds two [[Component]] instances. The higher precision value of the two is
 	 * chosen as the precision for the result and rounding is according to
-	 * [[Component.MODE]].
+	 * [[mathenv.mode]].
 	 * @param that The number to add this with.
 	 * @returns this + that.
 	 */
@@ -313,7 +306,7 @@ export class Component {
 	 */
 	public add(that: Component, context: MathContext): Component;
 	public add(that: Component, context?: MathContext) {
-		context = context || Component.MODE;
+		context = context || mathenv.mode;
 		const [a, b] = align(this.asString, that.asString, "0", this.precision - that.precision);
 		let sum = (BigInt(a) + BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
@@ -324,7 +317,7 @@ export class Component {
 	/**
 	 * Subtracts one [[Component]] instance from another. The higher precision value
 	 * of the two is chosen as the precision for the result and rounding is
-	 * according to [[Component.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param that The number to subtract from this.
 	 * @returns this - that.
 	 */
@@ -339,7 +332,7 @@ export class Component {
 	 */
 	public sub(that: Component, context: MathContext): Component;
 	public sub(that: Component, context?: MathContext) {
-		context = context || Component.MODE;
+		context = context || mathenv.mode;
 		const [a, b] = align(this.asString, that.asString, "0", this.precision - that.precision);
 		let sum = (BigInt(a) - BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
@@ -350,7 +343,7 @@ export class Component {
 	/**
 	 * Multiplies two [[Component]] instances. The sum of the precisions of the two
 	 * is chosen as the precision of the result and rounding is according to
-	 * [[Component.MODE]].
+	 * [[mathenv.mode]].
 	 * @param that The number to multiply this with.
 	 * @returns this * that.
 	 */
@@ -365,7 +358,7 @@ export class Component {
 	 */
 	public mul(that: Component, context: MathContext): Component;
 	public mul(that: Component, context?: MathContext) {
-		context = context || Component.MODE;
+		context = context || mathenv.mode;
 		let prod = (this.asBigInt * that.asBigInt).toString();
 		const precision = this.precision + that.precision;
 		const res = Component.create(decimate(prod, precision));
@@ -374,7 +367,7 @@ export class Component {
 
 	/**
 	 * Divides one [[Component]] instance by another with rounding according to
-	 * [[Component.MODE]].
+	 * [[mathenv.mode]].
 	 * @param that The number to divide this by.
 	 * @returns this / that.
 	 */
@@ -388,7 +381,7 @@ export class Component {
 	 */
 	public div(that: Component, context: MathContext): Component;
 	public div(that: Component, context?: MathContext) {
-		context = context || Component.MODE;
+		context = context || mathenv.mode;
 		if(that.sign === 0) {
 			if(this.sign === 0)
 				throw new IndeterminateForm("Cannot determine 0/0.");
@@ -407,7 +400,7 @@ export class Component {
 	 * The modulo operator. The extended definition for non-integer numbers has
 	 * been used. For two numbers \\(a\\) and \\(b\\),
 	 * \\[a mod b = a - b\lfloor\frac{a}{b}\rfloor\\]
-	 * The result is rounded according to [[Component.MODE]].
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that A number.
 	 */
 	public mod(that: Component): Component;
@@ -420,7 +413,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public mod(that: Component, context: MathContext): Component;
-	public mod(that: Component, context=Component.MODE) {
+	public mod(that: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -438,7 +431,7 @@ export class Component {
 	 * @param index The index / exponent to which the base is to be raised.
 	 * @param context The context settings to use.
 	 */
-	static intpow(base: Component, index: number, context=Component.MODE) {
+	static intpow(base: Component, index: number, context=mathenv.mode) {
 		if(index !== (index|0))
 			throw "Only defined for integer values of the power.";
 		let p = Component.ONE;
@@ -459,7 +452,7 @@ export class Component {
 	 * @param context The context settings object to use.
 	 */
 	public pow(ex: Component, context: MathContext): Component;
-	public pow(ex: Component, context=Component.MODE) {
+	public pow(ex: Component, context=mathenv.mode) {
 		if(this.equals(Component.ZERO))
 			return Component.ZERO;
 		if(ex.decimal === "" || ex.decimal === "0")
@@ -474,7 +467,7 @@ export class Component {
 
 	/**
 	 * Calculates the exponential of a given number with rounding according to
-	 * [[Component.MODE]].
+	 * [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static exp(x: Component): Component;
@@ -485,7 +478,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public static exp(x: Component, context: MathContext): Component;
-	public static exp(x: Component, context=Component.MODE) {
+	public static exp(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -509,7 +502,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 * @ignore
 	 */
-	private static ln_less(x: Component, context=Component.MODE) {
+	private static ln_less(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -530,7 +523,7 @@ export class Component {
 
 	/**
 	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
-	 * with rounding according to [[Component.MODE]].
+	 * with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static ln(x: Component): Component;
@@ -541,7 +534,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public static ln(x: Component, context: MathContext): Component;
-	public static ln(x: Component, context=Component.MODE) {
+	public static ln(x: Component, context=mathenv.mode) {
 		if(x.lessEquals(Component.ZERO, context))
 			throw new TypeError("Undefined.");
 		const ctx: MathContext = {
@@ -568,7 +561,7 @@ export class Component {
 	}
 
 	/**
-	 * Calculates the trigonometric sine with rounding according to [[Component.MODE]].
+	 * Calculates the trigonometric sine with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static sin(x: Component): Component;
@@ -579,7 +572,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public static sin(x: Component, context: MathContext): Component;
-	public static sin(x: Component, context=Component.MODE) {
+	public static sin(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -604,7 +597,7 @@ export class Component {
 
 	/**
 	 * Calculates the trigonometric cosine with rounding according to
-	 * [[Component.MODE]].
+	 * [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static cos(x: Component): Component;
@@ -615,7 +608,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public static cos(x: Component, context: MathContext): Component;
-	public static cos(x: Component, context=Component.MODE) {
+	public static cos(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -642,7 +635,7 @@ export class Component {
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
-	private static asin_less(x: Component, context=Component.MODE) {
+	private static asin_less(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -670,7 +663,7 @@ export class Component {
 
 	/**
 	 * Calculates the inverse trigonometric sine of a number with rounding
-	 * according to [[Component.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static asin(x: Component): Component;
@@ -681,7 +674,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public static asin(x: Component, context: MathContext): Component;
-	public static asin(x: Component, context=Component.MODE) {
+	public static asin(x: Component, context=mathenv.mode) {
 		if(x.lessThan(Component.ZERO))
 			return Component.asin(x.neg).neg;
 		const half = Component.create("0.5");
@@ -701,7 +694,7 @@ export class Component {
 
 	/**
 	 * Calculates the inverse trigonometric cosine of a number with rounding
-	 * according to [[Component.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static acos(x: Component): Component;
@@ -712,7 +705,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public static acos(x: Component, context: MathContext): Component;
-	public static acos(x: Component, context=Component.MODE) {
+	public static acos(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: context.precision + 5,
 			rounding: context.rounding
@@ -730,7 +723,7 @@ export class Component {
 	}
 
 	/**
-	 * Calculates the hyperbolic sine with rounding according to [[Component.MODE]].
+	 * Calculates the hyperbolic sine with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static sinh(x: Component): Component;
@@ -740,7 +733,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public static sinh(x: Component, context: MathContext): Component;
-	public static sinh(x: Component, context=Component.MODE) {
+	public static sinh(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -761,7 +754,7 @@ export class Component {
 	}
 
 	/**
-	 * Calculates the hyperbolic cosine with rounding according to [[Component.MODE]].
+	 * Calculates the hyperbolic cosine with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static cosh(x: Component): Component;
@@ -771,7 +764,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public static cosh(x: Component, context: MathContext): Component;
-	public static cosh(x: Component, context=Component.MODE) {
+	public static cosh(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -792,7 +785,7 @@ export class Component {
 	}
 
 	/**
-	 * Calculates the inverse hyperbolic sine with rounding according to [[Component.MODE]].
+	 * Calculates the inverse hyperbolic sine with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static asinh(x: Component): Component;
@@ -803,7 +796,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public static asinh(x: Component, context: MathContext): Component;
-	public static asinh(x: Component, context=Component.MODE) {
+	public static asinh(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -817,7 +810,7 @@ export class Component {
 
 	/**
 	 * Calculates the inverse hyperbolic cosine with rounding according to
-	 * [[Component.MODE]].
+	 * [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static acosh(x: Component): Component;
@@ -828,7 +821,7 @@ export class Component {
 	 * @param context The context settings to use.
 	 */
 	public static acosh(x: Component, context: MathContext): Component;
-	public static acosh(x: Component, context=Component.MODE) {
+	public static acosh(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
