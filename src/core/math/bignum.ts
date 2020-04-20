@@ -803,4 +803,18 @@ export namespace BigNum {
 		else args = (<Array<string|number>>vals).map(x => Component.create(x.toString()));
 		return new BigNum(args);
 	}
+
+	/**
+	 * Returns a single unit corresponding to a given index. The indexing starts
+	 * from 0. With \\(e_0 = 1\\) defined as the real unit and the rest (for
+	 * \\(i>0\\)) are the orthogonal imaginary units.
+	 * @param i The index.
+	 */
+	export function e(i: number) {
+		if(i < 0)
+			throw TypeError("Negative indices not allowed for basis.");
+		const values = new Array(i).fill(0).map(() => Component.ZERO);
+		values[i-1] = Component.ONE;
+		return new BigNum(values);
+	}
 }
