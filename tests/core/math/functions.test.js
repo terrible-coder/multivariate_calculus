@@ -21,12 +21,9 @@ describe("Print", function() {
 	});
 
 	it("Objects without toString", function() {
-		const obj = {
-			name: "Steve",
-			place: "California",
-			animal: "Leopard",
-			thing: "Bottle"
-		};
+		const obj = new (class {
+			constructor() {}
+		})();
 		func.print(obj);
 		expect(console.log.mock.calls[1][0]).toBe(obj);
 	});
