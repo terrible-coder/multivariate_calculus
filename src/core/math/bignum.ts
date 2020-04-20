@@ -14,7 +14,7 @@ import { mathenv } from "../env";
  * The BigNum objects follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction)
  * algebra for multiplication. They can be mathematically expressed as
  * 
- * \\(x = \sum_{i=0}^{N-1} x_ie_i\\)
+ * $$ x = \sum_{i=0}^{N-1} x_ie_i $$
  * 
  * where \\(N\\) represents the number of dimensions the number exists in and
  * \\(e_i\\) are the orthogonal units. The components are stored using a real
@@ -63,7 +63,7 @@ export class BigNum {
 	 * component wise. That is, two numbers \\(a\\) and \\(b\\) are equal
 	 * if and only if
 	 * 
-	 * \\(a_i = b_i \quad \forall i\\)
+	 * $$ a_i = b_i \quad \forall i $$
 	 * 
 	 * The equality is checked only upto the number of decimal places specified
 	 * by [[mathenv.mode]].
@@ -75,7 +75,7 @@ export class BigNum {
 	 * component wise. That is, two numbers \\(a\\) and \\(b\\) are equal
 	 * if and only if
 	 * 
-	 * \\(a_i = b_i \quad \forall i\\)
+	 * $$ a_i = b_i \quad \forall i $$
 	 * 
 	 * The equality is checked only upto the number of decimal places specified
 	 * by the given context settings.
@@ -171,8 +171,8 @@ export class BigNum {
 	/**
 	 * Evaluates the norm of this number. Since `this` is not necessarily a real
 	 * number, the norm is defined as
-	 * \\(\mathit{norm} a = a* a\\)
-	 * where \\(a*\\) is the conjugate of \\(a\\).
+	 * $$ \text{norm } a = a^* a $$
+	 * where \\(a^*\\) is the conjugate of \\(a\\).
 	 */
 	public norm(context=mathenv.mode) {
 		return this.conj.mul(this, context);
@@ -180,9 +180,9 @@ export class BigNum {
 
 	/**
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
-	 * That is, for two numbers \\(a\) and \\(b\\), their addition is defined as
+	 * That is, for two numbers \\(a\\) and \\(b\\), their addition is defined as
 	 * 
-	 * \\(a + b = \sum_i a_i + b_i\\)
+	 * $$ a + b = \sum_i a_i + b_i $$
 	 * 
 	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that The number to add this with.
@@ -193,7 +193,7 @@ export class BigNum {
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
 	 * That is, for two numbers \\(a\\) and \\(b\\), their addition is defined as
 	 * 
-	 * \\(a + b = \sum_i a_i + b_i\\)
+	 * $$ a + b = \sum_i a_i + b_i $$
 	 * 
 	 * The result is rounded according to the given context settings.
 	 * @param that The number to add this with.
@@ -213,7 +213,7 @@ export class BigNum {
 	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
 	 * That is, for two numbers \\(a\\) and \\(b\\), their difference is defined as
 	 * 
-	 * \\(a - b = \sum_i a_i - b_i\\)
+	 * $$ a - b = \sum_i a_i - b_i $$
 	 * 
 	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that The number to add this with.
@@ -224,7 +224,7 @@ export class BigNum {
 	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
 	 * That is, for two numbers \\(a\) and \\(b\\), their difference is defined as
 	 * 
-	 * \\(a - b = \sum_i a_i - b_i\\)
+	 * $$ a - b = \sum_i a_i - b_i $$
 	 * 
 	 * The result is rounded according to the given context settings.
 	 * @param that The number to add this with.
@@ -242,7 +242,7 @@ export class BigNum {
 	/**
 	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
 	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
-	 * The result is rounded according to [[Component.MDOE]].
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that The number to multiply with.
 	 * @returns this * that.
 	 */
