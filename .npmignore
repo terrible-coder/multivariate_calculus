@@ -3,10 +3,11 @@ node_modules
 /tests
 /src
 /out
-/doc
+/docs
 /cache
 /coverage
 /release
+/theme
 
 #files
 /.gitignore
@@ -15,6 +16,7 @@ node_modules
 /tsconfig.json
 /index.html
 /mcalc.js
+/mcalc.min.js
 
 #script files
 /build.cmd

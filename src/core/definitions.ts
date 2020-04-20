@@ -3,16 +3,26 @@ import { UnaryOperator } from "./operators/unary";
 
 /**
  * Anything in an expression can be considered as a token.
+ * A tagging interface which all classes representing some mathematical
+ * object must implement.
  */
 export interface Token {
+	/** The type of token `this` is representing. */
 	readonly type: "operator" | "expression" | "variable" | "constant";
 }
 
 /**
  * Anything that has a value or can be later assigned a value.
+ * A tagging interface which all classes representing some mathematical object
+ * whose value can be evaluated, at run time or when user suppiles the value,
+ * must implement.
  */
 export interface Evaluable extends Token {
+	/** The type of quantity with some way of evaluating a value `this` represents. */
 	readonly type: "expression" | "variable" | "constant";
+	/**
+	 * The kind of physical quantity `this` implements.
+	 */
 	readonly quantity: string;
 	[x: string]: any;
 }
@@ -20,22 +30,31 @@ export interface Evaluable extends Token {
 export function isEvaluable(e: Token): e is Evaluable {return e.type !== "operator"}
 
 /**
- * A symbolic representation of anything whose value can change and
- * whose specific value is unknown.
+ * A variable is a symbolic representation of some quantity whose value we do
+ * not know yet. Something whose value is not fixed and could take different
+ * values depending upon the situation. This interface must be implemented by
+ * all classes representing varying/unknown values.
  */
 export interface Variable extends Evaluable {
 	readonly type: "variable";
+	/** The string with which `this` is identified by. */
 	readonly name: string;
 }
 /** Checks whether a given `Evaluable` is a variable. */
 export function isVariable(e: Evaluable): e is Variable {return e.type === "variable";}
 
 /**
- * Any variable with a known value that remains fixed throughout.
+ * A constant is such a quantity whose value is known and remains fixed always.
  */
 export interface Constant extends Evaluable {
 	readonly type: "constant";
+	/** The fixed value `this` object will represent. */
 	readonly value: any;
+	/** The string with which `this` is identified by. For a constant, this value
+	 * is optional. The implementing classes should take care that there is some
+	 * default value assigned should the user choose not to initialise a [[Constant]]
+	 * with a name.
+	 */
 	readonly name: string;
 	equals(that: Evaluable): boolean;
 }
@@ -43,8 +62,18 @@ export interface Constant extends Evaluable {
 export function isConstant(e: Evaluable): e is Constant {return e.type === "constant";}
 
 /**
- * A mathematical statement that is contructed with any number of constants and
- * variables joined by operators in any legitimate condition.
+ * An expression represents a concept whose value depends on one or more
+ * unknowns (variables). That "value" can be evaluated given the value(s) of
+ * the unknown(s). More abstractly, an expression is some combination of
+ * constants and variables to represent a quantity whose value depends on the
+ * values of the variables it depends on.
+ * 
+ * As defined earlier, an expression is some combination of variables and constants.
+ *  The thing which connects those bits together are operators. The Expression
+ * interface uses a tree structure to store the different operations which must
+ * be carried out on the operands. The postfix form of this tree would be
+ * identical to the postfix notation of the mathematical expression this object
+ * represents.
  */
 export interface Expression extends Evaluable {
 	readonly type: "expression";
@@ -84,18 +113,3 @@ export function isExpression(e: Evaluable): e is Expression {return e.type === "
 
 /** The general operator type. */
 export type Operator = UnaryOperator | BinaryOperator;
-
-export type UnaryOperands = {
-	readonly arg: Evaluable;
-};
-export function isUnaryOperand(e: Object): e is UnaryOperands {
-	return e.hasOwnProperty("arg");
-}
-
-export type BinaryOperands = {
-	readonly lhs: Evaluable;
-	readonly rhs: Evaluable;
-};
-export function isBinaryOperand(e: Object): e is BinaryOperands {
-	return e.hasOwnProperty("lhs") && e.hasOwnProperty("rhs");
-}

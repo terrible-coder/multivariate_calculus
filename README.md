@@ -1,106 +1,91 @@
 multivariate_calculus
 =====================
+[shields]: (https://img.shields.io)
+[![CircleCI](https://img.shields.io/circleci/build/gh/terrible-coder/multivariate_calculus/master?style=flat-square&logo=circleci)](https://www.circleci.com/gh/terrible-coder/multivariate_calculus)
 
-Handles calculus of several variables in multidimensional space.
-It works with both TypeScript and JavaScript projects seamlessly.
+[![npm](https://img.shields.io/npm/v/multivariate_calculus?style=flat-square&logo=npm)](https://npmjs.com/package/multivariate_calculus)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/terrible-coder/multivariate_calculus?style=flat-square&logo=github)](https://github.com/terrible-coder/multivariate_calculus/releases/latest)
+
+[![Typescript](https://img.shields.io/badge/made_with-typescript-007ACC?style=flat-square&logo=typescript)](http://typescriptlang.org/)
+[![License](https://img.shields.io/github/license/terrible-coder/multivariate_calculus?style=flat-square)](https://opensource.org/licenses/MIT)
+
+A zero dependency libray that handles calculus of several variables in
+multidimensional space. It works with both TypeScript and JavaScript projects
+seamlessly. This library is so designed that you can write your mathematics code
+as you would do maths in pen and paper.
 
 ## Installation
 
+#### Browser
+
 If you wish to work with this library in the browser, you can download it from [here](https://github.com/terrible-coder/multivariate_calculus/releases).
 
-To install globally on your computer:
+Once you have downloaded the file in you project folder, open up your index.html
+file and add the following line:
+```html
+<script src="mcalc.js"></script>
+```
 
-	npm install multivariate_calculus --global
+This will tell the HTML that an external script is being referenced.
+Now if you wish to, say, create a new constant scalar object, you can say
+```javascript
+const a = Scalar.constant(5);
+console.log(a);
+```
+If you open up the developer console window in the browser you will be able to
+see what the object `a` looks like.
 
-If you instead want to use this package to build something of your own:
+-------------------
 
-	npm install multivariate_calculus --save
+#### Node
 
-## Usage
+**JavaScript**
 
-Once installed properly, you can say
-in TypeScript:
+For using this package in a nodejs environment, you first need to have [Nodejs](https://nodejs.org/en/download/)
+installed on your computer.
+Once that is done, open up your project directory and create an index.js file.
+At the top of the file copy the following line:
+```javascript
+const mc = require("multivariate_calculus");
+```
+
+This will import all the modules, classes, functions and constants from the
+package under the name `mc`. If we try to recreate the same example from above,
+you would have to write
+```javascript
+const a = mc.Scalar.constant(5);
+console.log(a);
+```
+
+You may also avoid having to write `mc` over and over again by modifying the
+import statement slightly
+```javascript
+const { Scalar } = require("multivariate_calculus");
+```
+
+This way you need not use the namespace object to access the modules, classes,
+functions and constants. The code will look exactly like in the case of browser use.
+
+**TypeScript**
+
+Working in TypeScript is similar to working with plain JavaScript. However, before
+you can start writing your code using TypeScript you need to first make sure
+that it is installed. If you are unfamiliar with TypeScript check out their
+[documentation here](http://www.typescriptlang.org/docs/home.html).
+
+Once that is done you can now import stuff from this package by using just one
+line at the top of your `.ts` file. To recreate the above example in TypeScript:
 ```typescript
-import { Matrix } from "multivariate_calculus"
-const A = new Matrix(2, 3);   // [[0, 0, 0], [0, 0, 0]]
-```
-or in JavaScript:
-```javascript
-const mcalc = require("multivariate_calculus");
-const A = new mcalc.Matrix(2, 3);   // [[0, 0, 0], [0, 0, 0]]
+import { Scalar } from "multivariate_calculus";
+
+const a = Scalar.constant(5);
+console.log(a);
 ```
 
-One can create and work with variables just like one would do in pen and paper.
-```javascript
-const x = Scalar.variable("x");
-```
+-------------------
 
-The code takes care that the same variable or constant object is not created twice,
-avoiding the problem of having multiple copies of the same variable lying around in memory.
-That is, after the previous line if we say
-```javascript
-const x_ = Scalar.variable("x");
-```
-this does not create a new object with the same name as that of `x`. Instead,
-it will return the original object that was first created with the name `"x"`.
-Essentially `x` and `x_` are pointing to the same object in memory.
-
-One may choose to work with more than one variable too. There is support for scalar algebra
-for any number of variables.
-```typescript
-import { Scalar } from "multivariate_calculus"
-
-const x = Scalar.variable("x");
-const y = Scalar.variable("y");
-const two = Scalar.constant(2);
-const three = Scalar.constant(3);
-const expr1 = x.add(two);
-const expr2 = x.add(y);
-
-const value1 = expr1.at(new Map([
-	[x, three]
-]));
-const value2 = expr2.at(new Map([
-	[y, two]
-]));
-
-console.log(value1);
-```
-
-Upon execution `value1` should be a `Scalar.Constant` object with a constant value of `5`.
-Interestingly, `expr1` and `value2` have the same value: a `Scalar.Expression` object
-representing `x + 2`.
-
-Almost all common algebraic scalar operations have been implemented.
-File an issue if something has been missed and should be implemented right away.
-
-Vector algebra has been added to this new version of the library. One can very
-simply create vector constants and vector variables.
-
-```javascript
-const i = new Vector.Constant([1, 0, 0]);
-const A = new Vector.Variable("A");
-const z = i.add(A);
-```
-
-On execution `z` will be a vector `Expression` whose value will be the
-vector sum of `A` and `i`.
-
-This is still a work in progress. A documentation page is coming soon. Work is
-being done on building the project to make it a useful tool for Physics and Mathematics.
-
-**Features implemented:**
-- [x] Matrix operations
-- [ ] Tensor operations
-- [x] A system of variables and constants for Scalar
-- [ ] A system of variables and constants for Matrix
-- [x] A system of variables and constants for Vector
-- [ ] A system of variables and constants for Tensor
-- [x] Algebra of Scalar variables
-- [ ] Algebra of Matrix variables
-- [x] Algebra of Vector variables
-- [ ] Algebra of Tensor variables
-- [ ] Calculating limits of arbitrary expressions of multiple variables
-- [ ] Evaluating partial derivatives
-- [ ] Evaluating integral with respect to single variable
-- [ ] Evaluating multiple integrals: line, surface, volume
+Check out the [documentation](https://terrible-coder.github.io/multivariate_calculus) for further readings.
+If there are any issues or some changes you would like to see, [file an issue](https://github.com/terrible-coder/multivariate_calculus/issues).
+To check out the documentation of some previous version add the generic version
+number after the URL:
+https://terrible-coder.github.io/multivariate_calculus/0.2/

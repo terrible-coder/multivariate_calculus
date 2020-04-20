@@ -1,7 +1,11 @@
-const { Vector } = require("../build/vector");
+const { Vector, __ } = require("../build/vector");
 const { isExpression } = require("../build/core/definitions");
 const { Scalar } = require("../build/scalar");
-const { sqrt } = require("../build/core/operators/unary");
+const { sqrt } = require("../build/core/math/functions");
+
+it("checks unknown value alias", function() {
+	expect(__).toBe(undefined);
+});
 
 describe("Vector constants", function() {
 	const arr = [1, 1, 2];
@@ -16,6 +20,19 @@ describe("Vector constants", function() {
 		100*Math.random()
 	]);
 
+	it("Creates vectors from scalar lists", function() {
+		const array = [
+			Scalar.constant(1),
+			Scalar.constant(1),
+			Scalar.constant(2)
+		];
+		expect(() => new Vector.Constant(array)).not.toThrow();
+		expect(() => Vector.constant(array)).not.toThrow();
+		const v = new Vector.Constant(array);
+		expect(v).toBeInstanceOf(Vector.Constant);
+		expect(v).toEqual(A);
+	});
+
 	it("Checks naming system", function() {
 		expect(Vector.constant("A")).toBe(a);
 		expect(a).not.toBe(A);
@@ -26,9 +43,9 @@ describe("Vector constants", function() {
 	it("Gets components", function() {
 		let i;
 		for(i = 1; i <= arr.length; i++)
-			expect(A.X(i)).toBe(arr[i - 1]);
+			expect(A.X(i)).toBe(Scalar.constant(arr[i - 1]));
 		for(; i < 10; i++)
-			expect(A.X(i)).toBe(0);
+			expect(A.X(i).value).toBe(0);
 	});
 
 	it("Checks equality", function() {
@@ -36,7 +53,7 @@ describe("Vector constants", function() {
 	});
 
 	it("Checks non-duplicacy", function() {
-		expect(Vector.constant([arr])).toBe(A);
+		expect(Vector.constant(arr)).toBe(A);
 		expect(Vector.constant([1, 1, 1])).toBe(B);
 	});
 
@@ -80,6 +97,10 @@ describe("Vector variable", function() {
 
 	it("Creates vector variables", function() {
 		expect(B).toBeInstanceOf(Vector);
+		expect(() => {
+			const G = Vector.variable("G", [1, __, 0, 4]);
+			expect(G.X(2)).toBeInstanceOf(Scalar.Variable);
+		}).not.toThrow();
 	});
 
 	it("Creates vector expressions", function() {
@@ -99,9 +120,11 @@ describe("Vector variable", function() {
 	});
 
 	it("Calculates cross product", function() {
-		const i = Vector.variable();
+		const i = Vector.variable("i");
 		const j = Vector.constant([0, 1]);
 		const c = i.cross(j);
+		for(let I = 1; I <= 3; I++)
+			expect(c.X(I)).toBeInstanceOf(Scalar.Expression);
 		expect(c).toBeInstanceOf(Vector.Expression);
 		expect(c.at(new Map([
 			[i, Vector.constant([1, 0])]
