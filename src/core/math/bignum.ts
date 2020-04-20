@@ -59,10 +59,10 @@ export class BigNum {
 
 	/**
 	 * Checks whether `this` and `that` are equal numbers. Equality is defined
-	 * component wise. That is, two numbers \(a\) and \(b\) are equal
+	 * component wise. That is, two numbers \\(a\\) and \\(b\\) are equal
 	 * if and only if
 	 * 
-	 * \(a_i = b_i \forall i\)
+	 * \\(a_i = b_i \quad \forall i\\)
 	 * 
 	 * The equality is checked only upto the number of decimal places specified
 	 * by [[Component.MODE]].
@@ -71,10 +71,10 @@ export class BigNum {
 	public equals(that: BigNum): boolean;
 	/**
 	 * Checks whether `this` and `that` are equal numbers. Equality is defined
-	 * component wise. That is, two numbers \(a\) and \(b\) are equal
+	 * component wise. That is, two numbers \\(a\\) and \\(b\\) are equal
 	 * if and only if
 	 * 
-	 * \(a_i = b_i \forall i\)
+	 * \\(a_i = b_i \quad \forall i\\)
 	 * 
 	 * The equality is checked only upto the number of decimal places specified
 	 * by the given context settings.
@@ -170,8 +170,8 @@ export class BigNum {
 	/**
 	 * Evaluates the norm of this number. Since `this` is not necessarily a real
 	 * number, the norm is defined as
-	 * \(norm a = a* a\)
-	 * where \(a*\) is the conjugate of \(a\).
+	 * \\(\mathit{norm} a = a* a\\)
+	 * where \\(a*\\) is the conjugate of \\(a\\).
 	 */
 	public norm(context=Component.MODE) {
 		return this.conj.mul(this, context);
@@ -179,8 +179,10 @@ export class BigNum {
 
 	/**
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
-	 * That is, for two numbers \(a\) and \(b\), their addition is defined as
-	 * \(a + b = \sum_i a_i + b_i\)
+	 * That is, for two numbers \\(a\) and \\(b\\), their addition is defined as
+	 * 
+	 * \\(a + b = \sum_i a_i + b_i\\)
+	 * 
 	 * The result is rounded according to [[Component.MODE]].
 	 * @param that The number to add this with.
 	 * @returns this + that.
@@ -188,8 +190,10 @@ export class BigNum {
 	public add(that: BigNum): BigNum;
 	/**
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
-	 * That is, for two numbers \(a\) and \(b\), their addition is defined as
-	 * \(a + b = \sum_i a_i + b_i\)
+	 * That is, for two numbers \\(a\\) and \\(b\\), their addition is defined as
+	 * 
+	 * \\(a + b = \sum_i a_i + b_i\\)
+	 * 
 	 * The result is rounded according to the given context settings.
 	 * @param that The number to add this with.
 	 * @param context The context settings to use.
@@ -206,8 +210,10 @@ export class BigNum {
 
 	/**
 	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
-	 * That is, for two numbers \(a\) and \(b\), their difference is defined as
-	 * \(a - b = \sum_i a_i - b_i\)
+	 * That is, for two numbers \\(a\\) and \\(b\\), their difference is defined as
+	 * 
+	 * \\(a - b = \sum_i a_i - b_i\\)
+	 * 
 	 * The result is rounded according to [[Component.MODE]].
 	 * @param that The number to add this with.
 	 * @returns this - that.
@@ -215,8 +221,10 @@ export class BigNum {
 	public sub(that: BigNum): BigNum;
 	/**
 	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
-	 * That is, for two numbers \(a\) and \(b\), their difference is defined as
-	 * \(a - b = \sum_i a_i - b_i\)
+	 * That is, for two numbers \\(a\) and \\(b\\), their difference is defined as
+	 * 
+	 * \\(a - b = \sum_i a_i - b_i\\)
+	 * 
 	 * The result is rounded according to the given context settings.
 	 * @param that The number to add this with.
 	 * @returns this - that.
