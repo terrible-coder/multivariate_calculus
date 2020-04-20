@@ -31,6 +31,7 @@ export function newton_raphson(f: (x: Component) => Component, f_: (x: Component
 /**
  * Checks whether an array contains distinct elements.
  * @param a Array of numbers.
+ * @ignore
  */
 function distinct(a: number[]) {
 	for(let i = 0; i < a.length; i++)
@@ -44,6 +45,7 @@ function distinct(a: number[]) {
  * of the other.
  * @param mu Combination to check against.
  * @param nu Combination to check.
+ * @ignore
  */
 function evenPerm(mu: number[], nu: number[]) {
 	let p = 0;

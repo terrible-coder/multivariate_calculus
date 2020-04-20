@@ -3,6 +3,10 @@ import { parseNum, pad, decimate, align } from "./parsers";
 import { MathContext, RoundingMode } from "./context";
 import { mathenv } from "../env";
 
+/**
+ * Type of argument accepted by [[Component]] constructor.
+ * @ignore
+ */
 type num1d = {
 	integer: string,
 	decimal: string
@@ -634,6 +638,7 @@ export class Component {
 	 * with rounding according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @ignore
 	 */
 	private static asin_less(x: Component, context=mathenv.mode) {
 		const ctx: MathContext = {

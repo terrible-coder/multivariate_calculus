@@ -1,5 +1,7 @@
 import { MathContext } from "./math/context";
-
+/**
+ * @ignore
+ */
 type env = {
     /**
      * Specifies the precision settings and rounding algorithm to use

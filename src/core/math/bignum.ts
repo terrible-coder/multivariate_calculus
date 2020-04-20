@@ -428,6 +428,7 @@ export class BigNum {
 	 * @param x The absolute value of real part.
 	 * @param y The absolute value of imaginary part.
 	 * @param ctx The context settings to use.
+	 * @ignore
 	 */
 	private static alpha_beta(x: Component, y: Component, ctx: MathContext) {
 		const one = Component.ONE, two = Component.TWO, half = Component.create("0.5");

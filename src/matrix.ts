@@ -105,6 +105,7 @@ export class Matrix {
 	 * Creates the new matrix by eliminating the elements in row `i` and column `j`.
 	 * @param i Row index of element.
 	 * @param j Column element of element.
+	 * @ignore
 	 */
 	private minor_matrix(i: number, j: number) {
 		const cf = new Matrix(this.row - 1, this.col - 1);
