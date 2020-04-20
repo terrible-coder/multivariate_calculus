@@ -1,10 +1,26 @@
-// import { MathContext } from "./context";
 import { trimZeroes, align, pad } from "./parsers";
 import { Component } from "./component";
 import { MathContext } from "./context";
 
 /**
- * Immutable higher dimensional numbers.
+ * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
+ * real part and imaginary part(s) stored as [[Component]] objects. A [[MathContext]] object
+ * is used to specify the number of decimal places (not significant figures) the
+ * user wants and what rounding algorithm should be used. Every operation is
+ * carried out by an intermediate result which is then rounded to the preferred
+ * number of decimal places using the preferred rounding algorithm.
+ * 
+ * The BigNum objects follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction)
+ * algebra for multiplication. They can be mathematically expressed as
+ * 
+ * \\(x = \sum_{i=0}^{N-1} x_ie_i\\)
+ * 
+ * where \\(N\\) represents the number of dimensions the number exists in and
+ * \\(e_i\\) are the orthogonal units. The components are stored using a real
+ * first convention. Therefore, by convention \\(e_0 = 1\\), the real
+ * unit. The others are the imaginary units. The \\(e_1\\) is our familiar
+ * \\(\imath\\) for the complex numbers. Again, \\(e_2=\jmath\\) and \\(e_3=k\\)
+ * are the [Hamilton's units for quaternions](https://en.wikipedia.org/wiki/Quaternion).
  */
 export class BigNum {
 
