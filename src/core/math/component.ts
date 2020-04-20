@@ -96,6 +96,12 @@ export class Component {
 	 */
 	readonly decimal: string;
 
+	/**
+	 * Creates an instance of [[Component]] class. This is not the recommended
+	 * way of creating new [[Component]] instances. For end users it is recommended
+	 * that they use the [[Component.create]] function instead.
+	 * @param real The value of the number in the required format.
+	 */
 	constructor(real: num1d) {
 		this.integer = real.integer;
 		this.decimal = real.decimal;
