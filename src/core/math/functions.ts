@@ -40,3 +40,13 @@ export const abs = math.abs;
 export const floor = math.floor;
 /** The smallest integer function. */
 export const ceil = math.ceil;
+
+/**
+ * Prints the string representation of an object to the default console.
+ * @param obj Object to print.
+ */
+export function print(obj: any) {
+    if(obj.toString !== undefined)
+        console.log(obj.toString());
+    else console.log(obj);
+}

@@ -1,549 +1,501 @@
 import { BigNum } from "../../../src/core/math/bignum";
-import { IndeterminateForm, DivisionByZero } from "../../../src/core/errors";
-import { RoundingMode, MathContext } from "../../../src/core/math/context";
+import { Component } from "../../../src/core/math/component";
 
-describe("Integer numbers", function() {
-	const a = BigNum.real("144");
-	const b = BigNum.real("-12");
-	describe("Creates new numbers", function() {
-		const st = "100.0";
-		it("from number", function() {
-			const num = 100;
-			const bnum = BigNum.real(num);
-			expect(bnum.toString()).toBe(st);
+describe("Creates numbers", function() {
+	describe("from constructor", function() {
+		it("from 1 real", function() {
+			const a = new BigNum(Component.create("5"));
+			expect(a.dim).toBe(1);
+			expect(a.components.length).toBe(1);
+			expect(a.components).toEqual([Component.create("5")]);
 		});
-		
-		describe("from string", function() {
-			it("Decimal form", function() {
-				const num = "100";
-				const bnum = BigNum.real(num);
-				expect(bnum.toString()).toBe(st);
-			});
-
-			it("Scientific form", function() {
-				const num = "1e2";
-				const bnum = BigNum.real(num);
-				expect(bnum.toString()).toBe(st);
-			});
+	
+		it("from 2 reals", function() {
+			const comps = [Component.create("5"), Component.create("1")];
+			const a = new BigNum(Component.create("5"), Component.create("1"));
+			expect(a.dim).toBe(2);
+			expect(a.components.length).toBe(2);
+			expect(a.components).toEqual(comps);
 		});
-
-		it("from integer and fractional parts", function() {
-			const bnum = BigNum.real("100", "0");
-			expect(bnum.toString()).toBe(st);
+	
+		it("from 3 reals", function() {
+			const comps = [Component.create("5"), Component.create("4"), Component.create("1")];
+			const a = new BigNum(comps);
+			expect(a.dim).toBe(4);
+			expect(a.components.length).toBe(4);
+			expect(a.components).toEqual(comps.concat(Component.create("0")));
 		});
 	});
 
-	it("Checks for equality", function() {
-		const A = BigNum.real("20");
-		const B = BigNum.real("20.1");
-		expect(A.equals(B)).toBe(false);
-		expect(A.equals(B, {
-			precision: 0,
-			rounding: RoundingMode.HALF_UP
-		})).toBe(true);
+	describe("from wrapper functions", function() {
+		it("from 1 real", function() {
+			const a = BigNum.real("5");
+			expect(a.dim).toBe(1);
+			expect(a.components.length).toBe(1);
+			expect(a.components).toEqual([Component.create("5")]);
+		});
+	
+		it("from 2 reals", function() {
+			const comps = [Component.create("5"), Component.create("1")];
+			const a = BigNum.complex("5", "1");
+			expect(a.dim).toBe(2);
+			expect(a.components.length).toBe(2);
+			expect(a.components).toEqual(comps);
+		});
+	
+		it("from 3 reals", function() {
+			const comps = [Component.create("5"), Component.create("4"), Component.create("1")];
+			const a = BigNum.hyper(comps.map(x => x.toString()));
+			expect(a.dim).toBe(4);
+			expect(a.components.length).toBe(4);
+			expect(a.components).toEqual(comps.concat(Component.create("0")));
+		});
+	});
+});
+
+describe("Negates", function() {
+	it("Creates additive inverse", function() {
+		const a = new BigNum(Component.create("5"), Component.create("1"), Component.create("4"));
+		expect(a.add(a.neg)).toEqual(new BigNum(Component.create("0")));
+	});
+});
+
+describe("Conjugates", function() {
+	describe("Real", function() {
+		it("Zero", function() {
+			const a = new BigNum(Component.ZERO);
+			expect(a.conj).toEqual(a);
+		});
+
+		it("Non-zero", function() {
+			for(let i = 1; i <= 10; i++) {
+				const sa = "" + i;
+				const sna = "-" + i;
+				const a = new BigNum(Component.create(sa));
+				const na = new BigNum(Component.create(sna));
+				expect(a.conj).toEqual(a);
+				expect(na.conj).toEqual(na);
+			}
+		});
 	});
 
-	it("Adds numbers", function() {
-		expect(a.add(b)).toEqual(BigNum.real("132"));
+	describe("Complex", function() {
+		it("Purely imaginary", function() {
+			for(let i = 1; i <= 10; i++) {
+				const sa = "" + i;
+				const sna = "-" + i;
+				const a = new BigNum(Component.ZERO, Component.create(sa));
+				const na = new BigNum(Component.ZERO, Component.create(sna));
+				expect(a.conj).toEqual(na);
+			}
+		});
+
+		it("Real and imaginary", function() {
+			const a = Component.create("5");
+			for(let i = 1; i <= 10; i++) {
+				const b = Component.create("" + i);
+				const nb = Component.create("-" + i);
+				const z = new BigNum(a, b);
+				const z_ = new BigNum(a, nb);
+				expect(z.conj).toEqual(z_);
+			}
+		});
+
+		it("Involution", function() {
+			const a = Component.create("5");
+			for(let i = 1; i <= 10; i++) {
+				const b = Component.create("" + i);
+				const z = new BigNum(a, b);
+				expect(z.conj.conj).toEqual(z);
+			}
+		});
+	});
+});
+
+describe("Adds", function() {
+	it("for 1 real", function() {
+		const a = new BigNum(Component.create("5"));
+		const b = new BigNum(Component.create("2"));
+		const sum = new BigNum(Component.create("7"));
+		expect(a.add(b)).toEqual(sum);
 	});
 
-	it("Subtracts numbers", function() {
-		expect(a.sub(b)).toEqual(BigNum.real("156"));
+	it("for 2 reals", function() {
+		const a = new BigNum(Component.create("5"), Component.create("1"));
+		const b = new BigNum(Component.create("2"), Component.create("3"));
+		const sum = new BigNum(Component.create("7"), Component.create("4"));
+		expect(a.add(b)).toEqual(sum);
 	});
 
-	it("Multiplies numbers", function() {
-		expect(a.mul(b)).toEqual(BigNum.real("-1728"));
+	it("for 3 reals", function() {
+		const a = new BigNum(Component.create("5"), Component.create("1"), Component.create("4"));
+		const b = new BigNum(Component.create("2"), Component.create("3"), Component.create("1"));
+		const sum = new BigNum(Component.create("7"), Component.create("4"), Component.create("5"));
+		expect(a.add(b)).toEqual(sum);
 	});
 
-	it("Divides numbers", function() {
-		expect(a.div(b)).toEqual(BigNum.real("-12"));
+	it("for mixed number of reals", function() {
+		const a = new BigNum(Component.create("5"));
+		const b = new BigNum(Component.create("2"), Component.create("4"));
+		const sum = new BigNum(Component.create("7"), Component.create("4"));
+		expect(() => a.add(b)).not.toThrow();
+		expect(a.add(b)).toEqual(sum);
+	});
+});
+
+
+describe("Subtracts", function() {
+	it("for 1 real", function() {
+		const a = new BigNum(Component.create("5"));
+		const b = new BigNum(Component.create("2"));
+		const diff = new BigNum(Component.create("3"));
+		expect(a.sub(b)).toEqual(diff);
 	});
 
-	it("Raises to integer powers", function() {
-		expect(BigNum.intpow(b, 2)).toEqual(a);
-		expect(BigNum.intpow(b, 3)).toEqual(BigNum.real("-1728"));
+	it("for 2 reals", function() {
+		const a = new BigNum(Component.create("5"), Component.create("1"));
+		const b = new BigNum(Component.create("2"), Component.create("3"));
+		const diff = new BigNum(Component.create("3"), Component.create("-2"));
+		expect(a.sub(b)).toEqual(diff);
 	});
 
-	it("Computes absolute value", function() {
+	it("for 3 reals", function() {
+		const a = new BigNum(Component.create("5"), Component.create("1"), Component.create("4"));
+		const b = new BigNum(Component.create("2"), Component.create("3"), Component.create("1"));
+		const diff = new BigNum(Component.create("3"), Component.create("-2"), Component.create("3"));
+		expect(a.sub(b)).toEqual(diff);
+	});
+
+	it("for mixed number of reals", function() {
+		const a = new BigNum(Component.create("5"));
+		const b = new BigNum(Component.create("2"), Component.create("4"));
+		const diff = new BigNum(Component.create("3"), Component.create("-4"));
+		expect(() => a.sub(b)).not.toThrow();
+		expect(a.sub(b)).toEqual(diff);
+	});
+});
+
+describe("Multiplies", function() {
+	it("for 1 real", function() {
+		const a = new BigNum(Component.create("5"));
+		const b = new BigNum(Component.create("7"));
+		const prod = new BigNum(Component.create("35"));
+		expect(a.mul(b)).toEqual(prod);
+	});
+
+	it("for 2 reals", function() {
+		const a = new BigNum(Component.create("5"), Component.create("1"));
+		const b = new BigNum(Component.create("7"), Component.create("3"));
+		const prod = new BigNum(Component.create("32"), Component.create("22"));
+		expect(a.mul(b)).toEqual(prod);
+	});
+
+	it("for 3 reals", function() {
+		const a = new BigNum(Component.ZERO, Component.create("1"), Component.create("2"));
+		const b = new BigNum(Component.ZERO, Component.create("2"), Component.create("1"));
+		const prod = new BigNum(Component.create("-4"), Component.ZERO, Component.ZERO, Component.create("-3"));
+		expect(() => a.mul(b)).not.toThrow();
+		expect(a.mul(b)).toEqual(prod);
+	});
+
+	it("for 5 reals", function() {
+		const A = new Array(5).fill(0).map(() => Component.ZERO);
+		const B = new Array(5).fill(0).map(() => Component.ZERO);
+		A[4] = Component.ONE;
+		B[1] = Component.ONE;
+		const a = new BigNum(A);
+		const b = new BigNum(B);
+		const p = new Array(5).fill(0).map(() => Component.ZERO);
+		p.push(Component.ONE.neg);
+		const prod = new BigNum(p);
+		expect(a.mul(b)).toEqual(prod);
+	});
+
+	it("i^2 = -1", function() {
+		for(let i = 1; i < 10; i++) {
+			const A = new Array(10).fill(0).map(() => Component.ZERO);
+			A[i] = Component.ONE;
+			const a = new BigNum(A);
+			expect(a.mul(a)).toEqual(new BigNum(Component.ONE.neg));
+		}
+	});
+});
+
+describe("Absolute value", function() {
+	it("for 1 real", function() {
+		const a = new BigNum(Component.create("5"));
 		expect(BigNum.abs(a)).toEqual(a);
-		expect(BigNum.abs(b)).toEqual(BigNum.real("12"));
+		expect(BigNum.abs(a.neg)).toEqual(a);
+	});
+
+	it("for 2 reals", function() {
+		const a = new BigNum(Component.THREE, Component.FOUR);
+		const abs = new BigNum(Component.FIVE);
+		expect(BigNum.abs(a)).toEqual(abs);
+		expect(BigNum.abs(a.conj)).toEqual(abs);
+	});
+
+	it("zz* = |z|^2", function() {
+		const a = new BigNum(Component.THREE, Component.FOUR);
+		const mag = BigNum.abs(a);
+		expect(mag.mul(mag)).toEqual(a.mul(a.conj));
 	});
 });
 
-describe("Decimal numbers", function() {
-	const a = BigNum.real("0.144");
-	const b = BigNum.real("1.2");
-	describe("Creates new numbers", function() {
-		const st = "40.01";
-		it("from number", function() {
-			const num = 40.01;
-			const bnum = BigNum.real(num);
-			expect(bnum.toString()).toBe(st);
+describe("Normalises", function() {
+	it("for 1 real", function() {
+		const a = new BigNum(Component.FIVE);
+		expect(a.norm()).toEqual(a.mul(a));
+		expect(a.neg.norm()).toEqual(a.mul(a));
+	});
+
+	it("for 3 reals", function() {
+		const a = new BigNum(Component.ONE, Component.TWO, Component.TWO);
+		const norm = new BigNum(Component.NINE);
+		expect(a.norm()).toEqual(norm);
+	});
+
+	it("equality with absolute value function", function() {
+		const a = new BigNum(Component.ONE, Component.TWO, Component.TWO, Component.ONE, Component.TWO, Component.TWO);
+		expect(a.norm()).toEqual(BigNum.absSq(a));
+	});
+});
+
+describe("Inverse", function() {
+	it("for 1 real", function() {
+		const a = BigNum.real("5");
+		const inv = BigNum.real("0.2");
+		expect(a.inv()).toEqual(inv);
+	});
+
+	it("for 2 reals", function() {
+		const a = BigNum.complex("3", "4");
+		const inv = BigNum.complex("0.12", "-0.16");
+		expect(a.inv()).toEqual(inv);
+	});
+});
+
+describe("Divides", function() {
+	describe("for 1 real", function() {
+		const a = BigNum.real("5");
+		it("right division", function() {
+			expect(a.div(a, "right")).toEqual(BigNum.real("1"));
 		});
 
-		describe("from string", function() {
-			it("Decimal form", function() {
-				const num = "40.01";
-				const bnum = BigNum.real(num);
-				expect(bnum.toString()).toBe(st);
-			});
-
-			it("Scientific form", function() {
-				const num1 = "4.001e1", num2 = "4001e-2";
-				const bnum1 = BigNum.real(num1), bnum2 = BigNum.real(num2);
-				expect(bnum1.toString()).toBe(st);
-				expect(bnum2.toString()).toBe(st);
-			});
-		});
-
-		it("from integer and fractional parts", function() {
-			const bnum = BigNum.real("40", "01");
-			expect(bnum.toString()).toBe(st);
+		it("left division", function() {
+			expect(a.div(a, "left")).toEqual(BigNum.real("1"));
 		});
 	});
 
-	it("Adds numbers", function() {
-		expect(a.add(b)).toEqual(BigNum.real("1.344"));
+	describe("for 2 reals", function() {
+		const a = BigNum.complex("3", "4");
+		it("right division", function() {
+			expect(a.div(a, "right")).toEqual(BigNum.real("1"));
+		});
+
+		it("left division", function() {
+			expect(a.div(a, "left")).toEqual(BigNum.real("1"));
+		});
 	});
 
-	it("Subtracts numbers", function() {
-		expect(a.sub(b)).toEqual(BigNum.real("-1.056"));
-	});
+	describe("for 6 reals", function() {
+		const a = BigNum.hyper("3", "3", "2", "1", "1", "1");
+		it("right division", function() {
+			expect(a.div(a, "right")).toEqual(BigNum.real("1"));
+		});
 
-	it("Multiplies numbers", function() {
-		expect(a.mul(b)).toEqual(BigNum.real("0.1728"));
-	});
-
-	it("Divides numbers", function() {
-		expect(a.div(b)).toEqual(BigNum.real("0.12"));
-	});
-
-	it("Raises to integer powers", function() {
-		expect(BigNum.intpow(b, 2)).toEqual(BigNum.real("1.44"));
-		expect(BigNum.intpow(b, 3)).toEqual(BigNum.real("1.728"));
-	});
-});
-
-describe("Mixed values", function() {
-	it("Addition", function() {
-		const a = BigNum.real("120");
-		const b = BigNum.real("0.123");
-		expect(a.add(b)).toEqual(BigNum.real("120.123"));
-	});
-
-	it("Division", function() {
-		const a = BigNum.real("10000");
-		const b = BigNum.real("1");
-		expect(b.div(a)).toEqual(BigNum.real("0.0001"));
-		const a1 = BigNum.real("0.0001");
-		const b1 = BigNum.real("1");
-		expect(a1.div(b1, {
-			precision: 2,
-			rounding: RoundingMode.HALF_UP
-		})).toEqual(BigNum.real("0"));
+		it("left division", function() {
+			expect(a.div(a, "left")).toEqual(BigNum.real("1"));
+		});
 	});
 });
 
-describe("Throws appropriate errors", function() {
-	const zero = BigNum.real("0");
-	it("Division by zero", function() {
-		expect(() => BigNum.real("1").div(zero)).toThrowError(new DivisionByZero("Cannot divide by zero."));
-		expect(() => zero.div(zero)).toThrowError(new IndeterminateForm("Cannot determine 0/0."));
+describe("Exponential", function() {
+	it("for 1 real", function() {
+		expect(BigNum.exp(BigNum.real("0"))).toEqual(BigNum.real("1"));
+		expect(BigNum.exp(BigNum.real("1"))).toEqual(new BigNum(Component.round(Component.E, Component.MODE)));
+		expect(BigNum.exp(BigNum.real("2"))).toEqual(new BigNum(Component.E.mul(Component.E)));
 	});
 
-	it("Illegal number format", function() {
-		expect(() => BigNum.real("1.1.1")).toThrowError(TypeError);
-	});
-});
-
-/*
- * These tests have been based on the rounding algorithms defined by JAVA.
- * To see all the rounding possibilities and read more about them go to
- * https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html
- */
-describe("Rounds", function() {
-	const a = ["5.5", "2.5", "1.6", "1.1", "1.0", "-1.0", "-1.1", "-1.6", "-2.5", "-5.5"];
-	it("Up", function() {
-		const b = ["6", "3", "2", "2", "1", "-1", "-2", "-2", "-3", "-6"];
-		const context = {
-			precision: 0,
-			rounding: RoundingMode.UP
-		};
-		for(let i = 0; i < 10; i++) {
-			const x = BigNum.round(BigNum.real(a[i]), context);
-			expect(x).toEqual(BigNum.real(b[i]));
-		}
+	it("for 2 reals", function() {
+		const i_pi = new BigNum(Component.ZERO, Component.PI);
+		expect(BigNum.exp(i_pi)).toEqual(BigNum.real("1").neg);
 	});
 
-	it("Down", function() {
-		const b = ["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"];
-		const context = {
-			precision: 0,
-			rounding: RoundingMode.DOWN
-		};
-		for(let i = 0; i < 10; i++) {
-			const x = BigNum.round(BigNum.real(a[i]), context);
-			expect(x).toEqual(BigNum.real(b[i]));
-		}
-	});
-
-	it("Ceiling", function() {
-		const b = ["6", "3", "2", "2", "1", "-1", "-1", "-1", "-2", "-5"];
-		const context = {
-			precision: 0,
-			rounding: RoundingMode.CEIL
-		};
-		for(let i = 0; i < 10; i++) {
-			const x = BigNum.round(BigNum.real(a[i]), context);
-			expect(x).toEqual(BigNum.real(b[i]));
-		}
-	});
-
-	it("Floor", function() {
-		const b = ["5", "2", "1", "1", "1", "-1", "-2", "-2", "-3", "-6"];
-		const context = {
-			precision: 0,
-			rounding: RoundingMode.FLOOR
-		};
-		for(let i = 0; i < 10; i++) {
-			const x = BigNum.round(BigNum.real(a[i]), context);
-			expect(x).toEqual(BigNum.real(b[i]));
-		}
-	});
-
-	it("Half up", function() {
-		const b = ["6", "3", "2", "1", "1", "-1", "-1", "-2", "-3", "-6"];
-		const context = {
-			precision: 0,
-			rounding: RoundingMode.HALF_UP
-		};
-		for(let i = 0; i < 10; i++) {
-			const x = BigNum.round(BigNum.real(a[i]), context);
-			expect(x).toEqual(BigNum.real(b[i]));
-		}
-	});
-
-	it("Half down", function() {
-		const b = ["5", "2", "2", "1", "1", "-1", "-1", "-2", "-2", "-5"];
-		const context = {
-			precision: 0,
-			rounding: RoundingMode.HALF_DOWN
-		};
-		for(let i = 0; i < 10; i++) {
-			const x = BigNum.round(BigNum.real(a[i]), context);
-			expect(x).toEqual(BigNum.real(b[i]));
-		}
-	});
-
-	it("Half even", function() {
-		const b = ["6", "2", "2", "1", "1", "-1", "-1", "-2", "-2", "-6"];
-		const context = {
-			precision: 0,
-			rounding: RoundingMode.HALF_EVEN
-		};
-		for(let i = 0; i < 10; i++) {
-			const x = BigNum.round(BigNum.real(a[i]), context);
-			expect(x).toEqual(BigNum.real(b[i]));
-		}
-	});
-
-	it("Unnecesary", function() {
-		const context: MathContext = {
-			precision: 0,
-			rounding: RoundingMode.UNNECESSARY
-		};
-		for(let i = 0; i < 10; i++) {
-			const x = BigNum.real(a[i]);
-			if(a[i] == "1.0")
-				expect(BigNum.round(x, context)).toEqual(BigNum.real("1"));
-			else if(a[i] == "-1.0")
-				expect(BigNum.round(x, context)).toEqual(BigNum.real("-1"));
-			else
-				expect(() => BigNum.round(x, context)).toThrow();
-		}
+	it("for 4 reals", function() {
+		const v = BigNum.hyper("0", "1", "2", "2");
+		const abs = BigNum.abs(v);
+		const [c, s] = BigNum.exp(new BigNum(Component.ZERO, abs.components[0])).components;
+		const cos = new BigNum(c);
+		const sin = new BigNum(s);
+		const exp = cos.add(v.div(abs).mul(sin));
+		expect(BigNum.exp(v)).toEqual(exp);
 	});
 });
 
-describe("Comparison", function() {
-	it("Compares integers", function() {
-		const a = BigNum.real("1");
-		const b = BigNum.real("2");
-		expect(a.compareTo(b)).toBe(-1);
-		expect(b.compareTo(a)).toBe(1);
-	});
+describe("Logarithm", function() {
+	describe("ln", function() {
+		it("for positive reals", function() {
+			for(let i = 1; i < 10; i++) {
+				const x = BigNum.real(i);
+				const x_ = Component.create(i);
+				expect(BigNum.ln(x).components[0]).toEqual(Component.ln(x_))
+			}
+		});
 
-	it("Compares fractions", function() {
-		const a = BigNum.real("0.25");
-		const b = BigNum.real("0.26");
-		expect(a.compareTo(b)).toBe(-1);
-		expect(b.compareTo(a)).toBe(1);
-	});
+		it("for negative reals", function() {
+			for(let i = 1; i < 10; i++) {
+				const x = BigNum.real(i).neg;
+				const x_ = Component.create(i);
+				const ln = BigNum.ln(x);
+				expect(ln.dim).toBe(2);
+				expect(ln.components[0]).toEqual(Component.ln(x_));
+				expect(ln.components[1]).toEqual(Component.round(Component.PI, Component.MODE));
+			}
+		});
 
-	it("Compares mixed fractions", function() {
-		const a = BigNum.real("1.23");
-		const b = BigNum.real("1.234");
-		expect(a.compareTo(b)).toBe(-1);
-		expect(b.compareTo(a)).toBe(1);
-	});
+		it("for 2 reals", function() {
+			const lnroot2 = Component.ln(Component.TWO.pow(Component.create("0.5")));
+			const piby4 = Component.PI.mul(Component.create("0.25"));
+			const pi3by4 = Component.PI.mul(Component.create("0.75"));
+			const values = [
+				BigNum.complex("1", "1"),
+				BigNum.complex("1", "-1"),
+				BigNum.complex("-1", "1"),
+				BigNum.complex("-1", "-1")
+			];
+			const logs = [
+				new BigNum(lnroot2, piby4),
+				new BigNum(lnroot2, piby4.neg),
+				new BigNum(lnroot2, pi3by4),
+				new BigNum(lnroot2, pi3by4.neg)
+			];
+			for(let i = 0; i < values.length; i++)
+				expect(BigNum.ln(values[i])).toEqual(logs[i]);
+		});
 
-	it("Checks equality", function() {
-		const a = BigNum.real("4.75");
-		const b = BigNum.real("4.75");
-		expect(a.compareTo(b)).toBe(0);
-		expect(b.compareTo(a)).toBe(0);
-	});
-
-	it("Compares numerically equivalent values", function() {
-		const a = BigNum.real("3.22");
-		const b = BigNum.real("0.322");
-		expect(a.compareTo(b)).not.toBe(0);
-	});
-});
-
-describe("Modulus", function() {
-	it("Integers", function() {
-		for(let i = 1; i <= 100; i++) {
-			const x = BigNum.real(i);
-			expect(x.mod(BigNum.SEVEN)).toEqual(BigNum.real(i%7));
-		}
-	});
-
-	it("Decimals", function() {
-		let x = BigNum.FIVE.pow(BigNum.real("0.5"));
-		const y = x.sub(BigNum.TWO);
-		for(let i = 0; i < 10; i++) {
-			expect(x.mod(BigNum.TWO)).toEqual(y);
-			x = x.add(BigNum.TWO);
-		}
+		it("for 6 reals", function() {
+			const piby2 = Component.PI.div(Component.TWO);
+			const x = BigNum.hyper("0", "3", "2", "1", "1", "1").div(BigNum.real("4"));
+			const log = new BigNum(piby2).mul(x);
+			expect(BigNum.ln(x)).toEqual(log);
+		});
 	});
 });
 
 describe("Trigonometry", function() {
-	const context = MathContext.HIGH_PRECISION;
 	describe("sine", function() {
-		it("Multiples of pi", function() {
-			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
-				const x = n.mul(BigNum.PI, context);
-				expect(BigNum.sin(x)).toEqual(BigNum.ZERO);
+		it("for 1 real", function() {
+			for(let i = 0; i < 10; i++) {
+				const x = BigNum.real(i);
+				const x_ = Component.create(i);
+				const res = BigNum.sin(x);
+				expect(res.dim).toBe(1);
+				expect(res.components[0]).toEqual(Component.sin(x_));
 			}
 		});
 
-		it("Odd multiples of pi/2", function() {
-			const piby2 = BigNum.PI.div(BigNum.TWO);
-			let even = true;
-			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
-				const f = BigNum.TWO.mul(n).add(BigNum.ONE);
-				const x = f.mul(piby2);
-				if(even)
-					expect(BigNum.sin(x)).toEqual(BigNum.ONE);
-				else
-					expect(BigNum.sin(x)).toEqual(BigNum.ONE.neg);
-				even = !even;
+		it("for complex", function() {
+			const values = [
+				BigNum.complex("0", "1"),
+				BigNum.complex("0", "-1"),
+				BigNum.complex("1", "1")
+			];
+			const sins = [
+				new BigNum(Component.ZERO, Component.sinh(Component.ONE)),
+				new BigNum(Component.ZERO, Component.sinh(Component.ONE.neg)),
+				(function(x: BigNum) {
+					const ctx = {
+						precision: 2 * Component.MODE.precision,
+						rounding: Component.MODE.rounding
+					};
+					const a = x.mul(BigNum.complex("0", "1"), ctx);
+					const num = BigNum.exp(a, ctx).sub(BigNum.exp(a.neg, ctx), ctx);
+					const res = num.div(BigNum.complex("0", "2"), ctx);
+					return BigNum.round(res, Component.MODE);
+				})(values[2])
+			];
+			for(let i = 0; i < values.length; i++) {
+				const res = BigNum.sin(values[i]);
+				expect(res.dim).toBe(2);
+				expect(res).toEqual(sins[i]);
 			}
 		});
 	});
 
 	describe("cosine", function() {
-		it("Multiples of pi", function() {
-			let even = true;
-			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
-				const x = n.mul(BigNum.PI);
-				if(even)
-					expect(BigNum.cos(x)).toEqual(BigNum.ONE);
-				else
-					expect(BigNum.cos(x)).toEqual(BigNum.ONE.neg);
-				even = !even;
+		it("for 1 real", function() {
+			for(let i = 0; i < 10; i++) {
+				const x = BigNum.real(i);
+				const x_ = Component.create(i);
+				const res = BigNum.cos(x);
+				expect(res.dim).toBe(1);
+				expect(res.components[0]).toEqual(Component.cos(x_));
 			}
 		});
 
-		it("Odd multiples of pi/2", function() {
-			const piby2 = BigNum.PI.div(BigNum.TWO, context);
-			for(let n = BigNum.ZERO; n.lessEquals(BigNum.NINE); n = n.add(BigNum.ONE)) {
-				const f = BigNum.TWO.mul(n).add(BigNum.ONE);
-				const x = f.mul(piby2, context);
-				expect(BigNum.cos(x)).toEqual(BigNum.ZERO);
+		it("for complex", function() {
+			const values = [
+				BigNum.complex("0", "1"),
+				BigNum.complex("0", "-1"),
+				BigNum.complex("1", "1")
+			];
+			const coss = [
+				new BigNum(Component.cosh(Component.ONE)),
+				new BigNum(Component.cosh(Component.ONE)),
+				(function(x: BigNum) {
+					const ctx = {
+						precision: 2 * Component.MODE.precision,
+						rounding: Component.MODE.rounding
+					}
+					const a = x.mul(BigNum.complex("0", "1"));
+					const num = BigNum.exp(a, ctx).add(BigNum.exp(a.neg, ctx), ctx);
+					const res = num.div(BigNum.real("2"));
+					return BigNum.round(res, Component.MODE);
+				})(values[2])
+			];
+			for(let i = 0; i < values.length; i++) {
+				const res = BigNum.cos(values[i]);
+				expect(res).toEqual(coss[i]);
 			}
 		});
 	});
-
-	describe("arcsin", function() {
-		const piby2 = BigNum.PI.div(BigNum.TWO);
-		it("zero", function() {
-			expect(BigNum.asin(BigNum.ZERO)).toEqual(BigNum.ZERO);
-		});
-
-		it("positive one", function() {
-			expect(BigNum.asin(BigNum.ONE)).toEqual(piby2);
-		});
-
-		it("negative one", function() {
-			expect(BigNum.asin(BigNum.ONE.neg)).toEqual(piby2.neg);
-		});
-	});
-
-	describe("arccos", function() {
-		const piby2 = BigNum.PI.div(BigNum.TWO);
-		it("zero", function() {
-			expect(BigNum.acos(BigNum.ZERO)).toEqual(piby2);
-		});
-
-		it("positive one", function() {
-			expect(BigNum.acos(BigNum.ONE)).toEqual(BigNum.ZERO);
-		});
-
-		it("negative one", function() {
-			expect(BigNum.acos(BigNum.ONE.neg)).toEqual(BigNum.round(BigNum.PI, BigNum.MODE));
-		});
-	});
-
-	describe("arctan", function() {
-		it("zero", function() {
-			expect(BigNum.atan(BigNum.ZERO)).toEqual(BigNum.ZERO);
-		});
-
-		it("1/root3", function() {
-			const root3 = BigNum.THREE.pow(BigNum.real("-0.5"));
-			expect(BigNum.atan(root3)).toEqual(BigNum.PI.div(BigNum.SIX));
-		});
-
-		it("root3", function() {
-			const root3 = BigNum.THREE.pow(BigNum.real("0.5"));
-			expect(BigNum.atan(root3)).toEqual(BigNum.PI.div(BigNum.THREE));
-		});
-	});
 });
 
-describe("Hyperbolic trigonometric", function() {
-	it("sinh", function() {
-		let x = BigNum.ZERO;
-		const alsosinh = (x: BigNum) => {
-			const ctx = MathContext.HIGH_PRECISION;
-			const a = BigNum.exp(x, ctx), b = BigNum.exp(x.neg, ctx);
-			const c = a.sub(b, ctx);
-			const res = c.div(BigNum.TWO, ctx);
-			return BigNum.round(res, BigNum.MODE);
-		}
-		for(let i = 0; i < 100; i++) {
-			expect(BigNum.sinh(x)).toEqual(alsosinh(x));
-			x = x.add(BigNum.real("0.01"));
-		}
+describe("Inverse trigonometry", function() {
+	describe("asin", function() {
+		it("for real", function() {
+			const three = Component.THREE, two = Component.TWO, half = Component.create("0.5");
+			const values = [
+				BigNum.real("1"),
+				BigNum.real("-1"),
+				BigNum.real("2")
+			];
+			const asins = [
+				new BigNum(Component.PI.div(two)),
+				new BigNum(Component.PI.div(two)).neg,
+				new BigNum(Component.PI.div(two), Component.ln(two.add(three.pow(half))))
+			];
+			for(let i = 0; i < values.length; i++)
+				expect(BigNum.asin(values[i])).toEqual(asins[i]);
+		});
 	});
 
-	it("cosh", function() {
-		let x = BigNum.ZERO;
-		const alsocosh = (x: BigNum) => {
-			const ctx = MathContext.HIGH_PRECISION;
-			const a = BigNum.exp(x, ctx), b = BigNum.exp(x.neg, ctx);
-			const c = a.add(b, ctx);
-			const res = c.div(BigNum.TWO, ctx);
-			return BigNum.round(res, BigNum.MODE);
-		}
-		for(let i = 0; i < 100; i++) {
-			expect(BigNum.cosh(x)).toEqual(alsocosh(x));
-			x = x.add(BigNum.real("0.01"));
-		}
-	});
-
-	it("tanh", function() {
-		let x = BigNum.ZERO;
-		const alsotanh = (x: BigNum) => {
-			const ctx = MathContext.HIGH_PRECISION;
-			const a = BigNum.exp(x, ctx), b = BigNum.exp(x.neg, ctx);
-			const res = a.sub(b, ctx).div(a.add(b, ctx), ctx);
-			return BigNum.round(res, BigNum.MODE);
-		}
-		for(let i = 0; i < 100; i++) {
-			expect(BigNum.tanh(x)).toEqual(alsotanh(x));
-			x = x.add(BigNum.real("0.01"));
-		}
-	});
-
-	// describe("asinh", function() {
-	// 	const alsoasinh = (x: BigNum) => {
-	// 		const ctx = MathContext.HIGH_PRECISION;
-	// 		const a = x.mul(x, ctx).add(BigNum.ONE).pow(BigNum.real("0.5"), ctx);
-	// 		const b = x.add(a, ctx);
-	// 		return BigNum.ln(b);
-	// 	}
-		
-	// 	it("Less than one", function() {
-	// 		let x = BigNum.ZERO;
-	// 		for(let i = 0; i < 100; i++) {
-	// 			expect(BigNum.asinh(x)).toEqual(alsoasinh(x));
-	// 			x = x.add(BigNum.real("0.01"));
-	// 		}
-	// 	});
-
-	// 	it("More than one", function() {
-	// 		// let x = BigNum.ONE;
-	// 		console.log(alsoasinh(BigNum.ONE));
-	// 		expect(1).toEqual(1);
-	// 		// for(let i = 0; i < 1; i++) {
-	// 		// 	console.log("For i =", i);
-	// 		// 	x = x.add(BigNum.real("0.1"))
-	// 		// }
-	// 	});
-	// });
-
-	// it("acosh", function() {
-	// 	const alsoacosh = (x: BigNum) => {
-	// 		const a = x.mul(x).sub(BigNum.ONE).pow(BigNum.real("0.5"));
-	// 		return BigNum.ln(x.add(a));
-	// 	}
-	// 	let x = BigNum.ZERO;
-	// 	for(let i = 0; i < 100; i++) {
-	// 		expect(() => BigNum.acosh(x)).toThrow();
-	// 		x = x.add(BigNum.real("0.01"));
-	// 	}
-	// 	x = BigNum.ONE;
-	// 	for(let i = 0; i < 100; i++) {
-	// 		expect(BigNum.acosh(x)).toEqual(alsoacosh(x));
-	// 		x = x.add(BigNum.real("0.1"));
-	// 	}
-	// });
-
-	// it("atanh", function() {
-	// 	let x = BigNum.ZERO;
-	// 	const alsoatanh = (x: BigNum) => {
-	// 		const ctx = MathContext.HIGH_PRECISION;
-	// 		const a = BigNum.ONE.add(x, ctx);
-	// 		const b = BigNum.ONE.sub(x, ctx);
-	// 		const c = BigNum.ln(a.div(b, ctx), ctx);
-	// 		return c.div(BigNum.TWO);
-	// 	}
-	// 	for(let i = 0; i < 10; i++) {
-	// 		expect(BigNum.atanh(x)).toEqual(alsoatanh(x));
-	// 		x = x.add(BigNum.real("0.01"));
-	// 	}
-	// });
-});
-
-describe("Exponent", function() {
-	it("exp", function() {
-		expect(BigNum.exp(BigNum.ZERO)).toEqual(BigNum.ONE);
-		expect(BigNum.exp(BigNum.ONE)).toEqual(BigNum.round(BigNum.E, BigNum.MODE));
-		expect(BigNum.exp(BigNum.TWO)).toEqual(BigNum.E.mul(BigNum.E));
-	});
-
-	it("power", function() {
-		expect(BigNum.TWO.pow(BigNum.TWO)).toEqual(BigNum.FOUR);
-	});
-});
-
-
-describe("Logarithm", function() {
-	it("ln", function() {
-		const e_inv = BigNum.ONE.div(BigNum.E, MathContext.HIGH_PRECISION);
-		expect(BigNum.ln(e_inv)).toEqual(BigNum.ONE.neg);
-		expect(BigNum.ln(BigNum.E)).toEqual(BigNum.ONE);
-		expect(BigNum.ln(BigNum.exp(BigNum.TWO))).toEqual(BigNum.TWO);
-	});
-
-	it("log", function() {
-		const inv = BigNum.real("0.1");
-		const ten = BigNum.real("10");
-		expect(BigNum.log(inv)).toEqual(BigNum.ONE.neg);
-		expect(BigNum.log(ten)).toEqual(BigNum.ONE);
-		expect(BigNum.log(BigNum.real("100"))).toEqual(BigNum.TWO);
+	describe("acos", function() {
+		it("for real", function() {
+			const three = Component.THREE, two = Component.TWO, half = Component.create("0.5");
+			const values = [
+				BigNum.real("1"),
+				BigNum.real("-1"),
+				BigNum.real("2")
+			];
+			const acoss = [
+				new BigNum(Component.ZERO),
+				new BigNum(Component.round(Component.PI, Component.MODE)),
+				new BigNum(Component.ZERO, Component.ln(two.add(three.pow(half))))
+			];
+			for(let i = 0; i < values.length; i++)
+				expect(BigNum.acos(values[i])).toEqual(acoss[i]);
+		});
 	});
 });
