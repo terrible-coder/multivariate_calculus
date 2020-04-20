@@ -1,5 +1,6 @@
 import { BigNum } from "../../../src/core/math/bignum";
 import { Component } from "../../../src/core/math/component";
+import { mathenv } from "../../../src/core/env";
 
 describe("Creates numbers", function() {
 	describe("from constructor", function() {
@@ -313,7 +314,7 @@ describe("Divides", function() {
 describe("Exponential", function() {
 	it("for 1 real", function() {
 		expect(BigNum.exp(BigNum.real("0"))).toEqual(BigNum.real("1"));
-		expect(BigNum.exp(BigNum.real("1"))).toEqual(new BigNum(Component.round(Component.E, Component.MODE)));
+		expect(BigNum.exp(BigNum.real("1"))).toEqual(new BigNum(Component.round(Component.E, mathenv.mode)));
 		expect(BigNum.exp(BigNum.real("2"))).toEqual(new BigNum(Component.E.mul(Component.E)));
 	});
 
@@ -350,7 +351,7 @@ describe("Logarithm", function() {
 				const ln = BigNum.ln(x);
 				expect(ln.dim).toBe(2);
 				expect(ln.components[0]).toEqual(Component.ln(x_));
-				expect(ln.components[1]).toEqual(Component.round(Component.PI, Component.MODE));
+				expect(ln.components[1]).toEqual(Component.round(Component.PI, mathenv.mode));
 			}
 		});
 
@@ -406,13 +407,13 @@ describe("Trigonometry", function() {
 				new BigNum(Component.ZERO, Component.sinh(Component.ONE.neg)),
 				(function(x: BigNum) {
 					const ctx = {
-						precision: 2 * Component.MODE.precision,
-						rounding: Component.MODE.rounding
+						precision: 2 * mathenv.mode.precision,
+						rounding: mathenv.mode.rounding
 					};
 					const a = x.mul(BigNum.complex("0", "1"), ctx);
 					const num = BigNum.exp(a, ctx).sub(BigNum.exp(a.neg, ctx), ctx);
 					const res = num.div(BigNum.complex("0", "2"), ctx);
-					return BigNum.round(res, Component.MODE);
+					return BigNum.round(res, mathenv.mode);
 				})(values[2])
 			];
 			for(let i = 0; i < values.length; i++) {
@@ -445,13 +446,13 @@ describe("Trigonometry", function() {
 				new BigNum(Component.cosh(Component.ONE)),
 				(function(x: BigNum) {
 					const ctx = {
-						precision: 2 * Component.MODE.precision,
-						rounding: Component.MODE.rounding
+						precision: 2 * mathenv.mode.precision,
+						rounding: mathenv.mode.rounding
 					}
 					const a = x.mul(BigNum.complex("0", "1"));
 					const num = BigNum.exp(a, ctx).add(BigNum.exp(a.neg, ctx), ctx);
 					const res = num.div(BigNum.real("2"));
-					return BigNum.round(res, Component.MODE);
+					return BigNum.round(res, mathenv.mode);
 				})(values[2])
 			];
 			for(let i = 0; i < values.length; i++) {
@@ -491,7 +492,7 @@ describe("Inverse trigonometry", function() {
 			];
 			const acoss = [
 				new BigNum(Component.ZERO),
-				new BigNum(Component.round(Component.PI, Component.MODE)),
+				new BigNum(Component.round(Component.PI, mathenv.mode)),
 				new BigNum(Component.ZERO, Component.ln(two.add(three.pow(half))))
 			];
 			for(let i = 0; i < values.length; i++)

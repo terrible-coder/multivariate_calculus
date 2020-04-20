@@ -1,5 +1,6 @@
 import { MathContext } from "./context";
 import { Component } from "./component";
+import { mathenv } from "../env";
 /**
  * Uses the Newton-Raphson algorithm to find the root of a given equation.
  * The exact derivative (found analytically) is assumed to be known.
@@ -10,7 +11,7 @@ import { Component } from "./component";
  * 			places specified by the default [[MathContext]].
  * @ignore
  */
-export function newton_raphson(f: (x: Component) => Component, f_: (x: Component) => Component, x: Component, context = Component.MODE) {
+export function newton_raphson(f: (x: Component) => Component, f_: (x: Component) => Component, x: Component, context = mathenv.mode) {
 	const ctx: MathContext = {
 		precision: 2 * context.precision,
 		rounding: context.rounding
@@ -30,6 +31,7 @@ export function newton_raphson(f: (x: Component) => Component, f_: (x: Component
 /**
  * Checks whether an array contains distinct elements.
  * @param a Array of numbers.
+ * @ignore
  */
 function distinct(a: number[]) {
 	for(let i = 0; i < a.length; i++)
@@ -43,6 +45,7 @@ function distinct(a: number[]) {
  * of the other.
  * @param mu Combination to check against.
  * @param nu Combination to check.
+ * @ignore
  */
 function evenPerm(mu: number[], nu: number[]) {
 	let p = 0;

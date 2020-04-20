@@ -1,6 +1,7 @@
 import { Component } from "../../../src/core/math/component";
 import { IndeterminateForm, DivisionByZero } from "../../../src/core/errors";
 import { RoundingMode, MathContext } from "../../../src/core/math/context";
+import { mathenv } from "../../../src/core/env";
 
 describe("Integer numbers", function() {
 	const a = Component.create("144");
@@ -320,7 +321,7 @@ describe("Modulus", function() {
 
 describe("Exponential", function() {
 	it("exp", function() {
-		const E = Component.round(Component.E, Component.MODE);
+		const E = Component.round(Component.E, mathenv.mode);
 		const E2 = Component.E.mul(Component.E);
 		expect(Component.exp(Component.ONE)).toEqual(E);
 		expect(Component.exp(Component.TWO)).toEqual(E2);
@@ -338,8 +339,8 @@ describe("Logarithm", function() {
 	it("ln", function() {
 		expect(() => Component.ln(Component.ZERO)).toThrow();
 		expect(Component.ln(Component.ONE)).toEqual(Component.ZERO);
-		expect(Component.ln(Component.create("10"))).toEqual(Component.round(Component.ln10, Component.MODE));
-		expect(Component.ln(Component.create("0.1"))).toEqual(Component.round(Component.ln10.neg, Component.MODE));
+		expect(Component.ln(Component.create("10"))).toEqual(Component.round(Component.ln10, mathenv.mode));
+		expect(Component.ln(Component.create("0.1"))).toEqual(Component.round(Component.ln10.neg, mathenv.mode));
 	});
 });
 
@@ -429,11 +430,11 @@ describe("Hyperbolic trigonometry", function() {
 	it("sinh", function() {
 		const alsosinh = (x: Component) => {
 			const ctx: MathContext = {
-				precision: 2 * Component.MODE.precision,
-				rounding: Component.MODE.rounding
+				precision: 2 * mathenv.mode.precision,
+				rounding: mathenv.mode.rounding
 			}
 			const res = Component.exp(x, ctx).sub(Component.exp(x.neg, ctx)).div(Component.TWO, ctx);
-			return Component.round(res, Component.MODE);
+			return Component.round(res, mathenv.mode);
 		}
 		for(let i = 0; i < 10; i++) {
 			const x = Component.create(i);
@@ -444,11 +445,11 @@ describe("Hyperbolic trigonometry", function() {
 	it("cosh", function() {
 		const alsocosh = (x: Component) => {
 			const ctx: MathContext = {
-				precision: 2 * Component.MODE.precision,
-				rounding: Component.MODE.rounding
+				precision: 2 * mathenv.mode.precision,
+				rounding: mathenv.mode.rounding
 			}
 			const res = Component.exp(x, ctx).add(Component.exp(x.neg, ctx)).div(Component.TWO, ctx);
-			return Component.round(res, Component.MODE);
+			return Component.round(res, mathenv.mode);
 		}
 		for(let i = 0; i < 10; i++) {
 			const x = Component.create(i);
@@ -459,15 +460,15 @@ describe("Hyperbolic trigonometry", function() {
 
 describe("Inverse hyperbolic trigonometry", function() {
 	const ctx = {
-		precision: 2 * Component.MODE.precision,
-		rounding: Component.MODE.rounding
+		precision: 2 * mathenv.mode.precision,
+		rounding: mathenv.mode.rounding
 	}
 
 	it("asinh", function() {
 		const identity = (x: Component) => {
 			const sinh = Component.sinh(x, ctx);
 			const asinh = Component.asinh(sinh, ctx);
-			return Component.round(asinh, Component.MODE);
+			return Component.round(asinh, mathenv.mode);
 		}
 		for(let i = 0; i < 10; i++) {
 			const x = Component.create(i);
@@ -479,7 +480,7 @@ describe("Inverse hyperbolic trigonometry", function() {
 		const identity = (x: Component) => {
 			const cosh = Component.cosh(x, ctx);
 			const acosh = Component.acosh(cosh, ctx);
-			return Component.round(acosh, Component.MODE);
+			return Component.round(acosh, mathenv.mode);
 		}
 		for(let i = 0; i < 10; i++) {
 			const x = Component.create(i);

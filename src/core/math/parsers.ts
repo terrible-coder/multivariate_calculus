@@ -1,4 +1,10 @@
+/**
+ * @ignore
+ */
 function trimStart(s: string, zero: (x: string, index: number) => boolean): string;
+/**
+ * @ignore
+ */
 function trimStart<T>(s: T[], zero: (x: T, index: number) => boolean): T[];
 function trimStart<T>(s: string | T[], zero: (x: string | T, index: number) => boolean) {
 	let i: number;
@@ -9,7 +15,13 @@ function trimStart<T>(s: string | T[], zero: (x: string | T, index: number) => b
 	return s.slice(i);
 }
 
+/**
+ * @ignore
+ */
 function trimEnd(s: string, zero: (x: string, index: number) => boolean): string;
+/**
+ * @ignore
+ */
 function trimEnd<T>(s: T[], zero: (x: T, index: number) => boolean): T[];
 function trimEnd<T>(s: string | T[], zero: (x: string | T, index: number) => boolean) {
 	let i: number;
@@ -27,15 +39,17 @@ function trimEnd<T>(s: string | T[], zero: (x: string | T, index: number) => boo
  * @param s String data to check.
  * @param pos Position to trim from.
  * @param zero Representation of zero element to trim.
+ * @ignore
  */
 export function trimZeroes(s: string, pos: "end" | "start", zero: (x: string, index: number) => boolean): string;
 /**
  * Trims unnecessary "zeroes" towards the end or beginning of an array.
  * The "zeroes" may not be numerically zero. Any data could be passed in to
  * indicate what element to look for when trimming.
- * @param s String data to check.
+ * @param s Array data to check.
  * @param pos Position to trim from.
  * @param zero Representation of zero element to trim.
+ * @ignore
  */
 export function trimZeroes<T>(s: T[], pos: "end" | "start", zero: (x: T, index: number) => boolean): T[];
 export function trimZeroes<T>(s: string | T[], pos: "end" | "start", zero: (x: string | T, index: number) => boolean) {
@@ -45,6 +59,9 @@ export function trimZeroes<T>(s: string | T[], pos: "end" | "start", zero: (x: s
 		return (pos === "end")? trimEnd(s, zero): trimStart(s, zero);
 }
 
+/**
+ * @ignore
+ */
 function isInteger(s: string, positive = false) {
 	const valids = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 	const ch = s.charAt(0);
@@ -55,6 +72,9 @@ function isInteger(s: string, positive = false) {
 	return true;
 }
 
+/**
+ * @ignore
+ */
 function isDecimal(s: string) {
 	const parts = s.split('.');
 	if (parts.length > 2)
@@ -65,6 +85,7 @@ function isDecimal(s: string) {
 /**
  * Checks whether the given representation of a real number is acceptable.
  * @param s String representation of a real number.
+ * @ignore
  */
 function isValid(s: string) {
 	if (s.indexOf('e') > -1) {
@@ -117,6 +138,7 @@ export function pad<T>(s: string | T[], n: number, elt: string | T, pos: "end" |
  * @param b 
  * @param elt String to use to align strings.
  * @param diff The difference of length between two strings as defined by caller.
+ * @ignore
  */
 export function align(a: string, b: string, elt: string, diff: number): string[];
 /**
@@ -129,6 +151,7 @@ export function align(a: string, b: string, elt: string, diff: number): string[]
  * @param b 
  * @param elt Element to use to align arrays.
  * @param diff The difference of length between two arrays as defined by caller.
+ * @ignore
  */
 export function align<T>(a: T[], b: T[], elt: T, diff: number): T[][];
 export function align<T>(a: string | T[], b: string | T[], elt: string | T, diff: number) {

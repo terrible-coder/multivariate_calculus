@@ -1,10 +1,27 @@
-// import { MathContext } from "./context";
 import { trimZeroes, align, pad } from "./parsers";
 import { Component } from "./component";
 import { MathContext } from "./context";
+import { mathenv } from "../env";
 
 /**
- * Immutable higher dimensional numbers.
+ * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
+ * real part and imaginary part(s) stored as [[Component]] objects. A [[MathContext]] object
+ * is used to specify the number of decimal places (not significant figures) the
+ * user wants and what rounding algorithm should be used. Every operation is
+ * carried out by an intermediate result which is then rounded to the preferred
+ * number of decimal places using the preferred rounding algorithm.
+ * 
+ * The BigNum objects follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction)
+ * algebra for multiplication. They can be mathematically expressed as
+ * 
+ * $$ x = \sum_{i=0}^{N-1} x_ie_i $$
+ * 
+ * where \\(N\\) represents the number of dimensions the number exists in and
+ * \\(e_i\\) are the orthogonal units. The components are stored using a real
+ * first convention. Therefore, by convention \\(e_0 = 1\\), the real
+ * unit. The others are the imaginary units. The \\(e_1\\) is our familiar
+ * \\(\imath\\) for the complex numbers. Again, \\(e_2=\jmath\\) and \\(e_3=k\\)
+ * are the [Hamilton's units for quaternions](https://en.wikipedia.org/wiki/Quaternion).
  */
 export class BigNum {
 
@@ -22,11 +39,15 @@ export class BigNum {
 
 	/**
 	 * Creates a higher dimensional number from its components.
+	 * For end users it is recommended that they use the [[BigNum.real]],
+	 * [[BigNum.complex]] and [[BigNum.hyper]] functions to create new numbers.
 	 * @param values The components of the number.
 	 */
 	constructor(...values: Component[]);
 	/**
 	 * Creates a higher dimensional number from its components.
+	 * For end users it is recommended that they use the [[BigNum.real]],
+	 * [[BigNum.complex]] and [[BigNum.hyper]] functions to create new numbers.
 	 * @param values The components of the number.
 	 */
 	constructor(values: Component[]);
@@ -43,22 +64,22 @@ export class BigNum {
 
 	/**
 	 * Checks whether `this` and `that` are equal numbers. Equality is defined
-	 * component wise. That is, two numbers \(a\) and \(b\) are equal
+	 * component wise. That is, two numbers \\(a\\) and \\(b\\) are equal
 	 * if and only if
 	 * 
-	 * \(a_i = b_i \forall i\)
+	 * $$ a_i = b_i \quad \forall i $$
 	 * 
 	 * The equality is checked only upto the number of decimal places specified
-	 * by [[Component.MODE]].
+	 * by [[mathenv.mode]].
 	 * @param that The number to check against.
 	 */
 	public equals(that: BigNum): boolean;
 	/**
 	 * Checks whether `this` and `that` are equal numbers. Equality is defined
-	 * component wise. That is, two numbers \(a\) and \(b\) are equal
+	 * component wise. That is, two numbers \\(a\\) and \\(b\\) are equal
 	 * if and only if
 	 * 
-	 * \(a_i = b_i \forall i\)
+	 * $$ a_i = b_i \quad \forall i $$
 	 * 
 	 * The equality is checked only upto the number of decimal places specified
 	 * by the given context settings.
@@ -66,7 +87,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public equals(that: BigNum, context: MathContext): boolean;
-	public equals(that: BigNum, context=Component.MODE) {
+	public equals(that: BigNum, context=mathenv.mode) {
 		if(this.dim !== that.dim)
 			return false;
 		const n = that.dim;
@@ -111,7 +132,7 @@ export class BigNum {
 
 	/**
 	 * Evaluates the absolute value of a number correct upto the number of
-	 * places specified by [[Component.MODE]].
+	 * places specified by [[mathenv.mode]].
 	 * @param x A number.
 	 * @param context Context settings to use.
 	 */
@@ -123,18 +144,18 @@ export class BigNum {
 	 * @param context Context settings to use.
 	 */
 	public static absSq(x: BigNum, context: MathContext): BigNum;
-	public static absSq(x: BigNum, context=Component.MODE) {
+	public static absSq(x: BigNum, context=mathenv.mode) {
 		return new BigNum(x.components.reduce((prev, curr) => prev.add(curr.mul(curr, context), context), Component.ZERO));
 	}
 
 	/**
 	 * Evaluates the absolute value of a number correct upto the number of
-	 * places specified by [[Component.MODE]].
+	 * places specified by [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static abs(x: BigNum): BigNum;
 	public static abs(x: BigNum, context: MathContext): BigNum;
-	public static abs(x: BigNum, context=Component.MODE) {
+	public static abs(x: BigNum, context=mathenv.mode) {
 		const magsq = x.components.reduce((prev, curr) => prev.add(curr.pow(Component.TWO)), Component.ZERO);
 		return new BigNum(magsq.pow(Component.create("0.5"), context));
 	}
@@ -154,33 +175,37 @@ export class BigNum {
 	/**
 	 * Evaluates the norm of this number. Since `this` is not necessarily a real
 	 * number, the norm is defined as
-	 * \(norm a = a* a\)
-	 * where \(a*\) is the conjugate of \(a\).
+	 * $$ \text{norm } a = a^* a $$
+	 * where \\(a^*\\) is the conjugate of \\(a\\).
 	 */
-	public norm(context=Component.MODE) {
+	public norm(context=mathenv.mode) {
 		return this.conj.mul(this, context);
 	}
 
 	/**
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
-	 * That is, for two numbers \(a\) and \(b\), their addition is defined as
-	 * \(a + b = \sum_i a_i + b_i\)
-	 * The result is rounded according to [[Component.MODE]].
+	 * That is, for two numbers \\(a\\) and \\(b\\), their addition is defined as
+	 * 
+	 * $$ a + b = \sum_i a_i + b_i $$
+	 * 
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that The number to add this with.
 	 * @returns this + that.
 	 */
 	public add(that: BigNum): BigNum;
 	/**
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
-	 * That is, for two numbers \(a\) and \(b\), their addition is defined as
-	 * \(a + b = \sum_i a_i + b_i\)
+	 * That is, for two numbers \\(a\\) and \\(b\\), their addition is defined as
+	 * 
+	 * $$ a + b = \sum_i a_i + b_i $$
+	 * 
 	 * The result is rounded according to the given context settings.
 	 * @param that The number to add this with.
 	 * @param context The context settings to use.
 	 * @returns this + that.
 	 */
 	public add(that: BigNum, context: MathContext): BigNum;
-	public add(that: BigNum, context=Component.MODE) {
+	public add(that: BigNum, context=mathenv.mode) {
 		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
@@ -190,23 +215,27 @@ export class BigNum {
 
 	/**
 	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
-	 * That is, for two numbers \(a\) and \(b\), their difference is defined as
-	 * \(a - b = \sum_i a_i - b_i\)
-	 * The result is rounded according to [[Component.MODE]].
+	 * That is, for two numbers \\(a\\) and \\(b\\), their difference is defined as
+	 * 
+	 * $$ a - b = \sum_i a_i - b_i $$
+	 * 
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that The number to add this with.
 	 * @returns this - that.
 	 */
 	public sub(that: BigNum): BigNum;
 	/**
 	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
-	 * That is, for two numbers \(a\) and \(b\), their difference is defined as
-	 * \(a - b = \sum_i a_i - b_i\)
+	 * That is, for two numbers \\(a\) and \\(b\\), their difference is defined as
+	 * 
+	 * $$ a - b = \sum_i a_i - b_i $$
+	 * 
 	 * The result is rounded according to the given context settings.
 	 * @param that The number to add this with.
 	 * @returns this - that.
 	 */
 	public sub(that: BigNum, context: MathContext): BigNum;
-	public sub(that: BigNum, context=Component.MODE) {
+	public sub(that: BigNum, context=mathenv.mode) {
 		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
@@ -217,7 +246,7 @@ export class BigNum {
 	/**
 	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
 	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
-	 * The result is rounded according to [[Component.MDOE]].
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that The number to multiply with.
 	 * @returns this * that.
 	 */
@@ -231,7 +260,7 @@ export class BigNum {
 	 * @returns this * that.
 	 */
 	public mul(that: BigNum, context: MathContext): BigNum;
-	public mul(that: BigNum, context=Component.MODE) {
+	public mul(that: BigNum, context=mathenv.mode) {
 		const zero = new BigNum(Component.ZERO);
 		if(this.equals(zero, context) || that.equals(zero, context))
 			return zero;
@@ -257,7 +286,7 @@ export class BigNum {
 	/**
 	 * Calculates the multiplicative inverse of this.
 	 */
-	public inv(context=Component.MODE) {
+	public inv(context=mathenv.mode) {
 		const magSq = this.norm(context).components[0];
 		const scale = new BigNum(Component.ONE.div(magSq, context));
 		return this.conj.mul(scale, context);
@@ -266,7 +295,7 @@ export class BigNum {
 	/**
 	 * Divides one [[BigNum]] instance by another. This method assumes right
 	 * division. That is, the inverse of `that` is multiplied on the right.
-	 * The result is rounded according to [[Component.MODE]].
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that Number to divide by.
 	 */
 	public div(that: BigNum): BigNum;
@@ -281,7 +310,7 @@ export class BigNum {
 	/**
 	 * Divides one [[BigNum]] instance by another. This method multiplies the
 	 * inverse of `that` on the given "side" of `this`.
-	 * The result is rounded according to [[Component.MODE]].
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that Number to divide by.
 	 * @param side Side on which to divide from.
 	 */
@@ -301,7 +330,7 @@ export class BigNum {
 		if(b === undefined) {
 			if(typeof a === "string") {
 				side = a;
-				context = Component.MODE;
+				context = mathenv.mode;
 			} else {
 				side = "right";
 				context = <MathContext>a;
@@ -321,7 +350,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the trigonometric sine of a given number with rounding
-	 * according to [[Component.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static sin(x: BigNum): BigNum;
@@ -332,7 +361,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static sin(x: BigNum, context: MathContext): BigNum;
-	public static sin(x: BigNum, context=Component.MODE) {
+	public static sin(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -349,7 +378,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the trigonometric cosine of a given number with rounding
-	 * according to [[Component.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static cos(x: BigNum): BigNum;
@@ -360,7 +389,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static cos(x: BigNum, context: MathContext): BigNum;
-	public static cos(x: BigNum, context=Component.MODE) {
+	public static cos(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -377,7 +406,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the trigonometric tangent of a given number with rounding
-	 * according to [[Component.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static tan(x: BigNum): BigNum;
@@ -388,7 +417,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static tan(x: BigNum, context: MathContext): BigNum;
-	public static tan(x: BigNum, context=Component.MODE) {
+	public static tan(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -403,6 +432,7 @@ export class BigNum {
 	 * @param x The absolute value of real part.
 	 * @param y The absolute value of imaginary part.
 	 * @param ctx The context settings to use.
+	 * @ignore
 	 */
 	private static alpha_beta(x: Component, y: Component, ctx: MathContext) {
 		const one = Component.ONE, two = Component.TWO, half = Component.create("0.5");
@@ -415,7 +445,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
-	 * according to [[Component.MODE]]. This method right now works good
+	 * according to [[mathenv.mode]]. This method right now works good
 	 * only for values much smaller than unity. For values close to unity
 	 * this method converges very slowly to the result. This will be fixed in
 	 * future updates.
@@ -432,7 +462,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static asin(x: BigNum, context: MathContext): BigNum;
-	public static asin(x: BigNum, context=Component.MODE) {
+	public static asin(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -452,7 +482,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the inverse trigonometric cosine of a given value with rounding
-	 * according to [[Component.MODE]]. This method right now works good
+	 * according to [[mathenv.mode]]. This method right now works good
 	 * only for values much smaller than unity. For values close to unity
 	 * this method converges very slowly to the result. This will be fixed in
 	 * future updates.
@@ -470,7 +500,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static acos(x: BigNum, context: MathContext): BigNum;
-	public static acos(x: BigNum, context=Component.MODE) {
+	public static acos(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -488,95 +518,9 @@ export class BigNum {
 		return BigNum.round(res, context);
 	}
 
-	// /**
-	//  * Calculates the atan value for a number whose magnitude (absolute value)
-	//  * is less than unity.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  * @ignore
-	//  */
-	// private static atan_less(x: BigNum, context: MathContext) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	}
-	// 	const x_sq = x.mul(x, ctx);
-	// 	let term = x;
-	// 	let sum = BigNum.ZERO;
-	// 	let n = BigNum.ZERO;
-	// 	while(true) {
-	// 		const temp = term.div(BigNum.TWO.mul(n).add(BigNum.ONE), ctx);
-	// 		sum = sum.add(temp, ctx);
-	// 		const term1 = term.mul(x_sq).neg;
-	// 		const temp1 = term1.div(BigNum.TWO.mul(n).add(BigNum.THREE));
-	// 		if(BigNum.abs(temp1).equals(BigNum.ZERO, ctx))
-	// 			return BigNum.round(sum, context);
-	// 		term = term1;
-	// 		n = n.add(BigNum.ONE);
-	// 	}
-	// }
-	//
-	// /**
-	//  * Calculates the atan value for a number whose magnitude (absolute value)
-	//  * is greater than unity.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  * @ignore
-	//  */
-	// private static atan_more(x: BigNum, context: MathContext) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	}
-	// 	const x_sq = x.mul(x, ctx).neg;
-	// 	let term = BigNum.ONE.div(x, ctx);
-	// 	let sum = BigNum.ZERO;
-	// 	let n = BigNum.ZERO;
-	// 	while(true) {
-	// 		const temp = term.div(BigNum.TWO.mul(n).add(BigNum.ONE), ctx);
-	// 		sum = sum.add(temp, ctx);
-	// 		const term1 = term.div(x_sq, ctx);
-	// 		const temp1 = term1.div(BigNum.TWO.mul(n).add(BigNum.THREE), ctx);
-	// 		if(BigNum.abs(temp1).equals(BigNum.ZERO, ctx))
-	// 			break;
-	// 		term = term1;
-	// 		n = n.add(BigNum.ONE);
-	// 	}
-	// 	const piby2 = BigNum.PI.div(BigNum.TWO, ctx);
-	// 	let res: BigNum;
-	// 	if(x.moreThan(BigNum.ONE))
-	// 		res = piby2.sub(sum, ctx);
-	// 	else
-	// 		res = piby2.add(sum, ctx).neg;
-	// 	return BigNum.round(res, context);
-	// }
-	//
-	// /**
-	//  * Calculates the inverse trigonometric tangent of a given value with rounding
-	//  * according to [[Component.MODE]].
-	//  * @param x A number.
-	//  */
-	// public static atan(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the inverse trigonometric tangent of a given value with rounding
-	//  * according to the given context settings.
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static atan(x: BigNum, context: MathContext): BigNum;
-	// public static atan(x: BigNum, context=Component.MODE) {
-	// 	if(BigNum.abs(x).lessThan(BigNum.ONE))
-	// 		return BigNum.atan_less(x, context);
-	// 	if(x.equals(BigNum.ONE, context))
-	// 		return BigNum.PI.div(BigNum.FOUR, context);
-	// 	if(x.equals(BigNum.ONE.neg, context))
-	// 		return BigNum.PI.div(BigNum.FOUR, context);
-	// 	return BigNum.atan_more(x, context);
-	// }
-
 	/**
 	 * Calculates the hyperbolic sine of a given value with rounding according
-	 * to [[Component.MODE]].
+	 * to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static sinh(x: BigNum): BigNum;
@@ -587,7 +531,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static sinh(x: BigNum, context: MathContext): BigNum;
-	public static sinh(x: BigNum, context=Component.MODE) {
+	public static sinh(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -598,7 +542,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the hyperbolic cosine of a given value with rounding according
-	 * to [[Component.MODE]].
+	 * to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static cosh(x: BigNum): BigNum;
@@ -609,7 +553,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static cosh(x: BigNum, context: MathContext): BigNum;
-	public static cosh(x: BigNum, context=Component.MODE) {
+	public static cosh(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -631,7 +575,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static tanh(x: BigNum, context: MathContext): BigNum;
-	public static tanh(x: BigNum, context=Component.MODE) {
+	public static tanh(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -642,7 +586,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the exponential of a given number with rounding according to
-	 * [[Component.MODE]].
+	 * [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static exp(x: BigNum): BigNum;
@@ -653,7 +597,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static exp(x: BigNum, context: MathContext): BigNum;
-	public static exp(x: BigNum, context=Component.MODE) {
+	public static exp(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -673,7 +617,7 @@ export class BigNum {
 
 	/**
 	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
-	 * with rounding according to [[Component.MODE]].
+	 * with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static ln(x: BigNum): BigNum;
@@ -684,7 +628,7 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static ln(x: BigNum, context: MathContext): BigNum;
-	public static ln(x: BigNum, context=Component.MODE) {
+	public static ln(x: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -703,7 +647,7 @@ export class BigNum {
 
 	// /**
 	//  * Calculates the common logarithm (to the base \\(10\\)) of a given number
-	//  * with rounding according to [[Component.MODE]].
+	//  * with rounding according to [[mathenv.mode]].
 	//  * @param x A number.
 	//  */
 	// public static log(x: BigNum): BigNum;
@@ -715,7 +659,7 @@ export class BigNum {
 	//  * @param context The context settings to use.
 	//  */
 	// public static log(x: BigNum, context: MathContext): BigNum;
-	// public static log(x: BigNum, context=Component.MODE) {
+	// public static log(x: BigNum, context=mathenv.mode) {
 	// 	const ctx: MathContext = {
 	// 		precision: 2 * context.precision,
 	// 		rounding: context.rounding
@@ -729,6 +673,10 @@ export class BigNum {
 export namespace BigNum {
 	/**
 	 * Creates a [[BigNum]] instance from the string representation of a real number.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
 	 * @param num The string representation of a real number in decimal system.
 	 */
 	export function real(num: string): BigNum;
@@ -737,6 +685,10 @@ export namespace BigNum {
 	 * number. This instance created will store the exact binary floating
 	 * point value of the number. Even though it uses the `toString()` method
 	 * to convert the number to a string it might be unpredictable at times.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
 	 * @param num A numeric expression.
 	 */
 	export function real(num: number): BigNum;
@@ -750,6 +702,10 @@ export namespace BigNum {
 	 * of the real and imaginary part. This instance will store the exact binary
 	 * floating point value of the number. Even though it uses the `toString()`
 	 * method to convert number to string it might be unpredictable at times.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
 	 * @param real The real part of the number.
 	 * @param imag The imaginary part of the number.
 	 */
@@ -757,6 +713,10 @@ export namespace BigNum {
 	/**
 	 * Creates a [[BigNum]] instance from the string representations of the real
 	 * and imaginary parts.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
 	 * @param real The real part of the number.
 	 * @param imag The imaginary part of the number.
 	 */
@@ -771,6 +731,10 @@ export namespace BigNum {
 	 * This instance will use the exact binary floating point representations
 	 * of the components. Even though it uses the `toString()` method to convert
 	 * numbers to strings it might be unpredictable at times.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
 	 * @param comps The components of the number.
 	 */
 	export function hyper(...comps: number[]): BigNum;
@@ -780,6 +744,10 @@ export namespace BigNum {
 	 * This instance will use the exact binary floating point representations
 	 * of the components. Even though it uses the `toString()` method to convert
 	 * numbers to strings it might be unpredictable at times.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
 	 * @param comps The components of the number.
 	 */
 	export function hyper(comps: number[]): BigNum;
@@ -787,12 +755,20 @@ export namespace BigNum {
 	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
 	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
 	 * @param comps The components of the number.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
 	 */
 	export function hyper(...comps: string[]): BigNum;
 	/**
 	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
 	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
 	 * @param comps The components of the number.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
 	 */
 	export function hyper(comps: string[]): BigNum;
 	export function hyper(...vals: (number | string)[] | [(number | string)[]]) {
@@ -802,5 +778,19 @@ export namespace BigNum {
 			args = temp.map(x => Component.create(x.toString()));
 		else args = (<Array<string|number>>vals).map(x => Component.create(x.toString()));
 		return new BigNum(args);
+	}
+
+	/**
+	 * Returns a single unit corresponding to a given index. The indexing starts
+	 * from 0. With \\(e_0 = 1\\) defined as the real unit and the rest (for
+	 * \\(i>0\\)) are the orthogonal imaginary units.
+	 * @param i The index.
+	 */
+	export function e(i: number) {
+		if(i < 0)
+			throw TypeError("Negative indices not allowed for basis.");
+		const values = new Array(i).fill(0).map(() => Component.ZERO);
+		values[i-1] = Component.ONE;
+		return new BigNum(values);
 	}
 }

@@ -46,7 +46,9 @@ export const ceil = math.ceil;
  * @param obj Object to print.
  */
 export function print(obj: any) {
-    if(obj.toString !== undefined)
-        console.log(obj.toString());
-    else console.log(obj);
+	const proto = Object.getPrototypeOf(obj);
+	const props = Object.getOwnPropertyNames(proto);
+	if(props.indexOf("toString") !== -1)
+		console.log(obj.toString());
+	else console.log(obj);
 }

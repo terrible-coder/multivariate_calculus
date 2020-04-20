@@ -1,3 +1,6 @@
+/**
+ * @ignore
+ */
 type endpoint = {
 	value: number,
 	inclusive: boolean
