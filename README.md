@@ -9,7 +9,7 @@ multivariate_calculus
 [![Typescript](https://img.shields.io/badge/made_with-typescript-007ACC?style=flat-square&logo=typescript)](http://typescriptlang.org/)
 [![License](https://img.shields.io/github/license/terrible-coder/multivariate_calculus?style=flat-square)](https://opensource.org/licenses/MIT)
 
-A zero dependency libray that handles calculus of several variables in
+A zero dependency library that handles calculus of several variables in
 multidimensional space. It works with both TypeScript and JavaScript projects
 seamlessly. This library is so designed that you can write your mathematics code
 as you would do maths in pen and paper.
