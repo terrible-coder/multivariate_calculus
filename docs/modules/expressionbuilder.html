@@ -6,6 +6,8 @@
 	<title>ExpressionBuilder | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
@@ -59,7 +61,7 @@
 					<a href="expressionbuilder.html">ExpressionBuilder</a>
 				</li>
 			</ul>
-			<h1>Module ExpressionBuilder</h1>
+			<h1>Namespace ExpressionBuilder</h1>
 		</div>
 	</div>
 </header>
@@ -80,9 +82,9 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="expressionbuilder.html#createarglist" class="tsd-kind-icon">create<wbr>Arg<wbr>List</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="expressionbuilder.html#evaluateat" class="tsd-kind-icon">evaluate<wbr>At</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="expressionbuilder.html#simplify" class="tsd-kind-icon">simplify</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="expressionbuilder.html#createarglist" class="tsd-kind-icon">create<wbr>Arg<wbr>List</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="expressionbuilder.html#evaluateat" class="tsd-kind-icon">evaluate<wbr>At</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace tsd-is-not-exported"><a href="expressionbuilder.html#simplify" class="tsd-kind-icon">simplify</a></li>
 							</ul>
 						</section>
 					</div>
@@ -90,17 +92,17 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
 					<a name="createarglist" class="tsd-anchor"></a>
 					<h3>create<wbr>Arg<wbr>List</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
 						<li class="tsd-signature tsd-kind-icon">create<wbr>Arg<wbr>List<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a>, b<span class="tsd-signature-symbol">?: </span><a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/expression.ts#L16">core/expression.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/expression.ts#L16">src/core/expression.ts:16</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -128,17 +130,17 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
 					<a name="evaluateat" class="tsd-anchor"></a>
 					<h3>evaluate<wbr>At</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
 						<li class="tsd-signature tsd-kind-icon">evaluate<wbr>At<span class="tsd-signature-symbol">(</span>exp<span class="tsd-signature-symbol">: </span><a href="../interfaces/expression.html" class="tsd-signature-type">Expression</a>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/expression.ts#L49">core/expression.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/expression.ts#L49">src/core/expression.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -168,17 +170,17 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace tsd-is-not-exported">
 					<a name="simplify" class="tsd-anchor"></a>
 					<h3>simplify</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">simplify<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/expression.ts#L31">core/expression.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/expression.ts#L31">src/core/expression.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -202,23 +204,23 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class="current tsd-kind-namespace">
 						<a href="expressionbuilder.html">Expression<wbr>Builder</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-namespace">
 						<a href="mathcontext.html">Math<wbr>Context</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-function tsd-parent-kind-module">
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
 						<a href="expressionbuilder.html#createarglist" class="tsd-kind-icon">create<wbr>Arg<wbr>List</a>
 					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
 						<a href="expressionbuilder.html#evaluateat" class="tsd-kind-icon">evaluate<wbr>At</a>
 					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<li class=" tsd-kind-function tsd-parent-kind-namespace tsd-is-not-exported">
 						<a href="expressionbuilder.html#simplify" class="tsd-kind-icon">simplify</a>
 					</li>
 				</ul>

@@ -6,6 +6,8 @@
 	<title>multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
@@ -56,7 +58,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> multivariate_calculus</h1>
+			<h1>multivariate_calculus</h1>
 		</div>
 	</div>
 </header>
@@ -68,10 +70,10 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Modules</h3>
+							<h3>Namespaces</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-module"><a href="modules/expressionbuilder.html" class="tsd-kind-icon">Expression<wbr>Builder</a></li>
-								<li class="tsd-kind-module"><a href="modules/mathcontext.html" class="tsd-kind-icon">Math<wbr>Context</a></li>
+								<li class="tsd-kind-namespace"><a href="modules/expressionbuilder.html" class="tsd-kind-icon">Expression<wbr>Builder</a></li>
+								<li class="tsd-kind-namespace"><a href="modules/mathcontext.html" class="tsd-kind-icon">Math<wbr>Context</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -86,6 +88,7 @@
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class"><a href="classes/bignum.html" class="tsd-kind-icon">Big<wbr>Num</a></li>
+								<li class="tsd-kind-class"><a href="classes/component.html" class="tsd-kind-icon">Component</a></li>
 								<li class="tsd-kind-class"><a href="classes/divisionbyzero.html" class="tsd-kind-icon">Division<wbr>ByZero</a></li>
 								<li class="tsd-kind-class"><a href="classes/indeterminateform.html" class="tsd-kind-icon">Indeterminate<wbr>Form</a></li>
 								<li class="tsd-kind-class"><a href="classes/interval.html" class="tsd-kind-icon">Interval</a></li>
@@ -111,7 +114,6 @@
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias"><a href="globals.html#operator" class="tsd-kind-icon">Operator</a></li>
-								<li class="tsd-kind-type-alias tsd-is-not-exported"><a href="globals.html#endpoint" class="tsd-kind-icon">endpoint</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -149,15 +151,21 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function"><a href="globals.html#isbinaryoperator" class="tsd-kind-icon">is<wbr>Binary<wbr>Operator</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#isconstant" class="tsd-kind-icon">is<wbr>Constant</a></li>
-								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#isdecimal" class="tsd-kind-icon">is<wbr>Decimal</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#isevaluable" class="tsd-kind-icon">is<wbr>Evaluable</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#isexpression" class="tsd-kind-icon">is<wbr>Expression</a></li>
-								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#isinteger" class="tsd-kind-icon">is<wbr>Integer</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#isunaryoperator" class="tsd-kind-icon">is<wbr>Unary<wbr>Operator</a></li>
-								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a></li>
-								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#isvalidmatrix" class="tsd-kind-icon">is<wbr>Valid<wbr>Matrix</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#isvalidmatrix" class="tsd-kind-icon">is<wbr>Valid<wbr>Matrix</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#isvariable" class="tsd-kind-icon">is<wbr>Variable</a></li>
-								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#trimzeroes" class="tsd-kind-icon">trim<wbr>Zeroes</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#kronecker" class="tsd-kind-icon">kronecker</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#levicivita" class="tsd-kind-icon">levicivita</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#parsenum" class="tsd-kind-icon">parse<wbr>Num</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#print" class="tsd-kind-icon">print</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal"><a href="globals.html#mathenv" class="tsd-kind-icon">mathenv</a></li>
 							</ul>
 						</section>
 					</div>
@@ -171,7 +179,7 @@
 					<div class="tsd-signature tsd-kind-icon">Operator<span class="tsd-signature-symbol">:</span> <a href="enums/unaryoperator.html" class="tsd-signature-type">UnaryOperator</a><span class="tsd-signature-symbol"> | </span><a href="enums/binaryoperator.html" class="tsd-signature-type">BinaryOperator</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L115">core/definitions.ts:115</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/definitions.ts#L115">src/core/definitions.ts:115</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -180,37 +188,16 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-is-not-exported">
-					<a name="endpoint" class="tsd-anchor"></a>
-					<h3>endpoint</h3>
-					<div class="tsd-signature tsd-kind-icon">endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/interval.ts#L1">core/interval.ts:1</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5>inclusive<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Variables</h2>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="__" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> __</h3>
-					<div class="tsd-signature tsd-kind-icon">__<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> =&nbsp;undefined</span></div>
+					<div class="tsd-signature tsd-kind-icon">__<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> = undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/vector.ts#L15">vector.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/vector.ts#L15">src/vector.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -229,10 +216,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="abs" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> abs</h3>
-					<div class="tsd-signature tsd-kind-icon">abs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">abs</span><span class="tsd-signature-symbol"> =&nbsp;math.abs</span></div>
+					<div class="tsd-signature tsd-kind-icon">abs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">abs</span><span class="tsd-signature-symbol"> = math.abs</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L38">core/math/functions.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L38">src/core/math/functions.ts:38</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -244,10 +231,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="acos" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> acos</h3>
-					<div class="tsd-signature tsd-kind-icon">acos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">acos</span><span class="tsd-signature-symbol"> =&nbsp;math.acos</span></div>
+					<div class="tsd-signature tsd-kind-icon">acos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">acos</span><span class="tsd-signature-symbol"> = math.acos</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L14">core/math/functions.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L14">src/core/math/functions.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -259,10 +246,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="acosh" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> acosh</h3>
-					<div class="tsd-signature tsd-kind-icon">acosh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">acosh</span><span class="tsd-signature-symbol"> =&nbsp;math.acosh</span></div>
+					<div class="tsd-signature tsd-kind-icon">acosh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">acosh</span><span class="tsd-signature-symbol"> = math.acosh</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L26">core/math/functions.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L26">src/core/math/functions.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -274,10 +261,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="asin" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> asin</h3>
-					<div class="tsd-signature tsd-kind-icon">asin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">asin</span><span class="tsd-signature-symbol"> =&nbsp;math.asin</span></div>
+					<div class="tsd-signature tsd-kind-icon">asin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">asin</span><span class="tsd-signature-symbol"> = math.asin</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L12">core/math/functions.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L12">src/core/math/functions.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -289,10 +276,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="asinh" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> asinh</h3>
-					<div class="tsd-signature tsd-kind-icon">asinh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">asinh</span><span class="tsd-signature-symbol"> =&nbsp;math.asinh</span></div>
+					<div class="tsd-signature tsd-kind-icon">asinh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">asinh</span><span class="tsd-signature-symbol"> = math.asinh</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L24">core/math/functions.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L24">src/core/math/functions.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -304,10 +291,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="atan" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> atan</h3>
-					<div class="tsd-signature tsd-kind-icon">atan<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">atan</span><span class="tsd-signature-symbol"> =&nbsp;math.atan</span></div>
+					<div class="tsd-signature tsd-kind-icon">atan<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">atan</span><span class="tsd-signature-symbol"> = math.atan</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L16">core/math/functions.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L16">src/core/math/functions.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -319,10 +306,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="atanh" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> atanh</h3>
-					<div class="tsd-signature tsd-kind-icon">atanh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">atanh</span><span class="tsd-signature-symbol"> =&nbsp;math.atanh</span></div>
+					<div class="tsd-signature tsd-kind-icon">atanh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">atanh</span><span class="tsd-signature-symbol"> = math.atanh</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L28">core/math/functions.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L28">src/core/math/functions.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -334,10 +321,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="ceil" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> ceil</h3>
-					<div class="tsd-signature tsd-kind-icon">ceil<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ceil</span><span class="tsd-signature-symbol"> =&nbsp;math.ceil</span></div>
+					<div class="tsd-signature tsd-kind-icon">ceil<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ceil</span><span class="tsd-signature-symbol"> = math.ceil</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L42">core/math/functions.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L42">src/core/math/functions.ts:42</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -349,10 +336,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="cos" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> cos</h3>
-					<div class="tsd-signature tsd-kind-icon">cos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">cos</span><span class="tsd-signature-symbol"> =&nbsp;math.cos</span></div>
+					<div class="tsd-signature tsd-kind-icon">cos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">cos</span><span class="tsd-signature-symbol"> = math.cos</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L8">core/math/functions.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L8">src/core/math/functions.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -364,10 +351,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="cosh" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> cosh</h3>
-					<div class="tsd-signature tsd-kind-icon">cosh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">cosh</span><span class="tsd-signature-symbol"> =&nbsp;math.cosh</span></div>
+					<div class="tsd-signature tsd-kind-icon">cosh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">cosh</span><span class="tsd-signature-symbol"> = math.cosh</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L20">core/math/functions.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L20">src/core/math/functions.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -379,10 +366,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="e" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> e</h3>
-					<div class="tsd-signature tsd-kind-icon">e<span class="tsd-signature-symbol">:</span> <a href="classes/scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> =&nbsp;Scalar.constant(Math.E)</span></div>
+					<div class="tsd-signature tsd-kind-icon">e<span class="tsd-signature-symbol">:</span> <a href="classes/scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> = Scalar.constant(Math.E)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/scalar.ts#L578">scalar.ts:578</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/scalar.ts#L578">src/scalar.ts:578</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -395,10 +382,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="exp" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> exp</h3>
-					<div class="tsd-signature tsd-kind-icon">exp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">exp</span><span class="tsd-signature-symbol"> =&nbsp;math.exp</span></div>
+					<div class="tsd-signature tsd-kind-icon">exp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">exp</span><span class="tsd-signature-symbol"> = math.exp</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L34">core/math/functions.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L34">src/core/math/functions.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -410,10 +397,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="floor" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> floor</h3>
-					<div class="tsd-signature tsd-kind-icon">floor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">floor</span><span class="tsd-signature-symbol"> =&nbsp;math.floor</span></div>
+					<div class="tsd-signature tsd-kind-icon">floor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">floor</span><span class="tsd-signature-symbol"> = math.floor</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L40">core/math/functions.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L40">src/core/math/functions.ts:40</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -425,10 +412,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="ln" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> ln</h3>
-					<div class="tsd-signature tsd-kind-icon">ln<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ln</span><span class="tsd-signature-symbol"> =&nbsp;math.ln</span></div>
+					<div class="tsd-signature tsd-kind-icon">ln<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ln</span><span class="tsd-signature-symbol"> = math.ln</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L32">core/math/functions.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L32">src/core/math/functions.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -440,10 +427,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="log" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> log</h3>
-					<div class="tsd-signature tsd-kind-icon">log<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">log</span><span class="tsd-signature-symbol"> =&nbsp;math.log</span></div>
+					<div class="tsd-signature tsd-kind-icon">log<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">log</span><span class="tsd-signature-symbol"> = math.log</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L30">core/math/functions.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L30">src/core/math/functions.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -455,10 +442,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="neg" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> neg</h3>
-					<div class="tsd-signature tsd-kind-icon">neg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">neg</span><span class="tsd-signature-symbol"> =&nbsp;math.neg</span></div>
+					<div class="tsd-signature tsd-kind-icon">neg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">neg</span><span class="tsd-signature-symbol"> = math.neg</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L4">core/math/functions.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L4">src/core/math/functions.ts:4</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -470,10 +457,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="oo" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> oo</h3>
-					<div class="tsd-signature tsd-kind-icon">oo<span class="tsd-signature-symbol">:</span> <a href="classes/scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> =&nbsp;Scalar.constant(Infinity)</span></div>
+					<div class="tsd-signature tsd-kind-icon">oo<span class="tsd-signature-symbol">:</span> <a href="classes/scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> = Scalar.constant(Infinity)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/scalar.ts#L573">scalar.ts:573</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/scalar.ts#L573">src/scalar.ts:573</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -485,10 +472,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="pi" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> pi</h3>
-					<div class="tsd-signature tsd-kind-icon">pi<span class="tsd-signature-symbol">:</span> <a href="classes/scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> =&nbsp;Scalar.constant(Math.PI)</span></div>
+					<div class="tsd-signature tsd-kind-icon">pi<span class="tsd-signature-symbol">:</span> <a href="classes/scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> = Scalar.constant(Math.PI)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/scalar.ts#L583">scalar.ts:583</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/scalar.ts#L583">src/scalar.ts:583</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -501,10 +488,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="sin" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> sin</h3>
-					<div class="tsd-signature tsd-kind-icon">sin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">sin</span><span class="tsd-signature-symbol"> =&nbsp;math.sin</span></div>
+					<div class="tsd-signature tsd-kind-icon">sin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">sin</span><span class="tsd-signature-symbol"> = math.sin</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L6">core/math/functions.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L6">src/core/math/functions.ts:6</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -516,10 +503,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="sinh" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> sinh</h3>
-					<div class="tsd-signature tsd-kind-icon">sinh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">sinh</span><span class="tsd-signature-symbol"> =&nbsp;math.sinh</span></div>
+					<div class="tsd-signature tsd-kind-icon">sinh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">sinh</span><span class="tsd-signature-symbol"> = math.sinh</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L18">core/math/functions.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L18">src/core/math/functions.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -531,10 +518,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="sqrt" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> sqrt</h3>
-					<div class="tsd-signature tsd-kind-icon">sqrt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">sqrt</span><span class="tsd-signature-symbol"> =&nbsp;math.sqrt</span></div>
+					<div class="tsd-signature tsd-kind-icon">sqrt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">sqrt</span><span class="tsd-signature-symbol"> = math.sqrt</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L36">core/math/functions.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L36">src/core/math/functions.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -546,10 +533,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="tan" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> tan</h3>
-					<div class="tsd-signature tsd-kind-icon">tan<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">tan</span><span class="tsd-signature-symbol"> =&nbsp;math.tan</span></div>
+					<div class="tsd-signature tsd-kind-icon">tan<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">tan</span><span class="tsd-signature-symbol"> = math.tan</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L10">core/math/functions.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L10">src/core/math/functions.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -561,10 +548,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="tanh" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> tanh</h3>
-					<div class="tsd-signature tsd-kind-icon">tanh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">tanh</span><span class="tsd-signature-symbol"> =&nbsp;math.tanh</span></div>
+					<div class="tsd-signature tsd-kind-icon">tanh<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">tanh</span><span class="tsd-signature-symbol"> = math.tanh</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/functions.ts#L22">core/math/functions.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L22">src/core/math/functions.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -576,10 +563,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="tau" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> tau</h3>
-					<div class="tsd-signature tsd-kind-icon">tau<span class="tsd-signature-symbol">:</span> <a href="classes/scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> =&nbsp;Scalar.constant(2 * Math.PI)</span></div>
+					<div class="tsd-signature tsd-kind-icon">tau<span class="tsd-signature-symbol">:</span> <a href="classes/scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> = Scalar.constant(2 * Math.PI)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/scalar.ts#L588">scalar.ts:588</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/scalar.ts#L588">src/scalar.ts:588</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -596,13 +583,13 @@
 					<a name="isbinaryoperator" class="tsd-anchor"></a>
 					<h3>is<wbr>Binary<wbr>Operator</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Binary<wbr>Operator<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Binary<wbr>Operator<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">s</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/operators/binary.ts#L30">core/operators/binary.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/operators/binary.ts#L30">src/core/operators/binary.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -616,7 +603,7 @@
 									<h5>s: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">s</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -624,13 +611,13 @@
 					<a name="isconstant" class="tsd-anchor"></a>
 					<h3>is<wbr>Constant</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Constant<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Constant<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">e</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L62">core/definitions.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/definitions.ts#L62">src/core/definitions.ts:62</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -644,30 +631,7 @@
 									<h5>e: <a href="interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
-					<a name="isdecimal" class="tsd-anchor"></a>
-					<h3>is<wbr>Decimal</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Decimal<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L880">core/math/bignum.ts:880</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>s: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">e</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -675,13 +639,13 @@
 					<a name="isevaluable" class="tsd-anchor"></a>
 					<h3>is<wbr>Evaluable</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Evaluable<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="interfaces/token.html" class="tsd-signature-type">Token</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Evaluable<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="interfaces/token.html" class="tsd-signature-type">Token</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">e</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L30">core/definitions.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/definitions.ts#L30">src/core/definitions.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -695,7 +659,7 @@
 									<h5>e: <a href="interfaces/token.html" class="tsd-signature-type">Token</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">e</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -703,13 +667,13 @@
 					<a name="isexpression" class="tsd-anchor"></a>
 					<h3>is<wbr>Expression</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Expression<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Expression<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">e</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L112">core/definitions.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/definitions.ts#L112">src/core/definitions.ts:112</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -723,33 +687,7 @@
 									<h5>e: <a href="interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
-					<a name="isinteger" class="tsd-anchor"></a>
-					<h3>is<wbr>Integer</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Integer<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, positive<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L870">core/math/bignum.ts:870</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>s: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> positive: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">e</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -757,13 +695,13 @@
 					<a name="isunaryoperator" class="tsd-anchor"></a>
 					<h3>is<wbr>Unary<wbr>Operator</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Unary<wbr>Operator<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Unary<wbr>Operator<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">s</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/operators/unary.ts#L50">core/operators/unary.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/operators/unary.ts#L50">src/core/operators/unary.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -777,44 +715,21 @@
 									<h5>s: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">s</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
-					<a name="isvalid" class="tsd-anchor"></a>
-					<h3>is<wbr>Valid</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Valid<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L887">core/math/bignum.ts:887</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>s: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="isvalidmatrix" class="tsd-anchor"></a>
 					<h3>is<wbr>Valid<wbr>Matrix</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-function">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Valid<wbr>Matrix<span class="tsd-signature-symbol">(</span>matrix2x2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/matrix.ts#L1">matrix.ts:1</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/matrix.ts#L1">src/matrix.ts:1</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -831,13 +746,13 @@
 					<a name="isvariable" class="tsd-anchor"></a>
 					<h3>is<wbr>Variable</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Variable<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Variable<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">e</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L44">core/definitions.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/definitions.ts#L44">src/core/definitions.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -851,35 +766,261 @@
 									<h5>e: <a href="interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">e</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
-					<a name="trimzeroes" class="tsd-anchor"></a>
-					<h3>trim<wbr>Zeroes</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">trim<wbr>Zeroes<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, pos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"end"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"start"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="kronecker" class="tsd-anchor"></a>
+					<h3>kronecker</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">kronecker<span class="tsd-signature-symbol">(</span>i<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, j<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span></li>
+						<li class="tsd-signature tsd-kind-icon">kronecker<span class="tsd-signature-symbol">(</span>i<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span>, j<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L856">core/math/bignum.ts:856</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/numerical.ts#L92">src/core/math/numerical.ts:92</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The Kronecker delta symbol for 2 dimensions.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>i: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Index value.</p>
+									</div>
+								</li>
+								<li>
+									<h5>j: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Index value.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">0</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">1</span>
+							</h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/numerical.ts#L98">src/core/math/numerical.ts:98</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The generalised Kronecker delta symbol for any number of dimensions.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>i: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Index values.</p>
+									</div>
+								</li>
+								<li>
+									<h5>j: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Index values.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">0</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">1</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="levicivita" class="tsd-anchor"></a>
+					<h3>levicivita</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">levicivita<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></li>
+						<li class="tsd-signature tsd-kind-icon">levicivita<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/numerical.ts#L67">src/core/math/numerical.ts:67</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The generalised Levi-Civita symbol for (n) dimensions.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>values: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">1</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">0</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">-1</span>
+							</h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/numerical.ts#L68">src/core/math/numerical.ts:68</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>s: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>pos: <span class="tsd-signature-type">"end"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"start"</span></h5>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>values: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">1</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">0</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">-1</span>
+							</h4>
 						</li>
 					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="parsenum" class="tsd-anchor"></a>
+					<h3>parse<wbr>Num</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Num<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/parsers.ts#L197">src/core/math/parsers.ts:197</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes a string and parses into the format expected by the <a href="classes/bignum.html">BigNum</a> class.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>s: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>String representation of the number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>An array where the first element is the integer part and the second is the decimal part.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="print" class="tsd-anchor"></a>
+					<h3>print</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">print<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/math/functions.ts#L48">src/core/math/functions.ts:48</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Prints the string representation of an object to the default console.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>obj: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object to print.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal">
+					<a name="mathenv" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> mathenv</h3>
+					<div class="tsd-signature tsd-kind-icon">mathenv<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/env.ts#L19">src/core/env.ts:19</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Stores information about the Math environment.</p>
+						</div>
+					</div>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="mathenv.coordinate_system" class="tsd-anchor"></a>
+						<h3>coordinate_<wbr>system</h3>
+						<div class="tsd-signature tsd-kind-icon">coordinate_<wbr>system<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"cartesian"</span><span class="tsd-signature-symbol"> = &quot;cartesian&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/env.ts#L21">src/core/env.ts:21</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="mathenv.mode" class="tsd-anchor"></a>
+						<h3>mode</h3>
+						<div class="tsd-signature tsd-kind-icon">mode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> = MathContext.DEFAULT_CONTEXT</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/ddfefe9/src/core/env.ts#L20">src/core/env.ts:20</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-type-declaration">
+							<h4>Type declaration</h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>precision<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The number of decimal places a <a href="classes/bignum.html">BigNum</a> object should store. This does
+												not represent the number of significant digits in the number unlike the
+											JAVA implementation of the same concept.</p>
+										</div>
+									</div>
+								</li>
+								<li class="tsd-parameter">
+									<h5>rounding<span class="tsd-signature-symbol">: </span><a href="enums/roundingmode.html" class="tsd-signature-type">RoundingMode</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The rounding algorithm that should be used for a particular numerical
+												operation. Care must be taken as to when the UNNECESSARY mode is used,
+												it will throw an exception if an exact representation of the result is
+											not found.</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</section>
 				</section>
 			</section>
 		</div>
@@ -889,10 +1030,10 @@
 					<li class="globals current ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-namespace">
 						<a href="modules/expressionbuilder.html">Expression<wbr>Builder</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-namespace">
 						<a href="modules/mathcontext.html">Math<wbr>Context</a>
 					</li>
 				</ul>
@@ -910,6 +1051,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/bignum.html" class="tsd-kind-icon">Big<wbr>Num</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/component.html" class="tsd-kind-icon">Component</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/divisionbyzero.html" class="tsd-kind-icon">Division<wbr>ByZero</a>
@@ -955,9 +1099,6 @@
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#operator" class="tsd-kind-icon">Operator</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-is-not-exported">
-						<a href="globals.html#endpoint" class="tsd-kind-icon">endpoint</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#__" class="tsd-kind-icon">__</a>
@@ -1040,32 +1181,35 @@
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isconstant" class="tsd-kind-icon">is<wbr>Constant</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#isdecimal" class="tsd-kind-icon">is<wbr>Decimal</a>
-					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isevaluable" class="tsd-kind-icon">is<wbr>Evaluable</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isexpression" class="tsd-kind-icon">is<wbr>Expression</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#isinteger" class="tsd-kind-icon">is<wbr>Integer</a>
-					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isunaryoperator" class="tsd-kind-icon">is<wbr>Unary<wbr>Operator</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
+					<li class=" tsd-kind-function">
 						<a href="globals.html#isvalidmatrix" class="tsd-kind-icon">is<wbr>Valid<wbr>Matrix</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isvariable" class="tsd-kind-icon">is<wbr>Variable</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#trimzeroes" class="tsd-kind-icon">trim<wbr>Zeroes</a>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#kronecker" class="tsd-kind-icon">kronecker</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#levicivita" class="tsd-kind-icon">levicivita</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#parsenum" class="tsd-kind-icon">parse<wbr>Num</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#print" class="tsd-kind-icon">print</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#mathenv" class="tsd-kind-icon">mathenv</a>
 					</li>
 				</ul>
 			</nav>
