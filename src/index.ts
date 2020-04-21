@@ -5,6 +5,7 @@ export * from "./core/math/functions";
 export { levicivita, kronecker } from "./core/math/numerical";
 export * from "./core/operators/binary";
 export * from "./core/operators/unary";
+export * from "./core/env";
 export * from "./core/definitions";
 export * from "./core/expression";
 export * from "./core/errors";
