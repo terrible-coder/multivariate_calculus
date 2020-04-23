@@ -108,6 +108,13 @@ export class Component {
 	}
 
 	/**
+	 * Returns the class whose object `this` is.
+	 */
+	public get classRef() {
+		return Component;
+	}
+
+	/**
 	 * Returns this number as a single string, with no decimal point.
 	 * @ignore
 	 */
