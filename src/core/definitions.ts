@@ -111,5 +111,34 @@ export interface Expression extends Evaluable {
 /** Checks whether a given `Evaluable` is an expression. */
 export function isExpression(e: Evaluable): e is Expression {return e.type === "expression";}
 
+/**
+ * All classes which handle some sort of numerical operations must implement
+ * this interface. This helps the global functions to recognise whether a certain
+ * operation (function) is defined for a particular type of argument.
+ */
+export abstract class Numerical {
+	/**
+	 * Returns the class of which this object is an instance of.
+	 */
+	abstract classRef: any;
+	/**
+	 * Checks whether a method exists on the object or as a static member of
+	 * the class.
+	 * @param methodName Name of the method.
+	 */
+	public getDefinition(methodName: string) {
+		// checking within object prototype
+		const proto = Object.getPrototypeOf(this);
+		const props = Object.getOwnPropertyNames(proto);
+		if(props.indexOf(methodName) !== -1)
+			return "instance";
+		// checking within class prototype
+		const staticProps = Object.getOwnPropertyNames(this.classRef);
+		if(staticProps.indexOf(methodName) !== -1)
+			return "static";
+		return "undefined";
+	}
+}
+
 /** The general operator type. */
 export type Operator = UnaryOperator | BinaryOperator;
