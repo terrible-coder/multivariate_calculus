@@ -2,6 +2,7 @@ import { trimZeroes, align, pad } from "./parsers";
 import { Component } from "./component";
 import { MathContext } from "./context";
 import { mathenv } from "../env";
+import { Numerical } from "../definitions";
 
 /**
  * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
@@ -23,7 +24,7 @@ import { mathenv } from "../env";
  * \\(\imath\\) for the complex numbers. Again, \\(e_2=\jmath\\) and \\(e_3=k\\)
  * are the [Hamilton's units for quaternions](https://en.wikipedia.org/wiki/Quaternion).
  */
-export class BigNum {
+export class BigNum extends Numerical {
 
 	/**
 	 * The components of the number represented by this object. The first one
@@ -52,6 +53,7 @@ export class BigNum {
 	 */
 	constructor(values: Component[]);
 	constructor(...values: Component[] | [Component[]]) {
+		super();
 		let args: Component[];
 		const temp = values[0];
 		if(temp instanceof Array)
@@ -60,6 +62,10 @@ export class BigNum {
 		args = trimZeroes<Component>(args, "end", x => x.integer === "" && x.decimal === "");
 		this.dim = Math.pow(2, Math.ceil(Math.log2(args.length || 1)));
 		this.components = pad(args, this.dim - args.length, Component.ZERO, "end");
+	}
+
+	public get classRef() {
+		return BigNum;
 	}
 
 	/**
