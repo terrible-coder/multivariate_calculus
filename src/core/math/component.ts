@@ -2,6 +2,7 @@ import { IndeterminateForm, DivisionByZero } from "../errors";
 import { parseNum, pad, decimate, align } from "./parsers";
 import { MathContext, RoundingMode } from "./context";
 import { mathenv } from "../env";
+import { Numerical } from "../definitions";
 
 /**
  * Type of argument accepted by [[Component]] constructor.
@@ -21,7 +22,7 @@ type num1d = {
  * carried out by an intermediate result which is then rounded to the preferred
  * number of decimal places using the preferred rounding algorithm.
  */
-export class Component {
+export class Component extends Numerical {
 
 	/**
 	 * The circle constant \\(\pi\\) correct upto 100 decimal places.
@@ -103,6 +104,7 @@ export class Component {
 	 * @param real The value of the number in the required format.
 	 */
 	constructor(real: num1d) {
+		super();
 		this.integer = real.integer;
 		this.decimal = real.decimal;
 	}
@@ -864,24 +866,6 @@ export class Component {
 		else
 			s = (this.integer || "0") + "." + (this.decimal || "0");
 		return s;
-	}
-
-	/**
-	 * Checks whether a method exists on the instance or exists as a class
-	 * method.
-	 * @param methodName Name of the method or property to look for.
-	 */
-	public getDefinition(methodName: string) {
-		// checking within object prototype
-		const proto = Object.getPrototypeOf(this);
-		const props = Object.getOwnPropertyNames(proto);
-		if(props.indexOf(methodName) !== -1)
-			return "instance";
-		// checking within class prototype
-		const staticProps = Object.getOwnPropertyNames(Component);
-		if(staticProps.indexOf(methodName) !== -1)
-			return "static";
-		return "undefined";
 	}
 }
 
