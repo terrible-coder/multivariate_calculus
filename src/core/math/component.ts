@@ -156,7 +156,9 @@ export class Component extends Numerical {
 	 * @param x The number whose absolute value is to be found.
 	 * @returns The absolute value of the argument.
 	 */
-	public static abs(x: Component) {
+	public static abs(x: Component): Component;
+	public static abs(x: Component, ...args: any[]): Component;
+	public static abs(x: Component, ...args: any[]) {
 		return x.integer.charAt(0) === '-'? Component.create(x.integer.substring(1) + "." + x.decimal): x;
 	}
 
@@ -324,8 +326,9 @@ export class Component extends Numerical {
 	 * @returns this + that.
 	 */
 	public add(that: Component, context: MathContext): Component;
-	public add(that: Component, context?: MathContext) {
-		context = context || mathenv.mode;
+	public add(that: Component, ...args: any[]): Component;
+	public add(that: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const [a, b] = align(this.asString, that.asString, "0", this.precision - that.precision);
 		let sum = (BigInt(a) + BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
@@ -350,8 +353,9 @@ export class Component extends Numerical {
 	 * @returns this - that.
 	 */
 	public sub(that: Component, context: MathContext): Component;
-	public sub(that: Component, context?: MathContext) {
-		context = context || mathenv.mode;
+	public sub(that: Component, ...args: any[]): Component;
+	public sub(that: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const [a, b] = align(this.asString, that.asString, "0", this.precision - that.precision);
 		let sum = (BigInt(a) - BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
@@ -376,8 +380,9 @@ export class Component extends Numerical {
 	 * @returns this * that.
 	 */
 	public mul(that: Component, context: MathContext): Component;
-	public mul(that: Component, context?: MathContext) {
-		context = context || mathenv.mode;
+	public mul(that: Component, ...args: any[]): Component;
+	public mul(that: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		let prod = (this.asBigInt * that.asBigInt).toString();
 		const precision = this.precision + that.precision;
 		const res = Component.create(decimate(prod, precision));
@@ -399,8 +404,9 @@ export class Component extends Numerical {
 	 * @returns this / that.
 	 */
 	public div(that: Component, context: MathContext): Component;
-	public div(that: Component, context?: MathContext) {
-		context = context || mathenv.mode;
+	public div(that: Component, ...args: any[]): Component;
+	public div(that: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		if(that.sign === 0) {
 			if(this.sign === 0)
 				throw new IndeterminateForm("Cannot determine 0/0.");
@@ -432,7 +438,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public mod(that: Component, context: MathContext): Component;
-	public mod(that: Component, context=mathenv.mode) {
+	public mod(that: Component, ...args: any[]): Component;
+	public mod(that: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -471,7 +479,9 @@ export class Component extends Numerical {
 	 * @param context The context settings object to use.
 	 */
 	public pow(ex: Component, context: MathContext): Component;
-	public pow(ex: Component, context=mathenv.mode) {
+	public pow(ex: Component, ...args: any[]): Component;
+	public pow(ex: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		if(this.equals(Component.ZERO))
 			return Component.ZERO;
 		if(ex.decimal === "" || ex.decimal === "0")
@@ -497,7 +507,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static exp(x: Component, context: MathContext): Component;
-	public static exp(x: Component, context=mathenv.mode) {
+	public static exp(x: Component, ...args: any[]): Component;
+	public static exp(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -553,7 +565,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static ln(x: Component, context: MathContext): Component;
-	public static ln(x: Component, context=mathenv.mode) {
+	public static ln(x: Component, ...args: any[]): Component;
+	public static ln(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		if(x.lessEquals(Component.ZERO, context))
 			throw new TypeError("Undefined.");
 		const ctx: MathContext = {
@@ -591,7 +605,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static sin(x: Component, context: MathContext): Component;
-	public static sin(x: Component, context=mathenv.mode) {
+	public static sin(x: Component, ...args: any[]): Component;
+	public static sin(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -627,7 +643,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static cos(x: Component, context: MathContext): Component;
-	public static cos(x: Component, context=mathenv.mode) {
+	public static cos(x: Component, ...args: any[]): Component;
+	public static cos(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -694,7 +712,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static asin(x: Component, context: MathContext): Component;
-	public static asin(x: Component, context=mathenv.mode) {
+	public static asin(x: Component, ...args: any[]): Component;
+	public static asin(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		if(x.lessThan(Component.ZERO))
 			return Component.asin(x.neg).neg;
 		const half = Component.create("0.5");
@@ -725,7 +745,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static acos(x: Component, context: MathContext): Component;
-	public static acos(x: Component, context=mathenv.mode) {
+	public static acos(x: Component, ...args: any[]): Component;
+	public static acos(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: context.precision + 5,
 			rounding: context.rounding
@@ -753,7 +775,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static sinh(x: Component, context: MathContext): Component;
-	public static sinh(x: Component, context=mathenv.mode) {
+	public static sinh(x: Component, ...args: any[]): Component;
+	public static sinh(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -784,7 +808,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static cosh(x: Component, context: MathContext): Component;
-	public static cosh(x: Component, context=mathenv.mode) {
+	public static cosh(x: Component, ...args: any[]): Component;
+	public static cosh(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -816,7 +842,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static asinh(x: Component, context: MathContext): Component;
-	public static asinh(x: Component, context=mathenv.mode) {
+	public static asinh(x: Component, ...args: any[]): Component;
+	public static asinh(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -841,7 +869,9 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static acosh(x: Component, context: MathContext): Component;
-	public static acosh(x: Component, context=mathenv.mode) {
+	public static acosh(x: Component, ...args: any[]): Component;
+	public static acosh(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
