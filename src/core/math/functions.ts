@@ -1,4 +1,3 @@
-import { math } from "./math";
 import { Numerical } from "../definitions";
 
 /** The negative value of its argument. */
