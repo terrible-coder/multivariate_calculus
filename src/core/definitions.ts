@@ -127,14 +127,9 @@ export abstract class Numerical {
 	 * @param methodName Name of the method.
 	 */
 	public getDefinition(methodName: string) {
-		// checking within object prototype
-		const proto = Object.getPrototypeOf(this);
-		const props = Object.getOwnPropertyNames(proto);
-		if(props.indexOf(methodName) !== -1)
+		if((<any>this)[methodName] !== undefined)
 			return "instance";
-		// checking within class prototype
-		const staticProps = Object.getOwnPropertyNames(this.classRef);
-		if(staticProps.indexOf(methodName) !== -1)
+		if(this.classRef[methodName] !== undefined)
 			return "static";
 		return "undefined";
 	}
