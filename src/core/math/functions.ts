@@ -3,10 +3,12 @@ import { Numerical } from "../definitions";
 
 /** The negative value of its argument. */
 export function neg(x: number): number;
-export function neg<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function neg<T>(x: number | (T & Numerical), ...args: any[]) {
+export function neg<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function neg<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return -<number>x;
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("neg");
 	if(def === "undefined")
 		throw new TypeError("Operation neg not defined for object of type " + x.classRef.name);
@@ -15,13 +17,14 @@ export function neg<T>(x: number | (T & Numerical), ...args: any[]) {
 	return x.classRef.neg(x, ...args);
 }
 
-
 /** The trigonometric sine function. */
 export function sin(x: number): number;
-export function sin<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function sin<T>(x: number | (T & Numerical), ...args: any[]) {
+export function sin<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function sin<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.sin(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("sin");
 	if(def === "undefined")
 		throw new TypeError("Operation sin not defined for object of type " + x.classRef.name);
@@ -32,10 +35,12 @@ export function sin<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The trigonometric cosine function. */
 export function cos(x: number): number;
-export function cos<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function cos<T>(x: number | (T & Numerical), ...args: any[]) {
+export function cos<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function cos<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.cos(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("cos");
 	if(def === "undefined")
 		throw new TypeError("Operation cos not defined for object of type " + x.classRef.name);
@@ -46,10 +51,12 @@ export function cos<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The trigonometric tangent function. */
 export function tan(x: number): number;
-export function tan<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function tan<T>(x: number | (T & Numerical), ...args: any[]) {
+export function tan<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function tan<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.tan(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("tan");
 	if(def === "undefined")
 		throw new TypeError("Operation tan not defined for object of type " + x.classRef.name);
@@ -60,10 +67,12 @@ export function tan<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The inverse trigonometric sine function. */
 export function asin(x: number): number;
-export function asin<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function asin<T>(x: number | (T & Numerical), ...args: any[]) {
+export function asin<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function asin<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.asin(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("asin");
 	if(def === "undefined")
 		throw new TypeError("Operation asin not defined for object of type " + x.classRef.name);
@@ -74,10 +83,12 @@ export function asin<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The inverse trigonometric cosine function. */
 export function acos(x: number): number;
-export function acos<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function acos<T>(x: number | (T & Numerical), ...args: any[]) {
+export function acos<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function acos<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.acos(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("acos");
 	if(def === "undefined")
 		throw new TypeError("Operation acos not defined for object of type " + x.classRef.name);
@@ -88,10 +99,12 @@ export function acos<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The inverse trigonometric tangent function. */
 export function atan(x: number): number;
-export function atan<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function atan<T>(x: number | (T & Numerical), ...args: any[]) {
+export function atan<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function atan<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.atan(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("atan");
 	if(def === "undefined")
 		throw new TypeError("Operation atan not defined for object of type " + x.classRef.name);
@@ -102,10 +115,12 @@ export function atan<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The hyperbolic sine function. */
 export function sinh(x: number): number;
-export function sinh<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function sinh<T>(x: number | (T & Numerical), ...args: any[]) {
+export function sinh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function sinh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.sinh(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("sinh");
 	if(def === "undefined")
 		throw new TypeError("Operation sinh not defined for object of type " + x.classRef.name);
@@ -116,10 +131,12 @@ export function sinh<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The hyperbolic cosine function. */
 export function cosh(x: number): number;
-export function cosh<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function cosh<T>(x: number | (T & Numerical), ...args: any[]) {
+export function cosh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function cosh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.cosh(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("cosh");
 	if(def === "undefined")
 		throw new TypeError("Operation cosh not defined for object of type " + x.classRef.name);
@@ -130,10 +147,12 @@ export function cosh<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The hyperbolic tangent function. */
 export function tanh(x: number): number;
-export function tanh<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function tanh<T>(x: number | (T & Numerical), ...args: any[]) {
+export function tanh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function tanh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.tanh(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("tanh");
 	if(def === "undefined")
 		throw new TypeError("Operation tanh not defined for object of type " + x.classRef.name);
@@ -144,10 +163,12 @@ export function tanh<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The inverse hyperbolic sine function. */
 export function asinh(x: number): number;
-export function asinh<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function asinh<T>(x: number | (T & Numerical), ...args: any[]) {
+export function asinh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function asinh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.asinh(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("asinh");
 	if(def === "undefined")
 		throw new TypeError("Operation asinh not defined for object of type " + x.classRef.name);
@@ -158,10 +179,12 @@ export function asinh<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The inverse hyperbolic cosine function. */
 export function acosh(x: number): number;
-export function acosh<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function acosh<T>(x: number | (T & Numerical), ...args: any[]) {
+export function acosh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function acosh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.acosh(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("acosh");
 	if(def === "undefined")
 		throw new TypeError("Operation acosh not defined for object of type " + x.classRef.name);
@@ -172,10 +195,12 @@ export function acosh<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The inverse hyperbolic tangent function. */
 export function atanh(x: number): number;
-export function atanh<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function atanh<T>(x: number | (T & Numerical), ...args: any[]) {
+export function atanh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function atanh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.atanh(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("atanh");
 	if(def === "undefined")
 		throw new TypeError("Operation atanh not defined for object of type " + x.classRef.name);
@@ -186,10 +211,12 @@ export function atanh<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The common logarithm function (to the base 10). */
 export function log(x: number): number;
-export function log<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function log<T>(x: number | (T & Numerical), ...args: any[]) {
+export function log<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function log<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.log10(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("log");
 	if(def === "undefined")
 		throw new TypeError("Operation log not defined for object of type " + x.classRef.name);
@@ -200,10 +227,12 @@ export function log<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The natural logarithm function (to the base `e`). */
 export function ln(x: number): number;
-export function ln<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function ln<T>(x: number | (T & Numerical), ...args: any[]) {
+export function ln<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function ln<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.log(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("ln");
 	if(def === "undefined")
 		throw new TypeError("Operation ln not defined for object of type " + x.classRef.name);
@@ -214,10 +243,12 @@ export function ln<T>(x: number | (T & Numerical), ...args: any[]) {
 
 /** The exponentiation function. */
 export function exp(x: number): number;
-export function exp<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function exp<T>(x: number | (T & Numerical), ...args: any[]) {
+export function exp<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function exp<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.exp(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("exp");
 	if(def === "undefined")
 		throw new TypeError("Operation exp not defined for object of type " + x.classRef.name);
@@ -231,10 +262,12 @@ export const sqrt = math.sqrt;
 
 /** The absolute value function. */
 export function abs(x: number): number;
-export function abs<T>(x: T & Numerical, ...args: any[]): T & Numerical;
-export function abs<T>(x: number | (T & Numerical), ...args: any[]) {
+export function abs<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function abs<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
 	if(typeof x === "number")
 		return Math.abs(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
 	const def = x.getDefinition("abs");
 	if(def === "undefined")
 		throw new TypeError("Operation abs not defined for object of type " + x.classRef.name);
