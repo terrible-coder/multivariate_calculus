@@ -257,9 +257,6 @@ export function exp<T>(x: number | (T extends Numerical? T: undefined), ...args:
 	return x.classRef.exp(x, ...args);
 }
 
-/** The square root function. */
-export const sqrt = math.sqrt;
-
 /** The absolute value function. */
 export function abs(x: number): number;
 export function abs<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
