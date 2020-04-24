@@ -13,6 +13,8 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
 	readonly quantity = "scalar";
 
+	public abstract neg: Scalar;
+
 	/**
 	 * Adds two [[Scalar]]s together. If `this` and `that` are both constants
 	 * then numerically adds the two and returns a new [[Scalar.Constant]] object
@@ -58,6 +60,114 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	 * @return The result of algebraic division.
 	 */
 	public abstract pow(that: Scalar): Scalar;
+
+	public static abs(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.abs(x.value));
+		return new Scalar.Expression(UnaryOperator.ABS, x);
+	}
+
+	public static sin(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.sin(x.value));
+		return new Scalar.Expression(UnaryOperator.SIN, x);
+	}
+
+	public static cos(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.cos(x.value));
+		return new Scalar.Expression(UnaryOperator.COS, x);
+	}
+
+	public static tan(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.tan(x.value));
+		return new Scalar.Expression(UnaryOperator.TAN, x);
+	}
+
+	public static asin(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.asin(x.value));
+		return new Scalar.Expression(UnaryOperator.ASIN, x);
+	}
+
+	public static acos(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.acos(x.value));
+		return new Scalar.Expression(UnaryOperator.ACOS, x);
+	}
+
+	public static atan(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.atan(x.value));
+		return new Scalar.Expression(UnaryOperator.ATAN, x);
+	}
+
+	public static sinh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.sinh(x.value));
+		return new Scalar.Expression(UnaryOperator.SINH, x);
+	}
+
+	public static cosh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.cosh(x.value));
+		return new Scalar.Expression(UnaryOperator.COSH, x);
+	}
+
+	public static tanh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.tanh(x.value));
+		return new Scalar.Expression(UnaryOperator.TANH, x);
+	}
+
+	public static asinh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.asinh(x.value));
+		return new Scalar.Expression(UnaryOperator.ASINH, x);
+	}
+
+	public static acosh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.acosh(x.value));
+		return new Scalar.Expression(UnaryOperator.ACOSH, x);
+	}
+
+	public static atanh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.atanh(x.value));
+		return new Scalar.Expression(UnaryOperator.ATANH, x);
+	}
+
+	public static exp(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.exp(x.value));
+		return new Scalar.Expression(UnaryOperator.EXP, x);
+	}
+
+	public static ln(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.log(x.value));
+		return new Scalar.Expression(UnaryOperator.LN, x);
+	}
+
+	public static log(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.log10(x.value));
+		return new Scalar.Expression(UnaryOperator.LOG, x);
+	}
+
+	public static floor(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.floor(x.value));
+		return new Scalar.Expression(UnaryOperator.FLOOR, x);
+	}
+
+	public static ceil(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.ceil(x.value));
+		return new Scalar.Expression(UnaryOperator.CEIL, x);
+	}
 }
 
 /**
@@ -102,6 +212,10 @@ export namespace Scalar {
 		 */
 		constructor(readonly value: number, readonly name: string = "") {
 			super();
+		}
+
+		public get neg() {
+			return Scalar.constant(-this.value);
 		}
 
 		/**
@@ -282,6 +396,10 @@ export namespace Scalar {
 			super();
 		}
 
+		public get neg() {
+			return new Scalar.Expression(UnaryOperator.NEG, this);
+		}
+
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the addition of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
@@ -380,6 +498,10 @@ export namespace Scalar {
 			this.operands.push(a);
 			if(b !== undefined)
 				this.operands.push(b);
+		}
+
+		public get neg() {
+			return new Scalar.Expression(UnaryOperator.NEG, this);
 		}
 
 		/**
