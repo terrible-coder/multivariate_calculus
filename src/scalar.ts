@@ -1,4 +1,4 @@
-import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, isConstant, isVariable, Operator } from "./core/definitions";
+import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, isConstant, isVariable, Operator, Numerical } from "./core/definitions";
 import { BinaryOperator } from "./core/operators/binary";
 import { ExpressionBuilder } from "./core/expression";
 import { UnaryOperator } from "./core/operators/unary";
@@ -9,7 +9,7 @@ import { Overwrite, IndeterminateForm } from "./core/errors";
  * Base class to works with scalar quantities.
  * @abstract
  */
-export abstract class Scalar implements Token, Evaluable {
+export abstract class Scalar extends Numerical implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
 	readonly quantity = "scalar";
 
@@ -86,6 +86,8 @@ export namespace Scalar {
 	 */
 	export class Constant extends Scalar implements _Constant {
 		readonly type = "constant";
+		readonly classRef = Scalar.Constant;
+
 		/**
 		 * Creates a [[Scalar.Constant]] object from number.
 		 * One may optionally pass in a string by which `this` object
@@ -265,6 +267,8 @@ export namespace Scalar {
 	 */
 	export class Variable extends Scalar implements _Variable {
 		readonly type = "variable";
+		readonly classRef = Scalar.Variable;
+
 		/**
 		 * Creates a [[Scalar.Variable]] object.
 		 * 
@@ -350,6 +354,8 @@ export namespace Scalar {
 	 */
 	export class Expression extends Scalar implements _Expression {
 		readonly type = "expression";
+		readonly classRef = Scalar.Expression;
+
 		/** `Set` of [[Variable]] quantities `this` depends on. */
 		readonly arg_list: Set<_Variable>;
 		/** Array of `Evaluable` quantity/quantities `this.op` operates on. */

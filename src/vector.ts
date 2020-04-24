@@ -1,4 +1,4 @@
-import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, Operator, isConstant, isVariable } from "./core/definitions";
+import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, Operator, isConstant, isVariable, Numerical } from "./core/definitions";
 import { BinaryOperator, isBinaryOperator } from "./core/operators/binary";
 import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { ExpressionBuilder } from "./core/expression";
@@ -18,7 +18,7 @@ export const __ = undefined;
  * Base class to work with vector quantities.
  * @abstract
  */
-export abstract class Vector implements Token, Evaluable {
+export abstract class Vector extends Numerical implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
 	readonly abstract X: (i: number) => Scalar;
 	readonly quantity = "vector";
@@ -136,6 +136,8 @@ export namespace Vector {
 	 */
 	export class Constant extends Vector implements _Constant {
 		readonly type = "constant";
+		readonly classRef = Vector.Constant;
+
 		/**
 		 * The number of dimensions `this` vector exists in.
 		 * @ignore
@@ -390,6 +392,7 @@ export namespace Vector {
 	 */
 	export class Variable extends Vector implements _Variable {
 		readonly type = "variable";
+		readonly classRef = Vector.Variable;
 		readonly name: string;
 		readonly value: (Scalar.Variable | Scalar.Constant)[] = [];
 
@@ -526,6 +529,7 @@ export namespace Vector {
 	 */
 	export class Expression extends Vector implements _Expression {
 		readonly type = "expression";
+		readonly classRef = Vector.Expression;
 		readonly arg_list: Set<_Variable>;
 		readonly operands: Evaluable[] = [];
 		/**
