@@ -277,9 +277,36 @@ export function abs<T>(x: number | (T extends Numerical? T: undefined), ...args:
 }
 
 /** The greatest integer function. */
-export const floor = math.floor;
+export function floor(x: number): number;
+export function floor<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function floor<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+	if(typeof x === "number")
+		return Math.floor(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
+	const def = x.getDefinition("floor");
+	if(def === "undefined")
+		throw new TypeError("Operation floor not defined for object of type " + x.classRef.name);
+	if(def === "instance")
+		return (<any>x).floor(...args);
+	return x.classRef.floor(x, ...args);
+}
+
 /** The smallest integer function. */
-export const ceil = math.ceil;
+export function ceil(x: number): number;
+export function ceil<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
+export function ceil<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+	if(typeof x === "number")
+		return Math.ceil(<number>x);
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
+	const def = x.getDefinition("ceil");
+	if(def === "undefined")
+		throw new TypeError("Operation ceil not defined for object of type " + x.classRef.name + ".");
+	if(def === "instance")
+		return (<any>x).ceil(...args);
+	return x.classRef.ceil(x, ...args);
+}
 
 /**
  * Prints the string representation of an object to the default console.
