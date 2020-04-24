@@ -1,16 +1,5 @@
 const func = require("../../../src/core/math/functions");
-const { math } = require("../../../src/core/math/math");
 const { Component } = require("../../../build/core/math/component");
-
-describe("Functions", function() {
-	it("Compare with math", function() {
-		let props = Object.getOwnPropertyNames(func);
-		props = props.slice(1, props.length - 1);
-		props.forEach(fn => {
-			expect(func[fn]).toBe(math[fn]);
-		});
-	});
-});
 
 describe("Print", function() {
 	console.log = jest.fn();
