@@ -2,8 +2,8 @@ import { Numerical } from "../definitions";
 
 /** The negative value of its argument. */
 export function neg(x: number): number;
-export function neg<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function neg<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function neg<T extends Numerical>(x: T, ...args: any[]): T;
+export function neg<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return -<number>x;
 	if(!(x instanceof Numerical))
@@ -18,8 +18,8 @@ export function neg<T>(x: number | (T extends Numerical? T: undefined), ...args:
 
 /** The trigonometric sine function. */
 export function sin(x: number): number;
-export function sin<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function sin<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function sin<T extends Numerical>(x: T, ...args: any[]): T;
+export function sin<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.sin(<number>x);
 	if(!(x instanceof Numerical))
@@ -34,8 +34,8 @@ export function sin<T>(x: number | (T extends Numerical? T: undefined), ...args:
 
 /** The trigonometric cosine function. */
 export function cos(x: number): number;
-export function cos<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function cos<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function cos<T extends Numerical>(x: T, ...args: any[]): T;
+export function cos<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.cos(<number>x);
 	if(!(x instanceof Numerical))
@@ -50,8 +50,8 @@ export function cos<T>(x: number | (T extends Numerical? T: undefined), ...args:
 
 /** The trigonometric tangent function. */
 export function tan(x: number): number;
-export function tan<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function tan<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function tan<T extends Numerical>(x: T, ...args: any[]): T;
+export function tan<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.tan(<number>x);
 	if(!(x instanceof Numerical))
@@ -66,8 +66,8 @@ export function tan<T>(x: number | (T extends Numerical? T: undefined), ...args:
 
 /** The inverse trigonometric sine function. */
 export function asin(x: number): number;
-export function asin<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function asin<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function asin<T extends Numerical>(x: T, ...args: any[]): T;
+export function asin<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.asin(<number>x);
 	if(!(x instanceof Numerical))
@@ -82,8 +82,8 @@ export function asin<T>(x: number | (T extends Numerical? T: undefined), ...args
 
 /** The inverse trigonometric cosine function. */
 export function acos(x: number): number;
-export function acos<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function acos<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function acos<T extends Numerical>(x: T, ...args: any[]): T;
+export function acos<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.acos(<number>x);
 	if(!(x instanceof Numerical))
@@ -98,8 +98,8 @@ export function acos<T>(x: number | (T extends Numerical? T: undefined), ...args
 
 /** The inverse trigonometric tangent function. */
 export function atan(x: number): number;
-export function atan<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function atan<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function atan<T extends Numerical>(x: T, ...args: any[]): T;
+export function atan<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.atan(<number>x);
 	if(!(x instanceof Numerical))
@@ -114,8 +114,8 @@ export function atan<T>(x: number | (T extends Numerical? T: undefined), ...args
 
 /** The hyperbolic sine function. */
 export function sinh(x: number): number;
-export function sinh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function sinh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function sinh<T extends Numerical>(x: T, ...args: any[]): T;
+export function sinh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.sinh(<number>x);
 	if(!(x instanceof Numerical))
@@ -130,8 +130,8 @@ export function sinh<T>(x: number | (T extends Numerical? T: undefined), ...args
 
 /** The hyperbolic cosine function. */
 export function cosh(x: number): number;
-export function cosh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function cosh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function cosh<T extends Numerical>(x: T, ...args: any[]): T;
+export function cosh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.cosh(<number>x);
 	if(!(x instanceof Numerical))
@@ -146,8 +146,8 @@ export function cosh<T>(x: number | (T extends Numerical? T: undefined), ...args
 
 /** The hyperbolic tangent function. */
 export function tanh(x: number): number;
-export function tanh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function tanh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function tanh<T extends Numerical>(x: T, ...args: any[]): T;
+export function tanh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.tanh(<number>x);
 	if(!(x instanceof Numerical))
@@ -162,8 +162,8 @@ export function tanh<T>(x: number | (T extends Numerical? T: undefined), ...args
 
 /** The inverse hyperbolic sine function. */
 export function asinh(x: number): number;
-export function asinh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function asinh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function asinh<T extends Numerical>(x: T, ...args: any[]): T;
+export function asinh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.asinh(<number>x);
 	if(!(x instanceof Numerical))
@@ -178,8 +178,8 @@ export function asinh<T>(x: number | (T extends Numerical? T: undefined), ...arg
 
 /** The inverse hyperbolic cosine function. */
 export function acosh(x: number): number;
-export function acosh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function acosh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function acosh<T extends Numerical>(x: T, ...args: any[]): T;
+export function acosh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.acosh(<number>x);
 	if(!(x instanceof Numerical))
@@ -194,8 +194,8 @@ export function acosh<T>(x: number | (T extends Numerical? T: undefined), ...arg
 
 /** The inverse hyperbolic tangent function. */
 export function atanh(x: number): number;
-export function atanh<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function atanh<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function atanh<T extends Numerical>(x: T, ...args: any[]): T;
+export function atanh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.atanh(<number>x);
 	if(!(x instanceof Numerical))
@@ -210,8 +210,8 @@ export function atanh<T>(x: number | (T extends Numerical? T: undefined), ...arg
 
 /** The common logarithm function (to the base 10). */
 export function log(x: number): number;
-export function log<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function log<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function log<T extends Numerical>(x: T, ...args: any[]): T;
+export function log<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.log10(<number>x);
 	if(!(x instanceof Numerical))
@@ -226,8 +226,8 @@ export function log<T>(x: number | (T extends Numerical? T: undefined), ...args:
 
 /** The natural logarithm function (to the base `e`). */
 export function ln(x: number): number;
-export function ln<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function ln<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function ln<T extends Numerical>(x: T, ...args: any[]): T;
+export function ln<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.log(<number>x);
 	if(!(x instanceof Numerical))
@@ -242,8 +242,8 @@ export function ln<T>(x: number | (T extends Numerical? T: undefined), ...args: 
 
 /** The exponentiation function. */
 export function exp(x: number): number;
-export function exp<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function exp<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function exp<T extends Numerical>(x: T, ...args: any[]): T;
+export function exp<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.exp(<number>x);
 	if(!(x instanceof Numerical))
@@ -258,8 +258,8 @@ export function exp<T>(x: number | (T extends Numerical? T: undefined), ...args:
 
 /** The absolute value function. */
 export function abs(x: number): number;
-export function abs<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function abs<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function abs<T extends Numerical>(x: T, ...args: any[]): T;
+export function abs<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.abs(<number>x);
 	if(!(x instanceof Numerical))
@@ -274,8 +274,8 @@ export function abs<T>(x: number | (T extends Numerical? T: undefined), ...args:
 
 /** The greatest integer function. */
 export function floor(x: number): number;
-export function floor<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function floor<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function floor<T extends Numerical>(x: T, ...args: any[]): T;
+export function floor<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.floor(<number>x);
 	if(!(x instanceof Numerical))
@@ -290,8 +290,8 @@ export function floor<T>(x: number | (T extends Numerical? T: undefined), ...arg
 
 /** The smallest integer function. */
 export function ceil(x: number): number;
-export function ceil<T>(x: T extends Numerical? T: undefined, ...args: any[]): T extends Numerical? T: undefined;
-export function ceil<T>(x: number | (T extends Numerical? T: undefined), ...args: any[]) {
+export function ceil<T extends Numerical>(x: T, ...args: any[]): T;
+export function ceil<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
 		return Math.ceil(<number>x);
 	if(!(x instanceof Numerical))
