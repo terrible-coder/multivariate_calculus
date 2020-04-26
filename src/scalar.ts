@@ -61,108 +61,144 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	 */
 	public abstract pow(that: Scalar): Scalar;
 
+	public static abs(x: Scalar.Constant): Scalar.Constant;
+	public static abs(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static abs(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.abs(x.value));
 		return new Scalar.Expression(UnaryOperator.ABS, x);
 	}
 
+	public static sin(x: Scalar.Constant): Scalar.Constant;
+	public static sin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static sin(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.sin(x.value));
 		return new Scalar.Expression(UnaryOperator.SIN, x);
 	}
 
+	public static cos(x: Scalar.Constant): Scalar.Constant;
+	public static cos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static cos(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.cos(x.value));
 		return new Scalar.Expression(UnaryOperator.COS, x);
 	}
 
+	public static tan(x: Scalar.Constant): Scalar.Constant;
+	public static tan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static tan(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.tan(x.value));
 		return new Scalar.Expression(UnaryOperator.TAN, x);
 	}
 
+	public static asin(x: Scalar.Constant): Scalar.Constant;
+	public static asin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static asin(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.asin(x.value));
 		return new Scalar.Expression(UnaryOperator.ASIN, x);
 	}
 
+	public static acos(x: Scalar.Constant): Scalar.Constant;
+	public static acos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static acos(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.acos(x.value));
 		return new Scalar.Expression(UnaryOperator.ACOS, x);
 	}
 
+	public static atan(x: Scalar.Constant): Scalar.Constant;
+	public static atan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static atan(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.atan(x.value));
 		return new Scalar.Expression(UnaryOperator.ATAN, x);
 	}
 
+	public static sinh(x: Scalar.Constant): Scalar.Constant;
+	public static sinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static sinh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.sinh(x.value));
 		return new Scalar.Expression(UnaryOperator.SINH, x);
 	}
 
+	public static cosh(x: Scalar.Constant): Scalar.Constant;
+	public static cosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static cosh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.cosh(x.value));
 		return new Scalar.Expression(UnaryOperator.COSH, x);
 	}
 
+	public static tanh(x: Scalar.Constant): Scalar.Constant;
+	public static tanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static tanh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.tanh(x.value));
 		return new Scalar.Expression(UnaryOperator.TANH, x);
 	}
 
+	public static asinh(x: Scalar.Constant): Scalar.Constant;
+	public static asinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static asinh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.asinh(x.value));
 		return new Scalar.Expression(UnaryOperator.ASINH, x);
 	}
 
+	public static acosh(x: Scalar.Constant): Scalar.Constant;
+	public static acosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static acosh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.acosh(x.value));
 		return new Scalar.Expression(UnaryOperator.ACOSH, x);
 	}
 
+	public static atanh(x: Scalar.Constant): Scalar.Constant;
+	public static atanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static atanh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.atanh(x.value));
 		return new Scalar.Expression(UnaryOperator.ATANH, x);
 	}
 
+	public static exp(x: Scalar.Constant): Scalar.Constant;
+	public static exp(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static exp(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.exp(x.value));
 		return new Scalar.Expression(UnaryOperator.EXP, x);
 	}
 
+	public static ln(x: Scalar.Constant): Scalar.Constant;
+	public static ln(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static ln(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.log(x.value));
 		return new Scalar.Expression(UnaryOperator.LN, x);
 	}
 
+	public static log(x: Scalar.Constant): Scalar.Constant;
+	public static log(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static log(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.log10(x.value));
 		return new Scalar.Expression(UnaryOperator.LOG, x);
 	}
 
+	public static floor(x: Scalar.Constant): Scalar.Constant;
+	public static floor(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static floor(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.floor(x.value));
 		return new Scalar.Expression(UnaryOperator.FLOOR, x);
 	}
 
+	public static ceil(x: Scalar.Constant): Scalar.Constant;
+	public static ceil(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static ceil(x: Scalar) {
 		if(x instanceof Scalar.Constant)
 			return Scalar.constant(Math.ceil(x.value));
