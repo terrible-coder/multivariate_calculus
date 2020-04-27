@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>RoundingMode | multivariate_calculus</title>
+	<title>Numerical | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -58,10 +58,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="roundingmode.html">RoundingMode</a>
+					<a href="numerical.html">Numerical</a>
 				</li>
 			</ul>
-			<h1>Enumeration RoundingMode</h1>
+			<h1>Class Numerical</h1>
 		</div>
 	</div>
 </header>
@@ -71,153 +71,109 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Specifies a <em>rounding behaviour</em> for numerical operations on <a href="../classes/bignum.html">BigNum</a>
-							which are capable of discarding some precision. This is based on the JAVA
-						implementation of rounding behaviour. Read more <a href="https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html">here</a>.</p>
+						<p>All classes which handle some sort of numerical operations must implement
+							this interface. This helps the global functions to recognise whether a certain
+						operation (function) is defined for a particular type of argument.</p>
 					</div>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Numerical</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="component.html" class="tsd-signature-type">Component</a>
+							</li>
+							<li>
+								<a href="bignum.html" class="tsd-signature-type">BigNum</a>
+							</li>
+							<li>
+								<a href="vector.html" class="tsd-signature-type">Vector</a>
+							</li>
+							<li>
+								<a href="scalar.html" class="tsd-signature-type">Scalar</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Enumeration members</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#ceil" class="tsd-kind-icon">CEIL</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#down" class="tsd-kind-icon">DOWN</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#floor" class="tsd-kind-icon">FLOOR</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#half_down" class="tsd-kind-icon">HALF_<wbr>DOWN</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#half_even" class="tsd-kind-icon">HALF_<wbr>EVEN</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#half_up" class="tsd-kind-icon">HALF_<wbr>UP</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#unnecessary" class="tsd-kind-icon">UNNECESSARY</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#up" class="tsd-kind-icon">UP</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="numerical.html#classref" class="tsd-kind-icon">class<wbr>Ref</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="numerical.html#getdefinition" class="tsd-kind-icon">get<wbr>Definition</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Enumeration members</h2>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="ceil" class="tsd-anchor"></a>
-					<h3>CEIL</h3>
-					<div class="tsd-signature tsd-kind-icon">CEIL<span class="tsd-signature-symbol">:</span></div>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="classref" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> class<wbr>Ref</h3>
+					<div class="tsd-signature tsd-kind-icon">class<wbr>Ref<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/math/context.ts#L12">src/core/math/context.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L127">src/core/definitions.ts:127</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Rounds the number up towards positive infinity.</p>
+							<p>Returns the class of which this object is an instance of.</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="down" class="tsd-anchor"></a>
-					<h3>DOWN</h3>
-					<div class="tsd-signature tsd-kind-icon">DOWN<span class="tsd-signature-symbol">:</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/math/context.ts#L10">src/core/math/context.ts:10</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rounds the number down towards 0.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="floor" class="tsd-anchor"></a>
-					<h3>FLOOR</h3>
-					<div class="tsd-signature tsd-kind-icon">FLOOR<span class="tsd-signature-symbol">:</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/math/context.ts#L14">src/core/math/context.ts:14</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rounds the number down towards negative infinity.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="half_down" class="tsd-anchor"></a>
-					<h3>HALF_<wbr>DOWN</h3>
-					<div class="tsd-signature tsd-kind-icon">HALF_<wbr>DOWN<span class="tsd-signature-symbol">:</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/math/context.ts#L18">src/core/math/context.ts:18</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded down.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="half_even" class="tsd-anchor"></a>
-					<h3>HALF_<wbr>EVEN</h3>
-					<div class="tsd-signature tsd-kind-icon">HALF_<wbr>EVEN<span class="tsd-signature-symbol">:</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/math/context.ts#L20">src/core/math/context.ts:20</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded to nearest even number.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="half_up" class="tsd-anchor"></a>
-					<h3>HALF_<wbr>UP</h3>
-					<div class="tsd-signature tsd-kind-icon">HALF_<wbr>UP<span class="tsd-signature-symbol">:</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/math/context.ts#L16">src/core/math/context.ts:16</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded up.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="unnecessary" class="tsd-anchor"></a>
-					<h3>UNNECESSARY</h3>
-					<div class="tsd-signature tsd-kind-icon">UNNECESSARY<span class="tsd-signature-symbol">:</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/math/context.ts#L22">src/core/math/context.ts:22</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rounding mode to assert that no rounding is necessary as an exact representation is possible.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="up" class="tsd-anchor"></a>
-					<h3>UP</h3>
-					<div class="tsd-signature tsd-kind-icon">UP<span class="tsd-signature-symbol">:</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/math/context.ts#L8">src/core/math/context.ts:8</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Rounds the number away from 0.</p>
-						</div>
-					</div>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getdefinition" class="tsd-anchor"></a>
+					<h3>get<wbr>Definition</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Definition<span class="tsd-signature-symbol">(</span>methodName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"instance"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"static"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"undefined"</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L133">src/core/definitions.ts:133</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks whether a method exists on the object or as a static member of
+									the class.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>methodName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the method.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">"instance"</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">"static"</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">"undefined"</span>
+							</h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -233,32 +189,14 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-enum">
-						<a href="roundingmode.html" class="tsd-kind-icon">Rounding<wbr>Mode</a>
+					<li class="current tsd-kind-class">
+						<a href="numerical.html" class="tsd-kind-icon">Numerical</a>
 						<ul>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="roundingmode.html#ceil" class="tsd-kind-icon">CEIL</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="numerical.html#classref" class="tsd-kind-icon">class<wbr>Ref</a>
 							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="roundingmode.html#down" class="tsd-kind-icon">DOWN</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="roundingmode.html#floor" class="tsd-kind-icon">FLOOR</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="roundingmode.html#half_down" class="tsd-kind-icon">HALF_<wbr>DOWN</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="roundingmode.html#half_even" class="tsd-kind-icon">HALF_<wbr>EVEN</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="roundingmode.html#half_up" class="tsd-kind-icon">HALF_<wbr>UP</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="roundingmode.html#unnecessary" class="tsd-kind-icon">UNNECESSARY</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="roundingmode.html#up" class="tsd-kind-icon">UP</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="numerical.html#getdefinition" class="tsd-kind-icon">get<wbr>Definition</a>
 							</li>
 						</ul>
 					</li>
