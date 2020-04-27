@@ -3,6 +3,26 @@ import { IndeterminateForm, DivisionByZero } from "../../../src/core/errors";
 import { RoundingMode, MathContext } from "../../../src/core/math/context";
 import { mathenv } from "../../../src/core/env";
 
+describe("Checks method definitions", function() {
+	it("Instance methods", function() {
+		const obj = Component.ONE;
+		expect(obj.getDefinition("add")).toBe("instance");
+		expect(obj.getDefinition("sub")).toBe("instance");
+	});
+
+	it("Class methods", function() {
+		const obj = Component.ONE;
+		expect(obj.getDefinition("exp")).toBe("static");
+		expect(obj.getDefinition("sin")).toBe("static");
+	});
+
+	it("Non methods", function() {
+		const obj = Component.ONE;
+		expect(obj.getDefinition("abc")).toBe("undefined");
+		expect(obj.getDefinition("foo")).toBe("undefined");
+	});
+});
+
 describe("Integer numbers", function() {
 	const a = Component.create("144");
 	const b = Component.create("-12");

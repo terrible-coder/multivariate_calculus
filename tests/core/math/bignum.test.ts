@@ -2,6 +2,26 @@ import { BigNum } from "../../../src/core/math/bignum";
 import { Component } from "../../../src/core/math/component";
 import { mathenv } from "../../../src/core/env";
 
+describe("Checks method definitions", function() {
+	it("Instance methods", function() {
+		const obj = Component.ONE;
+		expect(obj.getDefinition("add")).toBe("instance");
+		expect(obj.getDefinition("sub")).toBe("instance");
+	});
+
+	it("Class methods", function() {
+		const obj = Component.ONE;
+		expect(obj.getDefinition("exp")).toBe("static");
+		expect(obj.getDefinition("sin")).toBe("static");
+	});
+
+	it("Non methods", function() {
+		const obj = Component.ONE;
+		expect(obj.getDefinition("abc")).toBe("undefined");
+		expect(obj.getDefinition("foo")).toBe("undefined");
+	});
+});
+
 describe("Creates numbers", function() {
 	describe("from constructor", function() {
 		it("from 1 real", function() {

@@ -2,6 +2,7 @@ import { trimZeroes, align, pad } from "./parsers";
 import { Component } from "./component";
 import { MathContext } from "./context";
 import { mathenv } from "../env";
+import { Numerical } from "../definitions";
 
 /**
  * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
@@ -23,7 +24,7 @@ import { mathenv } from "../env";
  * \\(\imath\\) for the complex numbers. Again, \\(e_2=\jmath\\) and \\(e_3=k\\)
  * are the [Hamilton's units for quaternions](https://en.wikipedia.org/wiki/Quaternion).
  */
-export class BigNum {
+export class BigNum extends Numerical {
 
 	/**
 	 * The components of the number represented by this object. The first one
@@ -52,6 +53,7 @@ export class BigNum {
 	 */
 	constructor(values: Component[]);
 	constructor(...values: Component[] | [Component[]]) {
+		super();
 		let args: Component[];
 		const temp = values[0];
 		if(temp instanceof Array)
@@ -60,6 +62,10 @@ export class BigNum {
 		args = trimZeroes<Component>(args, "end", x => x.integer === "" && x.decimal === "");
 		this.dim = Math.pow(2, Math.ceil(Math.log2(args.length || 1)));
 		this.components = pad(args, this.dim - args.length, Component.ZERO, "end");
+	}
+
+	public get classRef() {
+		return BigNum;
 	}
 
 	/**
@@ -144,7 +150,9 @@ export class BigNum {
 	 * @param context Context settings to use.
 	 */
 	public static absSq(x: BigNum, context: MathContext): BigNum;
-	public static absSq(x: BigNum, context=mathenv.mode) {
+	public static absSq(x: BigNum, ...args: any[]): BigNum;
+	public static absSq(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		return new BigNum(x.components.reduce((prev, curr) => prev.add(curr.mul(curr, context), context), Component.ZERO));
 	}
 
@@ -155,7 +163,9 @@ export class BigNum {
 	 */
 	public static abs(x: BigNum): BigNum;
 	public static abs(x: BigNum, context: MathContext): BigNum;
-	public static abs(x: BigNum, context=mathenv.mode) {
+	public static abs(x: BigNum, ...args: any[]): BigNum;
+	public static abs(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const magsq = x.components.reduce((prev, curr) => prev.add(curr.pow(Component.TWO)), Component.ZERO);
 		return new BigNum(magsq.pow(Component.create("0.5"), context));
 	}
@@ -205,7 +215,9 @@ export class BigNum {
 	 * @returns this + that.
 	 */
 	public add(that: BigNum, context: MathContext): BigNum;
-	public add(that: BigNum, context=mathenv.mode) {
+	public add(that: BigNum, ...args: any[]): BigNum;
+	public add(that: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
@@ -235,7 +247,9 @@ export class BigNum {
 	 * @returns this - that.
 	 */
 	public sub(that: BigNum, context: MathContext): BigNum;
-	public sub(that: BigNum, context=mathenv.mode) {
+	public sub(that: BigNum, ...args: any[]): BigNum;
+	public sub(that: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
@@ -260,7 +274,9 @@ export class BigNum {
 	 * @returns this * that.
 	 */
 	public mul(that: BigNum, context: MathContext): BigNum;
-	public mul(that: BigNum, context=mathenv.mode) {
+	public mul(that: BigNum, ...args: any[]): BigNum;
+	public mul(that: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const zero = new BigNum(Component.ZERO);
 		if(this.equals(zero, context) || that.equals(zero, context))
 			return zero;
@@ -324,11 +340,13 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public div(that: BigNum, side: "left" | "right", context: MathContext): BigNum;
-	public div(that: BigNum, a?: MathContext | "left" | "right", b?: MathContext) {
+	public div(that: BigNum, ...args: any[]): BigNum;
+	public div(that: BigNum, ...args: any[]) {
+		const a = args[0], b = args[1];
 		let side: "left" | "right";
 		let context: MathContext;
 		if(b === undefined) {
-			if(typeof a === "string") {
+			if(a === "left" || a === "right") {
 				side = a;
 				context = mathenv.mode;
 			} else {
@@ -361,7 +379,9 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static sin(x: BigNum, context: MathContext): BigNum;
-	public static sin(x: BigNum, context=mathenv.mode) {
+	public static sin(x: BigNum, ...args: any[]): BigNum;
+	public static sin(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -389,7 +409,9 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static cos(x: BigNum, context: MathContext): BigNum;
-	public static cos(x: BigNum, context=mathenv.mode) {
+	public static cos(x: BigNum, ...args: any[]): BigNum;
+	public static cos(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -417,7 +439,9 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static tan(x: BigNum, context: MathContext): BigNum;
-	public static tan(x: BigNum, context=mathenv.mode) {
+	public static tan(x: BigNum, ...args: any[]): BigNum;
+	public static tan(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -462,7 +486,9 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static asin(x: BigNum, context: MathContext): BigNum;
-	public static asin(x: BigNum, context=mathenv.mode) {
+	public static asin(x: BigNum, ...args: any[]): BigNum;
+	public static asin(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -500,7 +526,9 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static acos(x: BigNum, context: MathContext): BigNum;
-	public static acos(x: BigNum, context=mathenv.mode) {
+	public static acos(x: BigNum, ...args: any[]): BigNum;
+	public static acos(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -531,7 +559,9 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static sinh(x: BigNum, context: MathContext): BigNum;
-	public static sinh(x: BigNum, context=mathenv.mode) {
+	public static sinh(x: BigNum, ...args: any[]): BigNum;
+	public static sinh(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -553,7 +583,9 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static cosh(x: BigNum, context: MathContext): BigNum;
-	public static cosh(x: BigNum, context=mathenv.mode) {
+	public static cosh(x: BigNum, ...args: any[]): BigNum;
+	public static cosh(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -575,7 +607,9 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static tanh(x: BigNum, context: MathContext): BigNum;
-	public static tanh(x: BigNum, context=mathenv.mode) {
+	public static tanh(x: BigNum, ...args: any[]): BigNum;
+	public static tanh(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -597,7 +631,9 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static exp(x: BigNum, context: MathContext): BigNum;
-	public static exp(x: BigNum, context=mathenv.mode) {
+	public static exp(x: BigNum, ...args: any[]): BigNum;
+	public static exp(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -628,7 +664,9 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static ln(x: BigNum, context: MathContext): BigNum;
-	public static ln(x: BigNum, context=mathenv.mode) {
+	public static ln(x: BigNum, ...args: any[]): BigNum;
+	public static ln(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
