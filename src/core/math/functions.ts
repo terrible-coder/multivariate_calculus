@@ -1,7 +1,18 @@
 import { Numerical } from "../definitions";
 
-/** The negative value of its argument. */
+/**
+ * The negative value of its argument.
+ * @param x A number.
+ */
 export function neg(x: number): number;
+/**
+ * The negative value of its argument. This function looks for the definition of
+ * the negation function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's negation function.
+ * @throws If negation is not defined for the argument object type.
+ */
 export function neg<T extends Numerical>(x: T, ...args: any[]): T;
 export function neg<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -16,8 +27,19 @@ export function neg<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.neg(x, ...args);
 }
 
-/** The trigonometric sine function. */
+/**
+ * The trigonometric sine function.
+ * @param x A number.
+ */
 export function sin(x: number): number;
+/**
+ * The trigonometric sine function. This function looks for the definition of
+ * the sine function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's sine function.
+ * @throws If the sine function is not defined for the argument object type.
+ */
 export function sin<T extends Numerical>(x: T, ...args: any[]): T;
 export function sin<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -32,8 +54,19 @@ export function sin<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.sin(x, ...args);
 }
 
-/** The trigonometric cosine function. */
+/**
+ * The trigonometric cosine function.
+ * @param x A number.
+ */
 export function cos(x: number): number;
+/**
+ * The trigonometric cosine function. This function looks for the definition of
+ * the cosine function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's cosine function.
+ * @throws If the cosine function is not defined for the argument object type.
+ */
 export function cos<T extends Numerical>(x: T, ...args: any[]): T;
 export function cos<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -48,8 +81,19 @@ export function cos<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.cos(x, ...args);
 }
 
-/** The trigonometric tangent function. */
+/**
+ * The trigonometric tangent function.
+ * @param x A number.
+ */
 export function tan(x: number): number;
+/**
+ * The trigonometric tangent function. This function looks for the definition of
+ * the tangent function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's tangent function.
+ * @throws If the tangent function is not defined for the argument object type.
+ */
 export function tan<T extends Numerical>(x: T, ...args: any[]): T;
 export function tan<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -64,8 +108,19 @@ export function tan<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.tan(x, ...args);
 }
 
-/** The inverse trigonometric sine function. */
+/**
+ * The inverse trigonometric sine function.
+ * @param x A number.
+ */
 export function asin(x: number): number;
+/**
+ * The inverse trigonometric sine function. This function looks for the definition of
+ * the inverse sine function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's inverse sine function.
+ * @throws If the inverse sine function is not defined for the argument object type.
+ */
 export function asin<T extends Numerical>(x: T, ...args: any[]): T;
 export function asin<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -80,8 +135,19 @@ export function asin<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.asin(x, ...args);
 }
 
-/** The inverse trigonometric cosine function. */
+/**
+ * The inverse trigonometric cosine function.
+ * @param x A number.
+ */
 export function acos(x: number): number;
+/**
+ * The inverse trigonometric cosine function. This function looks for the definition of
+ * the inverse cosine function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's inverse cosine function.
+ * @throws If the inverse cosine function is not defined for the argument object type.
+ */
 export function acos<T extends Numerical>(x: T, ...args: any[]): T;
 export function acos<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -96,8 +162,19 @@ export function acos<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.acos(x, ...args);
 }
 
-/** The inverse trigonometric tangent function. */
+/**
+ * The inverse trigonometric tangent function.
+ * @param x A number.
+ */
 export function atan(x: number): number;
+/**
+ * The inverse trigonometric tangent function. This function looks for the definition of
+ * the inverse tangent function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's inverse tangent function.
+ * @throws If the inverse tangent function is not defined for the argument object type.
+ */
 export function atan<T extends Numerical>(x: T, ...args: any[]): T;
 export function atan<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -112,8 +189,19 @@ export function atan<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.atan(x, ...args);
 }
 
-/** The hyperbolic sine function. */
+/**
+ * The hyperbolic sine function.
+ * @param x A number.
+ */
 export function sinh(x: number): number;
+/**
+ * The hyperbolic sine function. This function looks for the definition of
+ * the sinh function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's hyperbolic sine function.
+ * @throws If the hyperbolic sine function is not defined for the argument object type.
+ */
 export function sinh<T extends Numerical>(x: T, ...args: any[]): T;
 export function sinh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -128,8 +216,19 @@ export function sinh<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.sinh(x, ...args);
 }
 
-/** The hyperbolic cosine function. */
+/**
+ * The hyperbolic cosine function.
+ * @param x A number.
+ */
 export function cosh(x: number): number;
+/**
+ * The hyperbolic cosine function. This function looks for the definition of
+ * the cosh function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's hyperbolic cosine function.
+ * @throws If the hyperbolic cosine function is not defined for the argument object type.
+ */
 export function cosh<T extends Numerical>(x: T, ...args: any[]): T;
 export function cosh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -144,8 +243,19 @@ export function cosh<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.cosh(x, ...args);
 }
 
-/** The hyperbolic tangent function. */
+/**
+ * The hyperbolic tangent function.
+ * @param x A number.
+ */
 export function tanh(x: number): number;
+/**
+ * The hyperbolic tangent function. This function looks for the definition of
+ * the tanh function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's hyperbolic tangent function.
+ * @throws If the hyperbolic tangent function is not defined for the argument object type.
+ */
 export function tanh<T extends Numerical>(x: T, ...args: any[]): T;
 export function tanh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -160,8 +270,19 @@ export function tanh<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.tanh(x, ...args);
 }
 
-/** The inverse hyperbolic sine function. */
+/**
+ * The inverse hyperbolic sine function.
+ * @param x A number.
+ */
 export function asinh(x: number): number;
+/**
+ * The inverse hyperbolic sine function. This function looks for the definition of
+ * the inverse sinh function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's inverse hyperbolic sine function.
+ * @throws If the inverse hyperbolic sine function is not defined for the argument object type.
+ */
 export function asinh<T extends Numerical>(x: T, ...args: any[]): T;
 export function asinh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -176,8 +297,19 @@ export function asinh<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.asinh(x, ...args);
 }
 
-/** The inverse hyperbolic cosine function. */
+/**
+ * The inverse hyperbolic cosine function.
+ * @param x A number.
+ */
 export function acosh(x: number): number;
+/**
+ * The inverse hyperbolic cosine function. This function looks for the definition of
+ * the inverse cosh function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's inverse hyperbolic cosine function.
+ * @throws If the inverse hyperbolic cosine function is not defined for the argument object type.
+ */
 export function acosh<T extends Numerical>(x: T, ...args: any[]): T;
 export function acosh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -192,8 +324,19 @@ export function acosh<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.acosh(x, ...args);
 }
 
-/** The inverse hyperbolic tangent function. */
+/**
+ * The inverse hyperbolic tangent function.
+ * @param x A number.
+ */
 export function atanh(x: number): number;
+/**
+ * The inverse hyperbolic tangent function. This function looks for the definition of
+ * the inverse tanh function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's inverse hyperbolic tangent function.
+ * @throws If the inverse hyperbolic tangent function is not defined for the argument object type.
+ */
 export function atanh<T extends Numerical>(x: T, ...args: any[]): T;
 export function atanh<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -208,8 +351,19 @@ export function atanh<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.atanh(x, ...args);
 }
 
-/** The common logarithm function (to the base 10). */
+/**
+ * The common logarithm function (to the base $ 10 $).
+ * @param x A number.
+ */
 export function log(x: number): number;
+/**
+ * The common logarithm function (to the base $ 10 $). This function looks for the definition of
+ * the log function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's common log function.
+ * @throws If the common log function is not defined for the argument object type.
+ */
 export function log<T extends Numerical>(x: T, ...args: any[]): T;
 export function log<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -224,8 +378,19 @@ export function log<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.log(x, ...args);
 }
 
-/** The natural logarithm function (to the base `e`). */
+/**
+ * The natural logarithm function (to the base $ e $).
+ * @param x A number.
+ */
 export function ln(x: number): number;
+/**
+ * The natural logarithm function (to the base $ e $). This function looks for the definition of
+ * the ln function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's log function.
+ * @throws If the log function is not defined for the argument object type.
+ */
 export function ln<T extends Numerical>(x: T, ...args: any[]): T;
 export function ln<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -240,8 +405,19 @@ export function ln<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.ln(x, ...args);
 }
 
-/** The exponentiation function. */
+/**
+ * The exponential function.
+ * @param x A number.
+ */
 export function exp(x: number): number;
+/**
+ * The exponential function. This function looks for the definition of
+ * the exp function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's exponential function.
+ * @throws If the exponential function is not defined for the argument object type.
+ */
 export function exp<T extends Numerical>(x: T, ...args: any[]): T;
 export function exp<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -256,8 +432,19 @@ export function exp<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.exp(x, ...args);
 }
 
-/** The absolute value function. */
+/**
+ * The absolute value function.
+ * @param x A number.
+ */
 export function abs(x: number): number;
+/**
+ * The absolute value function. This function looks for the definition of
+ * the absolute value function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's sine function.
+ * @throws If the sine function is not defined for the argument object type.
+ */
 export function abs<T extends Numerical>(x: T, ...args: any[]): T;
 export function abs<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -272,8 +459,19 @@ export function abs<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.abs(x, ...args);
 }
 
-/** The greatest integer function. */
+/**
+ * The greatest integer function.
+ * @param x A number.
+ */
 export function floor(x: number): number;
+/**
+ * The greatest integer function. This function looks for the definition of
+ * the floor function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's floor function.
+ * @throws If the floor function is not defined for the argument object type.
+ */
 export function floor<T extends Numerical>(x: T, ...args: any[]): T;
 export function floor<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")
@@ -288,8 +486,19 @@ export function floor<T extends Numerical>(x: number | T, ...args: any[]) {
 	return x.classRef.floor(x, ...args);
 }
 
-/** The smallest integer function. */
+/**
+ * The smallest integer function.
+ * @param x A number.
+ */
 export function ceil(x: number): number;
+/**
+ * The smallest integer function. This function looks for the definition of
+ * the ceil function in the [[Numercal]] object.
+ * @template T Asserts object passed to be [[Numerical]].
+ * @param x A [[Numerical]].
+ * @param args Any additional parameters required by the object's ceil function.
+ * @throws If the ceil function is not defined for the argument object type.
+ */
 export function ceil<T extends Numerical>(x: T, ...args: any[]): T;
 export function ceil<T extends Numerical>(x: number | T, ...args: any[]) {
 	if(typeof x === "number")

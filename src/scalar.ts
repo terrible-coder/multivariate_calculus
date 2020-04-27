@@ -61,7 +61,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	 */
 	public abstract pow(that: Scalar): Scalar;
 
+	/**
+	 * Computes the absolute value of a [[Scalar]].
+	 * @param x A constant scalar.
+	 */
 	public static abs(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Computes the absolute value of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static abs(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static abs(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -69,7 +77,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.ABS, x);
 	}
 
+	/**
+	 * Calculates the trigonometric sine of a [[Scalar]].
+	 * @param x A constant scalar.
+	 */
 	public static sin(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the trigonometric sine of a [[Scalar]].
+	 * @param x A scalar variable or expression
+	 */
 	public static sin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static sin(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -77,7 +93,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.SIN, x);
 	}
 
+	/**
+	 * Calculates the trigonometric cosine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static cos(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the trigonometric cosine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static cos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static cos(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -85,7 +109,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.COS, x);
 	}
 
+	/**
+	 * Calculates the trigonometric tangent of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static tan(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the trigonometric tangent of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static tan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static tan(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -93,7 +125,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.TAN, x);
 	}
 
+	/**
+	 * Calculates the inverse trigonometric sine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static asin(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse trigonometric sine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static asin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static asin(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -101,7 +141,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.ASIN, x);
 	}
 
+	/**
+	 * Calculates the inverse trigonometric cosine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static acos(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse trigonometric cosine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static acos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static acos(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -109,7 +157,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.ACOS, x);
 	}
 
+	/**
+	 * Calculates the inverse trigonometric tangent of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static atan(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse trigonometric tangent of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static atan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static atan(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -117,7 +173,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.ATAN, x);
 	}
 
+	/**
+	 * Calculates the hyperbolic sine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static sinh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the hyperbolic sine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static sinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static sinh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -125,7 +189,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.SINH, x);
 	}
 
+	/**
+	 * Calculates the hyperbolic cosine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static cosh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the hyperbolic cosine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static cosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static cosh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -133,7 +205,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.COSH, x);
 	}
 
+	/**
+	 * Calculates the hyperbolic tangent of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static tanh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the hyperbolic tangent of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static tanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static tanh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -141,7 +221,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.TANH, x);
 	}
 
+	/**
+	 * Calculates the inverse hyperbolic sine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static asinh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse hyperbolic sine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static asinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static asinh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -149,7 +237,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.ASINH, x);
 	}
 
+	/**
+	 * Calculates the inverse hyperbolic cosine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static acosh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse hyperbolic cosine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static acosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static acosh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -157,7 +253,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.ACOSH, x);
 	}
 
+	/**
+	 * Calculates the inverse hyperbolic tangent of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static atanh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse hyperbolic tangent of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static atanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static atanh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -165,7 +269,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.ATANH, x);
 	}
 
+	/**
+	 * Calculates the exponential of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static exp(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the exponential of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static exp(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static exp(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -173,7 +285,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.EXP, x);
 	}
 
+	/**
+	 * Calculates the natural logarithm (to the base $ e $) of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static ln(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the natural logarithm (to the base $ e $) of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static ln(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static ln(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -181,7 +301,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.LN, x);
 	}
 
+	/**
+	 * Calculates the common logarithm (to the base $ 10 $) of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static log(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the common logarithm (to the base $ 10 $) of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static log(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static log(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -189,7 +317,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.LOG, x);
 	}
 
+	/**
+	 * Evaluates the largest integer less than or equal to a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static floor(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Evaluates the largest integer less than or equal to a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static floor(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static floor(x: Scalar) {
 		if(x instanceof Scalar.Constant)
@@ -197,7 +333,15 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 		return new Scalar.Expression(UnaryOperator.FLOOR, x);
 	}
 
+	/**
+	 * Evaluates the smallest integer greater than or equal to a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
 	public static ceil(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Evaluates the smallest integer greater than or equal to a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
 	public static ceil(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static ceil(x: Scalar) {
 		if(x instanceof Scalar.Constant)
