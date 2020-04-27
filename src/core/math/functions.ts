@@ -7,7 +7,7 @@ import { Numerical } from "../definitions";
 export function neg(x: number): number;
 /**
  * The negative value of its argument. This function looks for the definition of
- * the negation function in the [[Numercal]] object.
+ * the negation function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's negation function.
@@ -34,7 +34,7 @@ export function neg<T extends Numerical>(x: number | T, ...args: any[]) {
 export function sin(x: number): number;
 /**
  * The trigonometric sine function. This function looks for the definition of
- * the sine function in the [[Numercal]] object.
+ * the sine function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's sine function.
@@ -61,7 +61,7 @@ export function sin<T extends Numerical>(x: number | T, ...args: any[]) {
 export function cos(x: number): number;
 /**
  * The trigonometric cosine function. This function looks for the definition of
- * the cosine function in the [[Numercal]] object.
+ * the cosine function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's cosine function.
@@ -88,7 +88,7 @@ export function cos<T extends Numerical>(x: number | T, ...args: any[]) {
 export function tan(x: number): number;
 /**
  * The trigonometric tangent function. This function looks for the definition of
- * the tangent function in the [[Numercal]] object.
+ * the tangent function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's tangent function.
@@ -115,7 +115,7 @@ export function tan<T extends Numerical>(x: number | T, ...args: any[]) {
 export function asin(x: number): number;
 /**
  * The inverse trigonometric sine function. This function looks for the definition of
- * the inverse sine function in the [[Numercal]] object.
+ * the inverse sine function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's inverse sine function.
@@ -142,7 +142,7 @@ export function asin<T extends Numerical>(x: number | T, ...args: any[]) {
 export function acos(x: number): number;
 /**
  * The inverse trigonometric cosine function. This function looks for the definition of
- * the inverse cosine function in the [[Numercal]] object.
+ * the inverse cosine function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's inverse cosine function.
@@ -169,7 +169,7 @@ export function acos<T extends Numerical>(x: number | T, ...args: any[]) {
 export function atan(x: number): number;
 /**
  * The inverse trigonometric tangent function. This function looks for the definition of
- * the inverse tangent function in the [[Numercal]] object.
+ * the inverse tangent function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's inverse tangent function.
@@ -196,7 +196,7 @@ export function atan<T extends Numerical>(x: number | T, ...args: any[]) {
 export function sinh(x: number): number;
 /**
  * The hyperbolic sine function. This function looks for the definition of
- * the sinh function in the [[Numercal]] object.
+ * the sinh function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's hyperbolic sine function.
@@ -223,7 +223,7 @@ export function sinh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function cosh(x: number): number;
 /**
  * The hyperbolic cosine function. This function looks for the definition of
- * the cosh function in the [[Numercal]] object.
+ * the cosh function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's hyperbolic cosine function.
@@ -250,7 +250,7 @@ export function cosh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function tanh(x: number): number;
 /**
  * The hyperbolic tangent function. This function looks for the definition of
- * the tanh function in the [[Numercal]] object.
+ * the tanh function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's hyperbolic tangent function.
@@ -277,7 +277,7 @@ export function tanh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function asinh(x: number): number;
 /**
  * The inverse hyperbolic sine function. This function looks for the definition of
- * the inverse sinh function in the [[Numercal]] object.
+ * the inverse sinh function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's inverse hyperbolic sine function.
@@ -304,7 +304,7 @@ export function asinh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function acosh(x: number): number;
 /**
  * The inverse hyperbolic cosine function. This function looks for the definition of
- * the inverse cosh function in the [[Numercal]] object.
+ * the inverse cosh function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's inverse hyperbolic cosine function.
@@ -331,7 +331,7 @@ export function acosh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function atanh(x: number): number;
 /**
  * The inverse hyperbolic tangent function. This function looks for the definition of
- * the inverse tanh function in the [[Numercal]] object.
+ * the inverse tanh function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's inverse hyperbolic tangent function.
@@ -358,7 +358,7 @@ export function atanh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function log(x: number): number;
 /**
  * The common logarithm function (to the base $ 10 $). This function looks for the definition of
- * the log function in the [[Numercal]] object.
+ * the log function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's common log function.
@@ -385,7 +385,7 @@ export function log<T extends Numerical>(x: number | T, ...args: any[]) {
 export function ln(x: number): number;
 /**
  * The natural logarithm function (to the base $ e $). This function looks for the definition of
- * the ln function in the [[Numercal]] object.
+ * the ln function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's log function.
@@ -412,7 +412,7 @@ export function ln<T extends Numerical>(x: number | T, ...args: any[]) {
 export function exp(x: number): number;
 /**
  * The exponential function. This function looks for the definition of
- * the exp function in the [[Numercal]] object.
+ * the exp function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's exponential function.
@@ -439,7 +439,7 @@ export function exp<T extends Numerical>(x: number | T, ...args: any[]) {
 export function abs(x: number): number;
 /**
  * The absolute value function. This function looks for the definition of
- * the absolute value function in the [[Numercal]] object.
+ * the absolute value function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's sine function.
@@ -466,7 +466,7 @@ export function abs<T extends Numerical>(x: number | T, ...args: any[]) {
 export function floor(x: number): number;
 /**
  * The greatest integer function. This function looks for the definition of
- * the floor function in the [[Numercal]] object.
+ * the floor function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's floor function.
@@ -493,7 +493,7 @@ export function floor<T extends Numerical>(x: number | T, ...args: any[]) {
 export function ceil(x: number): number;
 /**
  * The smallest integer function. This function looks for the definition of
- * the ceil function in the [[Numercal]] object.
+ * the ceil function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
  * @param args Any additional parameters required by the object's ceil function.
