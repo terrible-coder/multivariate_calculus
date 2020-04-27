@@ -82,6 +82,10 @@ export interface Expression extends Evaluable {
 	readonly op: Operator;
 	/** Array of `Evaluable` quantity/quantities `this.op` operates on. */
 	readonly operands: Evaluable[];
+
+	/** Array of parameters needed by operator method other than the operands. */
+	readonly rest: any[];
+
 	/**
 	 * The left hand side operand for `this.op`.
 	 * @throws If `this.op` is a `UnaryOperator`.

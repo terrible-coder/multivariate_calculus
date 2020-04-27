@@ -531,6 +531,7 @@ export namespace Vector {
 		readonly type = "expression";
 		readonly classRef = Vector.Expression;
 		readonly arg_list: Set<_Variable>;
+		readonly rest: any[];
 		readonly operands: Evaluable[] = [];
 		/**
 		 * Returns the components of `this` vector. The index values start
@@ -548,7 +549,7 @@ export namespace Vector {
 		 * @param rhs The right hand side argument for the root operator.
 		 * @param X The accessor function which defines what the `i`th element should be.
 		 */
-		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, X: (i: number) => Scalar);
+		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, X: (i: number) => Scalar, ...args: any[]);
 		/**
 		 * Creates a vector expression for a binary operator with left and right
 		 * hand side arguments.
@@ -556,18 +557,22 @@ export namespace Vector {
 		 * @param arg The argument for the root operator.
 		 * @param X The accessor function which defines what the `i`th element should be.
 		 */
-		constructor(op: UnaryOperator, arg: Evaluable, X: (i: number) => Scalar);
-		constructor(readonly op: Operator, a: Evaluable, b: Evaluable | ((i: number) => Scalar), c?: (i: number) => Scalar) {
+		constructor(op: UnaryOperator, arg: Evaluable, X: (i: number) => Scalar, ...args: any[]);
+		constructor(readonly op: Operator, ...args: any[]) {
 			super();
-			if(b instanceof Function && c === undefined) {
-				this.X = b;
-				this.arg_list = ExpressionBuilder.createArgList(a);
-				this.operands.push(a);
-			} else if(!(b instanceof Function) && c instanceof Function) {
-				this.X = c;
-				this.arg_list = ExpressionBuilder.createArgList(a, b);
+			let a, b = undefined;
+			if(isBinaryOperator(op)) {
+				[a, b] = args.slice(0, 2);
 				this.operands.push(a, b);
+				this.X = args[2];
+				this.rest = args.slice(3);
+			} else if(isUnaryOperator(op)) {
+				a = args[0]
+				this.operands.push(a);
+				this.X = args[1];
+				this.rest = args.slice(2);
 			} else throw new Error("Illegal argument.");
+			this.arg_list = ExpressionBuilder.createArgList(a, b);
 		}
 
 		/**

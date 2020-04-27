@@ -1,7 +1,7 @@
 import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, isConstant, isVariable, Operator, Numerical } from "./core/definitions";
 import { BinaryOperator } from "./core/operators/binary";
 import { ExpressionBuilder } from "./core/expression";
-import { UnaryOperator } from "./core/operators/unary";
+import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { Vector } from "./vector";
 import { Overwrite, IndeterminateForm } from "./core/errors";
 
@@ -515,21 +515,31 @@ export namespace Scalar {
 		/** Array of `Evaluable` quantity/quantities `this.op` operates on. */
 		readonly operands: Evaluable[] = [];
 
+		readonly rest: any[];
+
 		/**
 		 * Creates a scalar expression object using a root binary operation.
 		 * @param op {BinaryOperator}
 		 * @param lhs The left hand side operand of the operator.
 		 * @param rhs The right hand side operand of the operator.
 		 */
-		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable);
+		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, ...args: any[]);
 		/**
 		 * Creates a scalar expression object using a root unary operation.
 		 * @param op {UnaryOperator}
 		 * @param arg The argument of the operator.
 		 */
-		constructor(op: UnaryOperator, arg: Evaluable);
-		constructor(readonly op: Operator, a: Evaluable, b?: Evaluable) {
+		constructor(op: UnaryOperator, arg: Evaluable, ...args: any[]);
+		constructor(readonly op: Operator, ...args: any[]) {
 			super();
+			let a, b = undefined;
+			if(isUnaryOperator(op)) {
+				a = args[0];
+				this.rest = args.slice(1);
+			} else {
+				[a, b] = args.slice(0, 2);
+				this.rest = args.slice(2);
+			}
 			this.arg_list = ExpressionBuilder.createArgList(a, b);
 			this.operands.push(a);
 			if(b !== undefined)
