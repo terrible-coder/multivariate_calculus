@@ -3,6 +3,9 @@ import { parseNum, pad, decimate, align } from "./parsers";
 import { MathContext, RoundingMode } from "./context";
 import { mathenv } from "../env";
 import { Numerical } from "../definitions";
+import { exp, ln } from "./exponential/exponential";
+import * as circ_trig from "./trigonometry/circular";
+import * as hyper_trig from "./trigonometry/hyperbolic";
 
 /**
  * Type of argument accepted by [[Component]] constructor.
@@ -510,46 +513,7 @@ export class Component extends Numerical {
 	public static exp(x: Component, ...args: any[]): Component;
 	public static exp(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		let sum = Component.ZERO;
-		let term = Component.ONE;
-		let n = Component.ZERO;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const term1 = term.mul(x, ctx).div(n.add(Component.ONE), ctx);
-			if(Component.abs(term1).equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n = n.add(Component.ONE);
-		}
-	}
-
-	/**
-	 * Evaluates the natural logarithm of a given number \\(x\\)(\\(|x| < 1\\)).
-	 * @param x A number.
-	 * @param context The context settings to use.
-	 * @ignore
-	 */
-	private static ln_less(x: Component, context=mathenv.mode) {
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		let sum = Component.ZERO;
-		let term = x;
-		let n = Component.ONE;
-		while(true) {
-			sum = sum.add(term.div(n, ctx), ctx);
-			const term1 = term.mul(x, ctx).neg;
-			const term2 = term1.div(n.add(Component.ONE, ctx), ctx);
-			if(Component.abs(term2).equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n = n.add(Component.ONE);
-		}
+		return exp(x, context);
 	}
 
 	/**
@@ -568,29 +532,7 @@ export class Component extends Numerical {
 	public static ln(x: Component, ...args: any[]): Component;
 	public static ln(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		if(x.lessEquals(Component.ZERO, context))
-			throw new TypeError("Undefined.");
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		if(x.lessThan(Component.ONE))
-			return Component.round(Component.ln(Component.ONE.div(x, ctx)).neg, context);
-		const ten = Component.create("10");
-		const limit = Component.create("0.9");
-		let k = x.integer.length - 1;
-		let tenk = Component.intpow(ten, k);
-		let f: Component;
-		while(true) {
-			f = x.div(tenk, ctx).sub(Component.ONE, ctx);
-			const abs = Component.abs(f);
-			if(abs.lessEquals(limit, ctx))
-				break;
-			tenk = tenk.mul(ten);
-			k++;
-		}
-		const res = Component.create(k).mul(Component.ln10, ctx).add(Component.ln_less(f, ctx), ctx);
-		return Component.round(res, context);
+		return ln(x, context);
 	}
 
 	/**
@@ -608,26 +550,7 @@ export class Component extends Numerical {
 	public static sin(x: Component, ...args: any[]): Component;
 	public static sin(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		x = x.mod(Component.TWO.mul(Component.PI, ctx), ctx);
-		if(Component.abs(x).equals(Component.PI, context))
-			return Component.ZERO;
-		const x_sq = x.mul(x, ctx);
-		let sum = Component.ZERO;
-		let term = x;
-		let n = 0;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const f = Component.create((2 * n + 2) * (2 * n + 3));
-			const term1 = term.mul(x_sq, ctx).div(f, ctx).neg;
-			if(term1.equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n++;
-		}
+		return circ_trig.sin(x, context);
 	}
 
 	/**
@@ -646,57 +569,7 @@ export class Component extends Numerical {
 	public static cos(x: Component, ...args: any[]): Component;
 	public static cos(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		x = x.mod(Component.TWO.mul(Component.PI, ctx), ctx);
-		const x_sq = x.mul(x, ctx);
-		let sum = Component.ZERO;
-		let term = Component.ONE;
-		let n = 0;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const f = Component.create((2*n+1) * (2*n+2));
-			const term1 = term.mul(x_sq, ctx).div(f, ctx).neg;
-			if(term1.equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n++;
-		}
-	}
-
-	/**
-	 * Computes the inverse trigonometric sine for \\(x\\) (\\(|x| < 0.5\\))
-	 * with rounding according to the given context settings.
-	 * @param x A number.
-	 * @param context The context settings to use.
-	 * @ignore
-	 */
-	private static asin_less(x: Component, context=mathenv.mode) {
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const x_sq = x.mul(x, ctx);
-		let sum = Component.ZERO;
-		let term = x;
-		let temp = x;
-		let f = Component.ONE;
-		let n = 0;
-		while(true) {
-			sum = sum.add(temp, ctx);
-			const f1 = Component.create(2*n + 3);
-			const fac = f.div(Component.create(2*n+2), ctx);
-			const term1 = term.mul(x_sq, ctx).mul(fac, ctx);
-			const temp1 = term1.div(f1, ctx);
-			if(temp1.equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			f = f1;
-			term = term1;
-			temp = temp1;
-			n++;
-		}
+		return circ_trig.cos(x, context);
 	}
 
 	/**
@@ -715,21 +588,7 @@ export class Component extends Numerical {
 	public static asin(x: Component, ...args: any[]): Component;
 	public static asin(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		if(x.lessThan(Component.ZERO))
-			return Component.asin(x.neg).neg;
-		const half = Component.create("0.5");
-		if(x.lessThan(half))
-			return Component.asin_less(x, context);
-		const ctx: MathContext = {
-			precision: context.precision + 5,
-			rounding: context.rounding
-		};
-		const piby2 = Component.PI.div(Component.TWO, ctx);
-		const z = Component.ONE.sub(x, ctx).div(Component.TWO, ctx);
-		const s = z.pow(half, ctx);
-		const temp = Component.asin_less(s, ctx);
-		const res = piby2.sub(Component.TWO.mul(temp, ctx), ctx);
-		return Component.round(res, context);
+		return circ_trig.asin(x, context);
 	}
 
 	/**
@@ -748,20 +607,7 @@ export class Component extends Numerical {
 	public static acos(x: Component, ...args: any[]): Component;
 	public static acos(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: context.precision + 5,
-			rounding: context.rounding
-		};
-		const half = Component.create("0.5");
-		if(Component.abs(x).lessThan(half)) {
-			const res = Component.PI.mul(half, ctx).sub(Component.asin_less(x, ctx), ctx);
-			return Component.round(res, context);
-		}
-		const z = Component.ONE.sub(x, ctx).div(Component.TWO, ctx);
-		const s = z.pow(half, ctx);
-		const temp = Component.asin(s, ctx);
-		const res = Component.TWO.mul(temp, ctx);
-		return Component.round(res, context);
+		return circ_trig.acos(x, context);
 	}
 
 	/**
@@ -778,23 +624,7 @@ export class Component extends Numerical {
 	public static sinh(x: Component, ...args: any[]): Component;
 	public static sinh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const x_sq = x.mul(x, ctx);
-		let sum = Component.ZERO;
-		let term = x;
-		let n = 0;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const f = Component.create((2*n + 2) * (2*n + 3));
-			const term1 = term.mul(x_sq, ctx).div(f, ctx);
-			if(term1.equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n++;
-		}
+		return hyper_trig.sinh(x, context);
 	}
 
 	/**
@@ -811,23 +641,7 @@ export class Component extends Numerical {
 	public static cosh(x: Component, ...args: any[]): Component;
 	public static cosh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const x_sq = x.mul(x, ctx);
-		let sum = Component.ZERO;
-		let term = Component.ONE;
-		let n = 0;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const f = Component.create((2*n + 1) * (2*n + 2));
-			const term1 = term.mul(x_sq, ctx).div(f, ctx);
-			if(term1.equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n++;
-		}
+		return hyper_trig.cosh(x, context);
 	}
 
 	/**
@@ -845,15 +659,7 @@ export class Component extends Numerical {
 	public static asinh(x: Component, ...args: any[]): Component;
 	public static asinh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const a = x;
-		const b = x.pow(Component.TWO, ctx).add(Component.ONE, ctx).pow(Component.create("0.5"), ctx);
-		const exp = a.add(b, ctx);
-		const res = Component.ln(exp, ctx);
-		return Component.round(res, context);
+		return hyper_trig.asinh(x, context);
 	}
 
 	/**
@@ -872,15 +678,7 @@ export class Component extends Numerical {
 	public static acosh(x: Component, ...args: any[]): Component;
 	public static acosh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const a = x;
-		const b = x.pow(Component.TWO, ctx).sub(Component.ONE, ctx).pow(Component.create("0.5"), ctx);
-		const exp = a.add(b, ctx);
-		const res = Component.ln(exp, ctx);
-		return Component.round(res, context);
+		return hyper_trig.acosh(x, context);
 	}
 
 	/**
