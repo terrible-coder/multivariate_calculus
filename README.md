@@ -9,7 +9,7 @@ multivariate_calculus
 [![Typescript](https://img.shields.io/badge/made_with-typescript-007ACC?style=flat-square&logo=typescript)](http://typescriptlang.org/)
 [![License](https://img.shields.io/github/license/terrible-coder/multivariate_calculus?style=flat-square)](https://opensource.org/licenses/MIT)
 
-A zero dependency libray that handles calculus of several variables in
+A zero dependency library that handles calculus of several variables in
 multidimensional space. It works with both TypeScript and JavaScript projects
 seamlessly. This library is so designed that you can write your mathematics code
 as you would do maths in pen and paper.
@@ -30,7 +30,7 @@ This will tell the HTML that an external script is being referenced.
 Now if you wish to, say, create a new constant scalar object, you can say
 ```javascript
 const a = Scalar.constant(5);
-console.log(a);
+print(a);
 ```
 If you open up the developer console window in the browser you will be able to
 see what the object `a` looks like.
@@ -54,7 +54,7 @@ package under the name `mc`. If we try to recreate the same example from above,
 you would have to write
 ```javascript
 const a = mc.Scalar.constant(5);
-console.log(a);
+mc.print(a);
 ```
 
 You may also avoid having to write `mc` over and over again by modifying the
@@ -76,10 +76,22 @@ that it is installed. If you are unfamiliar with TypeScript check out their
 Once that is done you can now import stuff from this package by using just one
 line at the top of your `.ts` file. To recreate the above example in TypeScript:
 ```typescript
-import { Scalar } from "multivariate_calculus";
+import { Scalar, print } from "multivariate_calculus";
 
 const a = Scalar.constant(5);
-console.log(a);
+print(a);
+```
+
+The library now comes with cleaner global math functions which you can call with
+any object. You can even perform trigonometry on `Scalar` objects by calling the global
+functions
+
+```typescript
+const x = Scalar.variable("x");
+const y = sin(x);
+print(y.at(new Map([
+	[x, pi]
+])));
 ```
 
 -------------------

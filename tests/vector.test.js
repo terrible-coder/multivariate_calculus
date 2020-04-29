@@ -73,7 +73,7 @@ describe("Vector constants", function() {
 	});
 
 	it("Calculates magnitude", function() {
-		const mag = sqrt(random.dot(random));
+		const mag = Scalar.constant(Math.sqrt(random.dot(random).value));
 		expect(Vector.mag(random).equals(mag)).toBe(true);
 		expect(Vector.mag(B).value).toBe(Math.sqrt(3));
 	});

@@ -1,7 +1,7 @@
 import { Evaluable, Variable, isExpression, isVariable, Expression, Constant } from "./definitions";
 import { isBinaryOperator } from "./operators/binary";
 import { isUnaryOperator } from "./operators/unary";
-import { math } from "./math/math";
+import * as func from "./math/functions";
 
 /**
  * Contains helper functions needed by any class that is an [[Expression]].
@@ -48,8 +48,8 @@ export namespace ExpressionBuilder {
 	 */
 	export function evaluateAt(exp: Expression, values: Map<Variable, Constant>) {
 		if(isBinaryOperator(exp.op))
-			return simplify(exp.lhs, values)[exp.op](simplify(exp.rhs, values));
+			return simplify(exp.lhs, values)[exp.op](simplify(exp.rhs, values), ...exp.rest);
 		if(isUnaryOperator(exp.op))
-			return (<any>math[exp.op])(simplify(exp.arg, values));
+			return (<any>func)[exp.op](simplify(exp.arg, values), ...exp.rest);
 	}
 }

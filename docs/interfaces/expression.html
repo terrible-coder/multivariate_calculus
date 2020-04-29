@@ -6,6 +6,8 @@
 	<title>Expression | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
@@ -135,6 +137,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="expression.html#op" class="tsd-kind-icon">op</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="expression.html#operands" class="tsd-kind-icon">operands</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="expression.html#quantity" class="tsd-kind-icon">quantity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="expression.html#rest" class="tsd-kind-icon">rest</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="expression.html#rhs" class="tsd-kind-icon">rhs</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="expression.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
@@ -157,7 +160,7 @@
 					<div class="tsd-signature tsd-kind-icon">arg<span class="tsd-signature-symbol">:</span> <a href="evaluable.html" class="tsd-signature-type">Evaluable</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L99">core/definitions.ts:99</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L103">src/core/definitions.ts:103</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -177,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">arg_<wbr>list<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><a href="variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L81">core/definitions.ts:81</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L81">src/core/definitions.ts:81</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -192,7 +195,7 @@
 					<div class="tsd-signature tsd-kind-icon">lhs<span class="tsd-signature-symbol">:</span> <a href="evaluable.html" class="tsd-signature-type">Evaluable</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L89">core/definitions.ts:89</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L93">src/core/definitions.ts:93</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -212,7 +215,7 @@
 					<div class="tsd-signature tsd-kind-icon">op<span class="tsd-signature-symbol">:</span> <a href="../globals.html#operator" class="tsd-signature-type">Operator</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L82">core/definitions.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L82">src/core/definitions.ts:82</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -222,7 +225,7 @@
 					<div class="tsd-signature tsd-kind-icon">operands<span class="tsd-signature-symbol">:</span> <a href="evaluable.html" class="tsd-signature-type">Evaluable</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L84">core/definitions.ts:84</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L84">src/core/definitions.ts:84</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -238,7 +241,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="evaluable.html">Evaluable</a>.<a href="evaluable.html#quantity">quantity</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L26">core/definitions.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L26">src/core/definitions.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -248,12 +251,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="rest" class="tsd-anchor"></a>
+					<h3>rest</h3>
+					<div class="tsd-signature tsd-kind-icon">rest<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L87">src/core/definitions.ts:87</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Array of parameters needed by operator method other than the operands.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="rhs" class="tsd-anchor"></a>
 					<h3>rhs</h3>
 					<div class="tsd-signature tsd-kind-icon">rhs<span class="tsd-signature-symbol">:</span> <a href="evaluable.html" class="tsd-signature-type">Evaluable</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L94">core/definitions.ts:94</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L98">src/core/definitions.ts:98</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -274,7 +292,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="evaluable.html">Evaluable</a>.<a href="evaluable.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L79">core/definitions.ts:79</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L79">src/core/definitions.ts:79</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -291,7 +309,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L109">core/definitions.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L113">src/core/definitions.ts:113</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -322,7 +340,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/definitions.ts#L104">core/definitions.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/503dbc7/src/core/definitions.ts#L108">src/core/definitions.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -376,6 +394,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="expression.html#quantity" class="tsd-kind-icon">quantity</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="expression.html#rest" class="tsd-kind-icon">rest</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="expression.html#rhs" class="tsd-kind-icon">rhs</a>
