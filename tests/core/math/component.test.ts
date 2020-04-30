@@ -444,6 +444,31 @@ describe("Inverse trigonometry", function() {
 		}
 		expect(Component.acos(Component.ONE)).toEqual(Component.ZERO);
 	});
+
+	it("arc tan", function() {
+		const values = [
+			"0.1",
+			"0.5",
+			"1",
+			"1.5",
+			"10",
+			"15",
+			"100",
+			"150"
+		].map(n => Component.create(n));
+		const atans = [
+			"0.09966865249116203",
+			"0.46364760900080612",
+			"0.78539816339744831",
+			"0.98279372324732907",
+			"1.4711276743037346",
+			"1.50422816301907282",
+			"1.56079666010823139",
+			"1.56412975889102839"
+		].map(n => Component.create(n));
+		for(let i = 0; i < values.length; i++)
+			expect(Component.atan(values[i])).toEqual(atans[i]);
+	});
 });
 
 describe("Hyperbolic trigonometry", function() {
