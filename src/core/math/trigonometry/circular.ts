@@ -58,7 +58,7 @@ export function cos(x: Component, context: MathContext) {
 }
 
 /**
- * Computes the inverse trigonometric sine for \\(x\\) (\\(|x| < 0.5\\))
+ * Computes the inverse trigonometric sine for $ x $ ($ |x| < 0.5 $)
  * with rounding according to the given context settings.
  * @param x A number.
  * @param context The context settings to use.

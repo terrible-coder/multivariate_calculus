@@ -26,7 +26,7 @@ export function exp(x: Component, context: MathContext) {
 }
 
 /**
- * Evaluates the natural logarithm of a given number \\(x\\)(\\(|x| < 1\\)).
+ * Evaluates the natural logarithm of a given number $ x $($ |x| < 1 $).
  * @param x A number.
  * @param context The context settings to use.
  * @ignore
@@ -51,7 +51,7 @@ function ln_less(x: Component, context: MathContext) {
 }
 
 /**
- * Calculates the natural logarithm (to the base \\(e\\)) of a given number
+ * Calculates the natural logarithm (to the base $ e $) of a given number
  * with rounding according to the given context settings.
  * @param x A number.
  * @param context The context settings to use.

@@ -17,11 +17,11 @@ import { Numerical } from "../definitions";
  * 
  * $$ x = \sum_{i=0}^{N-1} x_ie_i $$
  * 
- * where \\(N\\) represents the number of dimensions the number exists in and
- * \\(e_i\\) are the orthogonal units. The components are stored using a real
- * first convention. Therefore, by convention \\(e_0 = 1\\), the real
- * unit. The others are the imaginary units. The \\(e_1\\) is our familiar
- * \\(\imath\\) for the complex numbers. Again, \\(e_2=\jmath\\) and \\(e_3=k\\)
+ * where $ N $ represents the number of dimensions the number exists in and
+ * $ e_i $ are the orthogonal units. The components are stored using a real
+ * first convention. Therefore, by convention $ e_0 = 1 $, the real
+ * unit. The others are the imaginary units. The $ e_1 $ is our familiar
+ * $ \imath $ for the complex numbers. Again, $ e_2=\jmath $ and $ e_3=k $
  * are the [Hamilton's units for quaternions](https://en.wikipedia.org/wiki/Quaternion).
  */
 export class BigNum extends Numerical {
@@ -70,7 +70,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Checks whether `this` and `that` are equal numbers. Equality is defined
-	 * component wise. That is, two numbers \\(a\\) and \\(b\\) are equal
+	 * component wise. That is, two numbers $ a $ and $ b $ are equal
 	 * if and only if
 	 * 
 	 * $$ a_i = b_i \quad \forall i $$
@@ -82,7 +82,7 @@ export class BigNum extends Numerical {
 	public equals(that: BigNum): boolean;
 	/**
 	 * Checks whether `this` and `that` are equal numbers. Equality is defined
-	 * component wise. That is, two numbers \\(a\\) and \\(b\\) are equal
+	 * component wise. That is, two numbers $ a $ and $ b $ are equal
 	 * if and only if
 	 * 
 	 * $$ a_i = b_i \quad \forall i $$
@@ -186,7 +186,7 @@ export class BigNum extends Numerical {
 	 * Evaluates the norm of this number. Since `this` is not necessarily a real
 	 * number, the norm is defined as
 	 * $$ \text{norm } a = a^* a $$
-	 * where \\(a^*\\) is the conjugate of \\(a\\).
+	 * where $ a^* $ is the conjugate of $ a $.
 	 */
 	public norm(context=mathenv.mode) {
 		return this.conj.mul(this, context);
@@ -194,7 +194,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
-	 * That is, for two numbers \\(a\\) and \\(b\\), their addition is defined as
+	 * That is, for two numbers $ a $ and $ b $, their addition is defined as
 	 * 
 	 * $$ a + b = \sum_i a_i + b_i $$
 	 * 
@@ -205,7 +205,7 @@ export class BigNum extends Numerical {
 	public add(that: BigNum): BigNum;
 	/**
 	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
-	 * That is, for two numbers \\(a\\) and \\(b\\), their addition is defined as
+	 * That is, for two numbers $ a $ and $ b $, their addition is defined as
 	 * 
 	 * $$ a + b = \sum_i a_i + b_i $$
 	 * 
@@ -227,7 +227,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
-	 * That is, for two numbers \\(a\\) and \\(b\\), their difference is defined as
+	 * That is, for two numbers $ a $ and $ b $, their difference is defined as
 	 * 
 	 * $$ a - b = \sum_i a_i - b_i $$
 	 * 
@@ -238,7 +238,7 @@ export class BigNum extends Numerical {
 	public sub(that: BigNum): BigNum;
 	/**
 	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
-	 * That is, for two numbers \\(a\) and \\(b\\), their difference is defined as
+	 * That is, for two numbers $ a\) and $ b $, their difference is defined as
 	 * 
 	 * $$ a - b = \sum_i a_i - b_i $$
 	 * 
@@ -452,7 +452,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Helper function for inverse trig functions. Transforms the product into
-	 * a sum (\\(\alpha\\)) and difference (\\(\beta\\)).
+	 * a sum ($ \alpha $) and difference ($ \beta $).
 	 * @param x The absolute value of real part.
 	 * @param y The absolute value of imaginary part.
 	 * @param ctx The context settings to use.
@@ -652,13 +652,13 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
+	 * Calculates the natural logarithm (to the base $ e $) of a given number
 	 * with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static ln(x: BigNum): BigNum;
 	/**
-	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
+	 * Calculates the natural logarithm (to the base $ e $) of a given number
 	 * with rounding according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -684,13 +684,13 @@ export class BigNum extends Numerical {
 	}
 
 	// /**
-	//  * Calculates the common logarithm (to the base \\(10\\)) of a given number
+	//  * Calculates the common logarithm (to the base $ 10 $) of a given number
 	//  * with rounding according to [[mathenv.mode]].
 	//  * @param x A number.
 	//  */
 	// public static log(x: BigNum): BigNum;
 	// /**
-	//  * Calculates the common logarithm (to the base \\(10\\)) of a given number
+	//  * Calculates the common logarithm (to the base $ 10 $) of a given number
 	//  * with rounding according to the given context settings.
 	//  * [[MathContext]].
 	//  * @param x A number.
@@ -820,8 +820,8 @@ export namespace BigNum {
 
 	/**
 	 * Returns a single unit corresponding to a given index. The indexing starts
-	 * from 0. With \\(e_0 = 1\\) defined as the real unit and the rest (for
-	 * \\(i>0\\)) are the orthogonal imaginary units.
+	 * from 0. With $ e_0 = 1 $ defined as the real unit and the rest (for
+	 * $ i>0 $) are the orthogonal imaginary units.
 	 * @param i The index.
 	 */
 	export function e(i: number) {
