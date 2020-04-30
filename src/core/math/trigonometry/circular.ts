@@ -136,3 +136,105 @@ export function acos(x: Component, context: MathContext) {
 	const res = Component.TWO.mul(temp, ctx);
 	return Component.round(res, context);
 }
+
+/**
+ * Calculates the inverse trigonometric tangent of a number ($ x < 1 $).
+ * Method:
+ * 
+ * $$ \tan^{-1} x =\int_0^x \frac{1}{1+t^2} dt $$
+ * Since $ x < 1 $
+ * $$ \tan^{-1} = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{2n+1} $$
+ * 
+ * @param x A number.
+ * @param context The context settings to use.
+ */
+function atan_less(x: Component, context: MathContext) {
+	const ctx: MathContext = {
+		precision: 2 * context.precision,
+		rounding: context.rounding
+	};
+	const x_sq = x.mul(x, ctx);
+	let sum = Component.ZERO;
+	let temp = x;
+	let term = x;
+	let n = 0;
+	while(true) {
+		sum = sum.add(term, ctx);
+		const temp1 = temp.mul(x_sq, ctx).neg;
+		const f = Component.create(2*n + 3);
+		const term1 = temp1.div(f, ctx);
+		if(term1.equals(Component.ZERO, ctx))
+			return Component.round(sum, context);
+		temp = temp1;
+		term = term1;
+		n++;
+	}
+}
+
+/**
+ * Calculates the inverse trigonometric tangent of a number ($ x > 1 $).
+ * Method:
+ * 
+ * If $ (x-1)^2 < 2 $:
+ * 
+ * $$ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{x-1}{x+1}) $$
+ * 
+ * $ \frac{x-1}{x+1} < 1 $ always.
+ * 
+ * otherwise:
+ * 
+ * $$ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{1}{x}) $$
+ * 
+ * @param x A number.
+ * @param context The context settings to use.
+ */
+function atan_more(x: Component, context: MathContext) {
+	const ctx: MathContext = {
+		precision: context.precision + 5,
+		rounding: context.rounding
+	};
+	const check = x.sub(Component.ONE, ctx).pow(Component.TWO, ctx).lessThan(Component.TWO);
+	if(check) {
+		const less = x.sub(Component.ONE, ctx).div(x.add(Component.ONE, ctx), ctx);
+		const piby4 = Component.PI.div(Component.FOUR, ctx);
+		const res = piby4.add(atan_less(less, ctx));
+		return Component.round(res, context);
+	}
+	const less = Component.ONE.div(x, ctx);
+	const piby2 = Component.PI.div(Component.TWO, ctx);
+	const res = piby2.sub(atan_less(less, ctx));
+	return Component.round(res, context);
+}
+
+/**
+ * Calculates the inverse trigonometric tangent of a number with rounding
+ * according to the given context.
+ * 
+ * Method:
+ * The input can be divided into 3 regions for fast convergence.
+ * 1. $ x < 1 $:
+ * 
+ * $$ \tan^{-1} = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{2n+1} $$
+ * 
+ * 2. $ (x-1)^2 < 2 $:
+ * 
+ * $$ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{x-1}{x+1}) $$
+ * 
+ * 3. $ (x-1)^2 \geqslant 2 $:
+ * 
+ * $$ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{1}{x}) $$
+ * 
+ * @param x A number.
+ * @param context The context settings to use.
+ */
+export function atan(x: Component, context: MathContext): Component {
+	if(x.equals(Component.ZERO, context))
+		return Component.ZERO;
+	if(x.lessThan(Component.ZERO))
+		return atan(x.neg, context).neg;
+	if(x.equals(Component.ONE, context))
+		return Component.PI.div(Component.FOUR, context);
+	if(x.lessThan(Component.ONE))
+		return atan_less(x, context);
+	return atan_more(x, context);
+}
