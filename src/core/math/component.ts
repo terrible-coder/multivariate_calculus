@@ -49,6 +49,10 @@ export class Component extends Numerical {
 	 */
 	public static ln10 = new Component({integer: "2", decimal: "3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983"});
 
+	/**
+	 * The natural logarithm of $ 2 $ correct upto 100 decimal places.
+	 */
+	public static ln2 = new Component({integer: "", decimal: "6931471805599453094172321214581765680755001343602552541206800094933936219696947156058633269964186875"})
 
 	/**
 	 * The constant zero.
