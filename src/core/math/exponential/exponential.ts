@@ -44,20 +44,24 @@ function ln_1p(x: Component, context: MathContext) {
 		precision: 2 * context.precision,
 		rounding: context.rounding
 	};
+	const s = x.div(Component.TWO.add(x, ctx), ctx);
+	const s_sq = s.mul(s, ctx);
 	let sum = Component.ZERO;
-	let temp = x;
-	let term = x;
-	let n = 1;
+	let temp = s;
+	let term = s;
+	let n = 0;
 	while(true) {
 		sum = sum.add(term, ctx);
-		const temp1 = temp.mul(x, ctx).neg;
-		const term1 = temp1.div(Component.create(n+1), ctx);
+		const temp1 = temp.mul(s_sq, ctx);
+		const term1 = temp1.div(Component.create(2*n+3), ctx);
 		if(term1.equals(Component.ZERO, ctx))
-			return Component.round(sum, context);
+			break;
 		temp = temp1;
 		term = term1;
 		n++;
 	}
+	const res = Component.TWO.mul(sum, ctx);
+	return Component.round(res, context);
 }
 
 /**
@@ -73,19 +77,22 @@ function ln_1p(x: Component, context: MathContext) {
  * @param context The context settings to use.
  */
 function reduce_range(x: Component, context: MathContext): [number, Component] {
-	const ten = Component.create("10");
-	let k = x.integer.length - 1;
-	let tenk = Component.intpow(ten, k);
-	let f: Component;
+	const two = Component.TWO;
+	const half = Component.create("0.5");
+	const increment = x.lessThan(Component.ONE)? -1: 1;
+	const multiplier = increment === 1? two: half;
+	let k = 0;
+	let twok = Component.ONE;
+	let fplus1: Component;
 	while(true) {
-		const s = x.div(tenk, context);
-		f = s.sub(Component.ONE, context);
-		const abs = Component.abs(f);
-		if(abs.lessThan(Component.ONE))
+		fplus1 = x.div(twok, context);
+		const sq = fplus1.mul(fplus1, context);
+		if(sq.moreEquals(half, context) && sq.lessEquals(two, context))
 			break;
-		tenk = tenk.mul(ten);
-		k++;
+		twok = twok.mul(multiplier, context);
+		k += increment;
 	}
+	const f = fplus1.sub(Component.ONE, context);
 	return [k, f];
 }
 
@@ -104,19 +111,8 @@ export function ln(x: Component, context: MathContext): Component {
 		precision: context.precision + 5,
 		rounding: context.rounding
 	};
-	if(x.lessThan(Component.ONE))
-		return Component.round(ln(Component.ONE.div(x, ctx), ctx).neg, context);
 	const [k, f] = reduce_range(x, ctx);
-	let ln_1pf: Component;
-	const check = f.add(Component.ONE).pow(Component.TWO).moreThan(Component.TWO);
-	if(check) {
-		const num = Component.ONE.sub(f, ctx);
-		const den = Component.ONE.add(f, ctx);
-		const less = num.div(den, ctx);
-		const res = ln_1p(less, ctx);
-		ln_1pf = Component.ln2.sub(res, ctx);
-	} else ln_1pf = ln_1p(f, ctx);
-	const a = Component.create(k).mul(Component.ln10, ctx);
-	const res = a.add(ln_1pf, ctx);
+	let ln_1pf = ln_1p(f, ctx);
+	const res = Component.create(k).mul(Component.ln2, ctx).add(ln_1pf, ctx);
 	return Component.round(res, context);
 }
