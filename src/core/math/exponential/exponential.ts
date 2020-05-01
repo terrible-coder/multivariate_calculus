@@ -12,17 +12,34 @@ export function exp(x: Component, context: MathContext) {
 		precision: 2 * context.precision,
 		rounding: context.rounding
 	};
+	const threshold = Component.create("0.5").mul(Component.ln2, ctx);
+	// range reduction
+	let k = 0;
+	let r: Component;
+	let ln2_sum = Component.ZERO;
+	const increment = x.lessThan(Component.ZERO)? -1: 1;
+	while(true) {
+		r = x.sub(ln2_sum, ctx);
+		if(r.lessEquals(threshold, ctx))
+			break;
+		ln2_sum = increment === 1? ln2_sum.add(Component.ln2, ctx) : ln2_sum.sub(Component.ln2, ctx);
+		k += increment;
+	}
 	let sum = Component.ZERO;
 	let term = Component.ONE;
 	let n = Component.ZERO;
 	while(true) {
 		sum = sum.add(term, ctx);
-		const term1 = term.mul(x, ctx).div(n.add(Component.ONE), ctx);
-		if(Component.abs(term1).equals(Component.ZERO, ctx))
-			return Component.round(sum, context);
+		const term1 = term.mul(r, ctx).div(n.add(Component.ONE), ctx);
+		if(term1.equals(Component.ZERO, ctx))
+			break;
 		term = term1;
 		n = n.add(Component.ONE);
 	}
+	const temp = Component.intpow(Component.TWO, Math.abs(k), ctx);
+	const twok = k >= 0? temp: Component.ONE.div(temp, ctx);
+	const res = twok.mul(sum, ctx);
+	return Component.round(res, context);
 }
 
 /**
