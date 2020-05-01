@@ -28,12 +28,13 @@ export function exp(x: Component, context: MathContext) {
 /**
  * Evaluates the natural logarithm of $ 1 + x $ ($ |x| < \sqrt{2}-1 $).
  * Method:
- * For $ \ln (1+x) $ where $ |x| < 1 $ we can use the definition by integration.
+ * For faster convergence we can write $ \ln (1+x) $ as
  * 
- * $$ \ln (1+x) = \int_0^x \frac{dt}{1+t} $$
- * Since $ |x| < 1 $
+ * $$ \ln (1+x) = \ln (1+s) - \ln (1-s) $$
  * 
- * $$ \ln (1+x) = \sum_{n=1}^{\infty} (-1)^{n-1} \frac{x^n}{n} $$
+ * This gives us $ s = \frac{x}{2+x} $ and
+ * 
+ * $$ \ln (1+x) = 2 \sum_{n=0}^{\infty} \frac{s^{2n+1}}{2n+1} $$
  * 
  * @param x A number.
  * @param context The context settings to use.
@@ -69,14 +70,14 @@ function ln_1p(x: Component, context: MathContext) {
  * Method:
  * For every number $ x > 1 $ we can write it as
  * 
- * $$ x = 10^k(1 + f) $$
+ * $$ x = 2^k(1 + f) $$
  * 
  * where $ k $ is such that $ |f| < 1 $.
  * 
  * @param x A number.
  * @param context The context settings to use.
  */
-function reduce_range(x: Component, context: MathContext): [number, Component] {
+function range_adjust(x: Component, context: MathContext): [number, Component] {
 	const two = Component.TWO;
 	const half = Component.create("0.5");
 	const increment = x.lessThan(Component.ONE)? -1: 1;
@@ -111,7 +112,7 @@ export function ln(x: Component, context: MathContext): Component {
 		precision: context.precision + 5,
 		rounding: context.rounding
 	};
-	const [k, f] = reduce_range(x, ctx);
+	const [k, f] = range_adjust(x, ctx);
 	let ln_1pf = ln_1p(f, ctx);
 	const res = Component.create(k).mul(Component.ln2, ctx).add(ln_1pf, ctx);
 	return Component.round(res, context);
