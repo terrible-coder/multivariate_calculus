@@ -339,6 +339,34 @@ describe("Modulus", function() {
 	});
 });
 
+describe("Floor", function() {
+	it("For positive numbers", function() {
+		const values = new Array(10).fill(0).map((_, i) => `1.${i}`).map(n => Component.create(n));
+		for(let v of values)
+			expect(Component.floor(v)).toEqual(Component.ONE);
+	});
+
+	it("For negative numbers", function() {
+		const values = new Array(10).fill(0).map((_, i) => `-1.${i+1}`).map(n => Component.create(n));
+		for(let v of values)
+			expect(Component.floor(v)).toEqual(Component.TWO.neg);
+	});
+});
+
+describe("Ceil", function() {
+	it("For positive numbers", function() {
+		const values = new Array(10).fill(0).map((_, i) => `1.${i+1}`).map(n => Component.create(n));
+		for(let v of values)
+			expect(Component.ceil(v)).toEqual(Component.TWO);
+	});
+
+	it("For negative numbers", function() {
+		const values = new Array(10).fill(0).map((_, i) => `-1.${i}`).map(n => Component.create(n));
+		for(let v of values)
+			expect(Component.ceil(v)).toEqual(Component.ONE.neg);
+	});
+});
+
 describe("Exponential", function() {
 	it("exp", function() {
 		const E = Component.round(Component.E, mathenv.mode);
