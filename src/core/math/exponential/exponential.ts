@@ -26,7 +26,7 @@ export function exp(x: Component, context: MathContext) {
 }
 
 /**
- * Evaluates the natural logarithm of a given number $ 1 + x $ ($ |x| < \sqrt{2}-1 $).
+ * Evaluates the natural logarithm of $ 1 + x $ ($ |x| < \sqrt{2}-1 $).
  * Method:
  * For $ \ln (1+x) $ where $ |x| < 1 $ we can use the definition by integration.
  * 
@@ -39,7 +39,7 @@ export function exp(x: Component, context: MathContext) {
  * @param context The context settings to use.
  * @ignore
  */
-function ln_less(x: Component, context: MathContext) {
+function ln_1p(x: Component, context: MathContext) {
 	const ctx: MathContext = {
 		precision: 2 * context.precision,
 		rounding: context.rounding
@@ -113,9 +113,9 @@ export function ln(x: Component, context: MathContext): Component {
 		const num = Component.ONE.sub(f, ctx);
 		const den = Component.ONE.add(f, ctx);
 		const less = num.div(den, ctx);
-		const res = ln_less(less, ctx);
+		const res = ln_1p(less, ctx);
 		ln_1pf = Component.ln2.sub(res, ctx);
-	} else ln_1pf = ln_less(f, ctx);
+	} else ln_1pf = ln_1p(f, ctx);
 	const a = Component.create(k).mul(Component.ln10, ctx);
 	const res = a.add(ln_1pf, ctx);
 	return Component.round(res, context);
