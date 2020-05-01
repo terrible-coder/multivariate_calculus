@@ -452,7 +452,7 @@ export class Component extends Numerical {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const quo = this.div(that, {precision: 0, rounding: RoundingMode.FLOOR});
+		const quo = Component.floor(this.div(that));
 		const res = this.sub(that.mul(quo, ctx), ctx);
 		return Component.round(res, context);
 	}
@@ -499,6 +499,24 @@ export class Component extends Numerical {
 		};
 		const y = ex.mul(Component.ln(this, ctx), ctx);
 		return Component.round(Component.exp(y, ctx), context);
+	}
+
+	/**
+	 * The floor function. Evaluates the greatest integer less than or equal to
+	 * the given number.
+	 * @param x A number.
+	 */
+	public static floor(x: Component) {
+		return Component.round(x, {precision: 0, rounding: RoundingMode.FLOOR});
+	}
+
+	/**
+	 * The ceil function. Evaluates the smallest integer greater than or equal to
+	 * the given number.
+	 * @param x A number.
+	 */
+	public static ceil(x: Component) {
+		return Component.round(x, {precision: 0, rounding: RoundingMode.CEIL});
 	}
 
 	/**
