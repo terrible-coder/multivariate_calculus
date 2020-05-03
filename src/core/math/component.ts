@@ -466,12 +466,18 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	static intpow(base: Component, index: number, context=mathenv.mode) {
-		if(index !== (index|0))
-			throw "Only defined for integer values of the power.";
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		if(index !== (index|0) || index < 0)
+			throw "Only defined for positive integer values of the power.";
+		if(index === 0)
+			return Component.ONE;
 		let p = Component.ONE;
 		for(let i = 0; i < index; i++)
-			p = p.mul(base, context);
-		return p;
+			p = p.mul(base, ctx);
+		return Component.round(p, context);
 	}
 
 	/**
