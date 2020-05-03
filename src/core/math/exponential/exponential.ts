@@ -134,3 +134,22 @@ export function ln(x: Component, context: MathContext): Component {
 	const res = Component.create(k).mul(Component.ln2, ctx).add(ln_1pf, ctx);
 	return Component.round(res, context);
 }
+
+/**
+ * Raises `base` to the power of `ex` using the rounding according to the
+ * given context settings.
+ * @param ex A number.
+ * @param context The context settings object to use.
+ */
+export function pow(base: Component, ex: Component, context: MathContext): Component {
+	if(base.equals(Component.ZERO))
+		return Component.ZERO;
+	if(ex.decimal === "" || ex.decimal === "0")
+		return Component.intpow(base, parseInt(ex.integer) || 0, context);
+	const ctx: MathContext = {
+		precision: 2 * context.precision,
+		rounding: context.rounding
+	};
+	const y = ex.mul(Component.ln(base, ctx), ctx);
+	return Component.round(Component.exp(y, ctx), context);
+}

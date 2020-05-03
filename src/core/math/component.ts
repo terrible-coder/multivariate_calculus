@@ -3,7 +3,7 @@ import { parseNum, pad, decimate, align } from "./parsers";
 import { MathContext, RoundingMode } from "./context";
 import { mathenv } from "../env";
 import { Numerical } from "../definitions";
-import { exp, ln } from "./exponential/exponential";
+import { exp, ln, pow } from "./exponential/exponential";
 import * as circ_trig from "./trigonometry/circular";
 import * as hyper_trig from "./trigonometry/hyperbolic";
 
@@ -495,16 +495,7 @@ export class Component extends Numerical {
 	public pow(ex: Component, ...args: any[]): Component;
 	public pow(ex: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		if(this.equals(Component.ZERO))
-			return Component.ZERO;
-		if(ex.decimal === "" || ex.decimal === "0")
-			return Component.intpow(this, parseInt(ex.integer) || 0, context);
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const y = ex.mul(Component.ln(this, ctx), ctx);
-		return Component.round(Component.exp(y, ctx), context);
+		return pow(this, ex, context);
 	}
 
 	/**
