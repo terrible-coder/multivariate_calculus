@@ -142,14 +142,31 @@ export function ln(x: Component, context: MathContext): Component {
  * @param context The context settings object to use.
  */
 export function pow(base: Component, ex: Component, context: MathContext): Component {
-	if(base.equals(Component.ZERO))
+	if(base.equals(Component.ZERO, context))
 		return Component.ZERO;
-	if(ex.decimal === "" || ex.decimal === "0")
-		return Component.intpow(base, parseInt(ex.integer) || 0, context);
 	const ctx: MathContext = {
-		precision: 2 * context.precision,
+		precision: context.precision + 5,
 		rounding: context.rounding
 	};
-	const y = ex.mul(Component.ln(base, ctx), ctx);
-	return Component.round(Component.exp(y, ctx), context);
+	const exp_isInteger = ex.decimal === "" || ex.decimal === "0";
+	// const exp_isNegative = ex.lessThan(Component.ZERO);
+	// const base_isInteger = base.decimal === "" || base.decimal === "0";
+	const base_isNegative = base.lessThan(Component.ZERO);
+	if(base_isNegative && !exp_isInteger)
+		throw new TypeError("Raising negative numbers to fractional powers not defined.");
+	let sign: number;
+	let a: Component, b: Component;
+	if(base_isNegative) {
+		sign = ex.mod(Component.TWO, context).equals(Component.ZERO, context)? 1: -1;
+		a = base.neg;
+		b = ex;
+	} else {
+		sign = 1;
+		a = base;
+		b = ex;
+	}
+	const y = b.mul(Component.ln(a, ctx), ctx);
+	const temp = Component.exp(y, ctx);
+	const res = sign === 1? temp: temp.neg;
+	return Component.round(res, context);
 }
