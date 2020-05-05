@@ -3,6 +3,9 @@ import { parseNum, pad, decimate, align } from "./parsers";
 import { MathContext, RoundingMode } from "./context";
 import { mathenv } from "../env";
 import { Numerical } from "../definitions";
+import { Exponent } from "./exponential/exponential";
+import { TrigCyclic } from "./trigonometry/circular";
+import { TrigHyperbolic } from "./trigonometry/hyperbolic";
 
 /**
  * Type of argument accepted by [[Component]] constructor.
@@ -25,27 +28,31 @@ type num1d = {
 export class Component extends Numerical {
 
 	/**
-	 * The circle constant \\(\pi\\) correct upto 100 decimal places.
+	 * The circle constant \\( \pi \\) correct upto 100 decimal places.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
 	public static PI = new Component({integer: "3", decimal: "1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679"});
 
 	/**
-	 * The constant Euler's number (\\(e\\)) correct upto 100 decimal places.
+	 * The constant Euler's number (\\( e \\)) correct upto 100 decimal places.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
 	public static E = new Component({integer: "2", decimal: "7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274"});
 
 	/**
-	 * The natural logarithm of \\(10\\) correct upto 100 decimal places. This comes
+	 * The natural logarithm of \\( 10 \\) correct upto 100 decimal places. This comes
 	 * in very handy for natural base to common base logarithm.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
 	public static ln10 = new Component({integer: "2", decimal: "3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983"});
 
+	/**
+	 * The natural logarithm of \\( 2 \\) correct upto 100 decimal places.
+	 */
+	public static ln2 = new Component({integer: "", decimal: "6931471805599453094172321214581765680755001343602552541206800094933936219696947156058633269964186875"})
 
 	/**
 	 * The constant zero.
@@ -423,16 +430,16 @@ export class Component extends Numerical {
 
 	/**
 	 * The modulo operator. The extended definition for non-integer numbers has
-	 * been used. For two numbers \\(a\\) and \\(b\\),
-	 * \\[a mod b = a - b\lfloor\frac{a}{b}\rfloor\\]
+	 * been used. For two numbers \\( a \\) and \\( b \\),
+	 * \\[ a mod b = a - b\lfloor\frac{a}{b}\rfloor \\]
 	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that A number.
 	 */
 	public mod(that: Component): Component;
 	/**
 	 * The modulo operator. The extended definition for non-integer numbers has
-	 * been used. For two numbers \\(a\\) and \\(b\\),
-	 * \\[a mod b = a - b\lfloor\frac{a}{b}\rfloor\\]
+	 * been used. For two numbers \\( a \\) and \\( b \\),
+	 * \\[ a mod b = a - b\lfloor\frac{a}{b}\rfloor \\]
 	 * The result is rounded according to the given context.
 	 * @param that A number.
 	 * @param context The context settings to use.
@@ -445,7 +452,7 @@ export class Component extends Numerical {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const quo = this.div(that, {precision: 0, rounding: RoundingMode.FLOOR});
+		const quo = Component.floor(this.div(that));
 		const res = this.sub(that.mul(quo, ctx), ctx);
 		return Component.round(res, context);
 	}
@@ -459,12 +466,18 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	static intpow(base: Component, index: number, context=mathenv.mode) {
-		if(index !== (index|0))
-			throw "Only defined for integer values of the power.";
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		if(index !== (index|0) || index < 0)
+			throw "Only defined for positive integer values of the power.";
+		if(index === 0)
+			return Component.ONE;
 		let p = Component.ONE;
 		for(let i = 0; i < index; i++)
-			p = p.mul(base, context);
-		return p;
+			p = p.mul(base, ctx);
+		return Component.round(p, context);
 	}
 
 	/**
@@ -482,16 +495,25 @@ export class Component extends Numerical {
 	public pow(ex: Component, ...args: any[]): Component;
 	public pow(ex: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		if(this.equals(Component.ZERO))
-			return Component.ZERO;
-		if(ex.decimal === "" || ex.decimal === "0")
-			return Component.intpow(this, parseInt(ex.integer) || 0, context);
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const y = ex.mul(Component.ln(this, ctx), ctx);
-		return Component.round(Component.exp(y, ctx), context);
+		return Exponent.pow(this, ex, context);
+	}
+
+	/**
+	 * The floor function. Evaluates the greatest integer less than or equal to
+	 * the given number.
+	 * @param x A number.
+	 */
+	public static floor(x: Component) {
+		return Component.round(x, {precision: 0, rounding: RoundingMode.FLOOR});
+	}
+
+	/**
+	 * The ceil function. Evaluates the smallest integer greater than or equal to
+	 * the given number.
+	 * @param x A number.
+	 */
+	public static ceil(x: Component) {
+		return Component.round(x, {precision: 0, rounding: RoundingMode.CEIL});
 	}
 
 	/**
@@ -510,56 +532,17 @@ export class Component extends Numerical {
 	public static exp(x: Component, ...args: any[]): Component;
 	public static exp(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		let sum = Component.ZERO;
-		let term = Component.ONE;
-		let n = Component.ZERO;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const term1 = term.mul(x, ctx).div(n.add(Component.ONE), ctx);
-			if(Component.abs(term1).equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n = n.add(Component.ONE);
-		}
+		return Exponent.exp(x, context);
 	}
 
 	/**
-	 * Evaluates the natural logarithm of a given number \\(x\\)(\\(|x| < 1\\)).
-	 * @param x A number.
-	 * @param context The context settings to use.
-	 * @ignore
-	 */
-	private static ln_less(x: Component, context=mathenv.mode) {
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		let sum = Component.ZERO;
-		let term = x;
-		let n = Component.ONE;
-		while(true) {
-			sum = sum.add(term.div(n, ctx), ctx);
-			const term1 = term.mul(x, ctx).neg;
-			const term2 = term1.div(n.add(Component.ONE, ctx), ctx);
-			if(Component.abs(term2).equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n = n.add(Component.ONE);
-		}
-	}
-
-	/**
-	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
 	 * with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static ln(x: Component): Component;
 	/**
-	 * Calculates the natural logarithm (to the base \\(e\\)) of a given number
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
 	 * with rounding according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -568,29 +551,7 @@ export class Component extends Numerical {
 	public static ln(x: Component, ...args: any[]): Component;
 	public static ln(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		if(x.lessEquals(Component.ZERO, context))
-			throw new TypeError("Undefined.");
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		if(x.lessThan(Component.ONE))
-			return Component.round(Component.ln(Component.ONE.div(x, ctx)).neg, context);
-		const ten = Component.create("10");
-		const limit = Component.create("0.9");
-		let k = x.integer.length - 1;
-		let tenk = Component.intpow(ten, k);
-		let f: Component;
-		while(true) {
-			f = x.div(tenk, ctx).sub(Component.ONE, ctx);
-			const abs = Component.abs(f);
-			if(abs.lessEquals(limit, ctx))
-				break;
-			tenk = tenk.mul(ten);
-			k++;
-		}
-		const res = Component.create(k).mul(Component.ln10, ctx).add(Component.ln_less(f, ctx), ctx);
-		return Component.round(res, context);
+		return Exponent.ln(x, context);
 	}
 
 	/**
@@ -608,26 +569,7 @@ export class Component extends Numerical {
 	public static sin(x: Component, ...args: any[]): Component;
 	public static sin(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		x = x.mod(Component.TWO.mul(Component.PI, ctx), ctx);
-		if(Component.abs(x).equals(Component.PI, context))
-			return Component.ZERO;
-		const x_sq = x.mul(x, ctx);
-		let sum = Component.ZERO;
-		let term = x;
-		let n = 0;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const f = Component.create((2 * n + 2) * (2 * n + 3));
-			const term1 = term.mul(x_sq, ctx).div(f, ctx).neg;
-			if(term1.equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n++;
-		}
+		return TrigCyclic.sin(x, context);
 	}
 
 	/**
@@ -646,57 +588,26 @@ export class Component extends Numerical {
 	public static cos(x: Component, ...args: any[]): Component;
 	public static cos(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		x = x.mod(Component.TWO.mul(Component.PI, ctx), ctx);
-		const x_sq = x.mul(x, ctx);
-		let sum = Component.ZERO;
-		let term = Component.ONE;
-		let n = 0;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const f = Component.create((2*n+1) * (2*n+2));
-			const term1 = term.mul(x_sq, ctx).div(f, ctx).neg;
-			if(term1.equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n++;
-		}
+		return TrigCyclic.cos(x, context);
 	}
 
 	/**
-	 * Computes the inverse trigonometric sine for \\(x\\) (\\(|x| < 0.5\\))
-	 * with rounding according to the given context settings.
+	 * Calculates the trigonometric tangent with rounding according to
+	 * [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static tan(x: Component): Component;
+	/**
+	 * Calculates the trigonometric tangent with rounding according to the given
+	 * context.
 	 * @param x A number.
 	 * @param context The context settings to use.
-	 * @ignore
 	 */
-	private static asin_less(x: Component, context=mathenv.mode) {
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const x_sq = x.mul(x, ctx);
-		let sum = Component.ZERO;
-		let term = x;
-		let temp = x;
-		let f = Component.ONE;
-		let n = 0;
-		while(true) {
-			sum = sum.add(temp, ctx);
-			const f1 = Component.create(2*n + 3);
-			const fac = f.div(Component.create(2*n+2), ctx);
-			const term1 = term.mul(x_sq, ctx).mul(fac, ctx);
-			const temp1 = term1.div(f1, ctx);
-			if(temp1.equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			f = f1;
-			term = term1;
-			temp = temp1;
-			n++;
-		}
+	public static tan(x: Component, context: MathContext): Component;
+	public static tan(x: Component, ...args: any[]): Component;
+	public static tan(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		return TrigCyclic.tan(x, context);
 	}
 
 	/**
@@ -715,21 +626,7 @@ export class Component extends Numerical {
 	public static asin(x: Component, ...args: any[]): Component;
 	public static asin(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		if(x.lessThan(Component.ZERO))
-			return Component.asin(x.neg).neg;
-		const half = Component.create("0.5");
-		if(x.lessThan(half))
-			return Component.asin_less(x, context);
-		const ctx: MathContext = {
-			precision: context.precision + 5,
-			rounding: context.rounding
-		};
-		const piby2 = Component.PI.div(Component.TWO, ctx);
-		const z = Component.ONE.sub(x, ctx).div(Component.TWO, ctx);
-		const s = z.pow(half, ctx);
-		const temp = Component.asin_less(s, ctx);
-		const res = piby2.sub(Component.TWO.mul(temp, ctx), ctx);
-		return Component.round(res, context);
+		return TrigCyclic.asin(x, context);
 	}
 
 	/**
@@ -748,20 +645,26 @@ export class Component extends Numerical {
 	public static acos(x: Component, ...args: any[]): Component;
 	public static acos(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: context.precision + 5,
-			rounding: context.rounding
-		};
-		const half = Component.create("0.5");
-		if(Component.abs(x).lessThan(half)) {
-			const res = Component.PI.mul(half, ctx).sub(Component.asin_less(x, ctx), ctx);
-			return Component.round(res, context);
-		}
-		const z = Component.ONE.sub(x, ctx).div(Component.TWO, ctx);
-		const s = z.pow(half, ctx);
-		const temp = Component.asin(s, ctx);
-		const res = Component.TWO.mul(temp, ctx);
-		return Component.round(res, context);
+		return TrigCyclic.acos(x, context);
+	}
+
+	/**
+	 * Calculates the inverse trigonometric tangent of a number with rounding
+	 * according to [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static atan(x: Component): Component;
+	/**
+	 * Calculates the inverse trigonometric tangent of a number with rounding
+	 * according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static atan(x: Component, context: MathContext): Component;
+	public static atan(x: Component, ...args: any[]): Component;
+	public static atan(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		return TrigCyclic.atan(x, context);
 	}
 
 	/**
@@ -778,23 +681,7 @@ export class Component extends Numerical {
 	public static sinh(x: Component, ...args: any[]): Component;
 	public static sinh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const x_sq = x.mul(x, ctx);
-		let sum = Component.ZERO;
-		let term = x;
-		let n = 0;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const f = Component.create((2*n + 2) * (2*n + 3));
-			const term1 = term.mul(x_sq, ctx).div(f, ctx);
-			if(term1.equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n++;
-		}
+		return TrigHyperbolic.sinh(x, context);
 	}
 
 	/**
@@ -811,23 +698,7 @@ export class Component extends Numerical {
 	public static cosh(x: Component, ...args: any[]): Component;
 	public static cosh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const x_sq = x.mul(x, ctx);
-		let sum = Component.ZERO;
-		let term = Component.ONE;
-		let n = 0;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const f = Component.create((2*n + 1) * (2*n + 2));
-			const term1 = term.mul(x_sq, ctx).div(f, ctx);
-			if(term1.equals(Component.ZERO, ctx))
-				return Component.round(sum, context);
-			term = term1;
-			n++;
-		}
+		return TrigHyperbolic.cosh(x, context);
 	}
 
 	/**
@@ -845,15 +716,7 @@ export class Component extends Numerical {
 	public static asinh(x: Component, ...args: any[]): Component;
 	public static asinh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const a = x;
-		const b = x.pow(Component.TWO, ctx).add(Component.ONE, ctx).pow(Component.create("0.5"), ctx);
-		const exp = a.add(b, ctx);
-		const res = Component.ln(exp, ctx);
-		return Component.round(res, context);
+		return TrigHyperbolic.asinh(x, context);
 	}
 
 	/**
@@ -872,15 +735,7 @@ export class Component extends Numerical {
 	public static acosh(x: Component, ...args: any[]): Component;
 	public static acosh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const a = x;
-		const b = x.pow(Component.TWO, ctx).sub(Component.ONE, ctx).pow(Component.create("0.5"), ctx);
-		const exp = a.add(b, ctx);
-		const res = Component.ln(exp, ctx);
-		return Component.round(res, context);
+		return TrigHyperbolic.acosh(x, context);
 	}
 
 	/**

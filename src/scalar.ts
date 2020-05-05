@@ -286,12 +286,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the natural logarithm (to the base $ e $) of a [[Scalar]].
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a [[Scalar]].
 	 * @param x A scalar constant.
 	 */
 	public static ln(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the natural logarithm (to the base $ e $) of a [[Scalar]].
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a [[Scalar]].
 	 * @param x A scalar variable or expression.
 	 */
 	public static ln(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -302,12 +302,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the common logarithm (to the base $ 10 $) of a [[Scalar]].
+	 * Calculates the common logarithm (to the base \\( 10 \\)) of a [[Scalar]].
 	 * @param x A scalar constant.
 	 */
 	public static log(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the common logarithm (to the base $ 10 $) of a [[Scalar]].
+	 * Calculates the common logarithm (to the base \\( 10 \\)) of a [[Scalar]].
 	 * @param x A scalar variable or expression.
 	 */
 	public static log(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;

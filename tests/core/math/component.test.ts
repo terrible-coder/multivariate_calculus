@@ -175,6 +175,10 @@ describe("Throws appropriate errors", function() {
 	it("Illegal number format", function() {
 		expect(() => Component.create("1.1.1")).toThrowError(TypeError);
 	});
+
+	it("Negative number to fractional power", function() {
+		expect(() => Component.TWO.neg.pow(Component.create("0.5"))).toThrowError(TypeError);
+	});
 });
 
 /*
@@ -339,6 +343,34 @@ describe("Modulus", function() {
 	});
 });
 
+describe("Floor", function() {
+	it("For positive numbers", function() {
+		const values = new Array(10).fill(0).map((_, i) => `1.${i}`).map(n => Component.create(n));
+		for(let v of values)
+			expect(Component.floor(v)).toEqual(Component.ONE);
+	});
+
+	it("For negative numbers", function() {
+		const values = new Array(10).fill(0).map((_, i) => `-1.${i+1}`).map(n => Component.create(n));
+		for(let v of values)
+			expect(Component.floor(v)).toEqual(Component.TWO.neg);
+	});
+});
+
+describe("Ceil", function() {
+	it("For positive numbers", function() {
+		const values = new Array(10).fill(0).map((_, i) => `1.${i+1}`).map(n => Component.create(n));
+		for(let v of values)
+			expect(Component.ceil(v)).toEqual(Component.TWO);
+	});
+
+	it("For negative numbers", function() {
+		const values = new Array(10).fill(0).map((_, i) => `-1.${i}`).map(n => Component.create(n));
+		for(let v of values)
+			expect(Component.ceil(v)).toEqual(Component.ONE.neg);
+	});
+});
+
 describe("Exponential", function() {
 	it("exp", function() {
 		const E = Component.round(Component.E, mathenv.mode);
@@ -433,7 +465,7 @@ describe("Inverse trigonometry", function() {
 			"1.26610367277949912",
 			"1.15927948072740860",
 			"1.04719755119659775",
-			"0.92729521800161223",
+			"0.92729521800161224",
 			"0.79539883018414356",
 			"0.64350110879328439",
 			"0.45102681179626244"
@@ -443,6 +475,31 @@ describe("Inverse trigonometry", function() {
 			expect(Component.acos(x)).toEqual(Component.create(values[i]));
 		}
 		expect(Component.acos(Component.ONE)).toEqual(Component.ZERO);
+	});
+
+	it("arc tan", function() {
+		const values = [
+			"0.1",
+			"0.5",
+			"1",
+			"1.5",
+			"10",
+			"15",
+			"100",
+			"150"
+		].map(n => Component.create(n));
+		const atans = [
+			"0.09966865249116203",
+			"0.46364760900080612",
+			"0.78539816339744831",
+			"0.98279372324732907",
+			"1.4711276743037346",
+			"1.50422816301907282",
+			"1.56079666010823139",
+			"1.56412975889102839"
+		].map(n => Component.create(n));
+		for(let i = 0; i < values.length; i++)
+			expect(Component.atan(values[i])).toEqual(atans[i]);
 	});
 });
 

@@ -352,12 +352,12 @@ export function atanh<T extends Numerical>(x: number | T, ...args: any[]) {
 }
 
 /**
- * The common logarithm function (to the base $ 10 $).
+ * The common logarithm function (to the base \\( 10 \\)).
  * @param x A number.
  */
 export function log(x: number): number;
 /**
- * The common logarithm function (to the base $ 10 $). This function looks for the definition of
+ * The common logarithm function (to the base \\( 10 \\)). This function looks for the definition of
  * the log function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
@@ -379,12 +379,12 @@ export function log<T extends Numerical>(x: number | T, ...args: any[]) {
 }
 
 /**
- * The natural logarithm function (to the base $ e $).
+ * The natural logarithm function (to the base \\( e \\)).
  * @param x A number.
  */
 export function ln(x: number): number;
 /**
- * The natural logarithm function (to the base $ e $). This function looks for the definition of
+ * The natural logarithm function (to the base \\( e \\)). This function looks for the definition of
  * the ln function in the [[Numerical]] object.
  * @template T Asserts object passed to be [[Numerical]].
  * @param x A [[Numerical]].
