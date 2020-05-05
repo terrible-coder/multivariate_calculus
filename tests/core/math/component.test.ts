@@ -175,6 +175,10 @@ describe("Throws appropriate errors", function() {
 	it("Illegal number format", function() {
 		expect(() => Component.create("1.1.1")).toThrowError(TypeError);
 	});
+
+	it("Negative number to fractional power", function() {
+		expect(() => Component.TWO.neg.pow(Component.create("0.5"))).toThrowError(TypeError);
+	});
 });
 
 /*
