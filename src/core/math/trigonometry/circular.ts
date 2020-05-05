@@ -185,6 +185,7 @@ export namespace TrigCyclic {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @ignore
 	 */
 	function atan_less(x: Component, context: MathContext) {
 		const ctx: MathContext = {
@@ -225,6 +226,7 @@ export namespace TrigCyclic {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @ignore
 	 */
 	function atan_more(x: Component, context: MathContext) {
 		const ctx: MathContext = {

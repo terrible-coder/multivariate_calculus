@@ -94,6 +94,7 @@ export namespace Exponent {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @ignore
 	 */
 	function range_adjust(x: Component, context: MathContext): [number, Component] {
 		const two = Component.TWO;
