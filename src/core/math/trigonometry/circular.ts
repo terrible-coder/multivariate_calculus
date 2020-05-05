@@ -4,6 +4,17 @@ import { MathContext } from "../context";
 /**
  * Calculates the trigonometric sine with rounding according to the given
  * context.
+ * 
+ * Method:
+ * For $ x < 2\pi $
+ * The Taylor series converges for all $ x $.
+ * 
+ * $$ \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!} $$
+ * 
+ * For $ x \geqslant 2\pi $, range reduction can be performed.
+ * The $ \sin x $ function has a periodicity of $2\pi$.
+ * 
+ * $$ x \equiv f \pmod{2\pi} $$
  * @param x A number.
  * @param context The context settings to use.
  */
@@ -33,6 +44,17 @@ export function sin(x: Component, context: MathContext) {
 /**
  * Calculates the trigonometric cosine with rounding according to the given
  * context.
+ * 
+ * Method:
+ * For $ x < 2\pi $
+ * The Taylor series converges for all $ x $.
+ * 
+ * $$ \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!} $$
+ * 
+ * For $ x \geqslant 2\pi $, range reduction can be performed.
+ * The $ \cos x $ function has a periodicity of $2\pi$.
+ * 
+ * $$ x \equiv f \pmod{2\pi} $$
  * @param x A number.
  * @param context The context settings to use.
  */
@@ -93,6 +115,21 @@ function asin_less(x: Component, context: MathContext) {
 /**
  * Calculates the inverse trigonometric sine of a number with rounding
  * according to the given context.
+ * 
+ * Method:
+ * If $ x < 0.5 $
+ * use the definition from integration:
+ * 
+ * $$ \sin^{-1} x = \int_0^x \frac{dt}{\sqrt{1-t^2}} $$
+ * 
+ * Since $ x < 1 $
+ * 
+ * $$ \sin^{-1} = \sum_{n=0}^\infty \frac{(2n-1)!!}{2^n n!} \cdot \frac{x^{2n+1}}{2n+1} $$
+ * 
+ * If $ x \geqslant 0.5 $
+ * 
+ * $$ \sin^{-1} x = \frac{\pi}{2} - \sin^{-1} \sqrt{\frac{1-x}{2}} $$
+ * 
  * @param x A number.
  * @param context The context settings to use.
  */
