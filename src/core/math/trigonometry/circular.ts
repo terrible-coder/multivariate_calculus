@@ -79,6 +79,20 @@ export namespace TrigCyclic {
 			n++;
 		}
 	}
+
+	/**
+	 * Calculates the trigonometric tangent with rounding according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	export function tan(x: Component, context: MathContext) {
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const res = sin(x, ctx).div(cos(x, ctx), ctx);
+		return Component.round(res, context);
+	}
 	
 	/**
 	 * Computes the inverse trigonometric sine for \\( x \\) (\\( |x| < 0.5 \\))

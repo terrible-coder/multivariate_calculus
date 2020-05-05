@@ -592,6 +592,25 @@ export class Component extends Numerical {
 	}
 
 	/**
+	 * Calculates the trigonometric tangent with rounding according to
+	 * [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static tan(x: Component): Component;
+	/**
+	 * Calculates the trigonometric tangent with rounding according to the given
+	 * context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static tan(x: Component, context: MathContext): Component;
+	public static tan(x: Component, ...args: any[]): Component;
+	public static tan(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		return TrigCyclic.tan(x, context);
+	}
+
+	/**
 	 * Calculates the inverse trigonometric sine of a number with rounding
 	 * according to [[mathenv.mode]].
 	 * @param x A number.
