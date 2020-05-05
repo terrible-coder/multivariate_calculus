@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Overwrite | multivariate_calculus</title>
+	<title>Exponent | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -58,141 +58,149 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="overwrite.html">Overwrite</a>
+					<a href="exponent.html">Exponent</a>
 				</li>
 			</ul>
-			<h1>Class Overwrite</h1>
+			<h1>Namespace Exponent</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>The error thrown when some sort of illegal overwrite is attempted. It is
-							usually in the case of trying to define a constant with the same name
-						as another previously defined constant.</p>
-					</div>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<a href="divisionbyzero.html#error" class="tsd-signature-type">Error</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">Overwrite</span>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
+							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="overwrite.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="overwrite.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="overwrite.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="overwrite.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="overwrite.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="exponent.html#exp" class="tsd-kind-icon">exp</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="exponent.html#ln" class="tsd-kind-icon">ln</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="exponent.html#pow" class="tsd-kind-icon">pow</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Overwrite<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="overwrite.html" class="tsd-signature-type">Overwrite</a></li>
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
+					<a name="exp" class="tsd-anchor"></a>
+					<h3>exp</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">exp<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="../classes/component.html" class="tsd-signature-type">Component</a>, context<span class="tsd-signature-symbol">: </span><a href="mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/component.html" class="tsd-signature-type">Component</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/errors.ts#L35">src/core/errors.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/exponential/exponential.ts#L11">src/core/math/exponential/exponential.ts:11</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a <a href="overwrite.html">Overwrite</a> error.</p>
+									<p>Calculates the exponential of a given number with rounding according to
+									the given context settings.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<h5>x: <a href="../classes/component.html" class="tsd-signature-type">Component</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>The name of the constant which is being overwritten.</p>
-										</div>
+										<p>A number</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="overwrite.html" class="tsd-signature-type">Overwrite</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/component.html" class="tsd-signature-type">Component</a></h4>
 						</li>
 					</ul>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="message" class="tsd-anchor"></a>
-					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#message">message</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:974</li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
+					<a name="ln" class="tsd-anchor"></a>
+					<h3>ln</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">ln<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="../classes/component.html" class="tsd-signature-type">Component</a>, context<span class="tsd-signature-symbol">: </span><a href="mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/component.html" class="tsd-signature-type">Component</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/exponential/exponential.ts#L125">src/core/math/exponential/exponential.ts:125</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the natural logarithm (to the base \( e \)) of a given number
+									with rounding according to the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="../classes/component.html" class="tsd-signature-type">Component</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/component.html" class="tsd-signature-type">Component</a></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#name">name</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:973</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-					<a name="stack" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> stack</h3>
-					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#stack">stack</a></p>
-						<p>Overrides <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#stack">stack</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:975</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="error" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Error</h3>
-					<div class="tsd-signature tsd-kind-icon">Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ErrorConstructor</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:984</li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
+					<a name="pow" class="tsd-anchor"></a>
+					<h3>pow</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">pow<span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">: </span><a href="../classes/component.html" class="tsd-signature-type">Component</a>, ex<span class="tsd-signature-symbol">: </span><a href="../classes/component.html" class="tsd-signature-type">Component</a>, context<span class="tsd-signature-symbol">: </span><a href="mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/component.html" class="tsd-signature-type">Component</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/exponential/exponential.ts#L146">src/core/math/exponential/exponential.ts:146</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Raises <code>base</code> to the power of <code>ex</code> using the rounding according to the
+									given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>base: <a href="../classes/component.html" class="tsd-signature-type">Component</a></h5>
+								</li>
+								<li>
+									<h5>ex: <a href="../classes/component.html" class="tsd-signature-type">Component</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings object to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/component.html" class="tsd-signature-type">Component</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -202,34 +210,34 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="exponent.html">Exponent</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="expressionbuilder.html">Expression<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="mathcontext.html">Math<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="trigcyclic.html">Trig<wbr>Cyclic</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="trighyperbolic.html">Trig<wbr>Hyperbolic</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="overwrite.html" class="tsd-kind-icon">Overwrite</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="overwrite.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="overwrite.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="overwrite.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="overwrite.html#stack" class="tsd-kind-icon">stack</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="overwrite.html#error" class="tsd-kind-icon">Error</a>
-							</li>
-						</ul>
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
+						<a href="exponent.html#exp" class="tsd-kind-icon">exp</a>
 					</li>
-				</ul>
-				<ul class="after-current">
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
+						<a href="exponent.html#ln" class="tsd-kind-icon">ln</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
+						<a href="exponent.html#pow" class="tsd-kind-icon">pow</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
