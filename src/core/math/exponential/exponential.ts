@@ -44,15 +44,15 @@ export namespace Exponent {
 	}
 	
 	/**
-	 * Evaluates the natural logarithm of $ 1 + x $ ($ |x| < \sqrt{2}-1 $).
+	 * Evaluates the natural logarithm of \\( 1 + x \\) (\\( |x| < \sqrt{2}-1 \\)).
 	 * Method:
-	 * For faster convergence we can write $ \ln (1+x) $ as
+	 * For faster convergence we can write \\( \ln (1+x) \\) as
 	 * 
-	 * $$ \ln (1+x) = \ln (1+s) - \ln (1-s) $$
+	 * \\[ \ln (1+x) = \ln (1+s) - \ln (1-s) \\]
 	 * 
-	 * This gives us $ s = \frac{x}{2+x} $ and
+	 * This gives us \\( s = \frac{x}{2+x} \\) and
 	 * 
-	 * $$ \ln (1+x) = 2 \sum_{n=0}^{\infty} \frac{s^{2n+1}}{2n+1} $$
+	 * \\[ \ln (1+x) = 2 \sum_{n=0}^{\infty} \frac{s^{2n+1}}{2n+1} \\]
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -86,11 +86,11 @@ export namespace Exponent {
 	/**
 	 * Reduces the range of the argument of the logarithm function.
 	 * Method:
-	 * For every number $ x > 1 $ we can write it as
+	 * For every number \\( x > 1 \\) we can write it as
 	 * 
-	 * $$ x = 2^k(1 + f) $$
+	 * \\[ x = 2^k(1 + f) \\]
 	 * 
-	 * where $ k $ is such that $ |f| < 1 $.
+	 * where \\( k \\) is such that \\( |f| < 1 \\).
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -116,7 +116,7 @@ export namespace Exponent {
 	}
 	
 	/**
-	 * Calculates the natural logarithm (to the base $ e $) of a given number
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
 	 * with rounding according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.

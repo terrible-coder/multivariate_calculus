@@ -7,15 +7,15 @@ export namespace TrigCyclic {
 	 * context.
 	 * 
 	 * Method:
-	 * For $ x < 2\pi $
-	 * The Taylor series converges for all $ x $.
+	 * For \\( x < 2\pi \\)
+	 * The Taylor series converges for all \\( x \\).
 	 * 
-	 * $$ \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!} $$
+	 * \\[ \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!} \\]
 	 * 
-	 * For $ x \geqslant 2\pi $, range reduction can be performed.
-	 * The $ \sin x $ function has a periodicity of $2\pi$.
+	 * For \\( x \geqslant 2\pi \\), range reduction can be performed.
+	 * The \\( \sin x \\) function has a periodicity of \\( 2\pi \\).
 	 * 
-	 * $$ x \equiv f \pmod{2\pi} $$
+	 * \\[ x \equiv f \pmod{2\pi} \\]
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -47,15 +47,15 @@ export namespace TrigCyclic {
 	 * context.
 	 * 
 	 * Method:
-	 * For $ x < 2\pi $
-	 * The Taylor series converges for all $ x $.
+	 * For \\( x < 2\pi \\)
+	 * The Taylor series converges for all \\( x \\).
 	 * 
-	 * $$ \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!} $$
+	 * \\[ \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!} \\]
 	 * 
-	 * For $ x \geqslant 2\pi $, range reduction can be performed.
-	 * The $ \cos x $ function has a periodicity of $2\pi$.
+	 * For \\( x \geqslant 2\pi \\), range reduction can be performed.
+	 * The \\( \cos x \\) function has a periodicity of \\( 2\pi \\).
 	 * 
-	 * $$ x \equiv f \pmod{2\pi} $$
+	 * \\[ x \equiv f \pmod{2\pi} \\]
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -81,7 +81,7 @@ export namespace TrigCyclic {
 	}
 	
 	/**
-	 * Computes the inverse trigonometric sine for $ x $ ($ |x| < 0.5 $)
+	 * Computes the inverse trigonometric sine for \\( x \\) (\\( |x| < 0.5 \\))
 	 * with rounding according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -118,18 +118,18 @@ export namespace TrigCyclic {
 	 * according to the given context.
 	 * 
 	 * Method:
-	 * If $ x < 0.5 $
+	 * If \\( x < 0.5 \\)
 	 * use the definition from integration:
 	 * 
-	 * $$ \sin^{-1} x = \int_0^x \frac{dt}{\sqrt{1-t^2}} $$
+	 * \\[ \sin^{-1} x = \int_0^x \frac{dt}{\sqrt{1-t^2}} \\]
 	 * 
-	 * Since $ x < 1 $
+	 * Since \\( x < 1 \\)
 	 * 
-	 * $$ \sin^{-1} = \sum_{n=0}^\infty \frac{(2n-1)!!}{2^n n!} \cdot \frac{x^{2n+1}}{2n+1} $$
+	 * \\[ \sin^{-1} = \sum_{n=0}^\infty \frac{(2n-1)!!}{2^n n!} \cdot \frac{x^{2n+1}}{2n+1} \\]
 	 * 
-	 * If $ x \geqslant 0.5 $
+	 * If \\( x \geqslant 0.5 \\)
 	 * 
-	 * $$ \sin^{-1} x = \frac{\pi}{2} - \sin^{-1} \sqrt{\frac{1-x}{2}} $$
+	 * \\[ \sin^{-1} x = \frac{\pi}{2} - \sin^{-1} \sqrt{\frac{1-x}{2}} \\]
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -176,12 +176,12 @@ export namespace TrigCyclic {
 	}
 	
 	/**
-	 * Calculates the inverse trigonometric tangent of a number ($ x < 1 $).
+	 * Calculates the inverse trigonometric tangent of a number (\\( x < 1 \\)).
 	 * Method:
 	 * 
-	 * $$ \tan^{-1} x =\int_0^x \frac{1}{1+t^2} dt $$
-	 * Since $ x < 1 $
-	 * $$ \tan^{-1} = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{2n+1} $$
+	 * \\[ \tan^{-1} x = \int_0^x \frac{1}{1+t^2} dt \\]
+	 * Since \\( x < 1 \\)
+	 * \\[ \tan^{-1} = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{2n+1} \\]
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -210,18 +210,18 @@ export namespace TrigCyclic {
 	}
 	
 	/**
-	 * Calculates the inverse trigonometric tangent of a number ($ x > 1 $).
+	 * Calculates the inverse trigonometric tangent of a number (\\( x > 1 \\)).
 	 * Method:
 	 * 
-	 * If $ (x-1)^2 < 2 $:
+	 * If \\( (x-1)^2 < 2 \\):
 	 * 
-	 * $$ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{x-1}{x+1}) $$
+	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{x-1}{x+1}) \\]
 	 * 
-	 * $ \frac{x-1}{x+1} < 1 $ always.
+	 * \\( \frac{x-1}{x+1} < 1 \\) always.
 	 * 
 	 * otherwise:
 	 * 
-	 * $$ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{1}{x}) $$
+	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{1}{x}) \\]
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -250,17 +250,17 @@ export namespace TrigCyclic {
 	 * 
 	 * Method:
 	 * The input can be divided into 3 regions for fast convergence.
-	 * 1. $ x < 1 $:
+	 * 1. \\( x < 1 \\):
 	 * 
-	 * $$ \tan^{-1} = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{2n+1} $$
+	 * \\[ \tan^{-1} = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{2n+1} \\]
 	 * 
-	 * 2. $ (x-1)^2 < 2 $:
+	 * 2. \\( (x-1)^2 < 2 \\):
 	 * 
-	 * $$ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{x-1}{x+1}) $$
+	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{x-1}{x+1}) \\]
 	 * 
-	 * 3. $ (x-1)^2 \geqslant 2 $:
+	 * 3. \\( (x-1)^2 \geqslant 2 \\):
 	 * 
-	 * $$ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{1}{x}) $$
+	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{1}{x}) \\]
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
