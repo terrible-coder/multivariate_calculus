@@ -3,9 +3,9 @@ import { parseNum, pad, decimate, align } from "./parsers";
 import { MathContext, RoundingMode } from "./context";
 import { mathenv } from "../env";
 import { Numerical } from "../definitions";
-import { exp, ln, pow } from "./exponential/exponential";
-import * as circ_trig from "./trigonometry/circular";
-import * as hyper_trig from "./trigonometry/hyperbolic";
+import { Exponent } from "./exponential/exponential";
+import { TrigCyclic } from "./trigonometry/circular";
+import { TrigHyperbolic } from "./trigonometry/hyperbolic";
 
 /**
  * Type of argument accepted by [[Component]] constructor.
@@ -495,7 +495,7 @@ export class Component extends Numerical {
 	public pow(ex: Component, ...args: any[]): Component;
 	public pow(ex: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return pow(this, ex, context);
+		return Exponent.pow(this, ex, context);
 	}
 
 	/**
@@ -532,7 +532,7 @@ export class Component extends Numerical {
 	public static exp(x: Component, ...args: any[]): Component;
 	public static exp(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return exp(x, context);
+		return Exponent.exp(x, context);
 	}
 
 	/**
@@ -551,7 +551,7 @@ export class Component extends Numerical {
 	public static ln(x: Component, ...args: any[]): Component;
 	public static ln(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return ln(x, context);
+		return Exponent.ln(x, context);
 	}
 
 	/**
@@ -569,7 +569,7 @@ export class Component extends Numerical {
 	public static sin(x: Component, ...args: any[]): Component;
 	public static sin(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return circ_trig.sin(x, context);
+		return TrigCyclic.sin(x, context);
 	}
 
 	/**
@@ -588,7 +588,7 @@ export class Component extends Numerical {
 	public static cos(x: Component, ...args: any[]): Component;
 	public static cos(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return circ_trig.cos(x, context);
+		return TrigCyclic.cos(x, context);
 	}
 
 	/**
@@ -607,7 +607,7 @@ export class Component extends Numerical {
 	public static asin(x: Component, ...args: any[]): Component;
 	public static asin(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return circ_trig.asin(x, context);
+		return TrigCyclic.asin(x, context);
 	}
 
 	/**
@@ -626,7 +626,7 @@ export class Component extends Numerical {
 	public static acos(x: Component, ...args: any[]): Component;
 	public static acos(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return circ_trig.acos(x, context);
+		return TrigCyclic.acos(x, context);
 	}
 
 	/**
@@ -645,7 +645,7 @@ export class Component extends Numerical {
 	public static atan(x: Component, ...args: any[]): Component;
 	public static atan(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return circ_trig.atan(x, context);
+		return TrigCyclic.atan(x, context);
 	}
 
 	/**
@@ -662,7 +662,7 @@ export class Component extends Numerical {
 	public static sinh(x: Component, ...args: any[]): Component;
 	public static sinh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return hyper_trig.sinh(x, context);
+		return TrigHyperbolic.sinh(x, context);
 	}
 
 	/**
@@ -679,7 +679,7 @@ export class Component extends Numerical {
 	public static cosh(x: Component, ...args: any[]): Component;
 	public static cosh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return hyper_trig.cosh(x, context);
+		return TrigHyperbolic.cosh(x, context);
 	}
 
 	/**
@@ -697,7 +697,7 @@ export class Component extends Numerical {
 	public static asinh(x: Component, ...args: any[]): Component;
 	public static asinh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return hyper_trig.asinh(x, context);
+		return TrigHyperbolic.asinh(x, context);
 	}
 
 	/**
@@ -716,7 +716,7 @@ export class Component extends Numerical {
 	public static acosh(x: Component, ...args: any[]): Component;
 	public static acosh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		return hyper_trig.acosh(x, context);
+		return TrigHyperbolic.acosh(x, context);
 	}
 
 	/**
