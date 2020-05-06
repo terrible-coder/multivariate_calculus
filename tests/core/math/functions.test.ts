@@ -419,17 +419,42 @@ describe("Checks mathematical functions", function() {
 
 describe("Print", function() {
 	console.log = jest.fn();
-	it("Objects with toString", function() {
-		const obj = Component.ONE;
-		func.print(obj);
-		expect((<jest.Mock>console.log).mock.calls[0][0]).toBe("1.0");
+	const mockFn = <jest.Mock>console.log;
+	const noString = class {
+		constructor() {}
+	};
+
+	describe("For single parameter", function() {
+		it("Objects with toString", function() {
+			const obj = Component.ONE;
+			func.print(obj);
+			expect(mockFn.mock.calls[0][0]).toBe("1.0");
+		});
+	
+		it("Objects without toString", function() {
+			const obj = new noString();
+			func.print(obj);
+			expect(mockFn.mock.calls[1][0]).toBe(obj);
+		});
 	});
 
-	it("Objects without toString", function() {
-		const obj = new (class {
-			constructor() {}
-		})();
-		func.print(obj);
-		expect((<jest.Mock>console.log).mock.calls[1][0]).toBe(obj);
+	describe("For double parameters", function() {
+		it("both with toString", function() {
+			const obj1 = Component.ONE, obj2 = Component.TWO;
+			func.print(obj1, obj2);
+			expect(mockFn.mock.calls[2]).toEqual(["1.0", "2.0"]);
+		});
+
+		it("both without toString", function() {
+			const obj1 = new noString(), obj2 = new noString();
+			func.print(obj1, obj2);
+			expect(mockFn.mock.calls[3]).toEqual([obj1, obj2]);
+		});
+
+		it("mixed values", function() {
+			const obj1 = Component.SIX, obj2 = new noString();
+			func.print(obj1, obj2);
+			expect(mockFn.mock.calls[4]).toEqual(["6.0", obj2]);
+		});
 	});
 });
