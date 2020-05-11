@@ -62,6 +62,7 @@
   },
   "exclude": [
     "node_modules/",
+    "scripts/",
     "tests/",
     "build/",
     "@types/"
