@@ -13,7 +13,7 @@
     "build": "tsc --project ./",
     "test:all": "jest --config jest.config.js",
     "test:only": "jest -c jest.config.js -i",
-    "pack": "browserify ./release/app.js -o mcalc.js",
+    "pack": "browserify ./scripts/app.js -o mcalc.js",
     "minify": "minify mcalc.js > mcalc.min.js",
     "docs": "typedoc --theme ./theme --mode file --out ./docs/next ./src"
   },

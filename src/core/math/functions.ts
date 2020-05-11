@@ -517,10 +517,9 @@ export function ceil<T extends Numerical>(x: number | T, ...args: any[]) {
  * Prints the string representation of an object to the default console.
  * @param obj Object to print.
  */
-export function print(obj: any) {
-	const proto = Object.getPrototypeOf(obj);
-	const props = Object.getOwnPropertyNames(proto);
-	if(props.indexOf("toString") !== -1)
-		console.log(obj.toString());
-	else console.log(obj);
+export function print(...obj: any[]) {
+	const prototypes = obj.map(x => Object.getPrototypeOf(x));
+	const properties = prototypes.map(proto => Object.getOwnPropertyNames(proto));
+	const toPrint = properties.map((x, index) => x.indexOf("toString") !== -1? obj[index].toString(): obj[index])
+	console.log(...toPrint);
 }

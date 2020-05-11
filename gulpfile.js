@@ -73,7 +73,7 @@ const tasks = {
 		})(),
 	build_browser: (() => {
 			function f() {
-				return browserify("./release/app.js")
+				return browserify("./scripts/app.js")
 					.bundle()
 					.pipe(fs.createWriteStream("./mcalc.js"));
 			}
@@ -105,7 +105,7 @@ const tasks = {
 					.pipe(header(data.join(""), {
 						pkg: pkg
 					}))
-					.pipe(gulp.dest("./release"));
+					.pipe(gulp.dest("./scripts"));
 			}
 			f.displayName = "header";
 			return f;

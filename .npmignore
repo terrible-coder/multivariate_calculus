@@ -6,7 +6,7 @@ node_modules
 /docs
 /cache
 /coverage
-/release
+/scripts
 /theme
 .circleci
 
