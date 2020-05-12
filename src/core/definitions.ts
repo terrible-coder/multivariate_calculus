@@ -82,6 +82,10 @@ export interface Expression extends Evaluable {
 	readonly op: Operator;
 	/** Array of `Evaluable` quantity/quantities `this.op` operates on. */
 	readonly operands: Evaluable[];
+
+	/** Array of parameters needed by operator method other than the operands. */
+	readonly rest: any[];
+
 	/**
 	 * The left hand side operand for `this.op`.
 	 * @throws If `this.op` is a `UnaryOperator`.
@@ -110,6 +114,30 @@ export interface Expression extends Evaluable {
 }
 /** Checks whether a given `Evaluable` is an expression. */
 export function isExpression(e: Evaluable): e is Expression {return e.type === "expression";}
+
+/**
+ * All classes which handle some sort of numerical operations must implement
+ * this interface. This helps the global functions to recognise whether a certain
+ * operation (function) is defined for a particular type of argument.
+ */
+export abstract class Numerical {
+	/**
+	 * Returns the class of which this object is an instance of.
+	 */
+	abstract classRef: any;
+	/**
+	 * Checks whether a method exists on the object or as a static member of
+	 * the class.
+	 * @param methodName Name of the method.
+	 */
+	public getDefinition(methodName: string) {
+		if((<any>this)[methodName] !== undefined)
+			return "instance";
+		if(this.classRef[methodName] !== undefined)
+			return "static";
+		return "undefined";
+	}
+}
 
 /** The general operator type. */
 export type Operator = UnaryOperator | BinaryOperator;

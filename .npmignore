@@ -6,18 +6,16 @@ node_modules
 /docs
 /cache
 /coverage
-/release
+/scripts
+/theme
+.circleci
 
 #files
 /.gitignore
+/gulpfile.js
 /package-lock.json
 /jest.config.js
 /tsconfig.json
 /index.html
 /mcalc.js
 /mcalc.min.js
-
-#script files
-/build.cmd
-/test.cmd
-/pack.cmd

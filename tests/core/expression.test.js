@@ -1,3 +1,6 @@
+const { Scalar } = require("../../build/scalar");
+const { BinaryOperator } = require("../../build/core/operators/binary");
+const { UnaryOperator } = require("../../build/core/operators/unary");
 const { ExpressionBuilder } = require("../../build/core/expression");
 
 const a = {
@@ -69,5 +72,51 @@ describe("Creates dependency list from", function() {
 		expect(set.has(a)).toBe(true);
 		expect(set.has(b)).toBe(true);
 		expect(set.has(c)).not.toBe(true);
+	});
+});
+
+describe("Calls with rest parameters", function() {
+	const x = Scalar.variable("x");
+	const obj = {
+		foo: "bar"
+	}
+
+	describe("Static methods", function() {
+		const exp = new Scalar.Expression(UnaryOperator.ABS, x, obj);
+
+		it("stores rest parameters", function() {
+			expect(exp.rest).toEqual([obj]);
+		});
+
+		it("passes rest parameters", function() {
+			Scalar.abs = jest.fn();
+			try {
+				exp.at(new Map([
+					[x, Scalar.constant(2)]
+				]));
+			} catch {}
+			expect(Scalar.abs.mock.calls[0].length).toEqual(2);
+			expect(Scalar.abs.mock.calls[0][1]).toBe(obj);
+		});
+	});
+
+	describe("Instance methods", function() {
+		const exp = new Scalar.Expression(BinaryOperator.ADD, x, Scalar.constant(1), obj);
+
+		it("stores rest parameters", function() {
+			expect(exp.rest).toEqual([obj]);
+		});
+
+		it("passes rest parameters", function() {
+			const atValue = Scalar.constant(2);
+			atValue.add = jest.fn();
+			try {
+			const res = exp.at(new Map([
+					[x, atValue]
+				]));
+			} catch {}
+			expect(atValue.add.mock.calls[0].length).toBe(2);
+			expect(atValue.add.mock.calls[0][1]).toBe(obj);
+		});
 	});
 });

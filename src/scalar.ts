@@ -1,7 +1,7 @@
-import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, isConstant, isVariable, Operator } from "./core/definitions";
+import { Token, Evaluable, Constant as _Constant, Variable as _Variable, Expression as _Expression, isConstant, isVariable, Operator, Numerical } from "./core/definitions";
 import { BinaryOperator } from "./core/operators/binary";
 import { ExpressionBuilder } from "./core/expression";
-import { UnaryOperator } from "./core/operators/unary";
+import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { Vector } from "./vector";
 import { Overwrite, IndeterminateForm } from "./core/errors";
 
@@ -9,9 +9,11 @@ import { Overwrite, IndeterminateForm } from "./core/errors";
  * Base class to works with scalar quantities.
  * @abstract
  */
-export abstract class Scalar implements Token, Evaluable {
+export abstract class Scalar extends Numerical implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
 	readonly quantity = "scalar";
+
+	public abstract neg: Scalar;
 
 	/**
 	 * Adds two [[Scalar]]s together. If `this` and `that` are both constants
@@ -58,6 +60,294 @@ export abstract class Scalar implements Token, Evaluable {
 	 * @return The result of algebraic division.
 	 */
 	public abstract pow(that: Scalar): Scalar;
+
+	/**
+	 * Computes the absolute value of a [[Scalar]].
+	 * @param x A constant scalar.
+	 */
+	public static abs(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Computes the absolute value of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static abs(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static abs(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.abs(x.value));
+		return new Scalar.Expression(UnaryOperator.ABS, x);
+	}
+
+	/**
+	 * Calculates the trigonometric sine of a [[Scalar]].
+	 * @param x A constant scalar.
+	 */
+	public static sin(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the trigonometric sine of a [[Scalar]].
+	 * @param x A scalar variable or expression
+	 */
+	public static sin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static sin(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.sin(x.value));
+		return new Scalar.Expression(UnaryOperator.SIN, x);
+	}
+
+	/**
+	 * Calculates the trigonometric cosine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static cos(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the trigonometric cosine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static cos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static cos(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.cos(x.value));
+		return new Scalar.Expression(UnaryOperator.COS, x);
+	}
+
+	/**
+	 * Calculates the trigonometric tangent of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static tan(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the trigonometric tangent of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static tan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static tan(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.tan(x.value));
+		return new Scalar.Expression(UnaryOperator.TAN, x);
+	}
+
+	/**
+	 * Calculates the inverse trigonometric sine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static asin(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse trigonometric sine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static asin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static asin(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.asin(x.value));
+		return new Scalar.Expression(UnaryOperator.ASIN, x);
+	}
+
+	/**
+	 * Calculates the inverse trigonometric cosine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static acos(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse trigonometric cosine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static acos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static acos(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.acos(x.value));
+		return new Scalar.Expression(UnaryOperator.ACOS, x);
+	}
+
+	/**
+	 * Calculates the inverse trigonometric tangent of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static atan(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse trigonometric tangent of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static atan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static atan(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.atan(x.value));
+		return new Scalar.Expression(UnaryOperator.ATAN, x);
+	}
+
+	/**
+	 * Calculates the hyperbolic sine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static sinh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the hyperbolic sine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static sinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static sinh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.sinh(x.value));
+		return new Scalar.Expression(UnaryOperator.SINH, x);
+	}
+
+	/**
+	 * Calculates the hyperbolic cosine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static cosh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the hyperbolic cosine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static cosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static cosh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.cosh(x.value));
+		return new Scalar.Expression(UnaryOperator.COSH, x);
+	}
+
+	/**
+	 * Calculates the hyperbolic tangent of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static tanh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the hyperbolic tangent of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static tanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static tanh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.tanh(x.value));
+		return new Scalar.Expression(UnaryOperator.TANH, x);
+	}
+
+	/**
+	 * Calculates the inverse hyperbolic sine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static asinh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse hyperbolic sine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static asinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static asinh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.asinh(x.value));
+		return new Scalar.Expression(UnaryOperator.ASINH, x);
+	}
+
+	/**
+	 * Calculates the inverse hyperbolic cosine of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static acosh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse hyperbolic cosine of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static acosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static acosh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.acosh(x.value));
+		return new Scalar.Expression(UnaryOperator.ACOSH, x);
+	}
+
+	/**
+	 * Calculates the inverse hyperbolic tangent of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static atanh(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the inverse hyperbolic tangent of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static atanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static atanh(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.atanh(x.value));
+		return new Scalar.Expression(UnaryOperator.ATANH, x);
+	}
+
+	/**
+	 * Calculates the exponential of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static exp(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the exponential of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static exp(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static exp(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.exp(x.value));
+		return new Scalar.Expression(UnaryOperator.EXP, x);
+	}
+
+	/**
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static ln(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static ln(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static ln(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.log(x.value));
+		return new Scalar.Expression(UnaryOperator.LN, x);
+	}
+
+	/**
+	 * Calculates the common logarithm (to the base \\( 10 \\)) of a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static log(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Calculates the common logarithm (to the base \\( 10 \\)) of a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static log(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static log(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.log10(x.value));
+		return new Scalar.Expression(UnaryOperator.LOG, x);
+	}
+
+	/**
+	 * Evaluates the largest integer less than or equal to a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static floor(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Evaluates the largest integer less than or equal to a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static floor(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static floor(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.floor(x.value));
+		return new Scalar.Expression(UnaryOperator.FLOOR, x);
+	}
+
+	/**
+	 * Evaluates the smallest integer greater than or equal to a [[Scalar]].
+	 * @param x A scalar constant.
+	 */
+	public static ceil(x: Scalar.Constant): Scalar.Constant;
+	/**
+	 * Evaluates the smallest integer greater than or equal to a [[Scalar]].
+	 * @param x A scalar variable or expression.
+	 */
+	public static ceil(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+	public static ceil(x: Scalar) {
+		if(x instanceof Scalar.Constant)
+			return Scalar.constant(Math.ceil(x.value));
+		return new Scalar.Expression(UnaryOperator.CEIL, x);
+	}
 }
 
 /**
@@ -86,6 +376,8 @@ export namespace Scalar {
 	 */
 	export class Constant extends Scalar implements _Constant {
 		readonly type = "constant";
+		readonly classRef = Scalar.Constant;
+
 		/**
 		 * Creates a [[Scalar.Constant]] object from number.
 		 * One may optionally pass in a string by which `this` object
@@ -100,6 +392,10 @@ export namespace Scalar {
 		 */
 		constructor(readonly value: number, readonly name: string = "") {
 			super();
+		}
+
+		public get neg() {
+			return Scalar.constant(-this.value);
 		}
 
 		/**
@@ -265,6 +561,8 @@ export namespace Scalar {
 	 */
 	export class Variable extends Scalar implements _Variable {
 		readonly type = "variable";
+		readonly classRef = Scalar.Variable;
+
 		/**
 		 * Creates a [[Scalar.Variable]] object.
 		 * 
@@ -276,6 +574,10 @@ export namespace Scalar {
 		 */
 		constructor(readonly name: string) {
 			super();
+		}
+
+		public get neg() {
+			return new Scalar.Expression(UnaryOperator.NEG, this);
 		}
 
 		/**
@@ -350,10 +652,14 @@ export namespace Scalar {
 	 */
 	export class Expression extends Scalar implements _Expression {
 		readonly type = "expression";
+		readonly classRef = Scalar.Expression;
+
 		/** `Set` of [[Variable]] quantities `this` depends on. */
 		readonly arg_list: Set<_Variable>;
 		/** Array of `Evaluable` quantity/quantities `this.op` operates on. */
 		readonly operands: Evaluable[] = [];
+
+		readonly rest: any[];
 
 		/**
 		 * Creates a scalar expression object using a root binary operation.
@@ -361,19 +667,31 @@ export namespace Scalar {
 		 * @param lhs The left hand side operand of the operator.
 		 * @param rhs The right hand side operand of the operator.
 		 */
-		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable);
+		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, ...args: any[]);
 		/**
 		 * Creates a scalar expression object using a root unary operation.
 		 * @param op {UnaryOperator}
 		 * @param arg The argument of the operator.
 		 */
-		constructor(op: UnaryOperator, arg: Evaluable);
-		constructor(readonly op: Operator, a: Evaluable, b?: Evaluable) {
+		constructor(op: UnaryOperator, arg: Evaluable, ...args: any[]);
+		constructor(readonly op: Operator, ...args: any[]) {
 			super();
+			let a, b = undefined;
+			if(isUnaryOperator(op)) {
+				a = args[0];
+				this.rest = args.slice(1);
+			} else {
+				[a, b] = args.slice(0, 2);
+				this.rest = args.slice(2);
+			}
 			this.arg_list = ExpressionBuilder.createArgList(a, b);
 			this.operands.push(a);
 			if(b !== undefined)
 				this.operands.push(b);
+		}
+
+		public get neg() {
+			return new Scalar.Expression(UnaryOperator.NEG, this);
 		}
 
 		/**

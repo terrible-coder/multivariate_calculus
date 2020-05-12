@@ -1,623 +1,374 @@
-import { IndeterminateForm, DivisionByZero } from "../errors";
+import { trimZeroes, align, pad } from "./parsers";
+import { Component } from "./component";
+import { MathContext } from "./context";
+import { mathenv } from "../env";
+import { Numerical } from "../definitions";
 
 /**
- * Specifies a *rounding behaviour* for numerical operations on [[BigNum]]
- * which are capable of discarding some precision. This is based on the JAVA
- * implementation of rounding behaviour. Read more [here](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html). 
- */
-export enum RoundingMode {
-	/** Rounds the number away from 0. */
-	UP,
-	/** Rounds the number down towards 0. */
-	DOWN,
-	/** Rounds the number up towards positive infinity. */
-	CEIL,
-	/** Rounds the number down towards negative infinity. */
-	FLOOR,
-	/** Rounds towards nearest neighbour. In case it is equidistant it is rounded up. */
-	HALF_UP,
-	/** Rounds towards nearest neighbour. In case it is equidistant it is rounded down. */
-	HALF_DOWN,
-	/** Rounds towards nearest neighbour. In case it is equidistant it is rounded to nearest even number. */
-	HALF_EVEN,
-	/** Rounding mode to assert that no rounding is necessary as an exact representation is possible. */
-	UNNECESSARY
-}
-
-/**
- * An object type which holds information about the context settings that
- * describes certain rules for certain numerical operations.
- */
-export type MathContext = {
-	/**
-	 * The number of decimal places a [[BigNum]] object should store. This does
-	 * not represent the number of significant digits in the number unlike the
-	 * JAVA implementation of the same concept.
-	 */
-	precision: number;
-	/**
-	 * The rounding algorithm that should be used for a particular numerical
-	 * operation. Care must be taken as to when the UNNECESSARY mode is used,
-	 * it will throw an exception if an exact representation of the result is
-	 * not found.
-	 */
-	rounding: RoundingMode
-}
-
-export namespace MathContext {
-	/**
-	 * The default [[MathContext]] used when an exact representation cannot be
-	 * achieved for some operation.
-	 */
-	export const DEFAULT_CONTEXT: MathContext = {
-		precision: 17,
-		rounding: RoundingMode.UP
-	};
-
-	/**
-	 * The [[MathContext]] used for high precision calculation. Stores up to
-	 * 50 places after the decimal point with [[RoundingMode.UP]] rounding algorithm.
-	 */
-	export const HIGH_PRECISION: MathContext = {
-		precision: 50,
-		rounding: RoundingMode.UP
-	};
-
-	/**
-	 * The [[MathContext]] which defines how numbers are dealt with in science.
-	 * It has slightly higher precision value than the default context with
-	 * [[RoundingMode.HALF_EVEN]] rounding algorithm.
-	 */
-	export const SCIENTIFIC: MathContext = {
-		precision: 20,
-		rounding: RoundingMode.HALF_EVEN
-	};
-
-	/**
-	 * The [[MathContext]] which defines how to deal with high precision
-	 * numbers in science. It has the same precision value as the high precision one
-	 * and [[RoundingMode.HALF_EVEN]] rounding algorithm.
-	 */
-	export const HIGH_PREC_SCIENTIFIC: MathContext = {
-		precision: 50,
-		rounding: RoundingMode.HALF_EVEN
-	};
-}
-
-/**
- * Immutable, arbitrary precision decimal numbers. A BigNum consists of an
- * integer part and a decimal part stored as string objects. The precision of
- * the number is completely controlled by the user. A [[MathContext]] object
- * helps to specify the number of decimal places (not significant figures) the
+ * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
+ * real part and imaginary part(s) stored as [[Component]] objects. A [[MathContext]] object
+ * is used to specify the number of decimal places (not significant figures) the
  * user wants and what rounding algorithm should be used. Every operation is
  * carried out by an intermediate result which is then rounded to the preferred
  * number of decimal places using the preferred rounding algorithm.
+ * 
+ * The BigNum objects follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction)
+ * algebra for multiplication. They can be mathematically expressed as
+ * 
+ * \\[ x = \sum_{i=0}^{N-1} x_ie_i \\]
+ * 
+ * where \\( N \\) represents the number of dimensions the number exists in and
+ * \\( e_i \\) are the orthogonal units. The components are stored using a real
+ * first convention. Therefore, by convention \\( e_0 = 1 \\), the real
+ * unit. The others are the imaginary units. The \\( e_1 \\) is our familiar
+ * \\( \imath \\) for the complex numbers. Again, \\( e_2=\jmath \\) and \\( e_3=k \\)
+ * are the [Hamilton's units for quaternions](https://en.wikipedia.org/wiki/Quaternion).
  */
-export class BigNum {
+export class BigNum extends Numerical {
 
 	/**
-	 * The circle constant PI correct upto 100 decimal places.
+	 * The components of the number represented by this object. The first one
+	 * (at index 0) is the real component and the rest are the components of
+	 * the imaginary units.
+	 */
+	readonly components: Component[];
+	/**
+	 * The dimension in which this number belongs. The dimension must always be
+	 * a power of 2.
+	 */
+	readonly dim: number;
+
+	/**
+	 * Creates a higher dimensional number from its components.
+	 * For end users it is recommended that they use the [[BigNum.real]],
+	 * [[BigNum.complex]] and [[BigNum.hyper]] functions to create new numbers.
+	 * @param values The components of the number.
+	 */
+	constructor(...values: Component[]);
+	/**
+	 * Creates a higher dimensional number from its components.
+	 * For end users it is recommended that they use the [[BigNum.real]],
+	 * [[BigNum.complex]] and [[BigNum.hyper]] functions to create new numbers.
+	 * @param values The components of the number.
+	 */
+	constructor(values: Component[]);
+	constructor(...values: Component[] | [Component[]]) {
+		super();
+		let args: Component[];
+		const temp = values[0];
+		if(temp instanceof Array)
+			args = temp;
+		else args = <Array<Component>>values;
+		args = trimZeroes<Component>(args, "end", x => x.integer === "" && x.decimal === "");
+		this.dim = Math.pow(2, Math.ceil(Math.log2(args.length || 1)));
+		this.components = pad(args, this.dim - args.length, Component.ZERO, "end");
+	}
+
+	public get classRef() {
+		return BigNum;
+	}
+
+	/**
+	 * Checks whether `this` and `that` are equal numbers. Equality is defined
+	 * component wise. That is, two numbers \\( a \\) and \\( b \\) are equal
+	 * if and only if
 	 * 
-	 * Source: http://paulbourke.net/miscellaneous/numbers/
-	 */
-	public static PI = new BigNum("3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679");
-
-	/**
-	 * The constant Euler's number correct upto 100 decimal places.
+	 * \\[ a_i = b_i \quad \forall i \\]
 	 * 
-	 * Source: http://paulbourke.net/miscellaneous/numbers/
-	 */
-	public static E = new BigNum("2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274");
-
-	/**
-	 * The natural logarithm of 10 correct upto 100 decimal places. This comes
-	 * in vary handy for natural base to common base logarithm.
-	 * 
-	 * Source: http://paulbourke.net/miscellaneous/numbers/
-	 */
-	public static ln10 = new BigNum("2.3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983");
-
-	/**
-	 * The constant zero.
-	 */
-	public static ZERO = new BigNum("0");
-	/**
-	 * The constant one.
-	 */
-	public static ONE = new BigNum("1");
-	/**
-	 * The constant two.
-	 */
-	public static TWO = new BigNum("2");
-	/**
-	 * The constant three.
-	 */
-	public static THREE = new BigNum("3");
-	/**
-	 * The constant four.
-	 */
-	public static FOUR = new BigNum("4");
-	/**
-	 * The constant five.
-	 */
-	public static FIVE = new BigNum("5");
-	/**
-	 * The constant six.
-	 */
-	public static SIX = new BigNum("6");
-	/**
-	 * The constant seven.
-	 */
-	public static SEVEN = new BigNum("7");
-	/**
-	 * The constant eight.
-	 */
-	public static EIGHT = new BigNum("8");
-	/**
-	 * The constant nine.
-	 */
-	public static NINE = new BigNum("9");
-
-	/**
-	 * The default [[MathContext]] used for numerical operations related to [[BigNum]]
-	 * when a context has not been mentioned separately. Reassign this value
-	 * if you want to have all subsequent operations in some [[MathContext]]
-	 * other than [[MathContext.DEFAULT_CONTEXT]].
-	 */
-	static MODE = MathContext.DEFAULT_CONTEXT;
-
-	/**
-	 * The integer part of the number.
-	 */
-	readonly integer: string;
-	/**
-	 * The decimal part of the number.
-	 */
-	readonly decimal: string;
-
-	/**
-	 * Creates a [[BigNum]] instance from the string representation of the number.
-	 * @param num The string representation of the number in decimal system.
-	 */
-	constructor(num: string);
-	/**
-	 * Creates a [[BigNum]] instance from the decimal representation of the
-	 * number. This instance created will store the exact binary floating
-	 * point value of the number. Even though it uses the toString() method
-	 * to convert the number to a string it might be unpredictable at times.
-	 * @param num A numeric expression.
-	 */
-	constructor(num: number);
-	/**
-	 * Creates a [[BigNum]] instance from the integral and fractional part
-	 * of the number. Both the arguments are expected to be string
-	 * representations of integers.
-	 * @param integer The whole part of the number.
-	 * @param fraction The fractional part of the number.
-	 */
-	constructor(integer: string, fraction: string);
-	constructor(a: number | string, b?: string) {
-		let num: string;
-		if(b === undefined)
-			if(typeof a === "number")
-				num = a.toString();
-			else num = a;
-		else if(typeof a === "string" && typeof b === "string")
-			num = a + "." + b;
-		else throw new TypeError("Illegal argument type.");
-		[this.integer, this.decimal] = BigNum.parseNum(num);
-	}
-
-	/**
-	 * Returns this number as a single string, with no decimal point.
-	 * @ignore
-	 */
-	private get asString() {
-		return this.integer + this.decimal;
-	}
-
-	/**
-	 * Returns this number as an unscaled BigInt instance.
-	 * @ignore
-	 */
-	private get asBigInt() {
-		return BigInt(this.asString);
-	}
-
-	/**
-	 * The number of digits after the decimal point stored by this number.
-	 * @ignore
-	 */
-	private get precision() {
-		return this.decimal.length;
-	}
-
-	/**
-	 * The sign of this number.
-	 */
-	public get sign() {
-		if(this.integer === "" && this.decimal === "")
-			return 0;
-		if(this.integer.charAt(0) === '-')
-			return -1;
-		return 1;
-	}
-
-	/**
-	 * Given a string, adds padding to the rear or front. This is an implementation
-	 * to only aid with numerical operations where the numbers are stored as
-	 * strings. Do not use for general use.
-	 * @param s The string which is to be padded.
-	 * @param n Number of times padding string must be used.
-	 * @param char The padding string. It must be a single character string.
-	 * @param front Flag value to indicate whether to pad at front or at rear.
-	 * @ignore
-	 */
-	private static pad(s: string, n: number, char: string, front=false) {
-		if(char.length > 1)
-			throw new Error("Padding string must have only one character.");
-		return front? "".padEnd(n, char) + s: s + "".padEnd(n, char);
-	}
-
-	/**
-	 * Aligns the decimal point in the given numbers by adding padding 0's
-	 * at the end of the smaller number string.
-	 * @param a 
-	 * @param b 
-	 * @returns The strings aligned according to position of decimal point.
-	 * @ignore
-	 */
-	private static align(a: BigNum, b: BigNum) {
-		const pa = a.precision, pb = b.precision;
-		const d = pa - pb;
-		let aa = a.asString,
-			ba = b.asString;
-		if(d > 0)
-			ba = BigNum.pad(ba, d, "0");
-		else if(d < 0)
-			aa = BigNum.pad(aa, -d, "0");
-		return [aa, ba];
-	}
-
-	/**
-	 * Inserts a decimal point in the string at a given index. The `index`
-	 * value is calculated from the rear of the string starting from 1.
-	 * @param a The number as a string.
-	 * @param index The index from the rear.
-	 * @ignore
-	 */
-	private static decimate(a: string, index: number) {
-		if(index < 0)
-			throw new Error("Cannot put decimal point at negative index.");
-		let s = a, sgn = "";
-		if(s.charAt(0) === '-') {
-			s = s.substring(1);
-			sgn = "-";
-		}
-		if(index > s.length)
-			s = "0." + BigNum.pad(s, index - s.length, "0", true);
-		else
-			s = s.substring(0, s.length - index) + "." + s.substring(s.length - index);
-		return sgn + s;
-	}
-
-	/**
-	 * Takes a string and parses into the format expected by the [[BigNum]] class.
-	 * @param s String representation of the number.
-	 * @returns An array where the first element is the integer part and the second is the decimal part.
-	 */
-	private static parseNum(s: string) {
-		if(!isValid(s))
-			throw new TypeError("Illegal number format.");
-		let a = [];
-		if(s.indexOf('e') > -1) {
-			// The number is in scientific mode
-			// Me-E
-			// M is the mantissa and E is the exponent with base 10
-			const i = s.indexOf('e');
-			const mantissa = s.substring(0, i), exponent = Number(s.substring(i+1));
-			const index = mantissa.indexOf('.');
-			const precision = index == -1? 0: mantissa.substring(index + 1).length;
-			let num = mantissa.split('.').join("");
-			if(exponent > precision) {
-				num = BigNum.pad(mantissa, exponent - precision, "0");
-			} else
-				num = BigNum.decimate(num, precision - exponent);
-			a = num.split(".");
-		} else a = s.split(".");
-		return a.length === 1? [trimZeroes(a[0], "start"), ""]:
-								[trimZeroes(a[0], "start"), trimZeroes(a[1], "end")];
-	}
-
-	/**
-	 * Evaluates the absolute value of this number.
-	 * @param x The number whose absolute value is to be found.
-	 * @returns The absolute value of the argument.
-	 */
-	public static abs(x: BigNum) {
-		return x.integer.charAt(0) === '-'? new BigNum(x.integer.substring(1) + "." + x.decimal): x;
-	}
-
-	/**
-	 * Rounds off a given number according to some [[MathContext]]. The different
-	 * rounding algorithms implemented are identical to the ones defined by the
-	 * [RoundingMode](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html)
-	 * class of JAVA.
-	 * @param x The number to round off.
-	 * @param context The [[MathContext]] which defines how the number is to be rounded.
-	 * @returns The number representing the rounded value of the argument according to the given context.
-	 */
-	public static round(x: BigNum, context: MathContext) {
-		if(x.precision > context.precision) {
-			const num = x.asBigInt;
-			const diff = x.precision - context.precision;
-			const divider = BigInt(BigNum.pad("1", diff, "0"));
-			let rounded = num / divider, last = num % divider;
-			const one = BigInt("1"), ten = BigInt("10");
-			const FIVE = BigInt(BigNum.pad("5", diff - 1, "0")), ONE = BigInt(BigNum.pad("1", diff - 1, "0"));
-			switch(context.rounding) {
-			case RoundingMode.UP:
-				if(last >= ONE) rounded += one;
-				else if(last <= -ONE) rounded -= one;
-				break;
-			case RoundingMode.DOWN:
-				break;
-			case RoundingMode.CEIL:
-				if(last >= ONE) rounded += one;
-				break;
-			case RoundingMode.FLOOR:
-				if(last <= -ONE) rounded -= one;
-				break;
-			case RoundingMode.HALF_DOWN:
-				if(last > FIVE) rounded += one;
-				else if(last < -FIVE) rounded -= one;
-				break;
-			case RoundingMode.HALF_UP:
-				if(last >= FIVE) rounded += one;
-				else if(last <= -FIVE) rounded -= one;
-				break;
-			case RoundingMode.HALF_EVEN:
-				if(last > FIVE) rounded += one;
-				else if(last < -FIVE) rounded -= one;
-				else if(Math.abs(Number(rounded % ten)) % 2 !== 0) {
-					if(last === FIVE) rounded += one;
-					else if(last === -FIVE) rounded -= one;
-				}
-				break;
-			case RoundingMode.UNNECESSARY:
-				if(last > 0 || last < 0)
-					throw Error("Rounding necessary. Exact representation not known.");
-				break;
-			}
-			let r = rounded.toString();
-			return new BigNum(BigNum.decimate(r, context.precision));
-		} else return x;
-	}
-
-	/**
-	 * The comparator function. This compares `this` to `that` and returns
-	 * * 0 if they are equal
-	 * * 1 if `this` > `that`
-	 * * -1 if `this` < `that`
-	 * @param that Number to compare with.
-	 */
-	public compareTo(that: BigNum) {
-		const [a, b] = BigNum.align(this, that);
-		const x = BigInt(a) - BigInt(b);
-		return x > 0? 1: x < 0? -1: 0;
-	}
-
-	/**
-	 * Determines whether `this` is less than `that`.
-	 * @param that Number to compare with.
-	 */
-	public lessThan(that: BigNum) {
-		return this.compareTo(that) === -1;
-	}
-
-	/**
-	 * Determines whether `this` is more than `that`.
-	 * @param that Number to compare with.
-	 */
-	public moreThan(that: BigNum) {
-		return this.compareTo(that) === 1;
-	}
-
-	/**
-	 * Checks whether `this` and `that` are equal numbers. Equality is checked
-	 * only till the number of decimal places specified by [[BigNum.MODE]].
+	 * The equality is checked only upto the number of decimal places specified
+	 * by [[mathenv.mode]].
 	 * @param that The number to check against.
 	 */
 	public equals(that: BigNum): boolean;
 	/**
-	 * Checks whether `this` and `that` are equal numbers. Equality is checked
-	 * only till the number of decimal places specified by `context`.
+	 * Checks whether `this` and `that` are equal numbers. Equality is defined
+	 * component wise. That is, two numbers \\( a \\) and \\( b \\) are equal
+	 * if and only if
+	 * 
+	 * \\[ a_i = b_i \quad \forall i \\]
+	 * 
+	 * The equality is checked only upto the number of decimal places specified
+	 * by the given context settings.
 	 * @param that The number to check against.
-	 * @param context The [[MathContext]] value to use for equality check.
+	 * @param context The context settings to use.
 	 */
 	public equals(that: BigNum, context: MathContext): boolean;
-	public equals(that: BigNum, context = BigNum.MODE) {
-		const A = BigNum.round(this, context);
-		const B = BigNum.round(that, context);
-		return A.integer === B.integer && A.decimal === B.decimal;
+	public equals(that: BigNum, context=mathenv.mode) {
+		if(this.dim !== that.dim)
+			return false;
+		const n = that.dim;
+		for(let i = 0; i < n; i++)
+			if(!this.components[i].equals(that.components[i], context))
+				return false;
+		return true;
 	}
 
 	/**
-	 * Determines whether `this` is less than or equal to `that`.
-	 * @param that Number to compare with.
-	 */
-	public lessEquals(that: BigNum) {
-		return this.lessThan(that) || this.equals(that);
-	}
-
-	/**
-	 * Determines whether `this` is more than or equal to `that`.
-	 * @param that Number to compare with.
-	 */
-	public moreEquals(that: BigNum) {
-		return this.moreThan(that) || this.equals(that);
-	}
-
-	/**
-	 * The negative value of `this`.
+	 * The negative of `this`.
 	 */
 	public get neg() {
-		if(this.integer.charAt(0) === '-')
-			return new BigNum(this.integer.substring(1) + "." + this.decimal);
-		return new BigNum("-" + this.toString());
+		return new BigNum(this.components.map(x => x.neg));
 	}
 
 	/**
-	 * Adds two [[BigNum]] instances. The higher precision value of the two is
-	 * chosen as the precision for the result and rounding is according to
-	 * [[BigNum.MODE]].
+	 * The real part of this number.
+	 */
+	public get real() {
+		return new BigNum(this.components[0]);
+	}
+
+	/**
+	 * The imaginary part of this number.
+	 */
+	public get imag() {
+		return new BigNum([Component.ZERO].concat(this.components.slice(1)));
+	}
+
+	/**
+	 * The conjugate of `this` number.
+	 */
+	public get conj(): BigNum {
+		if(this.dim === 1)
+			return this;
+		const real = this.real.components;
+		const imag = this.imag.neg.components.slice(1);
+		const comps = real.concat(imag);
+		return new BigNum(comps);
+	}
+
+	/**
+	 * Evaluates the absolute value of a number correct upto the number of
+	 * places specified by [[mathenv.mode]].
+	 * @param x A number.
+	 * @param context Context settings to use.
+	 */
+	public static absSq(x: BigNum): BigNum;
+	/**
+	 * Evaluates the absolute value of a number correct upto the number of
+	 * places specified by the given context settings.
+	 * @param x A number.
+	 * @param context Context settings to use.
+	 */
+	public static absSq(x: BigNum, context: MathContext): BigNum;
+	public static absSq(x: BigNum, ...args: any[]): BigNum;
+	public static absSq(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		return new BigNum(x.components.reduce((prev, curr) => prev.add(curr.mul(curr, context), context), Component.ZERO));
+	}
+
+	/**
+	 * Evaluates the absolute value of a number correct upto the number of
+	 * places specified by [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static abs(x: BigNum): BigNum;
+	public static abs(x: BigNum, context: MathContext): BigNum;
+	public static abs(x: BigNum, ...args: any[]): BigNum;
+	public static abs(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const magsq = x.components.reduce((prev, curr) => prev.add(curr.pow(Component.TWO)), Component.ZERO);
+		return new BigNum(magsq.pow(Component.create("0.5"), context));
+	}
+
+	/**
+	 * Rounds off a [[BigNum]] instance, component-wise, according to some
+	 * [[MathContext]]. The different rounding algorithms implemented are
+	 * identical to the ones defined by the [RoundingMode](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html)
+	 * class of JAVA.
+	 * @param x The number to be rounded off.
+	 * @param context The context settings to use for rounding.
+	 */
+	public static round(x: BigNum, context: MathContext) {
+		return new BigNum(x.components.map(comp => Component.round(comp, context)));
+	}
+
+	/**
+	 * Evaluates the norm of this number. Since `this` is not necessarily a real
+	 * number, the norm is defined as
+	 * \\[ \text{norm } a = a^* a \\]
+	 * where \\( a^* \\) is the conjugate of \\( a \\).
+	 */
+	public norm(context=mathenv.mode) {
+		return this.conj.mul(this, context);
+	}
+
+	/**
+	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
+	 * That is, for two numbers \\( a \\) and \\( b \\), their addition is defined as
+	 * 
+	 * \\[ a + b = \sum_i a_i + b_i \\]
+	 * 
+	 * The result is rounded according to [[mathenv.mode]].
 	 * @param that The number to add this with.
 	 * @returns this + that.
 	 */
 	public add(that: BigNum): BigNum;
 	/**
-	 * Adds two [[BigNum]] instances. The higher precision value of the two is
-	 * chosen as the precision for the result and rounding is according to the
-	 * given context settings.
+	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
+	 * That is, for two numbers \\( a \\) and \\( b \\), their addition is defined as
+	 * 
+	 * \\[ a + b = \sum_i a_i + b_i \\]
+	 * 
+	 * The result is rounded according to the given context settings.
 	 * @param that The number to add this with.
-	 * @param context The context settings object to use.
+	 * @param context The context settings to use.
 	 * @returns this + that.
 	 */
 	public add(that: BigNum, context: MathContext): BigNum;
-	public add(that: BigNum, context?: MathContext) {
-		context = context || BigNum.MODE;
-		const [a, b] = BigNum.align(this, that);
-		let sum = (BigInt(a) + BigInt(b)).toString();
-		const precision = Math.max(this.precision, that.precision);
-		const res = new BigNum(BigNum.decimate(sum, precision));
-		return BigNum.round(res, context);
+	public add(that: BigNum, ...args: any[]): BigNum;
+	public add(that: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
+		const sum: Component[] = [];
+		for(let i = 0; i < a.length; i++)
+			sum.push(a[i].add(b[i], context));
+		return new BigNum(sum);
 	}
 
 	/**
-	 * Subtracts one [[BigNum]] instance from another. The higher precision value
-	 * of the two is chosen as the precision for the result and rounding is
-	 * according to [[BigNum.MODE]].
-	 * @param that The number to subtract from this.
+	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
+	 * That is, for two numbers \\( a \\) and \\( b \\), their difference is defined as
+	 * 
+	 * \\[ a - b = \sum_i a_i - b_i \\]
+	 * 
+	 * The result is rounded according to [[mathenv.mode]].
+	 * @param that The number to add this with.
 	 * @returns this - that.
 	 */
 	public sub(that: BigNum): BigNum;
 	/**
-	 * Subtracts one [[BigNum]] instance from another. The higher precision value
-	 * of the two is chosen as the precision for the result and rounding is
-	 * according to the given context settings.
-	 * @param that The number to subtract from this.
-	 * @param context The context settings object to use.
+	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
+	 * That is, for two numbers \\( a \\) and \\( b \\), their difference is defined as
+	 * 
+	 * \\[ a - b = \sum_i a_i - b_i \\]
+	 * 
+	 * The result is rounded according to the given context settings.
+	 * @param that The number to add this with.
 	 * @returns this - that.
 	 */
 	public sub(that: BigNum, context: MathContext): BigNum;
-	public sub(that: BigNum, context?: MathContext) {
-		context = context || BigNum.MODE;
-		const [a, b] = BigNum.align(this, that);
-		let sum = (BigInt(a) - BigInt(b)).toString();
-		const precision = Math.max(this.precision, that.precision);
-		const res = new BigNum(BigNum.decimate(sum, precision));
-		return BigNum.round(res, context);
+	public sub(that: BigNum, ...args: any[]): BigNum;
+	public sub(that: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
+		const sum: Component[] = [];
+		for(let i = 0; i < a.length; i++)
+			sum.push(a[i].sub(b[i], context));
+		return new BigNum(sum);
 	}
 
 	/**
-	 * Multiplies two [[BigNum]] instances. The sum of the precisions of the two
-	 * is chosen as the precision of the result and rounding is according to
-	 * [[BigNum.MODE]].
-	 * @param that The number to multiply this with.
+	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
+	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
+	 * The result is rounded according to [[mathenv.mode]].
+	 * @param that The number to multiply with.
 	 * @returns this * that.
 	 */
 	public mul(that: BigNum): BigNum;
 	/**
-	 * Multiplies two [[BigNum]] instances. The sum of the precisions of the two
-	 * is chosen as the precision of the result and rounding is according to
-	 * the given context settings.
-	 * @param that The number to multiply this with.
-	 * @param context The context settings object to use.
+	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
+	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
+	 * The result is rounded according to the given context settings.
+	 * @param that The number to multiply with.
+	 * @param context The context settings to use.
 	 * @returns this * that.
 	 */
 	public mul(that: BigNum, context: MathContext): BigNum;
-	public mul(that: BigNum, context?: MathContext) {
-		context = context || BigNum.MODE;
-		let prod = (this.asBigInt * that.asBigInt).toString();
-		const precision = this.precision + that.precision;
-		const res = new BigNum(BigNum.decimate(prod, precision));
-		return BigNum.round(res, context);
+	public mul(that: BigNum, ...args: any[]): BigNum;
+	public mul(that: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const zero = new BigNum(Component.ZERO);
+		if(this.equals(zero, context) || that.equals(zero, context))
+			return zero;
+		if(this.dim === 1 && that.dim === 1)
+			return new BigNum(this.components[0].mul(that.components[0], context));
+		if(this.dim === 1)
+			return new BigNum(that.components.map(x => this.components[0].mul(x, context)));
+		if(that.dim === 1)
+			return new BigNum(this.components.map(x => x.mul(that.components[0], context)));
+		const n = Math.max(this.dim, that.dim);
+		const a1 = new BigNum(this.components.slice(0, n/2)),
+			  a2 = new BigNum(this.components.slice(n/2));
+		const b1 = new BigNum(that.components.slice(0, n/2)),
+			  b2 = new BigNum(that.components.slice(n/2));
+		let q1 = a1.mul(b1, context).sub(b2.conj.mul(a2, context), context).components;
+		let q2 = b2.mul(a1, context).add(a2.mul(b1.conj, context), context).components;
+		q1 = pad(q1, n/2-q1.length, Component.ZERO, "end");
+		q2 = pad(q2, n/2-q2.length, Component.ZERO, "end");
+		const q = new BigNum(q1.concat(q2));
+		return q;
 	}
 
 	/**
-	 * Divides one [[BigNum]] instance by another with rounding according to
-	 * [[BigNum.MODE]].
-	 * @param that The number to divide this by.
-	 * @returns this / that.
+	 * Calculates the multiplicative inverse of this.
+	 */
+	public inv(context=mathenv.mode) {
+		const magSq = this.norm(context).components[0];
+		const scale = new BigNum(Component.ONE.div(magSq, context));
+		return this.conj.mul(scale, context);
+	}
+
+	/**
+	 * Divides one [[BigNum]] instance by another. This method assumes right
+	 * division. That is, the inverse of `that` is multiplied on the right.
+	 * The result is rounded according to [[mathenv.mode]].
+	 * @param that Number to divide by.
 	 */
 	public div(that: BigNum): BigNum;
 	/**
-	 * Divides one [[BigNum]] instance by another with rounding according to the
-	 * given context settings.
-	 * @param that The number to divide this by.
-	 * @param context The context settings object to use.
-	 * @returns this / that.
-	 */
-	public div(that: BigNum, context: MathContext): BigNum;
-	public div(that: BigNum, context?: MathContext) {
-		context = context || BigNum.MODE;
-		if(that.sign === 0) {
-			if(this.sign === 0)
-				throw new IndeterminateForm("Cannot determine 0/0.");
-			throw new DivisionByZero("Cannot divide by zero.");
-		}
-		const precision = context.precision;
-		const p1 = this.precision, p2 = that.precision, p = precision - p1 + p2;
-		const a = p < 0? this.asBigInt: BigInt(BigNum.pad(this.asString, p, "0")); //this.asBigInt * BigInt(Math.pow(10, precision - p1 + p2));
-		const b = that.asBigInt;
-		let quo = (a / b).toString();
-		const res = new BigNum(BigNum.decimate(quo, (p < 0)? p1: precision));
-		return BigNum.round(res, context);
-	}
-
-	/**
-	 * Raises a [[BigNum]] to an integer power. This function may be made
-	 * private in future versions. It is adviced not to use this function
-	 * except for development purposes.
-	 * @param base The base number.
-	 * @param index The index / exponent to which the base is to be raised.
+	 * Divides one [[BigNum]] instance by another. This method assumes right
+	 * division. That is, the inverse of `that` is multiplied on the right.
+	 * The result is rounded according to the given context settings.
+	 * @param that Number to divide by.
 	 * @param context The context settings to use.
 	 */
-	static intpow(base: BigNum, index: number, context=BigNum.MODE) {
-		if(index !== (index|0))
-			throw "Only defined for integer values of the power.";
-		let p = BigNum.ONE;
-		for(let i = 0; i < index; i++)
-			p = p.mul(base, context);
-		return p;
-	}
-
+	public div(that: BigNum, context: MathContext): BigNum;
 	/**
-	 * Raises `this` to the power of `ex`.
-	 * @param ex A number.
+	 * Divides one [[BigNum]] instance by another. This method multiplies the
+	 * inverse of `that` on the given "side" of `this`.
+	 * The result is rounded according to [[mathenv.mode]].
+	 * @param that Number to divide by.
+	 * @param side Side on which to divide from.
 	 */
-	public pow(ex: BigNum): BigNum;
+	public div(that: BigNum, side: "left" | "right"): BigNum;
 	/**
-	 * Raises `this` to the power of `ex` using the rounding according to the
-	 * given context settings.
-	 * @param ex A number.
-	 * @param context The context settings object to use.
+	 * Divides one [[BigNum]] instance by another. This method multiplies the
+	 * inverse of `that` on the given "side" of `this`.
+	 * The result is rounded according to the given context settings.
+	 * @param that Number to divide by.
+	 * @param side Side on which to divide from.
+	 * @param context The context settings to use.
 	 */
-	public pow(ex: BigNum, context: MathContext): BigNum;
-	public pow(ex: BigNum, context=BigNum.MODE) {
-		if(ex.decimal === "" || ex.decimal === "0")
-			return BigNum.intpow(this, parseInt(ex.integer), context);
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const y = ex.mul(BigNum.ln(this, ctx), ctx);
-		return BigNum.round(BigNum.exp(y, ctx), context);
+	public div(that: BigNum, side: "left" | "right", context: MathContext): BigNum;
+	public div(that: BigNum, ...args: any[]): BigNum;
+	public div(that: BigNum, ...args: any[]) {
+		const a = args[0], b = args[1];
+		let side: "left" | "right";
+		let context: MathContext;
+		if(b === undefined) {
+			if(a === "left" || a === "right") {
+				side = a;
+				context = mathenv.mode;
+			} else {
+				side = "right";
+				context = <MathContext>a;
+			}
+		} else {
+			side = <"left" | "right">a;
+			context = b;
+		}
+		if(this.dim === 1 && that.dim === 1)
+			return new BigNum(this.components[0].div(that.components[0], context));
+		if(that.dim === 1)
+			return new BigNum(this.components.map(x => x.div(that.components[0], context)));
+		if(this.dim === 1)
+			return new BigNum(that.inv(context).components.map(x => x.div(this.components[0], context)));
+		return side === "right"? this.mul(that.inv(context), context): that.inv(context).mul(this, context);
 	}
 
 	/**
 	 * Calculates the trigonometric sine of a given number with rounding
-	 * according to [[BigNum.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static sin(x: BigNum): BigNum;
@@ -628,37 +379,26 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static sin(x: BigNum, context: MathContext): BigNum;
-	public static sin(x: BigNum, context=BigNum.MODE) {
-		/*
-			sin x = sum((-1)^n * x^(2n+1) / (2n+1)!, 0, infty)
-			t_n = ((-1)^n / (2n+1)!) * x^(2n+1)
-			t_n1 = ((-1)^n+1 / (2n+3)!) * x^(2n+3)
-			t_n1 = - (t_n/(2n+3)(2n+2)) * x^2
-		*/
+	public static sin(x: BigNum, ...args: any[]): BigNum;
+	public static sin(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const x_sq = x.mul(x, ctx);
-		let sum = BigNum.ZERO;
-		let term = x;
-		let n = BigNum.ZERO;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const a = BigNum.TWO.mul(n).add(BigNum.THREE);
-			const b = BigNum.TWO.mul(n).add(BigNum.TWO);
-			const f = a.mul(b).neg;
-			const term1 = term.mul(x_sq, ctx).div(f, ctx);
-			if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
-				return BigNum.round(sum, context);
-			term = term1;
-			n = n.add(BigNum.ONE);
-		}
+		const a = x.real.components[0];
+		const v = x.imag;
+		const theta = BigNum.abs(v).components[0];
+		const real = new BigNum(Component.sin(a, ctx).mul(Component.cosh(theta, ctx), ctx));
+		const imag = new BigNum(Component.cos(a, ctx).mul(Component.sinh(theta, ctx), ctx));
+		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.real("0"): v.div(new BigNum(theta), ctx);
+		const res = real.add(v_.mul(imag, ctx), ctx);
+		return BigNum.round(res, context);
 	}
 
 	/**
 	 * Calculates the trigonometric cosine of a given number with rounding
-	 * according to [[BigNum.MODE]].
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static cos(x: BigNum): BigNum;
@@ -669,37 +409,218 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static cos(x: BigNum, context: MathContext): BigNum;
-	public static cos(x: BigNum, context=BigNum.MODE) {
-		/*
-			cos x = sum((-1)^n * x^(2n) / (2n)!, 0, infty)
-			t_n = (-1)^n * x^(2n) / (2n)!
-			t_n1 = (-1)^n+1 * x^(2n+2) / (2n + 2)!
-			t_n1 = - (t_n / (2n + 1)(2n + 2)) * x^2
-		*/
+	public static cos(x: BigNum, ...args: any[]): BigNum;
+	public static cos(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const x_sq = x.mul(x, ctx);
-		let sum = BigNum.ZERO;
-		let term = BigNum.ONE;
-		let n = BigNum.ZERO;
-		while(true) {
-			sum = sum.add(term, ctx);
-			const a = BigNum.TWO.mul(n).add(BigNum.ONE);
-			const b = BigNum.TWO.mul(n).add(BigNum.TWO);
-			const f = a.mul(b).neg;
-			const term1 = term.mul(x_sq, ctx).div(f, ctx);
-			if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
-				return BigNum.round(sum, context);
-			term = term1;
-			n = n.add(BigNum.ONE);
+		const a = x.real.components[0];
+		const v = x.imag;
+		const theta = BigNum.abs(v).components[0];
+		const real = new BigNum(Component.cos(a, ctx).mul(Component.cosh(theta, ctx), ctx));
+		const imag = new BigNum(Component.sin(a, ctx).mul(Component.sinh(theta, ctx), ctx));
+		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.real("0"): v.div(new BigNum(theta), ctx);
+		const res = real.sub(v_.mul(imag, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
+	/**
+	 * Calculates the trigonometric tangent of a given number with rounding
+	 * according to [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static tan(x: BigNum): BigNum;
+	/**
+	 * Calculates the trigonometric tangent of a given number with rounding
+	 * according to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static tan(x: BigNum, context: MathContext): BigNum;
+	public static tan(x: BigNum, ...args: any[]): BigNum;
+	public static tan(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
 		}
+		const res = BigNum.sin(x, ctx).div(BigNum.cos(x, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
+	/**
+	 * Helper function for inverse trig functions. Transforms the product into
+	 * a sum (\\( \alpha \\)) and difference (\\( \beta \\)).
+	 * @param x The absolute value of real part.
+	 * @param y The absolute value of imaginary part.
+	 * @param ctx The context settings to use.
+	 * @ignore
+	 */
+	private static alpha_beta(x: Component, y: Component, ctx: MathContext) {
+		const one = Component.ONE, two = Component.TWO, half = Component.create("0.5");
+		const alpha2 = x.add(one, ctx).pow(two, ctx).add(y.pow(two, ctx), ctx);
+		const beta2 = x.sub(one, ctx).pow(two, ctx).add(y.pow(two, ctx), ctx);
+		const alpha = alpha2.pow(half, ctx);
+		const beta = beta2.pow(half, ctx);
+		return [alpha, beta];
+	}
+
+	/**
+	 * Calculates the inverse trigonometric sine of a given value with rounding
+	 * according to [[mathenv.mode]]. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 */
+	public static asin(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse trigonometric sine of a given value with rounding
+	 * according to the given context setings. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static asin(x: BigNum, context: MathContext): BigNum;
+	public static asin(x: BigNum, ...args: any[]): BigNum;
+	public static asin(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		};
+		const a = x.real.components[0];
+		const v = x.imag;
+		const theta = BigNum.abs(v).components[0];
+		const [alpha, beta] = BigNum.alpha_beta(a, theta, ctx);
+		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
+		const sin = alpha.sub(beta, ctx).div(Component.TWO, ctx);
+		const real = new BigNum(Component.asin(sin, ctx));
+		const imag = new BigNum(Component.acosh(cosh, ctx));
+		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
+		const res = real.add(v_.mul(imag, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
+	/**
+	 * Calculates the inverse trigonometric cosine of a given value with rounding
+	 * according to [[mathenv.mode]]. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static acos(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse trigonometric cosine of a given value with rounding
+	 * according to the given context settings. This method right now works good
+	 * only for values much smaller than unity. For values close to unity
+	 * this method converges very slowly to the result. This will be fixed in
+	 * future updates.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static acos(x: BigNum, context: MathContext): BigNum;
+	public static acos(x: BigNum, ...args: any[]): BigNum;
+	public static acos(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const a = x.real.components[0];
+		const v = x.imag;
+		const theta = BigNum.abs(v).components[0];
+		const [alpha, beta] = BigNum.alpha_beta(a, theta, ctx);
+		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
+		const cos = alpha.sub(beta, ctx).div(Component.TWO, ctx);
+		const real = new BigNum(Component.acos(cos, ctx));
+		const imag = new BigNum(Component.acosh(cosh, ctx));
+		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
+		const res = real.add(v_.mul(imag, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
+	/**
+	 * Calculates the hyperbolic sine of a given value with rounding according
+	 * to [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static sinh(x: BigNum): BigNum;
+	/**
+	 * Calculates the hyperbolic sine of a given value with rounding according
+	 * to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static sinh(x: BigNum, context: MathContext): BigNum;
+	public static sinh(x: BigNum, ...args: any[]): BigNum;
+	public static sinh(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const res = BigNum.exp(x, ctx).sub(BigNum.exp(x.neg, ctx), ctx).div(BigNum.real("2"), ctx);
+		return BigNum.round(res, context);
+	}
+
+	/**
+	 * Calculates the hyperbolic cosine of a given value with rounding according
+	 * to [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static cosh(x: BigNum): BigNum;
+	/**
+	 * Calculates the hyperbolic cosine of a given value with rounding according
+	 * to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static cosh(x: BigNum, context: MathContext): BigNum;
+	public static cosh(x: BigNum, ...args: any[]): BigNum;
+	public static cosh(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const res = BigNum.exp(x, ctx).add(BigNum.exp(x.neg, ctx), ctx).div(BigNum.real("2"), ctx);
+		return BigNum.round(res, context);
+	}
+
+	/**
+	 * Calculates the hyperbolic tangent of a given value with rounding according
+	 * to the given context settings.
+	 * @param x A number.
+	 */
+	public static tanh(x: BigNum): BigNum;
+	/**
+	 * Calculates the hyperbolic tangent of a given value with rounding according
+	 * to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static tanh(x: BigNum, context: MathContext): BigNum;
+	public static tanh(x: BigNum, ...args: any[]): BigNum;
+	public static tanh(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const res = BigNum.sinh(x, ctx).div(BigNum.cosh(x, ctx), ctx);
+		return BigNum.round(res, context);
 	}
 
 	/**
 	 * Calculates the exponential of a given number with rounding according to
-	 * [[BigNum.MODE]].
+	 * [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static exp(x: BigNum): BigNum;
@@ -710,188 +631,204 @@ export class BigNum {
 	 * @param context The context settings to use.
 	 */
 	public static exp(x: BigNum, context: MathContext): BigNum;
-	public static exp(x: BigNum, context=BigNum.MODE) {
+	public static exp(x: BigNum, ...args: any[]): BigNum;
+	public static exp(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		let sum = BigNum.ZERO;
-		let term = BigNum.ONE;
-		let n = BigNum.ZERO;
+		let sum = BigNum.real("0");
+		let term = BigNum.real("1");
+		let n = BigNum.real("0");
 		while(true) {
 			sum = sum.add(term, ctx);
-			const term1 = term.mul(x, ctx).div(n.add(BigNum.ONE), ctx);
-			if(BigNum.abs(term1).equals(BigNum.ZERO, ctx))
+			const term1 = term.mul(x, ctx).div(n.add(BigNum.real("1")), ctx);
+			if(term1.equals(BigNum.real("0"), ctx))
 				return BigNum.round(sum, context);
 			term = term1;
-			n = n.add(BigNum.ONE);
+			n = n.add(BigNum.real("1"));
 		}
 	}
 
 	/**
-	 * Evaluates the natural logarithm of a given number `x` (`|x| < 1`).
-	 * @param x A number.
-	 * @param context The context settings to use.
-	 * @ignore
-	 */
-	private static ln_less(x: BigNum, context=BigNum.MODE) {
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		let sum = BigNum.ZERO;
-		let term = x;
-		let n = BigNum.ONE;
-		while(true) {
-			sum = sum.add(term.div(n, ctx), ctx);
-			const term1 = term.mul(x, ctx).neg;
-			const term2 = term1.div(n.add(BigNum.ONE, ctx), ctx);
-			if(BigNum.abs(term2).equals(BigNum.ZERO, ctx))
-				return BigNum.round(sum, context);
-			term = term1;
-			n = n.add(BigNum.ONE);
-		}
-	}
-
-	/**
-	 * Calculates the natural logarithm (to the base `e`) of a given number
-	 * with rounding according to [[BigNum.MODE]].
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
+	 * with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static ln(x: BigNum): BigNum;
 	/**
-	 * Calculates the natural logarithm (to the base `e`) of a given number
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
 	 * with rounding according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
 	public static ln(x: BigNum, context: MathContext): BigNum;
-	public static ln(x: BigNum, context=BigNum.MODE) {
+	public static ln(x: BigNum, ...args: any[]): BigNum;
+	public static ln(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		if(x.lessEquals(BigNum.ZERO))
-			throw "Undefined";
-		if(x.lessThan(BigNum.TWO))
-			return BigNum.round(
-				BigNum.ln_less(x.sub(BigNum.ONE, ctx), ctx),
-				context
-				);
-		return BigNum.round(newton_raphson(
-			y => BigNum.exp(y, ctx).sub(x, ctx),
-			y => BigNum.exp(y, ctx),
-			BigNum.ONE,
-			ctx
-			),
-			context);
+		const r = BigNum.abs(x, ctx);
+		const real = new BigNum(Component.ln(r.components[0], ctx));
+		const u = x.div(r, ctx);
+		const u0 = u.components[0]; //cos(theta)
+		const sin2 = Component.ONE.sub(u0.pow(Component.TWO, ctx), ctx);
+		const sin = new BigNum(sin2.pow(Component.create("0.5"), ctx));
+		const theta = new BigNum(Component.acos(u0, ctx));
+		const v = sin.equals(BigNum.real("0"), ctx)? BigNum.complex("0", "1"): u.imag.div(sin, ctx);
+		const res = real.add(theta.mul(v, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
+	// /**
+	//  * Calculates the common logarithm (to the base \\( 10 \\)) of a given number
+	//  * with rounding according to [[mathenv.mode]].
+	//  * @param x A number.
+	//  */
+	// public static log(x: BigNum): BigNum;
+	// /**
+	//  * Calculates the common logarithm (to the base \\( 10 \\)) of a given number
+	//  * with rounding according to the given context settings.
+	//  * [[MathContext]].
+	//  * @param x A number.
+	//  * @param context The context settings to use.
+	//  */
+	// public static log(x: BigNum, context: MathContext): BigNum;
+	// public static log(x: BigNum, context=mathenv.mode) {
+	// 	const ctx: MathContext = {
+	// 		precision: 2 * context.precision,
+	// 		rounding: context.rounding
+	// 	};
+	// 	const y = BigNum.ln(x, ctx).div(BigNum.ln10, ctx);
+	// 	return BigNum.round(y, context);
+	// }
+
+}
+
+export namespace BigNum {
+	/**
+	 * Creates a [[BigNum]] instance from the string representation of a real number.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
+	 * @param num The string representation of a real number in decimal system.
+	 */
+	export function real(num: string): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the decimal representation of a real
+	 * number. This instance created will store the exact binary floating
+	 * point value of the number. Even though it uses the `toString()` method
+	 * to convert the number to a string it might be unpredictable at times.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
+	 * @param num A numeric expression.
+	 */
+	export function real(num: number): BigNum;
+	export function real(a: number|string) {
+		let num = a.toString();
+		return new BigNum(Component.create(num));
 	}
 
 	/**
-	 * Calculates the common logarithm (to the base `10`) of a given number
-	 * with rounding according to [[BigNum.MODE]].
-	 * @param x A number.
+	 * Creates a [[BigNum]] instance of a complex number from the decimal representations
+	 * of the real and imaginary part. This instance will store the exact binary
+	 * floating point value of the number. Even though it uses the `toString()`
+	 * method to convert number to string it might be unpredictable at times.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
+	 * @param real The real part of the number.
+	 * @param imag The imaginary part of the number.
 	 */
-	public static log(x: BigNum): BigNum;
+	export function complex(real: number, imag: number): BigNum;
 	/**
-	 * Calculates the common logarithm (to the base `10`) of a given number
-	 * with rounding according to the given context settings.
-	 * [[MathContext]].
-	 * @param x A number.
-	 * @param context The context settings to use.
+	 * Creates a [[BigNum]] instance from the string representations of the real
+	 * and imaginary parts.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
+	 * @param real The real part of the number.
+	 * @param imag The imaginary part of the number.
 	 */
-	public static log(x: BigNum, context: MathContext): BigNum;
-	public static log(x: BigNum, context=BigNum.MODE) {
-		const ctx: MathContext = {
-			precision: 2 * context.precision,
-			rounding: context.rounding
-		};
-		const y = BigNum.ln(x, ctx).div(BigNum.ln10, ctx);
-		return BigNum.round(y, context);
+	export function complex(real: string, imag: string): BigNum;
+	export function complex(a: number|string, b: number|string) {
+		return new BigNum(Component.create(a.toString()), Component.create(b.toString()));
 	}
 
 	/**
-	 * The canonical representation of the number as a string.
-	 * @returns The string representation of `this`.
+	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
+	 * This instance will use the exact binary floating point representations
+	 * of the components. Even though it uses the `toString()` method to convert
+	 * numbers to strings it might be unpredictable at times.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
+	 * @param comps The components of the number.
 	 */
-	public toString() {
-		let s = "";
-		if(this.integer === "-" && this.decimal === "")
-			s = "0.0";
-		else if(this.integer === "-")
-			s = "-0." + this.decimal;
-		else
-			s = (this.integer || "0") + "." + (this.decimal || "0");
-		return s;
+	export function hyper(...comps: number[]): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
+	 * This instance will use the exact binary floating point representations
+	 * of the components. Even though it uses the `toString()` method to convert
+	 * numbers to strings it might be unpredictable at times.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
+	 * @param comps The components of the number.
+	 */
+	export function hyper(comps: number[]): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
+	 * @param comps The components of the number.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
+	 */
+	export function hyper(...comps: string[]): BigNum;
+	/**
+	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
+	 * @param comps The components of the number.
+	 * 
+	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * over using the constructor for the same. The constructor may not always be
+	 * predictable is called directly.
+	 */
+	export function hyper(comps: string[]): BigNum;
+	export function hyper(...vals: (number | string)[] | [(number | string)[]]) {
+		let args: Component[];
+		const temp = vals[0];
+		if(temp instanceof Array)
+			args = temp.map(x => Component.create(x.toString()));
+		else args = (<Array<string|number>>vals).map(x => Component.create(x.toString()));
+		return new BigNum(args);
 	}
-}
 
-/**
- * Uses the Newton-Raphson algorithm to find the root of a given equation.
- * The exact derivative (found analytically) is assumed to be known.
- * @param f Function whose root is to be found
- * @param f_ The derivative of `f`.
- * @param x The initial trial solution.
- * @returns The root of the given function `f` correct upto the number of decimal
- * 			places specified by the default [[MathContext]].
- * @ignore
- */
-function newton_raphson(f: (x: BigNum)=>BigNum, f_: (x: BigNum)=>BigNum, x: BigNum, context=BigNum.MODE) {
-	const ctx: MathContext = {
-		precision: 2 * context.precision,
-		rounding: context.rounding
-	};
-	let X = x;
-	let Y: BigNum;
-	while(true) {
-		if(f(X).equals(BigNum.ZERO, ctx))
-			return BigNum.round(X, context);
-		Y = new BigNum(X.toString());
-		X = X.sub(f(X).div(f_(X), ctx), ctx);
-		if(X.equals(Y, ctx))
-			return BigNum.round(X, context);
+	/**
+	 * Returns a single unit corresponding to a given index. The indexing starts
+	 * from 0. With \\( e_0 = 1 \\) defined as the real unit and the rest (for
+	 * \\( i>0 \\)) are the orthogonal imaginary units.
+	 * @param i The index.
+	 */
+	export function e(i: number) {
+		if(i < 0)
+			throw TypeError("Negative indices not allowed for basis.");
+		const values = new Array(i).fill(0).map(() => Component.ZERO);
+		values[i-1] = Component.ONE;
+		return new BigNum(values);
 	}
-}
-
-function trimZeroes(s: string, pos: "end" | "start") {
-	let i: number;
-	if(pos === "end") {
-		for(i = s.length - 1; i >= 0; i--)
-			if(s.charAt(i) !== '0')
-				break;
-		return s.substring(0, i+1);
-	}
-	for(i = 0; i < s.length; i++)
-		if(s.charAt(i) !== '0')
-			break;
-	return s.substring(i);
-}
-
-function isInteger(s: string, positive=false) {
-	const valids = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-	const ch = s.charAt(0);
-	const st = positive? (ch === '+'? s.substring(1): s): ((ch === '+' || ch === '-')? s.substring(1): s);
-	for(let x of st)
-		if(!(x in valids))
-			return false;
-	return true;
-}
-
-function isDecimal(s: string) {
-	const parts = s.split('.');
-	if(parts.length > 2)
-		return false;
-	return parts.length === 1? isInteger(parts[0]): isInteger(parts[0]) && isInteger(parts[1], true);
-}
-
-function isValid(s: string) {
-	if(s.indexOf('e') > -1) {
-		// The number is in scientific mode
-		// Me-E
-		// M is the mantissa and E is the exponent with base 10
-		const i = s.indexOf('e');
-		const mantissa = s.substring(0, i), exponent = s.substring(i+1);
-		return isDecimal(mantissa) && isInteger(exponent);
-	}
-	return isDecimal(s);
 }

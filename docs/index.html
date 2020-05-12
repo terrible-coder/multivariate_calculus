@@ -6,6 +6,8 @@
 	<title>multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
@@ -56,7 +58,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> multivariate_calculus</h1>
+			<h1>multivariate_calculus</h1>
 		</div>
 	</div>
 </header>
@@ -67,7 +69,12 @@
 				<a href="#multivariate_calculus" id="multivariate_calculus" style="color: inherit; text-decoration: none;">
 					<h1>multivariate_calculus</h1>
 				</a>
-				<p>A zero dependency libray that handles calculus of several variables in
+				<p><a href="https://www.circleci.com/gh/terrible-coder/multivariate_calculus"><img src="https://img.shields.io/circleci/build/gh/terrible-coder/multivariate_calculus/master?style=flat-square&logo=circleci" alt="CircleCI"></a></p>
+				<p><a href="https://npmjs.com/package/multivariate_calculus"><img src="https://img.shields.io/npm/v/multivariate_calculus?style=flat-square&logo=npm" alt="npm"></a>
+				<a href="https://github.com/terrible-coder/multivariate_calculus/releases/latest"><img src="https://img.shields.io/github/v/release/terrible-coder/multivariate_calculus?style=flat-square&logo=github" alt="GitHub release (latest by date)"></a></p>
+				<p><a href="http://typescriptlang.org/"><img src="https://img.shields.io/badge/made_with-typescript-007ACC?style=flat-square&logo=typescript" alt="Typescript"></a>
+				<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/terrible-coder/multivariate_calculus?style=flat-square" alt="License"></a></p>
+				<p>A zero dependency library that handles calculus of several variables in
 					multidimensional space. It works with both TypeScript and JavaScript projects
 					seamlessly. This library is so designed that you can write your mathematics code
 				as you would do maths in pen and paper.</p>
@@ -84,7 +91,7 @@
 				<p>This will tell the HTML that an external script is being referenced.
 				Now if you wish to, say, create a new constant scalar object, you can say</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> a = Scalar.constant(<span class="hljs-number">5</span>);
-<span class="hljs-built_in">console</span>.log(a);</code></pre>
+print(a);</code></pre>
 				<p>If you open up the developer console window in the browser you will be able to
 				see what the object <code>a</code> looks like.</p>
 				<hr>
@@ -101,7 +108,7 @@
 					package under the name <code>mc</code>. If we try to recreate the same example from above,
 				you would have to write</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> a = mc.Scalar.constant(<span class="hljs-number">5</span>);
-<span class="hljs-built_in">console</span>.log(a);</code></pre>
+mc.print(a);</code></pre>
 				<p>You may also avoid having to write <code>mc</code> over and over again by modifying the
 				import statement slightly</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> { Scalar } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"multivariate_calculus"</span>);</code></pre>
@@ -114,10 +121,18 @@
 				<a href="http://www.typescriptlang.org/docs/home.html">documentation here</a>.</p>
 				<p>Once that is done you can now import stuff from this package by using just one
 				line at the top of your <code>.ts</code> file. To recreate the above example in TypeScript:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Scalar } <span class="hljs-keyword">from</span> <span class="hljs-string">"multivariate_calculus"</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Scalar, print } <span class="hljs-keyword">from</span> <span class="hljs-string">"multivariate_calculus"</span>;
 
 <span class="hljs-keyword">const</span> a = Scalar.constant(<span class="hljs-number">5</span>);
-<span class="hljs-built_in">console</span>.log(a);</code></pre>
+print(a);</code></pre>
+				<p>The library now comes with cleaner global math functions which you can call with
+					any object. You can even perform trigonometry on <code>Scalar</code> objects by calling the global
+				functions</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> x = Scalar.variable(<span class="hljs-string">"x"</span>);
+<span class="hljs-keyword">const</span> y = sin(x);
+print(y.at(<span class="hljs-keyword">new</span> Map([
+    [x, pi]
+])));</code></pre>
 				<hr>
 				<p>Check out the <a href="https://terrible-coder.github.io/multivariate_calculus">documentation</a> for further readings.
 					If there are any issues or some changes you would like to see, <a href="https://github.com/terrible-coder/multivariate_calculus/issues">file an issue</a>.
@@ -132,11 +147,20 @@
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-namespace">
+						<a href="modules/exponent.html">Exponent</a>
+					</li>
+					<li class=" tsd-kind-namespace">
 						<a href="modules/expressionbuilder.html">Expression<wbr>Builder</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class=" tsd-kind-namespace">
 						<a href="modules/mathcontext.html">Math<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="modules/trigcyclic.html">Trig<wbr>Cyclic</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="modules/trighyperbolic.html">Trig<wbr>Hyperbolic</a>
 					</li>
 				</ul>
 			</nav>
@@ -155,6 +179,9 @@
 						<a href="classes/bignum.html" class="tsd-kind-icon">Big<wbr>Num</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/component.html" class="tsd-kind-icon">Component</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/divisionbyzero.html" class="tsd-kind-icon">Division<wbr>ByZero</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -168,6 +195,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/matrix.html" class="tsd-kind-icon">Matrix</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/numerical.html" class="tsd-kind-icon">Numerical</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/overwrite.html" class="tsd-kind-icon">Overwrite</a>
@@ -199,59 +229,11 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#operator" class="tsd-kind-icon">Operator</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-is-not-exported">
-						<a href="globals.html#endpoint" class="tsd-kind-icon">endpoint</a>
-					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#__" class="tsd-kind-icon">__</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#abs" class="tsd-kind-icon">abs</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#acos" class="tsd-kind-icon">acos</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#acosh" class="tsd-kind-icon">acosh</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#asin" class="tsd-kind-icon">asin</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#asinh" class="tsd-kind-icon">asinh</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#atan" class="tsd-kind-icon">atan</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#atanh" class="tsd-kind-icon">atanh</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#ceil" class="tsd-kind-icon">ceil</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#cos" class="tsd-kind-icon">cos</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#cosh" class="tsd-kind-icon">cosh</a>
-					</li>
-					<li class=" tsd-kind-variable">
 						<a href="globals.html#e" class="tsd-kind-icon">e</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#exp" class="tsd-kind-icon">exp</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#floor" class="tsd-kind-icon">floor</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#ln" class="tsd-kind-icon">ln</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#log" class="tsd-kind-icon">log</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#neg" class="tsd-kind-icon">neg</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#oo" class="tsd-kind-icon">oo</a>
@@ -260,22 +242,43 @@
 						<a href="globals.html#pi" class="tsd-kind-icon">pi</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="globals.html#sin" class="tsd-kind-icon">sin</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#sinh" class="tsd-kind-icon">sinh</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#sqrt" class="tsd-kind-icon">sqrt</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#tan" class="tsd-kind-icon">tan</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#tanh" class="tsd-kind-icon">tanh</a>
-					</li>
-					<li class=" tsd-kind-variable">
 						<a href="globals.html#tau" class="tsd-kind-icon">tau</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#abs" class="tsd-kind-icon">abs</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#acos" class="tsd-kind-icon">acos</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#acosh" class="tsd-kind-icon">acosh</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#asin" class="tsd-kind-icon">asin</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#asinh" class="tsd-kind-icon">asinh</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#atan" class="tsd-kind-icon">atan</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#atanh" class="tsd-kind-icon">atanh</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#ceil" class="tsd-kind-icon">ceil</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#cos" class="tsd-kind-icon">cos</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#cosh" class="tsd-kind-icon">cosh</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#exp" class="tsd-kind-icon">exp</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#floor" class="tsd-kind-icon">floor</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isbinaryoperator" class="tsd-kind-icon">is<wbr>Binary<wbr>Operator</a>
@@ -283,32 +286,56 @@
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isconstant" class="tsd-kind-icon">is<wbr>Constant</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#isdecimal" class="tsd-kind-icon">is<wbr>Decimal</a>
-					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isevaluable" class="tsd-kind-icon">is<wbr>Evaluable</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isexpression" class="tsd-kind-icon">is<wbr>Expression</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#isinteger" class="tsd-kind-icon">is<wbr>Integer</a>
-					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isunaryoperator" class="tsd-kind-icon">is<wbr>Unary<wbr>Operator</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
+					<li class=" tsd-kind-function">
 						<a href="globals.html#isvalidmatrix" class="tsd-kind-icon">is<wbr>Valid<wbr>Matrix</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#isvariable" class="tsd-kind-icon">is<wbr>Variable</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#trimzeroes" class="tsd-kind-icon">trim<wbr>Zeroes</a>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#kronecker" class="tsd-kind-icon">kronecker</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#levicivita" class="tsd-kind-icon">levicivita</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#ln" class="tsd-kind-icon">ln</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#log" class="tsd-kind-icon">log</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#neg" class="tsd-kind-icon">neg</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#parsenum" class="tsd-kind-icon">parse<wbr>Num</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#print" class="tsd-kind-icon">print</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#sin" class="tsd-kind-icon">sin</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#sinh" class="tsd-kind-icon">sinh</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#tan" class="tsd-kind-icon">tan</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#tanh" class="tsd-kind-icon">tanh</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#mathenv" class="tsd-kind-icon">mathenv</a>
 					</li>
 				</ul>
 			</nav>

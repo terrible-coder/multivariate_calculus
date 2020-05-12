@@ -48,8 +48,9 @@ export enum UnaryOperator {
  * Checks whether the passed string has been defined as a UnaryOperator.
  */
 export function isUnaryOperator(s: string): s is UnaryOperator {
-	for(let k in UnaryOperator)
-		if(UnaryOperator[k] === s)
+	type iter = keyof typeof UnaryOperator;
+	for(let elt in UnaryOperator)
+		if(UnaryOperator[<iter>elt] === s)
 			return true;
 	return false;
 }

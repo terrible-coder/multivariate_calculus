@@ -6,6 +6,8 @@
 	<title>BigNum | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
@@ -69,21 +71,34 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Immutable, arbitrary precision decimal numbers. A BigNum consists of an
-							integer part and a decimal part stored as string objects. The precision of
-							the number is completely controlled by the user. A <a href="../modules/mathcontext.html">MathContext</a> object
-							helps to specify the number of decimal places (not significant figures) the
+						<p>Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
+							real part and imaginary part(s) stored as <a href="component.html">Component</a> objects. A <a href="../modules/mathcontext.html">MathContext</a> object
+							is used to specify the number of decimal places (not significant figures) the
 							user wants and what rounding algorithm should be used. Every operation is
 							carried out by an intermediate result which is then rounded to the preferred
 						number of decimal places using the preferred rounding algorithm.</p>
 					</div>
+					<p>The BigNum objects follow the <a href="https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction">Cayley-Dickson construction</a>
+					algebra for multiplication. They can be mathematically expressed as</p>
+					<p>\[ x = \sum_{i=0}^{N-1} x_ie_i \]</p>
+					<p>where \( N \) represents the number of dimensions the number exists in and
+						\( e_i \) are the orthogonal units. The components are stored using a real
+						first convention. Therefore, by convention \( e_0 = 1 \), the real
+						unit. The others are the imaginary units. The \( e_1 \) is our familiar
+						\( \imath \) for the complex numbers. Again, \( e_2=\jmath \) and \( e_3=k \)
+					are the <a href="https://en.wikipedia.org/wiki/Quaternion">Hamilton&#39;s units for quaternions</a>.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">BigNum</span>
+						<a href="numerical.html" class="tsd-signature-type">Numerical</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">BigNum</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -100,55 +115,48 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="bignum.html#decimal" class="tsd-kind-icon">decimal</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="bignum.html#integer" class="tsd-kind-icon">integer</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#e" class="tsd-kind-icon">E</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#eight" class="tsd-kind-icon">EIGHT</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#five" class="tsd-kind-icon">FIVE</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#four" class="tsd-kind-icon">FOUR</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#mode" class="tsd-kind-icon">MODE</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#nine" class="tsd-kind-icon">NINE</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#one" class="tsd-kind-icon">ONE</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#pi" class="tsd-kind-icon">PI</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#seven" class="tsd-kind-icon">SEVEN</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#six" class="tsd-kind-icon">SIX</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#three" class="tsd-kind-icon">THREE</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#two" class="tsd-kind-icon">TWO</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#zero" class="tsd-kind-icon">ZERO</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="bignum.html#ln10" class="tsd-kind-icon">ln10</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="bignum.html#components" class="tsd-kind-icon">components</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="bignum.html#dim" class="tsd-kind-icon">dim</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite"><a href="bignum.html#classref" class="tsd-kind-icon">class<wbr>Ref</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="bignum.html#conj" class="tsd-kind-icon">conj</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="bignum.html#imag" class="tsd-kind-icon">imag</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="bignum.html#neg" class="tsd-kind-icon">neg</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="bignum.html#sign" class="tsd-kind-icon">sign</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="bignum.html#real" class="tsd-kind-icon">real</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#add" class="tsd-kind-icon">add</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#compareto" class="tsd-kind-icon">compare<wbr>To</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#div" class="tsd-kind-icon">div</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#equals" class="tsd-kind-icon">equals</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#lessequals" class="tsd-kind-icon">less<wbr>Equals</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#lessthan" class="tsd-kind-icon">less<wbr>Than</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#moreequals" class="tsd-kind-icon">more<wbr>Equals</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#morethan" class="tsd-kind-icon">more<wbr>Than</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="bignum.html#getdefinition" class="tsd-kind-icon">get<wbr>Definition</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#inv" class="tsd-kind-icon">inv</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#mul" class="tsd-kind-icon">mul</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#pow" class="tsd-kind-icon">pow</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#norm" class="tsd-kind-icon">norm</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#sub" class="tsd-kind-icon">sub</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bignum.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#abs" class="tsd-kind-icon">abs</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#abssq" class="tsd-kind-icon">abs<wbr>Sq</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#acos" class="tsd-kind-icon">acos</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#asin" class="tsd-kind-icon">asin</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#complex" class="tsd-kind-icon">complex</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#cos" class="tsd-kind-icon">cos</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#cosh" class="tsd-kind-icon">cosh</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#e" class="tsd-kind-icon">e</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#exp" class="tsd-kind-icon">exp</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#intpow" class="tsd-kind-icon">intpow</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#hyper" class="tsd-kind-icon">hyper</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#ln" class="tsd-kind-icon">ln</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#log" class="tsd-kind-icon">log</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="bignum.html#parsenum" class="tsd-kind-icon">parse<wbr>Num</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#real-1" class="tsd-kind-icon">real</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#round" class="tsd-kind-icon">round</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#sin" class="tsd-kind-icon">sin</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#sinh" class="tsd-kind-icon">sinh</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#tan" class="tsd-kind-icon">tan</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#tanh" class="tsd-kind-icon">tanh</a></li>
 							</ul>
 						</section>
 					</div>
@@ -160,29 +168,30 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Big<wbr>Num<span class="tsd-signature-symbol">(</span>num<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Big<wbr>Num<span class="tsd-signature-symbol">(</span>num<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Big<wbr>Num<span class="tsd-signature-symbol">(</span>integer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fraction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Big<wbr>Num<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>values<span class="tsd-signature-symbol">: </span><a href="component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Big<wbr>Num<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><a href="component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L176">core/math/bignum.ts:176</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L39">src/core/math/bignum.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a <a href="bignum.html">BigNum</a> instance from the string representation of the number.</p>
+									<p>Creates a higher dimensional number from its components.
+										For end users it is recommended that they use the <a href="bignum.html#real">BigNum.real</a>,
+									<a href="bignum.html#complex">BigNum.complex</a> and <a href="bignum.html#hyper">BigNum.hyper</a> functions to create new numbers.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>num: <span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>values: <a href="component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>The string representation of the number in decimal system.</p>
+											<p>The components of the number.</p>
 										</div>
 									</div>
 								</li>
@@ -192,58 +201,23 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L182">core/math/bignum.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L47">src/core/math/bignum.ts:47</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a <a href="bignum.html">BigNum</a> instance from the decimal representation of the
-										number. This instance created will store the exact binary floating
-										point value of the number. Even though it uses the toString() method
-									to convert the number to a string it might be unpredictable at times.</p>
+									<p>Creates a higher dimensional number from its components.
+										For end users it is recommended that they use the <a href="bignum.html#real">BigNum.real</a>,
+									<a href="bignum.html#complex">BigNum.complex</a> and <a href="bignum.html#hyper">BigNum.hyper</a> functions to create new numbers.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>num: <span class="tsd-signature-type">number</span></h5>
+									<h5>values: <a href="component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>The string representation of the number in decimal system.</p>
-										</div>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L190">core/math/bignum.ts:190</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates a <a href="bignum.html">BigNum</a> instance from the integral and fractional part
-										of the number. Both the arguments are expected to be string
-									representations of integers.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>integer: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>The whole part of the number.</p>
-										</div>
-									</div>
-								</li>
-								<li>
-									<h5>fraction: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>The fractional part of the number.</p>
+											<p>The components of the number.</p>
 										</div>
 									</div>
 								</li>
@@ -256,281 +230,103 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="decimal" class="tsd-anchor"></a>
-					<h3>decimal</h3>
-					<div class="tsd-signature tsd-kind-icon">decimal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="components" class="tsd-anchor"></a>
+					<h3>components</h3>
+					<div class="tsd-signature tsd-kind-icon">components<span class="tsd-signature-symbol">:</span> <a href="component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L176">core/math/bignum.ts:176</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L34">src/core/math/bignum.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The decimal part of the number.</p>
+							<p>The components of the number represented by this object. The first one
+								(at index 0) is the real component and the rest are the components of
+							the imaginary units.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="integer" class="tsd-anchor"></a>
-					<h3>integer</h3>
-					<div class="tsd-signature tsd-kind-icon">integer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="dim" class="tsd-anchor"></a>
+					<h3>dim</h3>
+					<div class="tsd-signature tsd-kind-icon">dim<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L172">core/math/bignum.ts:172</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L39">src/core/math/bignum.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The integer part of the number.</p>
+							<p>The dimension in which this number belongs. The dimension must always be
+							a power of 2.</p>
 						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="e" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> E</h3>
-					<div class="tsd-signature tsd-kind-icon">E<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L110">core/math/bignum.ts:110</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant Euler&#39;s number correct upto 100 decimal places.</p>
-						</div>
-						<p>Source: <a href="http://paulbourke.net/miscellaneous/numbers/">http://paulbourke.net/miscellaneous/numbers/</a></p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="eight" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> EIGHT</h3>
-					<div class="tsd-signature tsd-kind-icon">EIGHT<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;8&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L155">core/math/bignum.ts:155</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant eight.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="five" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> FIVE</h3>
-					<div class="tsd-signature tsd-kind-icon">FIVE<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;5&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L143">core/math/bignum.ts:143</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant five.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="four" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> FOUR</h3>
-					<div class="tsd-signature tsd-kind-icon">FOUR<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;4&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L139">core/math/bignum.ts:139</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant four.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="mode" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> MODE</h3>
-					<div class="tsd-signature tsd-kind-icon">MODE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;MathContext.DEFAULT_CONTEXT</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L167">core/math/bignum.ts:167</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The default <a href="../modules/mathcontext.html">MathContext</a> used for numerical operations related to <a href="bignum.html">BigNum</a>
-								when a context has not been mentioned separately. Reassign this value
-								if you want to have all subsequent operations in some <a href="../modules/mathcontext.html">MathContext</a>
-							other than <a href="../modules/mathcontext.html#default_context">MathContext.DEFAULT_CONTEXT</a>.</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5>precision<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
-								<div class="tsd-comment tsd-typography">
-									<div class="lead">
-										<p>The number of decimal places a <a href="bignum.html">BigNum</a> object should store. This does
-											not represent the number of significant digits in the number unlike the
-										JAVA implementation of the same concept.</p>
-									</div>
-								</div>
-							</li>
-							<li class="tsd-parameter">
-								<h5>rounding<span class="tsd-signature-symbol">: </span><a href="../enums/roundingmode.html" class="tsd-signature-type">RoundingMode</a></h5>
-								<div class="tsd-comment tsd-typography">
-									<div class="lead">
-										<p>The rounding algorithm that should be used for a particular numerical
-											operation. Care must be taken as to when the UNNECESSARY mode is used,
-											it will throw an exception if an exact representation of the result is
-										not found.</p>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="nine" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> NINE</h3>
-					<div class="tsd-signature tsd-kind-icon">NINE<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;9&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L159">core/math/bignum.ts:159</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant nine.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="one" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> ONE</h3>
-					<div class="tsd-signature tsd-kind-icon">ONE<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;1&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L127">core/math/bignum.ts:127</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant one.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="pi" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> PI</h3>
-					<div class="tsd-signature tsd-kind-icon">PI<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L103">core/math/bignum.ts:103</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The circle constant PI correct upto 100 decimal places.</p>
-						</div>
-						<p>Source: <a href="http://paulbourke.net/miscellaneous/numbers/">http://paulbourke.net/miscellaneous/numbers/</a></p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="seven" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> SEVEN</h3>
-					<div class="tsd-signature tsd-kind-icon">SEVEN<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;7&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L151">core/math/bignum.ts:151</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant seven.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="six" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> SIX</h3>
-					<div class="tsd-signature tsd-kind-icon">SIX<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;6&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L147">core/math/bignum.ts:147</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant six.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="three" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> THREE</h3>
-					<div class="tsd-signature tsd-kind-icon">THREE<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;3&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L135">core/math/bignum.ts:135</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant three.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="two" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> TWO</h3>
-					<div class="tsd-signature tsd-kind-icon">TWO<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;2&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L131">core/math/bignum.ts:131</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant two.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="zero" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> ZERO</h3>
-					<div class="tsd-signature tsd-kind-icon">ZERO<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;0&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L123">core/math/bignum.ts:123</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The constant zero.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="ln10" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> ln10</h3>
-					<div class="tsd-signature tsd-kind-icon">ln10<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol"> =&nbsp;new BigNum(&quot;2.3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983&quot;)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L118">core/math/bignum.ts:118</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The natural logarithm of 10 correct upto 100 decimal places. This comes
-							in vary handy for natural base to common base logarithm.</p>
-						</div>
-						<p>Source: <a href="http://paulbourke.net/miscellaneous/numbers/">http://paulbourke.net/miscellaneous/numbers/</a></p>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+					<a name="classref" class="tsd-anchor"></a>
+					<h3>class<wbr>Ref</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> classRef<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="numerical.html">Numerical</a>.<a href="numerical.html#classref">classRef</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L67">src/core/math/bignum.ts:67</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="conj" class="tsd-anchor"></a>
+					<h3>conj</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> conj<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L130">src/core/math/bignum.ts:130</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The conjugate of <code>this</code> number.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="imag" class="tsd-anchor"></a>
+					<h3>imag</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> imag<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L123">src/core/math/bignum.ts:123</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The imaginary part of this number.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 					<a name="neg" class="tsd-anchor"></a>
 					<h3>neg</h3>
@@ -541,12 +337,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L464">core/math/bignum.ts:464</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L109">src/core/math/bignum.ts:109</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>The negative value of <code>this</code>.</p>
+									<p>The negative of <code>this</code>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
@@ -554,29 +350,24 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="sign" class="tsd-anchor"></a>
-					<h3>sign</h3>
+					<a name="real" class="tsd-anchor"></a>
+					<h3>real</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> sign<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> real<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L238">core/math/bignum.ts:238</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L116">src/core/math/bignum.ts:116</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>The sign of this number.</p>
+									<p>The real part of this number.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">0</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">1</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">-1</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -589,20 +380,22 @@
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L477">core/math/bignum.ts:477</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L205">src/core/math/bignum.ts:205</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Adds two <a href="bignum.html">BigNum</a> instances. The higher precision value of the two is
-										chosen as the precision for the result and rounding is according to
-									<a href="bignum.html#mode">BigNum.MODE</a>.</p>
+									<p>Adds two <a href="bignum.html">BigNum</a> instances. Addition is defined component-wise.
+									That is, for two numbers \( a \) and \( b \), their addition is defined as</p>
 								</div>
+								<p>\[ a + b = \sum_i a_i + b_i \]</p>
+								<p>The result is rounded according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -619,15 +412,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L486">core/math/bignum.ts:486</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L217">src/core/math/bignum.ts:217</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Adds two <a href="bignum.html">BigNum</a> instances. The higher precision value of the two is
-										chosen as the precision for the result and rounding is according to the
-									given context settings.</p>
+									<p>Adds two <a href="bignum.html">BigNum</a> instances. Addition is defined component-wise.
+									That is, for two numbers \( a \) and \( b \), their addition is defined as</p>
 								</div>
+								<p>\[ a + b = \sum_i a_i + b_i \]</p>
+								<p>The result is rounded according to the given context settings.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -640,53 +434,29 @@
 								<li>
 									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The context settings object to use.</p>
+										<p>The context settings to use.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
 							<p>this + that.</p>
 						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="compareto" class="tsd-anchor"></a>
-					<h3>compare<wbr>To</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">compare<wbr>To<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">0</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">-1</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L404">core/math/bignum.ts:404</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L218">src/core/math/bignum.ts:218</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>The comparator function. This compares <code>this</code> to <code>that</code> and returns</p>
-									<ul>
-										<li>0 if they are equal</li>
-										<li>1 if <code>this</code> &gt; <code>that</code></li>
-										<li>-1 if <code>this</code> &lt; <code>that</code></li>
-									</ul>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Number to compare with.</p>
-									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">0</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">1</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">-1</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -696,18 +466,22 @@
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">div<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 						<li class="tsd-signature tsd-kind-icon">div<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">div<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, side<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"left"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"right"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">div<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, side<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"left"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"right"</span>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">div<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L553">core/math/bignum.ts:553</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L317">src/core/math/bignum.ts:317</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Divides one <a href="bignum.html">BigNum</a> instance by another with rounding according to
-									<a href="bignum.html#mode">BigNum.MODE</a>.</p>
+									<p>Divides one <a href="bignum.html">BigNum</a> instance by another. This method assumes right
+										division. That is, the inverse of <code>that</code> is multiplied on the right.
+									The result is rounded according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -715,23 +489,23 @@
 								<li>
 									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The number to divide this by.</p>
+										<p>Number to divide by.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-							<p>this / that.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L561">core/math/bignum.ts:561</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L325">src/core/math/bignum.ts:325</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Divides one <a href="bignum.html">BigNum</a> instance by another with rounding according to the
-									given context settings.</p>
+									<p>Divides one <a href="bignum.html">BigNum</a> instance by another. This method assumes right
+										division. That is, the inverse of <code>that</code> is multiplied on the right.
+									The result is rounded according to the given context settings.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -739,18 +513,100 @@
 								<li>
 									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The number to divide this by.</p>
+										<p>Number to divide by.</p>
 									</div>
 								</li>
 								<li>
 									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The context settings object to use.</p>
+										<p>The context settings to use.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-							<p>this / that.</p>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L333">src/core/math/bignum.ts:333</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Divides one <a href="bignum.html">BigNum</a> instance by another. This method multiplies the
+										inverse of <code>that</code> on the given &quot;side&quot; of <code>this</code>.
+									The result is rounded according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Number to divide by.</p>
+									</div>
+								</li>
+								<li>
+									<h5>side: <span class="tsd-signature-type">"left"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"right"</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Side on which to divide from.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L342">src/core/math/bignum.ts:342</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Divides one <a href="bignum.html">BigNum</a> instance by another. This method multiplies the
+										inverse of <code>that</code> on the given &quot;side&quot; of <code>this</code>.
+									The result is rounded according to the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Number to divide by.</p>
+									</div>
+								</li>
+								<li>
+									<h5>side: <span class="tsd-signature-type">"left"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"right"</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Side on which to divide from.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L343">src/core/math/bignum.ts:343</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -765,14 +621,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L431">core/math/bignum.ts:431</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L82">src/core/math/bignum.ts:82</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Checks whether <code>this</code> and <code>that</code> are equal numbers. Equality is checked
-									only till the number of decimal places specified by <a href="bignum.html#mode">BigNum.MODE</a>.</p>
+									<p>Checks whether <code>this</code> and <code>that</code> are equal numbers. Equality is defined
+										component wise. That is, two numbers \( a \) and \( b \) are equal
+									if and only if</p>
 								</div>
+								<p>\[ a_i = b_i \quad \forall i \]</p>
+								<p>The equality is checked only upto the number of decimal places specified
+								by <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -788,14 +648,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L438">core/math/bignum.ts:438</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L95">src/core/math/bignum.ts:95</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Checks whether <code>this</code> and <code>that</code> are equal numbers. Equality is checked
-									only till the number of decimal places specified by <code>context</code>.</p>
+									<p>Checks whether <code>this</code> and <code>that</code> are equal numbers. Equality is defined
+										component wise. That is, two numbers \( a \) and \( b \) are equal
+									if and only if</p>
 								</div>
+								<p>\[ a_i = b_i \quad \forall i \]</p>
+								<p>The equality is checked only upto the number of decimal places specified
+								by the given context settings.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -808,549 +672,74 @@
 								<li>
 									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The <a href="../modules/mathcontext.html">MathContext</a> value to use for equality check.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="lessequals" class="tsd-anchor"></a>
-					<h3>less<wbr>Equals</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">less<wbr>Equals<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L449">core/math/bignum.ts:449</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Determines whether <code>this</code> is less than or equal to <code>that</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Number to compare with.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="lessthan" class="tsd-anchor"></a>
-					<h3>less<wbr>Than</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">less<wbr>Than<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L414">core/math/bignum.ts:414</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Determines whether <code>this</code> is less than <code>that</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Number to compare with.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="moreequals" class="tsd-anchor"></a>
-					<h3>more<wbr>Equals</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">more<wbr>Equals<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L457">core/math/bignum.ts:457</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Determines whether <code>this</code> is more than or equal to <code>that</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Number to compare with.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="morethan" class="tsd-anchor"></a>
-					<h3>more<wbr>Than</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">more<wbr>Than<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L422">core/math/bignum.ts:422</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Determines whether <code>this</code> is more than <code>that</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Number to compare with.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="mul" class="tsd-anchor"></a>
-					<h3>mul</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">mul<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-						<li class="tsd-signature tsd-kind-icon">mul<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L529">core/math/bignum.ts:529</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Multiplies two <a href="bignum.html">BigNum</a> instances. The sum of the precisions of the two
-										is chosen as the precision of the result and rounding is according to
-									<a href="bignum.html#mode">BigNum.MODE</a>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The number to multiply this with.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-							<p>this * that.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L538">core/math/bignum.ts:538</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Multiplies two <a href="bignum.html">BigNum</a> instances. The sum of the precisions of the two
-										is chosen as the precision of the result and rounding is according to
-									the given context settings.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The number to multiply this with.</p>
-									</div>
-								</li>
-								<li>
-									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The context settings object to use.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-							<p>this * that.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="pow" class="tsd-anchor"></a>
-					<h3>pow</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">pow<span class="tsd-signature-symbol">(</span>ex<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-						<li class="tsd-signature tsd-kind-icon">pow<span class="tsd-signature-symbol">(</span>ex<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L599">core/math/bignum.ts:599</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Raises <code>this</code> to the power of <code>ex</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>ex: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A number.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L606">core/math/bignum.ts:606</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Raises <code>this</code> to the power of <code>ex</code> using the rounding according to the
-									given context settings.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>ex: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A number.</p>
-									</div>
-								</li>
-								<li>
-									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The context settings object to use.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="sub" class="tsd-anchor"></a>
-					<h3>sub</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sub<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-						<li class="tsd-signature tsd-kind-icon">sub<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L503">core/math/bignum.ts:503</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Subtracts one <a href="bignum.html">BigNum</a> instance from another. The higher precision value
-										of the two is chosen as the precision for the result and rounding is
-									according to <a href="bignum.html#mode">BigNum.MODE</a>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The number to subtract from this.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-							<p>this - that.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L512">core/math/bignum.ts:512</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Subtracts one <a href="bignum.html">BigNum</a> instance from another. The higher precision value
-										of the two is chosen as the precision for the result and rounding is
-									according to the given context settings.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The number to subtract from this.</p>
-									</div>
-								</li>
-								<li>
-									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The context settings object to use.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-							<p>this - that.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="tostring" class="tsd-anchor"></a>
-					<h3>to<wbr>String</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>String<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L817">core/math/bignum.ts:817</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>The canonical representation of the number as a string.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>The string representation of <code>this</code>.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="abs" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> abs</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">abs<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L337">core/math/bignum.ts:337</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Evaluates the absolute value of this number.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The number whose absolute value is to be found.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-							<p>The absolute value of the argument.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="cos" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> cos</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">cos<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-						<li class="tsd-signature tsd-kind-icon">cos<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L664">core/math/bignum.ts:664</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Calculates the trigonometric cosine of a given number with rounding
-									according to <a href="bignum.html#mode">BigNum.MODE</a>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A number.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L671">core/math/bignum.ts:671</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Calculates the trigonometric cosine of a given number with rounding
-									according to the given context settings.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A number.</p>
-									</div>
-								</li>
-								<li>
-									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
-									<div class="tsd-comment tsd-typography">
 										<p>The context settings to use.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="exp" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> exp</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">exp<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-						<li class="tsd-signature tsd-kind-icon">exp<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getdefinition" class="tsd-anchor"></a>
+					<h3>get<wbr>Definition</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Definition<span class="tsd-signature-symbol">(</span>methodName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"instance"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"static"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"undefined"</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="numerical.html">Numerical</a>.<a href="numerical.html#getdefinition">getDefinition</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/definitions.ts#L133">src/core/definitions.ts:133</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks whether a method exists on the object or as a static member of
+									the class.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>methodName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the method.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">"instance"</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">"static"</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">"undefined"</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="inv" class="tsd-anchor"></a>
+					<h3>inv</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">inv<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L705">core/math/bignum.ts:705</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L305">src/core/math/bignum.ts:305</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Calculates the exponential of a given number with rounding according to
-									<a href="bignum.html#mode">BigNum.MODE</a>.</p>
+									<p>Calculates the multiplicative inverse of this.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A number.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L712">core/math/bignum.ts:712</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Calculates the exponential of a given number with rounding according to
-									the given context settings.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A number</p>
-									</div>
-								</li>
-								<li>
-									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The context settings to use.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="intpow" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> intpow</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">intpow<span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L586">core/math/bignum.ts:586</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Raises a <a href="bignum.html">BigNum</a> to an integer power. This function may be made
-										private in future versions. It is adviced not to use this function
-									except for development purposes.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>base: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The base number.</p>
-									</div>
-								</li>
-								<li>
-									<h5>index: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The index / exponent to which the base is to be raised.</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> context: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;BigNum.MODE</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The context settings to use.</p>
-									</div>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> context: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> = mathenv.mode</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter">
 											<h5>precision<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
@@ -1380,24 +769,246 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="ln" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> ln</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">ln<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-						<li class="tsd-signature tsd-kind-icon">ln<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="mul" class="tsd-anchor"></a>
+					<h3>mul</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">mul<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">mul<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">mul<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L761">core/math/bignum.ts:761</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L267">src/core/math/bignum.ts:267</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Calculates the natural logarithm (to the base <code>e</code>) of a given number
-									with rounding according to <a href="bignum.html#mode">BigNum.MODE</a>.</p>
+									<p>Multiplies two <a href="bignum.html">BigNum</a> instances. Multiplication is defined using
+										the <a href="https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction#Octonions">Caley-Dickson definition</a>.
+									The result is rounded according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The number to multiply with.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+							<p>this * that.</p>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L276">src/core/math/bignum.ts:276</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Multiplies two <a href="bignum.html">BigNum</a> instances. Multiplication is defined using
+										the <a href="https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction#Octonions">Caley-Dickson definition</a>.
+									The result is rounded according to the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The number to multiply with.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+							<p>this * that.</p>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L277">src/core/math/bignum.ts:277</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="norm" class="tsd-anchor"></a>
+					<h3>norm</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">norm<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L191">src/core/math/bignum.ts:191</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Evaluates the norm of this number. Since <code>this</code> is not necessarily a real
+										number, the norm is defined as
+										\[ \text{norm } a = a^* a \]
+									where \( a^* \) is the conjugate of \( a \).</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> context: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> = mathenv.mode</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>precision<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>The number of decimal places a <a href="bignum.html">BigNum</a> object should store. This does
+														not represent the number of significant digits in the number unlike the
+													JAVA implementation of the same concept.</p>
+												</div>
+											</div>
+										</li>
+										<li class="tsd-parameter">
+											<h5>rounding<span class="tsd-signature-symbol">: </span><a href="../enums/roundingmode.html" class="tsd-signature-type">RoundingMode</a></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>The rounding algorithm that should be used for a particular numerical
+														operation. Care must be taken as to when the UNNECESSARY mode is used,
+														it will throw an exception if an exact representation of the result is
+													not found.</p>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sub" class="tsd-anchor"></a>
+					<h3>sub</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">sub<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">sub<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">sub<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L238">src/core/math/bignum.ts:238</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Subtracts one <a href="bignum.html">BigNum</a> instance from another. Subtraction is defined component-wise.
+									That is, for two numbers \( a \) and \( b \), their difference is defined as</p>
+								</div>
+								<p>\[ a - b = \sum_i a_i - b_i \]</p>
+								<p>The result is rounded according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The number to add this with.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+							<p>this - that.</p>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L249">src/core/math/bignum.ts:249</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Subtracts one <a href="bignum.html">BigNum</a> instance from another. Subtraction is defined component-wise.
+									That is, for two numbers \( a \) and \( b \), their difference is defined as</p>
+								</div>
+								<p>\[ a - b = \sum_i a_i - b_i \]</p>
+								<p>The result is rounded according to the given context settings.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The number to add this with.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+							<p>this - that.</p>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L250">src/core/math/bignum.ts:250</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>that: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="abs" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> abs</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">abs<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">abs<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">abs<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L164">src/core/math/bignum.ts:164</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Evaluates the absolute value of a number correct upto the number of
+									places specified by <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1414,12 +1025,803 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L768">core/math/bignum.ts:768</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L165">src/core/math/bignum.ts:165</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L166">src/core/math/bignum.ts:166</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="abssq" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> abs<wbr>Sq</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">abs<wbr>Sq<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">abs<wbr>Sq<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">abs<wbr>Sq<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L145">src/core/math/bignum.ts:145</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Calculates the natural logarithm (to the base <code>e</code>) of a given number
+									<p>Evaluates the absolute value of a number correct upto the number of
+									places specified by <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L152">src/core/math/bignum.ts:152</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Evaluates the absolute value of a number correct upto the number of
+									places specified by the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L153">src/core/math/bignum.ts:153</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="acos" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> acos</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">acos<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">acos<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">acos<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L518">src/core/math/bignum.ts:518</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the inverse trigonometric cosine of a given value with rounding
+										according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>. This method right now works good
+										only for values much smaller than unity. For values close to unity
+										this method converges very slowly to the result. This will be fixed in
+									future updates.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L528">src/core/math/bignum.ts:528</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the inverse trigonometric cosine of a given value with rounding
+										according to the given context settings. This method right now works good
+										only for values much smaller than unity. For values close to unity
+										this method converges very slowly to the result. This will be fixed in
+									future updates.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L529">src/core/math/bignum.ts:529</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="asin" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> asin</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">asin<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">asin<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">asin<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L478">src/core/math/bignum.ts:478</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the inverse trigonometric sine of a given value with rounding
+										according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>. This method right now works good
+										only for values much smaller than unity. For values close to unity
+										this method converges very slowly to the result. This will be fixed in
+									future updates.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L488">src/core/math/bignum.ts:488</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the inverse trigonometric sine of a given value with rounding
+										according to the given context setings. This method right now works good
+										only for values much smaller than unity. For values close to unity
+										this method converges very slowly to the result. This will be fixed in
+									future updates.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L489">src/core/math/bignum.ts:489</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="complex" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> complex</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">complex<span class="tsd-signature-symbol">(</span>real<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, imag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">complex<span class="tsd-signature-symbol">(</span>real<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, imag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L750">src/core/math/bignum.ts:750</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a <a href="bignum.html">BigNum</a> instance of a complex number from the decimal representations
+										of the real and imaginary part. This instance will store the exact binary
+										floating point value of the number. Even though it uses the <code>toString()</code>
+									method to convert number to string it might be unpredictable at times.</p>
+								</div>
+								<p>The use of this function to create a new <a href="bignum.html">BigNum</a> instance is recommended
+									over using the constructor for the same. The constructor may not always be
+								predictable is called directly.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>real: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The real part of the number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>imag: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The imaginary part of the number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L761">src/core/math/bignum.ts:761</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a <a href="bignum.html">BigNum</a> instance from the string representations of the real
+									and imaginary parts.</p>
+								</div>
+								<p>The use of this function to create a new <a href="bignum.html">BigNum</a> instance is recommended
+									over using the constructor for the same. The constructor may not always be
+								predictable is called directly.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>real: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The real part of the number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>imag: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The imaginary part of the number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="cos" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> cos</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">cos<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">cos<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">cos<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L404">src/core/math/bignum.ts:404</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the trigonometric cosine of a given number with rounding
+									according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L411">src/core/math/bignum.ts:411</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the trigonometric cosine of a given number with rounding
+									according to the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L412">src/core/math/bignum.ts:412</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="cosh" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> cosh</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">cosh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">cosh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">cosh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L578">src/core/math/bignum.ts:578</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the hyperbolic cosine of a given value with rounding according
+									to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L585">src/core/math/bignum.ts:585</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the hyperbolic cosine of a given value with rounding according
+									to the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L586">src/core/math/bignum.ts:586</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="e" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> e</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">e<span class="tsd-signature-symbol">(</span>i<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L827">src/core/math/bignum.ts:827</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a single unit corresponding to a given index. The indexing starts
+										from 0. With \( e_0 = 1 \) defined as the real unit and the rest (for
+									\( i&gt;0 \)) are the orthogonal imaginary units.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>i: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The index.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="exp" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> exp</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">exp<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">exp<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">exp<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L626">src/core/math/bignum.ts:626</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the exponential of a given number with rounding according to
+									<a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L633">src/core/math/bignum.ts:633</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the exponential of a given number with rounding according to
+									the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L634">src/core/math/bignum.ts:634</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="hyper" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> hyper</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">hyper<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>comps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">hyper<span class="tsd-signature-symbol">(</span>comps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">hyper<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>comps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">hyper<span class="tsd-signature-symbol">(</span>comps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L778">src/core/math/bignum.ts:778</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a <a href="bignum.html">BigNum</a> instance from the components of a <a href="https://en.wikipedia.org/wiki/Hypercomplex_number">hyper-complex</a>
+										number that follow the <a href="https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction">Cayley-Dickson construction</a>.
+										This instance will use the exact binary floating point representations
+										of the components. Even though it uses the <code>toString()</code> method to convert
+									numbers to strings it might be unpredictable at times.</p>
+								</div>
+								<p>The use of this function to create a new <a href="bignum.html">BigNum</a> instance is recommended
+									over using the constructor for the same. The constructor may not always be
+								predictable is called directly.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>comps: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The components of the number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L791">src/core/math/bignum.ts:791</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a <a href="bignum.html">BigNum</a> instance from the components of a <a href="https://en.wikipedia.org/wiki/Hypercomplex_number">hyper-complex</a>
+										number that follow the <a href="https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction">Cayley-Dickson construction</a>.
+										This instance will use the exact binary floating point representations
+										of the components. Even though it uses the <code>toString()</code> method to convert
+									numbers to strings it might be unpredictable at times.</p>
+								</div>
+								<p>The use of this function to create a new <a href="bignum.html">BigNum</a> instance is recommended
+									over using the constructor for the same. The constructor may not always be
+								predictable is called directly.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>comps: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The components of the number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L801">src/core/math/bignum.ts:801</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a <a href="bignum.html">BigNum</a> instance from the components of a <a href="https://en.wikipedia.org/wiki/Hypercomplex_number">hyper-complex</a>
+									number that follow the <a href="https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction">Cayley-Dickson construction</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>comps: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The components of the number.</p>
+										<p>The use of this function to create a new <a href="bignum.html">BigNum</a> instance is recommended
+											over using the constructor for the same. The constructor may not always be
+										predictable is called directly.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L811">src/core/math/bignum.ts:811</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a <a href="bignum.html">BigNum</a> instance from the components of a <a href="https://en.wikipedia.org/wiki/Hypercomplex_number">hyper-complex</a>
+									number that follow the <a href="https://en.wikipedia.org/wiki/Cayley%E2%80%93Dickson_construction">Cayley-Dickson construction</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>comps: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The components of the number.</p>
+										<p>The use of this function to create a new <a href="bignum.html">BigNum</a> instance is recommended
+											over using the constructor for the same. The constructor may not always be
+										predictable is called directly.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="ln" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> ln</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">ln<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">ln<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">ln<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L659">src/core/math/bignum.ts:659</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the natural logarithm (to the base \( e \)) of a given number
+									with rounding according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L666">src/core/math/bignum.ts:666</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the natural logarithm (to the base \( e \)) of a given number
 									with rounding according to the given context settings.</p>
 								</div>
 							</div>
@@ -1440,34 +1842,53 @@
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
 						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L667">src/core/math/bignum.ts:667</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
-					<a name="log" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> log</h3>
+					<a name="real-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> real</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">log<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
-						<li class="tsd-signature tsd-kind-icon">log<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">real<span class="tsd-signature-symbol">(</span>num<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">real<span class="tsd-signature-symbol">(</span>num<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L795">core/math/bignum.ts:795</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L720">src/core/math/bignum.ts:720</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Calculates the common logarithm (to the base <code>10</code>) of a given number
-									with rounding according to <a href="bignum.html#mode">BigNum.MODE</a>.</p>
+									<p>Creates a <a href="bignum.html">BigNum</a> instance from the string representation of a real number.</p>
 								</div>
+								<p>The use of this function to create a new <a href="bignum.html">BigNum</a> instance is recommended
+									over using the constructor for the same. The constructor may not always be
+								predictable is called directly.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<h5>num: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A number.</p>
+										<p>The string representation of a real number in decimal system.</p>
 									</div>
 								</li>
 							</ul>
@@ -1476,64 +1897,30 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L803">core/math/bignum.ts:803</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L732">src/core/math/bignum.ts:732</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Calculates the common logarithm (to the base <code>10</code>) of a given number
-										with rounding according to the given context settings.
-									<a href="../modules/mathcontext.html">MathContext</a>.</p>
+									<p>Creates a <a href="bignum.html">BigNum</a> instance from the decimal representation of a real
+										number. This instance created will store the exact binary floating
+										point value of the number. Even though it uses the <code>toString()</code> method
+									to convert the number to a string it might be unpredictable at times.</p>
 								</div>
+								<p>The use of this function to create a new <a href="bignum.html">BigNum</a> instance is recommended
+									over using the constructor for the same. The constructor may not always be
+								predictable is called directly.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<h5>num: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A number.</p>
-									</div>
-								</li>
-								<li>
-									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The context settings to use.</p>
+										<p>A numeric expression.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
-					<a name="parsenum" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> parse<wbr>Num</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Num<span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L309">core/math/bignum.ts:309</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Takes a string and parses into the format expected by the <a href="bignum.html">BigNum</a> class.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>s: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>String representation of the number.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
-							<p>An array where the first element is the integer part and the second is the decimal part.</p>
 						</li>
 					</ul>
 				</section>
@@ -1547,14 +1934,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L350">core/math/bignum.ts:350</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L181">src/core/math/bignum.ts:181</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Rounds off a given number according to some <a href="../modules/mathcontext.html">MathContext</a>. The different
-										rounding algorithms implemented are identical to the ones defined by the
-										<a href="https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html">RoundingMode</a>
+									<p>Rounds off a <a href="bignum.html">BigNum</a> instance, component-wise, according to some
+										<a href="../modules/mathcontext.html">MathContext</a>. The different rounding algorithms implemented are
+										identical to the ones defined by the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html">RoundingMode</a>
 									class of JAVA.</p>
 								</div>
 							</div>
@@ -1563,18 +1950,17 @@
 								<li>
 									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The number to round off.</p>
+										<p>The number to be rounded off.</p>
 									</div>
 								</li>
 								<li>
 									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The <a href="../modules/mathcontext.html">MathContext</a> which defines how the number is to be rounded.</p>
+										<p>The context settings to use for rounding.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
-							<p>The number representing the rounded value of the argument according to the given context.</p>
 						</li>
 					</ul>
 				</section>
@@ -1584,18 +1970,19 @@
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
 						<li class="tsd-signature tsd-kind-icon">sin<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 						<li class="tsd-signature tsd-kind-icon">sin<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">sin<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L623">core/math/bignum.ts:623</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L374">src/core/math/bignum.ts:374</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Calculates the trigonometric sine of a given number with rounding
-									according to <a href="bignum.html#mode">BigNum.MODE</a>.</p>
+									according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1612,7 +1999,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/53c84d9/src/core/math/bignum.ts#L630">core/math/bignum.ts:630</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L381">src/core/math/bignum.ts:381</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1634,6 +2021,263 @@
 									<div class="tsd-comment tsd-typography">
 										<p>The context settings to use.</p>
 									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L382">src/core/math/bignum.ts:382</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="sinh" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> sinh</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">sinh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">sinh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">sinh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L554">src/core/math/bignum.ts:554</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the hyperbolic sine of a given value with rounding according
+									to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L561">src/core/math/bignum.ts:561</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the hyperbolic sine of a given value with rounding according
+									to the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L562">src/core/math/bignum.ts:562</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="tan" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> tan</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">tan<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">tan<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">tan<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L434">src/core/math/bignum.ts:434</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the trigonometric tangent of a given number with rounding
+									according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L441">src/core/math/bignum.ts:441</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the trigonometric tangent of a given number with rounding
+									according to the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L442">src/core/math/bignum.ts:442</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="tanh" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> tanh</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">tanh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">tanh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">tanh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L602">src/core/math/bignum.ts:602</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the hyperbolic tangent of a given value with rounding according
+									to the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L609">src/core/math/bignum.ts:609</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the hyperbolic tangent of a given value with rounding according
+									to the given context settings.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L610">src/core/math/bignum.ts:610</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
@@ -1661,64 +2305,28 @@
 								<a href="bignum.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="bignum.html#decimal" class="tsd-kind-icon">decimal</a>
+								<a href="bignum.html#components" class="tsd-kind-icon">components</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="bignum.html#integer" class="tsd-kind-icon">integer</a>
+								<a href="bignum.html#dim" class="tsd-kind-icon">dim</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#e" class="tsd-kind-icon">E</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+								<a href="bignum.html#classref" class="tsd-kind-icon">class<wbr>Ref</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#eight" class="tsd-kind-icon">EIGHT</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="bignum.html#conj" class="tsd-kind-icon">conj</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#five" class="tsd-kind-icon">FIVE</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#four" class="tsd-kind-icon">FOUR</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#mode" class="tsd-kind-icon">MODE</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#nine" class="tsd-kind-icon">NINE</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#one" class="tsd-kind-icon">ONE</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#pi" class="tsd-kind-icon">PI</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#seven" class="tsd-kind-icon">SEVEN</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#six" class="tsd-kind-icon">SIX</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#three" class="tsd-kind-icon">THREE</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#two" class="tsd-kind-icon">TWO</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#zero" class="tsd-kind-icon">ZERO</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#ln10" class="tsd-kind-icon">ln10</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="bignum.html#imag" class="tsd-kind-icon">imag</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="bignum.html#neg" class="tsd-kind-icon">neg</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="bignum.html#sign" class="tsd-kind-icon">sign</a>
+								<a href="bignum.html#real" class="tsd-kind-icon">real</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="bignum.html#add" class="tsd-kind-icon">add</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="bignum.html#compareto" class="tsd-kind-icon">compare<wbr>To</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="bignum.html#div" class="tsd-kind-icon">div</a>
@@ -1726,56 +2334,71 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="bignum.html#equals" class="tsd-kind-icon">equals</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="bignum.html#lessequals" class="tsd-kind-icon">less<wbr>Equals</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="bignum.html#getdefinition" class="tsd-kind-icon">get<wbr>Definition</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="bignum.html#lessthan" class="tsd-kind-icon">less<wbr>Than</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="bignum.html#moreequals" class="tsd-kind-icon">more<wbr>Equals</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="bignum.html#morethan" class="tsd-kind-icon">more<wbr>Than</a>
+								<a href="bignum.html#inv" class="tsd-kind-icon">inv</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="bignum.html#mul" class="tsd-kind-icon">mul</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="bignum.html#pow" class="tsd-kind-icon">pow</a>
+								<a href="bignum.html#norm" class="tsd-kind-icon">norm</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="bignum.html#sub" class="tsd-kind-icon">sub</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="bignum.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="bignum.html#abs" class="tsd-kind-icon">abs</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#abssq" class="tsd-kind-icon">abs<wbr>Sq</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#acos" class="tsd-kind-icon">acos</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#asin" class="tsd-kind-icon">asin</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#complex" class="tsd-kind-icon">complex</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="bignum.html#cos" class="tsd-kind-icon">cos</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#cosh" class="tsd-kind-icon">cosh</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#e" class="tsd-kind-icon">e</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="bignum.html#exp" class="tsd-kind-icon">exp</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#intpow" class="tsd-kind-icon">intpow</a>
+								<a href="bignum.html#hyper" class="tsd-kind-icon">hyper</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="bignum.html#ln" class="tsd-kind-icon">ln</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="bignum.html#log" class="tsd-kind-icon">log</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static">
-								<a href="bignum.html#parsenum" class="tsd-kind-icon">parse<wbr>Num</a>
+								<a href="bignum.html#real-1" class="tsd-kind-icon">real</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="bignum.html#round" class="tsd-kind-icon">round</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="bignum.html#sin" class="tsd-kind-icon">sin</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#sinh" class="tsd-kind-icon">sinh</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#tan" class="tsd-kind-icon">tan</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#tanh" class="tsd-kind-icon">tanh</a>
 							</li>
 						</ul>
 					</li>
