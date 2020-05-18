@@ -44,7 +44,7 @@ jobs:
           name: Running tests
           command: npm run test:all
 
-  deploy:
+  publish:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -71,7 +71,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - deploy:
+      - publish:
           requires:
             - test
           filters:
