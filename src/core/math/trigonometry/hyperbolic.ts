@@ -29,7 +29,7 @@ export namespace TrigHyperbolic {
 			n++;
 		}
 	}
-	
+
 	/**
 	 * Calculates the hyperbolic cosine with rounding according to the given context.
 	 * @param x A number.
@@ -54,7 +54,25 @@ export namespace TrigHyperbolic {
 			n++;
 		}
 	}
-	
+
+	/**
+	 * Calculates the hyperbolic tangent with rounding according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	export function tanh(x: Component, context: MathContext): Component {
+		if(x.lessThan(Component.ZERO))
+			return tanh(x.neg, context).neg;
+		if(x.equals(Component.ZERO, context))
+			return Component.ZERO;
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		};
+		const res = sinh(x, ctx).div(cosh(x, ctx), ctx);
+		return Component.round(res, context);
+	}
+
 	/**
 	 * Calculates the inverse hyperbolic sine with rounding according to the
 	 * given context.
@@ -72,7 +90,7 @@ export namespace TrigHyperbolic {
 		const res = ln(exp, ctx);
 		return Component.round(res, context);
 	}
-	
+
 	/**
 	 * Calculates the inverse hyperbolic cosine with rounding according to the
 	 * given context.
