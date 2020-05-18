@@ -581,4 +581,16 @@ describe("Inverse hyperbolic trigonometry", function() {
 			expect(identity(x)).toEqual(x);
 		}
 	});
+
+	it("atanh", function() {
+		const identity = (x: Component) => {
+			const tanh = Component.tanh(x, ctx);
+			const atanh = Component.atanh(tanh, ctx);
+			return Component.round(atanh, mathenv.mode);
+		}
+		for(let i = 0; i < 10; i++) {
+			const x = Component.create(`0.${i}`);
+			expect(identity(x)).toEqual(x);
+		}
+	});
 });
