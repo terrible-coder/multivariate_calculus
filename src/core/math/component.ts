@@ -756,6 +756,24 @@ export class Component extends Numerical {
 	}
 
 	/**
+	 * Calculates the inverse hyperbolic sine with rounding according to [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static atanh(x: Component): Component;
+	/**
+	 * Calculates the inverse hyperbolic sine with rounding according to the
+	 * given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static atanh(x: Component, context: MathContext): Component;
+	public static atanh(x: Component, ...args: any[]): Component;
+	public static atanh(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		return TrigHyperbolic.atanh(x, context);
+	}
+
+	/**
 	 * The canonical representation of the number as a string.
 	 * @returns The string representation of `this`.
 	 */
