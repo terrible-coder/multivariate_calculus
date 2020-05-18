@@ -47,7 +47,7 @@ jobs:
   docs:
     <<: *defaults
     steps:
-      = attach_workspace:
+      - attach_workspace:
           at: ~/repo
       - run:
           name: Build documentation
