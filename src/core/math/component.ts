@@ -702,6 +702,23 @@ export class Component extends Numerical {
 	}
 
 	/**
+	 * Calculates the hyperbolic tangent with rounding according to [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static tanh(x: Component): Component;
+	/**
+	 * Calculates the hyperbolic tangent with rounding according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static tanh(x: Component, context: MathContext): Component;
+	public static tanh(x: Component, ...args: any[]): Component;
+	public static tanh(x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		return TrigHyperbolic.tanh(x, context);
+	}
+
+	/**
 	 * Calculates the inverse hyperbolic sine with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
