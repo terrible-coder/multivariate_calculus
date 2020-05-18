@@ -4,7 +4,7 @@ ghpages.clean();
 ghpages.publish("docs", {
 	silent: true,
 	dotfiles: true,
-	add: false,
+	add: true,
 	user: {
 		name: "Ayanava De",
 		email: "ayanavade01@gmail.com"
