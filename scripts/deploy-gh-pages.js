@@ -11,6 +11,8 @@ ghpages.publish("docs", {
 	},
 	repo: `https://${process.env.GH_TOKEN}@github.com/terrible-coder/multivariate_calculus`,
 }, err => {
-	console.log("Something went wrong.");
-	console.error(err);
+	if(err !== undefined) {
+		console.log("Something went wrong.");
+		console.error(err);
+	} else console.log("Published.");
 });
