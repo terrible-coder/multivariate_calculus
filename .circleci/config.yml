@@ -117,6 +117,5 @@ workflows:
             branches:
               only:
                 - master
-                - ci
             tags:
               ignore: /.*/
