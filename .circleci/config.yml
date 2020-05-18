@@ -44,6 +44,18 @@ jobs:
           name: Running tests
           command: npm run test:all
 
+  docs:
+    <<: *defaults
+    steps:
+      = attach_workspace:
+          at: ~/repo
+      - run:
+          name: Build documentation
+          command: npm run docs
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
   publish:
     <<: *defaults
     steps:
@@ -88,9 +100,17 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
-      - gh-page:
+      - docs:
           requires:
             - build
+          filters:
+            tags:
+              ignore: /.*/
+            branches:
+              only: master
+      - gh-page:
+          requires:
+            - docs
           filters:
             branches:
               only:
