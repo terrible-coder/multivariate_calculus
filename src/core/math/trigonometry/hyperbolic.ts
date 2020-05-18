@@ -29,7 +29,7 @@ export namespace TrigHyperbolic {
 			n++;
 		}
 	}
-	
+
 	/**
 	 * Calculates the hyperbolic cosine with rounding according to the given context.
 	 * @param x A number.
@@ -54,7 +54,25 @@ export namespace TrigHyperbolic {
 			n++;
 		}
 	}
-	
+
+	/**
+	 * Calculates the hyperbolic tangent with rounding according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	export function tanh(x: Component, context: MathContext): Component {
+		if(x.lessThan(Component.ZERO))
+			return tanh(x.neg, context).neg;
+		if(x.equals(Component.ZERO, context))
+			return Component.ZERO;
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		};
+		const res = sinh(x, ctx).div(cosh(x, ctx), ctx);
+		return Component.round(res, context);
+	}
+
 	/**
 	 * Calculates the inverse hyperbolic sine with rounding according to the
 	 * given context.
@@ -72,7 +90,7 @@ export namespace TrigHyperbolic {
 		const res = ln(exp, ctx);
 		return Component.round(res, context);
 	}
-	
+
 	/**
 	 * Calculates the inverse hyperbolic cosine with rounding according to the
 	 * given context.
@@ -88,6 +106,28 @@ export namespace TrigHyperbolic {
 		const b = x.pow(Component.TWO, ctx).sub(Component.ONE, ctx).pow(Component.create("0.5"), ctx);
 		const exp = a.add(b, ctx);
 		const res = ln(exp, ctx);
+		return Component.round(res, context);
+	}
+
+	/**
+	 * Calculates the inverse hyperbolic tangent with rounding according to the
+	 * given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	export function atanh(x: Component, context: MathContext): Component {
+		if(x.lessThan(Component.ZERO))
+			return atanh(x.neg, context).neg;
+		if(x.equals(Component.ZERO, context))
+			return Component.ZERO;
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		};
+		const half = Component.create("0.5");
+		const a = ln(Component.ONE.add(x, ctx), ctx);
+		const b = ln(Component.ONE.sub(x, ctx), ctx);
+		const res = half.mul(a.sub(b, ctx), ctx);
 		return Component.round(res, context);
 	}
 }

@@ -533,6 +533,23 @@ describe("Hyperbolic trigonometry", function() {
 			expect(Component.cosh(x)).toEqual(alsocosh(x));
 		}
 	});
+
+	it("tanh", function() {
+		const alsotanh = (x: Component) => {
+			const ctx: MathContext = {
+				precision: 2 * mathenv.mode.precision,
+				rounding: mathenv.mode.rounding
+			}
+			const num = Component.exp(Component.TWO.mul(x, ctx), ctx).sub(Component.ONE, ctx);
+			const den = Component.exp(Component.TWO.mul(x, ctx), ctx).add(Component.ONE, ctx);
+			const res = num.div(den, ctx);
+			return Component.round(res, mathenv.mode);
+		}
+		for(let i = 0; i < 10; i++) {
+			const x = Component.create(i);
+			expect(Component.tanh(x)).toEqual(alsotanh(x));
+		}
+	});
 });
 
 describe("Inverse hyperbolic trigonometry", function() {
@@ -561,6 +578,18 @@ describe("Inverse hyperbolic trigonometry", function() {
 		}
 		for(let i = 0; i < 10; i++) {
 			const x = Component.create(i);
+			expect(identity(x)).toEqual(x);
+		}
+	});
+
+	it("atanh", function() {
+		const identity = (x: Component) => {
+			const tanh = Component.tanh(x, ctx);
+			const atanh = Component.atanh(tanh, ctx);
+			return Component.round(atanh, mathenv.mode);
+		}
+		for(let i = 0; i < 10; i++) {
+			const x = Component.create(`0.${i}`);
 			expect(identity(x)).toEqual(x);
 		}
 	});
