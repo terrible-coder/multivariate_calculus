@@ -1,6 +1,5 @@
 const ghpages = require("gh-pages");
 
-ghpages.clean();
 ghpages.publish("docs", {
 	silent: true,
 	dotfiles: true,
