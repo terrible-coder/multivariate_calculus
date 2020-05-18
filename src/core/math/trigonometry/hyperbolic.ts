@@ -108,4 +108,26 @@ export namespace TrigHyperbolic {
 		const res = ln(exp, ctx);
 		return Component.round(res, context);
 	}
+
+	/**
+	 * Calculates the inverse hyperbolic tangent with rounding according to the
+	 * given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	export function atanh(x: Component, context: MathContext): Component {
+		if(x.lessThan(Component.ZERO))
+			return atanh(x.neg, context).neg;
+		if(x.equals(Component.ZERO, context))
+			return Component.ZERO;
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		};
+		const half = Component.create("0.5");
+		const a = ln(Component.ONE.add(x, ctx), ctx);
+		const b = ln(Component.ONE.sub(x, ctx), ctx);
+		const res = half.mul(a.sub(b, ctx), ctx);
+		return Component.round(res, context);
+	}
 }
