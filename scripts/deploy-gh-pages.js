@@ -10,6 +10,7 @@ ghpages.publish("docs", {
 		email: "ayanavade01@gmail.com"
 	},
 	repo: `https://${process.env.GH_TOKEN}@github.com/terrible-coder/multivariate_calculus`,
+	message: "Deploy to gh-pages"
 }, err => {
 	if(err !== undefined) {
 		console.log("Something went wrong.");
