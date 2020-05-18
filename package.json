@@ -1,0 +1,51 @@
+{
+  "name": "multivariate_calculus",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/terrible-coder/multivariate_calculus.git"
+  },
+  "version": "0.3.6",
+  "description": "Handles calculus of multiple variables in multidimensional space.",
+  "homepage": "https://terrible-coder.github.io/multivariate_calculus",
+  "main": "build/index.js",
+  "types": "@types/index.d.ts",
+  "scripts": {
+    "build": "tsc --project ./",
+    "test:all": "jest --config jest.config.js",
+    "test:only": "jest -c jest.config.js -i",
+    "pack": "browserify ./scripts/app.js -o mcalc.js",
+    "minify": "minify mcalc.js > mcalc.min.js",
+    "docs": "typedoc --theme ./theme --mode file --out ./docs/next ./src"
+  },
+  "keywords": [
+    "vector",
+    "calculus",
+    "vector-calculus",
+    "multivariable",
+    "multivariate",
+    "multivariable-calculus",
+    "multivariate-calculus"
+  ],
+  "author": "terrible-coder",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "@types/node": "^12.11.7",
+    "browserify": "^16.2.3",
+    "gh-pages": "^2.2.0",
+    "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-header": "^2.0.9",
+    "gulp-jest": "^4.0.3",
+    "gulp-minify": "^3.1.0",
+    "gulp-typedoc": "^2.2.2",
+    "gulp-typescript": "^5.0.1",
+    "jest": "^25.1.0",
+    "jest-cli": "^25.1.0",
+    "minify": "^5.1.1",
+    "ts-jest": "^25.4.0",
+    "typedoc": "^0.17.4",
+    "typescript": "^3.8.3",
+    "yargs": "^14.2.0"
+  }
+}

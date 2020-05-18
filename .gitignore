@@ -1,0 +1,13 @@
+# folders
+/build
+/@types
+/node_modules
+/out
+/doc
+/cache
+/coverage
+
+# files
+/index.html
+/mcalc.js
+/mcalc.min.js
