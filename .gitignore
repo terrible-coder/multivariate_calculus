@@ -1,13 +1,19 @@
 # folders
+/src
 /build
+/tests
+/scripts
+/theme
 /@types
 /node_modules
-/out
-/doc
+/docs
 /cache
 /coverage
 
 # files
-/index.html
 /mcalc.js
 /mcalc.min.js
+/gulpfile.js
+/package-lock.json
+/jest.config.js
+/.npmignore
