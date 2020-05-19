@@ -108,18 +108,11 @@ workflows:
             - build
           filters:
             tags:
-              ignore: /.*/
-            branches:
-              only:
-                - master
-                - ci
+              ignore: /^v\d+\.\d+\.\d+/
 
       - gh-page:
           requires:
             - docs
           filters:
-            branches:
-              only:
-                - master
             tags:
-              ignore: /.*/
+              ignore: /^v\d+\.\d+\.\d+/
