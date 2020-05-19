@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Overwrite | multivariate_calculus</title>
+	<title>RoundingMode | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -58,10 +58,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="overwrite.html">Overwrite</a>
+					<a href="roundingmode.html">RoundingMode</a>
 				</li>
 			</ul>
-			<h1>Class Overwrite</h1>
+			<h1>Enumeration RoundingMode</h1>
 		</div>
 	</div>
 </header>
@@ -71,128 +71,153 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The error thrown when some sort of illegal overwrite is attempted. It is
-							usually in the case of trying to define a constant with the same name
-						as another previously defined constant.</p>
+						<p>Specifies a <em>rounding behaviour</em> for numerical operations on <a href="../classes/bignum.html">BigNum</a>
+							which are capable of discarding some precision. This is based on the JAVA
+						implementation of rounding behaviour. Read more <a href="https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html">here</a>.</p>
 					</div>
 				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<a href="divisionbyzero.html#error" class="tsd-signature-type">Error</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">Overwrite</span>
-							</li>
-						</ul>
-					</li>
-				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
+							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="overwrite.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="overwrite.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="overwrite.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="overwrite.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="overwrite.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#ceil" class="tsd-kind-icon">CEIL</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#down" class="tsd-kind-icon">DOWN</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#floor" class="tsd-kind-icon">FLOOR</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#half_down" class="tsd-kind-icon">HALF_<wbr>DOWN</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#half_even" class="tsd-kind-icon">HALF_<wbr>EVEN</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#half_up" class="tsd-kind-icon">HALF_<wbr>UP</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#unnecessary" class="tsd-kind-icon">UNNECESSARY</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="roundingmode.html#up" class="tsd-kind-icon">UP</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Overwrite<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="overwrite.html" class="tsd-signature-type">Overwrite</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/errors.ts#L35">src/core/errors.ts:35</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Creates a <a href="overwrite.html">Overwrite</a> error.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>The name of the constant which is being overwritten.</p>
-										</div>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="overwrite.html" class="tsd-signature-type">Overwrite</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="message" class="tsd-anchor"></a>
-					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#message">message</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:974</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#name">name</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:973</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-					<a name="stack" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> stack</h3>
-					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#stack">stack</a></p>
-						<p>Overrides <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#stack">stack</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:975</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="error" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Error</h3>
-					<div class="tsd-signature tsd-kind-icon">Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ErrorConstructor</span></div>
+				<h2>Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="ceil" class="tsd-anchor"></a>
+					<h3>CEIL</h3>
+					<div class="tsd-signature tsd-kind-icon">CEIL<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:984</li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/math/context.ts#L12">src/core/math/context.ts:12</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Rounds the number up towards positive infinity.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="down" class="tsd-anchor"></a>
+					<h3>DOWN</h3>
+					<div class="tsd-signature tsd-kind-icon">DOWN<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/math/context.ts#L10">src/core/math/context.ts:10</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Rounds the number down towards 0.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="floor" class="tsd-anchor"></a>
+					<h3>FLOOR</h3>
+					<div class="tsd-signature tsd-kind-icon">FLOOR<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/math/context.ts#L14">src/core/math/context.ts:14</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Rounds the number down towards negative infinity.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="half_down" class="tsd-anchor"></a>
+					<h3>HALF_<wbr>DOWN</h3>
+					<div class="tsd-signature tsd-kind-icon">HALF_<wbr>DOWN<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/math/context.ts#L18">src/core/math/context.ts:18</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded down.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="half_even" class="tsd-anchor"></a>
+					<h3>HALF_<wbr>EVEN</h3>
+					<div class="tsd-signature tsd-kind-icon">HALF_<wbr>EVEN<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/math/context.ts#L20">src/core/math/context.ts:20</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded to nearest even number.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="half_up" class="tsd-anchor"></a>
+					<h3>HALF_<wbr>UP</h3>
+					<div class="tsd-signature tsd-kind-icon">HALF_<wbr>UP<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/math/context.ts#L16">src/core/math/context.ts:16</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded up.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="unnecessary" class="tsd-anchor"></a>
+					<h3>UNNECESSARY</h3>
+					<div class="tsd-signature tsd-kind-icon">UNNECESSARY<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/math/context.ts#L22">src/core/math/context.ts:22</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Rounding mode to assert that no rounding is necessary as an exact representation is possible.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="up" class="tsd-anchor"></a>
+					<h3>UP</h3>
+					<div class="tsd-signature tsd-kind-icon">UP<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/math/context.ts#L8">src/core/math/context.ts:8</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Rounds the number away from 0.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -208,23 +233,32 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="overwrite.html" class="tsd-kind-icon">Overwrite</a>
+					<li class="current tsd-kind-enum">
+						<a href="roundingmode.html" class="tsd-kind-icon">Rounding<wbr>Mode</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="overwrite.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="roundingmode.html#ceil" class="tsd-kind-icon">CEIL</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="overwrite.html#message" class="tsd-kind-icon">message</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="roundingmode.html#down" class="tsd-kind-icon">DOWN</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="overwrite.html#name" class="tsd-kind-icon">name</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="roundingmode.html#floor" class="tsd-kind-icon">FLOOR</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="overwrite.html#stack" class="tsd-kind-icon">stack</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="roundingmode.html#half_down" class="tsd-kind-icon">HALF_<wbr>DOWN</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="overwrite.html#error" class="tsd-kind-icon">Error</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="roundingmode.html#half_even" class="tsd-kind-icon">HALF_<wbr>EVEN</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="roundingmode.html#half_up" class="tsd-kind-icon">HALF_<wbr>UP</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="roundingmode.html#unnecessary" class="tsd-kind-icon">UNNECESSARY</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="roundingmode.html#up" class="tsd-kind-icon">UP</a>
 							</li>
 						</ul>
 					</li>

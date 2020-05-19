@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>InvalidIndex | multivariate_calculus</title>
+	<title>ExpressionBuilder | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -58,10 +58,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="invalidindex.html">InvalidIndex</a>
+					<a href="expressionbuilder.html">ExpressionBuilder</a>
 				</li>
 			</ul>
-			<h1>Class InvalidIndex</h1>
+			<h1>Namespace ExpressionBuilder</h1>
 		</div>
 	</div>
 </header>
@@ -71,135 +71,130 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The error thrown when some invalid index of some quantity is being accessed.
-						An invalid index would be any index which does not exist on a particular quantity.</p>
+						<p>Contains helper functions needed by any class that is an <a href="../interfaces/expression.html">Expression</a>.</p>
 					</div>
 				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<a href="divisionbyzero.html#error" class="tsd-signature-type">Error</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">InvalidIndex</span>
-							</li>
-						</ul>
-					</li>
-				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
+							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="invalidindex.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="invalidindex.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="invalidindex.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="invalidindex.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="invalidindex.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="expressionbuilder.html#createarglist" class="tsd-kind-icon">create<wbr>Arg<wbr>List</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace"><a href="expressionbuilder.html#evaluateat" class="tsd-kind-icon">evaluate<wbr>At</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-namespace tsd-is-not-exported"><a href="expressionbuilder.html#simplify" class="tsd-kind-icon">simplify</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Invalid<wbr>Index<span class="tsd-signature-symbol">(</span>passed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, start<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="invalidindex.html" class="tsd-signature-type">InvalidIndex</a></li>
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
+					<a name="createarglist" class="tsd-anchor"></a>
+					<h3>create<wbr>Arg<wbr>List</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Arg<wbr>List<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a>, b<span class="tsd-signature-symbol">?: </span><a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/errors.ts#L50">src/core/errors.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/expression.ts#L16">src/core/expression.ts:16</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates an <a href="invalidindex.html">InvalidIndex</a> error.</p>
+									<p>Given any one or two <a href="../interfaces/evaluable.html">Evaluable</a> quantities, contructs a <code>Set</code> of
+									unknowns it/they depend on.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>passed: <span class="tsd-signature-type">number</span></h5>
+									<h5>a: <a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>The index value being accessed.</p>
-										</div>
+										<p>First <a href="../interfaces/evaluable.html">Evaluable</a></p>
 									</div>
 								</li>
 								<li>
-									<h5>start: <span class="tsd-signature-type">number</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> b: <a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>The value from which indexing starts.</p>
-										</div>
+										<p>Second <a href="../interfaces/evaluable.html">Evaluable</a></p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="invalidindex.html" class="tsd-signature-type">InvalidIndex</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Set</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="message" class="tsd-anchor"></a>
-					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#message">message</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:974</li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace">
+					<a name="evaluateat" class="tsd-anchor"></a>
+					<h3>evaluate<wbr>At</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
+						<li class="tsd-signature tsd-kind-icon">evaluate<wbr>At<span class="tsd-signature-symbol">(</span>exp<span class="tsd-signature-symbol">: </span><a href="../interfaces/expression.html" class="tsd-signature-type">Expression</a>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/expression.ts#L49">src/core/expression.ts:49</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Given an <a href="../interfaces/expression.html">Expression</a> and a <code>Map</code> of variables to constants, evaluates
+										the value of the given expression at the given values of variables.
+										It is like evaluating the expression by substituting the specified
+									variables by respective constant values.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>exp: <a href="../interfaces/expression.html" class="tsd-signature-type">Expression</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The <a href="../interfaces/expression.html">Expression</a> to evaluate</p>
+									</div>
+								</li>
+								<li>
+									<h5>values: <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The map of <a href="../interfaces/variable.html">Variable</a>s to <a href="../interfaces/constant.html">Constant</a>s.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#name">name</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:973</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-					<a name="stack" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> stack</h3>
-					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#stack">stack</a></p>
-						<p>Overrides <a href="divisionbyzero.html">DivisionByZero</a>.<a href="divisionbyzero.html#stack">stack</a></p>
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:975</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="error" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Error</h3>
-					<div class="tsd-signature tsd-kind-icon">Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ErrorConstructor</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in node_modules/typescript/lib/lib.es5.d.ts:984</li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-namespace tsd-is-not-exported">
+					<a name="simplify" class="tsd-anchor"></a>
+					<h3>simplify</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">simplify<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/expression.ts#L31">src/core/expression.ts:31</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a></h5>
+								</li>
+								<li>
+									<h5>values: <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/evaluable.html" class="tsd-signature-type">Evaluable</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -209,34 +204,34 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="exponent.html">Exponent</a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="expressionbuilder.html">Expression<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="mathcontext.html">Math<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="trigcyclic.html">Trig<wbr>Cyclic</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="trighyperbolic.html">Trig<wbr>Hyperbolic</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="invalidindex.html" class="tsd-kind-icon">Invalid<wbr>Index</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="invalidindex.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="invalidindex.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="invalidindex.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="invalidindex.html#stack" class="tsd-kind-icon">stack</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="invalidindex.html#error" class="tsd-kind-icon">Error</a>
-							</li>
-						</ul>
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
+						<a href="expressionbuilder.html#createarglist" class="tsd-kind-icon">create<wbr>Arg<wbr>List</a>
 					</li>
-				</ul>
-				<ul class="after-current">
+					<li class=" tsd-kind-function tsd-parent-kind-namespace">
+						<a href="expressionbuilder.html#evaluateat" class="tsd-kind-icon">evaluate<wbr>At</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-namespace tsd-is-not-exported">
+						<a href="expressionbuilder.html#simplify" class="tsd-kind-icon">simplify</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

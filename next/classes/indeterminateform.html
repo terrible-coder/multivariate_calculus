@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Overwrite | multivariate_calculus</title>
+	<title>IndeterminateForm | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -58,10 +58,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="overwrite.html">Overwrite</a>
+					<a href="indeterminateform.html">IndeterminateForm</a>
 				</li>
 			</ul>
-			<h1>Class Overwrite</h1>
+			<h1>Class IndeterminateForm</h1>
 		</div>
 	</div>
 </header>
@@ -71,9 +71,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The error thrown when some sort of illegal overwrite is attempted. It is
-							usually in the case of trying to define a constant with the same name
-						as another previously defined constant.</p>
+						<p>The error thrown when some sort of <a href="https://en.wikipedia.org/wiki/Indeterminate_form">indeterminate form</a> is produced during
+						calculations.</p>
 					</div>
 				</div>
 			</section>
@@ -84,7 +83,7 @@
 						<a href="divisionbyzero.html#error" class="tsd-signature-type">Error</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">Overwrite</span>
+								<span class="target">IndeterminateForm</span>
 							</li>
 						</ul>
 					</li>
@@ -97,16 +96,16 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="overwrite.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="indeterminateform.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="overwrite.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="overwrite.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="overwrite.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="overwrite.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="indeterminateform.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="indeterminateform.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="indeterminateform.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="indeterminateform.html#error" class="tsd-kind-icon">Error</a></li>
 							</ul>
 						</section>
 					</div>
@@ -118,32 +117,32 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Overwrite<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="overwrite.html" class="tsd-signature-type">Overwrite</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Indeterminate<wbr>Form<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="indeterminateform.html" class="tsd-signature-type">IndeterminateForm</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/errors.ts#L35">src/core/errors.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/92c701d/src/core/errors.ts#L19">src/core/errors.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a <a href="overwrite.html">Overwrite</a> error.</p>
+									<p>Creates an <a href="indeterminateform.html">IndeterminateForm</a> error.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<h5>message: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>The name of the constant which is being overwritten.</p>
+											<p>The message to display.</p>
 										</div>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="overwrite.html" class="tsd-signature-type">Overwrite</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="indeterminateform.html" class="tsd-signature-type">IndeterminateForm</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -209,22 +208,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="overwrite.html" class="tsd-kind-icon">Overwrite</a>
+						<a href="indeterminateform.html" class="tsd-kind-icon">Indeterminate<wbr>Form</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="overwrite.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="indeterminateform.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="overwrite.html#message" class="tsd-kind-icon">message</a>
+								<a href="indeterminateform.html#message" class="tsd-kind-icon">message</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="overwrite.html#name" class="tsd-kind-icon">name</a>
+								<a href="indeterminateform.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-								<a href="overwrite.html#stack" class="tsd-kind-icon">stack</a>
+								<a href="indeterminateform.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="overwrite.html#error" class="tsd-kind-icon">Error</a>
+								<a href="indeterminateform.html#error" class="tsd-kind-icon">Error</a>
 							</li>
 						</ul>
 					</li>
