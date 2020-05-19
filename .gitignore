@@ -9,6 +9,7 @@
 /docs
 /cache
 /coverage
+/.circleci
 
 # files
 /mcalc.js
