@@ -547,6 +547,52 @@ export class BigNum extends Numerical {
 	}
 
 	/**
+	 * Calculates the inverse trigonometric tangent of a given value with rounding
+	 * according to [[mathenv.mode]].
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static atan(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse trigonometric tangent of a given value with rounding
+	 * according to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static atan(x: BigNum, context: MathContext): BigNum;
+	public static atan(x: BigNum, ...args: any[]): BigNum;
+	public static atan(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const a = x.real.components[0];
+		const v = x.imag;
+		const theta = BigNum.abs(v, context).components[0];
+		if(a.equals(Component.ZERO, context))
+			if(theta.moreThan(Component.ONE))
+				throw new TypeError("Undefined.");
+		if(v.equals(BigNum.real("0"), context))
+			return new BigNum(Component.atan(a, context));
+		const a_sq = a.mul(a, ctx);
+		const atan_arg = Component.TWO.mul(a, ctx).div(
+			Component.ONE.sub(x.norm(ctx).components[0] ,ctx), ctx);
+		const thetap1 = theta.add(Component.ONE, ctx);
+		const thetam1 = theta.sub(Component.ONE, ctx);
+		const thetap1_sq = thetap1.mul(thetap1, ctx);
+		const thetam1_sq = thetam1.mul(thetam1, ctx);
+		const log_arg = a_sq.add(thetap1_sq, ctx).div(a_sq.add(thetam1_sq, ctx), ctx);
+		const half = Component.create("0.5");
+		const quarter = Component.create("0.25");
+		const real = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
+		const imag = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
+		const v_ = v.div(new BigNum(theta), ctx);
+		const res = real.add(v_.mul(imag, ctx));
+		return BigNum.round(res, context);
+	}
+
+	/**
 	 * Calculates the hyperbolic sine of a given value with rounding according
 	 * to [[mathenv.mode]].
 	 * @param x A number.
