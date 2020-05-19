@@ -43,13 +43,20 @@ jobs:
       - run:
           name: Running tests
           command: npm run test:all
-      
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
 
-  deploy:
+  docs:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Build documentation
+          command: npm run docs
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  publish:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -60,6 +67,15 @@ jobs:
       - run:
           name: Publish package
           command: npm publish
+  
+  gh-page:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Deploy docs
+          command: npm run deploy-gh-pages
 
 workflows:
   version: 2
@@ -70,13 +86,15 @@ workflows:
           filters:
             tags:
               only: /.*/
+
       - test:
           requires:
             - build
           filters:
             tags:
               only: /.*/
-      - deploy:
+
+      - publish:
           requires:
             - test
           filters:
@@ -84,3 +102,17 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+
+      - docs:
+          requires:
+            - build
+          filters:
+            tags:
+              ignore: /^v\d+\.\d+\.\d+/
+
+      - gh-page:
+          requires:
+            - docs
+          filters:
+            tags:
+              ignore: /^v\d+\.\d+\.\d+/
