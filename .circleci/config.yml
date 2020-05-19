@@ -86,12 +86,14 @@ workflows:
           filters:
             tags:
               only: /.*/
+
       - test:
           requires:
             - build
           filters:
             tags:
               only: /.*/
+
       - publish:
           requires:
             - test
@@ -100,6 +102,7 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+
       - docs:
           requires:
             - build
@@ -110,6 +113,7 @@ workflows:
               only:
                 - master
                 - ci
+
       - gh-page:
           requires:
             - docs
