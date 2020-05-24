@@ -44,6 +44,7 @@
     "jest": "^25.1.0",
     "jest-cli": "^25.1.0",
     "minify": "^5.1.1",
+    "shelljs": "^0.8.4",
     "ts-jest": "^25.4.0",
     "typedoc": "^0.17.4",
     "typescript": "^3.8.3",
