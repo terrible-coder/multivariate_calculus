@@ -519,4 +519,22 @@ describe("Inverse trigonometry", function() {
 				expect(BigNum.acos(values[i])).toEqual(acoss[i]);
 		});
 	});
+
+	describe("atan", function() {
+		it("for real", function() {
+			const values = [
+				"1", "-1", "2", "-2", "1000000", "10000000000"
+			].map(x => BigNum.real(x));
+			const atans = [
+				"0.78539816339744831",
+				"-0.78539816339744831",
+				"1.10714871779409051",
+				"-1.10714871779409051",
+				"1.57079532679489662",
+				"1.57079632669489662"
+			].map(x => BigNum.real(x));
+			for(let i = 0; i < values.length; i++)
+				expect(BigNum.atan(values[i])).toEqual(atans[i]);
+		});
+	});
 });
