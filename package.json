@@ -17,7 +17,7 @@
     "minify": "minify mcalc.js > mcalc.min.js",
     "docs": "typedoc --theme ./theme --mode file --out ./docs/next ./src",
     "deploy-gh-pages": "node ./scripts/deploy-gh-pages.js",
-    "postversion": "git push && git push --tag"
+    "postversion": "git push && git push --tags"
   },
   "keywords": [
     "vector",
