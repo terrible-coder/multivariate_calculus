@@ -1,7 +1,7 @@
 const shell = require("shelljs")
 const pkg = require("../package.json");
 
-console.log(`uploading to version ${pkg.version}`);
+shell.exec(`echo Uploading to version ${pkg.version}`);
 const prerelease = /\d+.\d+.\d+-(?<preid>\w+).\d+/;
 const latest = /\d+\.\d+\.\d+(?<rest>.*)/;
 let tag = "";
@@ -17,6 +17,6 @@ else {
 	shell.exit(1);
 }
 
-const command = `npm publish --tag ${tag}`;
-shell.exec(`echo ${command}`);
-shell.exec("echo Can publish.");
+shell.exec(`echo Adding tag ${tag}`);
+shell.exec(`npm publish --tag ${tag}`);
+shell.exec("echo Published.");
