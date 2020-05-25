@@ -101,7 +101,7 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              ignore: /.*/
+              only: master
 
       - docs:
           requires:
@@ -109,6 +109,8 @@ workflows:
           filters:
             tags:
               ignore: /^v\d+\.\d+\.\d+/
+            branches:
+              only: master
 
       - gh-page:
           requires:
@@ -116,3 +118,5 @@ workflows:
           filters:
             tags:
               ignore: /^v\d+\.\d+\.\d+/
+            branches:
+              only: master
