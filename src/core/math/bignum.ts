@@ -578,13 +578,11 @@ export class BigNum extends Numerical {
 		const a_sq = a.mul(a, ctx);
 		const atan_arg = Component.TWO.mul(a, ctx).div(
 			Component.ONE.sub(x.norm(ctx).components[0] ,ctx), ctx);
-		const thetap1 = theta.add(Component.ONE, ctx);
-		const thetam1 = theta.sub(Component.ONE, ctx);
-		const thetap1_sq = thetap1.mul(thetap1, ctx);
-		const thetam1_sq = thetam1.mul(thetam1, ctx);
+		const [thetap1_sq, thetam1_sq] = [
+			theta.add(Component.ONE, ctx), theta.sub(Component.ONE, ctx)
+		].map(x => x.mul(x, ctx));
 		const log_arg = a_sq.add(thetap1_sq, ctx).div(a_sq.add(thetam1_sq, ctx), ctx);
-		const half = Component.create("0.5");
-		const quarter = Component.create("0.25");
+		const half = Component.create("0.5"), quarter = Component.create("0.25");
 		const real = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
 		const imag = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
 		const v_ = v.div(new BigNum(theta), ctx);
