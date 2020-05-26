@@ -536,5 +536,21 @@ describe("Inverse trigonometry", function() {
 			for(let i = 0; i < values.length; i++)
 				expect(BigNum.atan(values[i])).toEqual(atans[i]);
 		});
+
+		it("imaginary", function() {
+			const strings = [
+				"0.5",
+				"-0.5",
+				"0.9",
+				"-0.9",
+			];
+			for(let s of strings) {
+				const x = BigNum.complex("0", s);
+				console.log(x);
+				const atan = new BigNum(Component.ZERO, Component.atanh(Component.create(s)));
+				expect(BigNum.atan(x)).toEqual(atan);
+			}
+			expect(() => BigNum.atan(BigNum.complex("0", "2"))).toThrow();
+		});
 	});
 });
