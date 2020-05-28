@@ -499,8 +499,13 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Helper function for inverse trig functions. Transforms the product into
-	 * a sum (\\( \alpha \\)) and difference (\\( \beta \\)).
+	 * Helper function for inverse trig functions. Transforms the product of two
+	 * into a sum (\\( \alpha \\)) and difference (\\( \beta \\)).
+	 * 
+	 * \\[ \alpha = \sqrt{(x+1)^2 + y^2} \\]
+	 * 
+	 * \\[ \beta = \sqrt{(x-1)^2 + y^2} \\]
+	 * 
 	 * @param x The absolute value of real part.
 	 * @param y The absolute value of imaginary part.
 	 * @param ctx The context settings to use.
