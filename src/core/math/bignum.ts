@@ -410,10 +410,12 @@ export class BigNum extends Numerical {
 		};
 		const a = x.real.components[0];
 		const v = x.imag;
-		const theta = BigNum.abs(v).components[0];
+		const theta = BigNum.abs(v, ctx).components[0];
+		if(theta.equals(Component.ZERO, ctx))
+			return new BigNum(Component.sin(a, context));
+		const v_hat = v.div(new BigNum(theta), ctx);
 		const real = new BigNum(Component.sin(a, ctx).mul(Component.cosh(theta, ctx), ctx));
 		const imag = new BigNum(Component.cos(a, ctx).mul(Component.sinh(theta, ctx), ctx));
-		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.real("0"): v.div(new BigNum(theta), ctx);
 		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
@@ -462,10 +464,12 @@ export class BigNum extends Numerical {
 		};
 		const a = x.real.components[0];
 		const v = x.imag;
-		const theta = BigNum.abs(v).components[0];
+		const theta = BigNum.abs(v, ctx).components[0];
+		if(theta.equals(Component.ZERO, ctx))
+			return new BigNum(Component.cos(a, context));
+		const v_hat = v.div(new BigNum(theta), ctx);
 		const real = new BigNum(Component.cos(a, ctx).mul(Component.cosh(theta, ctx), ctx));
 		const imag = new BigNum(Component.sin(a, ctx).mul(Component.sinh(theta, ctx), ctx));
-		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.real("0"): v.div(new BigNum(theta), ctx);
 		const res = real.sub(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
@@ -539,13 +543,13 @@ export class BigNum extends Numerical {
 		};
 		const a = x.real.components[0];
 		const v = x.imag;
-		const theta = BigNum.abs(v).components[0];
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
 		const [alpha, beta] = BigNum.alpha_beta(a, theta, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
 		const sin = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.asin(sin, ctx));
 		const imag = new BigNum(Component.acosh(cosh, ctx));
-		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
 		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
@@ -579,13 +583,13 @@ export class BigNum extends Numerical {
 		}
 		const a = x.real.components[0];
 		const v = x.imag;
-		const theta = BigNum.abs(v).components[0];
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
 		const [alpha, beta] = BigNum.alpha_beta(a, theta, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
 		const cos = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.acos(cos, ctx));
 		const imag = new BigNum(Component.acosh(cosh, ctx));
-		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
 		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
@@ -619,6 +623,7 @@ export class BigNum extends Numerical {
 				throw new TypeError("Undefined.");
 		if(v.equals(BigNum.real("0"), context))
 			return new BigNum(Component.atan(a, context));
+		const v_hat = v.div(new BigNum(theta), ctx);
 		const a_sq = a.mul(a, ctx);
 		const atan_arg = Component.TWO.mul(a, ctx).div(
 			Component.ONE.sub(x.norm(ctx).components[0] ,ctx), ctx);
@@ -629,7 +634,6 @@ export class BigNum extends Numerical {
 		const half = Component.create("0.5"), quarter = Component.create("0.25");
 		const real = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
 		const imag = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
-		const v_hat = v.div(new BigNum(theta), ctx);
 		const res = real.add(v_hat.mul(imag, ctx));
 		return BigNum.round(res, context);
 	}
@@ -775,12 +779,12 @@ export class BigNum extends Numerical {
 		const theta = BigNum.abs(v, ctx).components[0];
 		if(theta.equals(Component.ZERO, context))
 			return new BigNum(Component.asinh(a));
+		const v_hat = v.div(new BigNum(theta), ctx);
 		const [alpha, beta] = BigNum.alpha_beta(theta, a, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
 		const sin = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.acosh(cosh, ctx));
 		const imag = new BigNum(Component.asin(sin, ctx));
-		const v_hat = v.div(new BigNum(theta), ctx);
 		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
