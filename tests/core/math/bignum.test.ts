@@ -579,4 +579,28 @@ describe("Hyperbolic trigonometry", function() {
 			values.forEach((x, i) => expect(BigNum.sinh(x)).toEqual(sinhs[i]));
 		});
 	});
+
+	describe("cosh", function() {
+		it("for real", function() {
+			const values = new Array(6).fill(0).map((_, i) => i.toString()).map(x => BigNum.real(x));
+			const coshs = [
+				"1",
+				"1.54308063481524378",
+				"3.76219569108363146",
+				"10.06766199577776585",
+				"27.30823283601648663",
+				"74.20994852478784445"
+			].map(x => BigNum.real(x));
+			values.forEach((x, i) => expect(BigNum.cosh(x)).toEqual(coshs[i]));
+			values.forEach((x, i) => expect(BigNum.cosh(x.neg)).toEqual(coshs[i]));
+		});
+
+		it("for imaginary", function() {
+			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", i.toString()));
+			const coshs = new Array(10).fill(0)
+									.map((_, i) => Component.create(`${i}`))
+									.map(x => new BigNum(Component.cos(x)));
+			values.forEach((x, i) => expect(BigNum.cosh(x)).toEqual(coshs[i]));
+		});
+	});
 });
