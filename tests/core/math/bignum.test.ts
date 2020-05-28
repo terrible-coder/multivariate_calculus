@@ -570,5 +570,13 @@ describe("Hyperbolic trigonometry", function() {
 			values.forEach((x, i) => expect(BigNum.sinh(x)).toEqual(sinhs[i]));
 			values.forEach((x, i) => expect(BigNum.sinh(x.neg)).toEqual(sinhs[i].neg));
 		});
+
+		it("for imaginary", function() {
+			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", i.toString()));
+			const sinhs = new Array(10).fill(0)
+									.map((_, i) => Component.create(`${i}`))
+									.map(x => new BigNum(Component.ZERO, Component.sin(x)));
+			values.forEach((x, i) => expect(BigNum.sinh(x)).toEqual(sinhs[i]));
+		});
 	});
 });
