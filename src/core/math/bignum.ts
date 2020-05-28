@@ -507,12 +507,14 @@ export class BigNum extends Numerical {
 	 * @ignore
 	 */
 	private static alpha_beta(x: Component, y: Component, ctx: MathContext) {
-		const one = Component.ONE, two = Component.TWO, half = Component.create("0.5");
-		const alpha2 = x.add(one, ctx).pow(two, ctx).add(y.pow(two, ctx), ctx);
-		const beta2 = x.sub(one, ctx).pow(two, ctx).add(y.pow(two, ctx), ctx);
-		const alpha = alpha2.pow(half, ctx);
-		const beta = beta2.pow(half, ctx);
-		return [alpha, beta];
+		const one = Component.ONE, half = Component.create("0.5");
+		const [xp1_sq, xm1_sq, y_sq] = [
+										x.add(one, ctx), x.sub(one, ctx), y
+									].map(val => val.mul(val, ctx));
+		const alpha2 = xp1_sq.add(y_sq, ctx);
+		const beta2 = xm1_sq.add(y_sq, ctx);
+		const values = [alpha2, beta2].map(val => val.pow(half, ctx));
+		return values;
 	}
 
 	/**
