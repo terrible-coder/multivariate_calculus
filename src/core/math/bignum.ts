@@ -3,6 +3,7 @@ import { Component } from "./component";
 import { MathContext } from "./context";
 import { mathenv } from "../env";
 import { Numerical } from "../definitions";
+import { alpha_beta } from "./numerical";
 
 /**
  * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
@@ -369,12 +370,34 @@ export class BigNum extends Numerical {
 	/**
 	 * Calculates the trigonometric sine of a given number with rounding
 	 * according to [[mathenv.mode]].
+	 * 
+	 * Method:
+	 * The sum formula works for higher dimensional numbers too.
+	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
+	 * the "vector" part or the purely imaginary part.
+	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
+	 * such that \\( x = a + \hat{v} \theta \\)
+	 * Now,
+	 * 
+	 * \\[ \sin (a + v) = \sin a \cosh \theta + \hat{v} \cos a \sinh \theta \\]
+	 * 
 	 * @param x A number.
 	 */
 	public static sin(x: BigNum): BigNum;
 	/**
 	 * Calculates the trigonometric sine of a given number with rounding
 	 * according to the given context settings.
+	 * 
+	 * Method:
+	 * The sum formula works for higher dimensional numbers too.
+	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
+	 * the "vector" part or the purely imaginary part.
+	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
+	 * such that \\( x = a + \hat{v} \theta \\)
+	 * Now,
+	 * 
+	 * \\[ \sin (a + v) = \sin a \cosh \theta + \hat{v} \cos a \sinh \theta \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -382,29 +405,53 @@ export class BigNum extends Numerical {
 	public static sin(x: BigNum, ...args: any[]): BigNum;
 	public static sin(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
+		const a = x.real.components[0];
+		const v = x.imag;
+		if(v.equals(BigNum.real("0"), context))
+			return new BigNum(Component.sin(a, context));
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const a = x.real.components[0];
-		const v = x.imag;
-		const theta = BigNum.abs(v).components[0];
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = v.div(new BigNum(theta), ctx);
 		const real = new BigNum(Component.sin(a, ctx).mul(Component.cosh(theta, ctx), ctx));
 		const imag = new BigNum(Component.cos(a, ctx).mul(Component.sinh(theta, ctx), ctx));
-		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.real("0"): v.div(new BigNum(theta), ctx);
-		const res = real.add(v_.mul(imag, ctx), ctx);
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
 	/**
 	 * Calculates the trigonometric cosine of a given number with rounding
 	 * according to [[mathenv.mode]].
+	 * 
+	 * Method:
+	 * The sum formula works for higher dimensional numbers too.
+	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
+	 * the "vector" part or the purely imaginary part.
+	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
+	 * such that \\( x = a + \hat{v} \theta \\)
+	 * Now,
+	 * 
+	 * \\[ \cos (a + v) = \cos a \cosh \theta - \hat{v} \sin a \sinh \theta \\]
+	 * 
 	 * @param x A number.
 	 */
 	public static cos(x: BigNum): BigNum;
 	/**
 	 * Calculates the trigonometric cosine of a given number with rounding
 	 * according to the given context settings.
+	 * 
+	 * Method:
+	 * The sum formula works for higher dimensional numbers too.
+	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
+	 * the "vector" part or the purely imaginary part.
+	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
+	 * such that \\( x = a + \hat{v} \theta \\)
+	 * Now,
+	 * 
+	 * \\[ \cos (a + v) = \cos a \cosh \theta - \hat{v} \sin a \sinh \theta \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -412,17 +459,19 @@ export class BigNum extends Numerical {
 	public static cos(x: BigNum, ...args: any[]): BigNum;
 	public static cos(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
+		const a = x.real.components[0];
+		const v = x.imag;
+		if(v.equals(BigNum.real("0"), context))
+			return new BigNum(Component.cos(a, context));
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const a = x.real.components[0];
-		const v = x.imag;
-		const theta = BigNum.abs(v).components[0];
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = v.div(new BigNum(theta), ctx);
 		const real = new BigNum(Component.cos(a, ctx).mul(Component.cosh(theta, ctx), ctx));
 		const imag = new BigNum(Component.sin(a, ctx).mul(Component.sinh(theta, ctx), ctx));
-		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.real("0"): v.div(new BigNum(theta), ctx);
-		const res = real.sub(v_.mul(imag, ctx), ctx);
+		const res = real.sub(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
@@ -448,23 +497,6 @@ export class BigNum extends Numerical {
 		}
 		const res = BigNum.sin(x, ctx).div(BigNum.cos(x, ctx), ctx);
 		return BigNum.round(res, context);
-	}
-
-	/**
-	 * Helper function for inverse trig functions. Transforms the product into
-	 * a sum (\\( \alpha \\)) and difference (\\( \beta \\)).
-	 * @param x The absolute value of real part.
-	 * @param y The absolute value of imaginary part.
-	 * @param ctx The context settings to use.
-	 * @ignore
-	 */
-	private static alpha_beta(x: Component, y: Component, ctx: MathContext) {
-		const one = Component.ONE, two = Component.TWO, half = Component.create("0.5");
-		const alpha2 = x.add(one, ctx).pow(two, ctx).add(y.pow(two, ctx), ctx);
-		const beta2 = x.sub(one, ctx).pow(two, ctx).add(y.pow(two, ctx), ctx);
-		const alpha = alpha2.pow(half, ctx);
-		const beta = beta2.pow(half, ctx);
-		return [alpha, beta];
 	}
 
 	/**
@@ -495,14 +527,14 @@ export class BigNum extends Numerical {
 		};
 		const a = x.real.components[0];
 		const v = x.imag;
-		const theta = BigNum.abs(v).components[0];
-		const [alpha, beta] = BigNum.alpha_beta(a, theta, ctx);
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
+		const [alpha, beta] = alpha_beta(a, theta, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
 		const sin = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.asin(sin, ctx));
 		const imag = new BigNum(Component.acosh(cosh, ctx));
-		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
-		const res = real.add(v_.mul(imag, ctx), ctx);
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
@@ -535,14 +567,14 @@ export class BigNum extends Numerical {
 		}
 		const a = x.real.components[0];
 		const v = x.imag;
-		const theta = BigNum.abs(v).components[0];
-		const [alpha, beta] = BigNum.alpha_beta(a, theta, ctx);
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
+		const [alpha, beta] = alpha_beta(a, theta, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
 		const cos = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.acos(cos, ctx));
 		const imag = new BigNum(Component.acosh(cosh, ctx));
-		const v_ = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
-		const res = real.add(v_.mul(imag, ctx), ctx);
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
@@ -575,6 +607,7 @@ export class BigNum extends Numerical {
 				throw new TypeError("Undefined.");
 		if(v.equals(BigNum.real("0"), context))
 			return new BigNum(Component.atan(a, context));
+		const v_hat = v.div(new BigNum(theta), ctx);
 		const a_sq = a.mul(a, ctx);
 		const atan_arg = Component.TWO.mul(a, ctx).div(
 			Component.ONE.sub(x.norm(ctx).components[0] ,ctx), ctx);
@@ -585,20 +618,41 @@ export class BigNum extends Numerical {
 		const half = Component.create("0.5"), quarter = Component.create("0.25");
 		const real = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
 		const imag = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
-		const v_ = v.div(new BigNum(theta), ctx);
-		const res = real.add(v_.mul(imag, ctx));
+		const res = real.add(v_hat.mul(imag, ctx));
 		return BigNum.round(res, context);
 	}
 
 	/**
 	 * Calculates the hyperbolic sine of a given value with rounding according
 	 * to [[mathenv.mode]].
+	 * 
+	 * Method:
+	 * The sum formula works for higher dimensional numbers too.
+	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
+	 * the "vector" part or the purely imaginary part.
+	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
+	 * such that \\( x = a + \hat{v} \theta \\)
+	 * Now,
+	 * 
+	 * \\[ \sinh (a + v) = \sinh a \cos \theta + \hat{v} \cosh a \sin \theta \\]
+	 * 
 	 * @param x A number.
 	 */
 	public static sinh(x: BigNum): BigNum;
 	/**
 	 * Calculates the hyperbolic sine of a given value with rounding according
 	 * to the given context settings.
+	 * 
+	 * Method:
+	 * The sum formula works for higher dimensional numbers too.
+	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
+	 * the "vector" part or the purely imaginary part.
+	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
+	 * such that \\( x = a + \hat{v} \theta \\)
+	 * Now,
+	 * 
+	 * \\[ \sinh (a + v) = \sinh a \cos \theta + \hat{v} \cosh a \sin \theta \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -617,12 +671,34 @@ export class BigNum extends Numerical {
 	/**
 	 * Calculates the hyperbolic cosine of a given value with rounding according
 	 * to [[mathenv.mode]].
+	 * 
+	 * Method:
+	 * The sum formula works for higher dimensional numbers too.
+	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
+	 * the "vector" part or the purely imaginary part.
+	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
+	 * such that \\( x = a + \hat{v} \theta \\)
+	 * Now,
+	 * 
+	 * \\[ \cosh (a + v) = \cosh a \cos \theta + \hat{v} \sinh a \sin \theta \\]
+	 * 
 	 * @param x A number.
 	 */
 	public static cosh(x: BigNum): BigNum;
 	/**
 	 * Calculates the hyperbolic cosine of a given value with rounding according
 	 * to the given context settings.
+	 * 
+	 * Method:
+	 * The sum formula works for higher dimensional numbers too.
+	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
+	 * the "vector" part or the purely imaginary part.
+	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
+	 * such that \\( x = a + \hat{v} \theta \\)
+	 * Now,
+	 * 
+	 * \\[ \cosh (a + v) = \cosh a \cos \theta + \hat{v} \sinh a \sin \theta \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -687,13 +763,13 @@ export class BigNum extends Numerical {
 		const theta = BigNum.abs(v, ctx).components[0];
 		if(theta.equals(Component.ZERO, context))
 			return new BigNum(Component.asinh(a));
-		const [alpha, beta] = BigNum.alpha_beta(theta, a, ctx);
+		const v_hat = v.div(new BigNum(theta), ctx);
+		const [alpha, beta] = alpha_beta(theta, a, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
 		const sin = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.acosh(cosh, ctx));
 		const imag = new BigNum(Component.asin(sin, ctx));
-		const v_ = v.div(new BigNum(theta), ctx);
-		const res = real.add(v_.mul(imag, ctx), ctx);
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 

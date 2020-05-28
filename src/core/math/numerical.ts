@@ -29,6 +29,29 @@ export function newton_raphson(f: (x: Component) => Component, f_: (x: Component
 }
 
 /**
+ * Helper function for inverse trig functions. Transforms the product of two
+ * into a sum (\\( \alpha \\)) and difference (\\( \beta \\)).
+ * 
+ * \\[ \alpha = \sqrt{(x+1)^2 + y^2} \\]
+ * 
+ * \\[ \beta = \sqrt{(x-1)^2 + y^2} \\]
+ * 
+ * @param x The absolute value of real part.
+ * @param y The absolute value of imaginary part.
+ * @param ctx The context settings to use.
+ */
+export function alpha_beta(x: Component, y: Component, ctx: MathContext) {
+	const one = Component.ONE, half = Component.create("0.5");
+	const [xp1_sq, xm1_sq, y_sq] = [
+									x.add(one, ctx), x.sub(one, ctx), y
+								].map(val => val.mul(val, ctx));
+	const alpha2 = xp1_sq.add(y_sq, ctx);
+	const beta2 = xm1_sq.add(y_sq, ctx);
+	const values = [alpha2, beta2].map(val => val.pow(half, ctx));
+	return values;
+}
+
+/**
  * Checks whether an array contains distinct elements.
  * @param a Array of numbers.
  * @ignore
