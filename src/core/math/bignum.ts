@@ -3,6 +3,7 @@ import { Component } from "./component";
 import { MathContext } from "./context";
 import { mathenv } from "../env";
 import { Numerical } from "../definitions";
+import { alpha_beta } from "./numerical";
 
 /**
  * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
@@ -499,30 +500,6 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Helper function for inverse trig functions. Transforms the product of two
-	 * into a sum (\\( \alpha \\)) and difference (\\( \beta \\)).
-	 * 
-	 * \\[ \alpha = \sqrt{(x+1)^2 + y^2} \\]
-	 * 
-	 * \\[ \beta = \sqrt{(x-1)^2 + y^2} \\]
-	 * 
-	 * @param x The absolute value of real part.
-	 * @param y The absolute value of imaginary part.
-	 * @param ctx The context settings to use.
-	 * @ignore
-	 */
-	private static alpha_beta(x: Component, y: Component, ctx: MathContext) {
-		const one = Component.ONE, half = Component.create("0.5");
-		const [xp1_sq, xm1_sq, y_sq] = [
-										x.add(one, ctx), x.sub(one, ctx), y
-									].map(val => val.mul(val, ctx));
-		const alpha2 = xp1_sq.add(y_sq, ctx);
-		const beta2 = xm1_sq.add(y_sq, ctx);
-		const values = [alpha2, beta2].map(val => val.pow(half, ctx));
-		return values;
-	}
-
-	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
 	 * according to [[mathenv.mode]]. This method right now works good
 	 * only for values much smaller than unity. For values close to unity
@@ -552,7 +529,7 @@ export class BigNum extends Numerical {
 		const v = x.imag;
 		const theta = BigNum.abs(v, ctx).components[0];
 		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
-		const [alpha, beta] = BigNum.alpha_beta(a, theta, ctx);
+		const [alpha, beta] = alpha_beta(a, theta, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
 		const sin = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.asin(sin, ctx));
@@ -592,7 +569,7 @@ export class BigNum extends Numerical {
 		const v = x.imag;
 		const theta = BigNum.abs(v, ctx).components[0];
 		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex("0", "1"): v.div(new BigNum(theta), ctx);
-		const [alpha, beta] = BigNum.alpha_beta(a, theta, ctx);
+		const [alpha, beta] = alpha_beta(a, theta, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
 		const cos = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.acos(cos, ctx));
@@ -787,7 +764,7 @@ export class BigNum extends Numerical {
 		if(theta.equals(Component.ZERO, context))
 			return new BigNum(Component.asinh(a));
 		const v_hat = v.div(new BigNum(theta), ctx);
-		const [alpha, beta] = BigNum.alpha_beta(theta, a, ctx);
+		const [alpha, beta] = alpha_beta(theta, a, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
 		const sin = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.acosh(cosh, ctx));
