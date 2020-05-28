@@ -554,3 +554,21 @@ describe("Inverse trigonometry", function() {
 		});
 	});
 });
+
+describe("Hyperbolic trigonometry", function() {
+	describe("sinh", function() {
+		it("for real", function() {
+			const values = new Array(6).fill(0).map((_, i) => i.toString()).map(x => BigNum.real(x));
+			const sinhs = [
+				"0",
+				"1.17520119364380146",
+				"3.62686040784701877",
+				"10.01787492740990190",
+				"27.28991719712775245",
+				"74.20321057778875898"
+			].map(x => BigNum.real(x));
+			values.forEach((x, i) => expect(BigNum.sinh(x)).toEqual(sinhs[i]));
+			values.forEach((x, i) => expect(BigNum.sinh(x.neg)).toEqual(sinhs[i].neg));
+		});
+	});
+});
