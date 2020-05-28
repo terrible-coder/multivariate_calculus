@@ -405,15 +405,15 @@ export class BigNum extends Numerical {
 	public static sin(x: BigNum, ...args: any[]): BigNum;
 	public static sin(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
+		const a = x.real.components[0];
+		const v = x.imag;
+		if(v.equals(BigNum.real("0"), context))
+			return new BigNum(Component.sin(a, context));
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const a = x.real.components[0];
-		const v = x.imag;
 		const theta = BigNum.abs(v, ctx).components[0];
-		if(theta.equals(Component.ZERO, ctx))
-			return new BigNum(Component.sin(a, context));
 		const v_hat = v.div(new BigNum(theta), ctx);
 		const real = new BigNum(Component.sin(a, ctx).mul(Component.cosh(theta, ctx), ctx));
 		const imag = new BigNum(Component.cos(a, ctx).mul(Component.sinh(theta, ctx), ctx));
@@ -459,15 +459,15 @@ export class BigNum extends Numerical {
 	public static cos(x: BigNum, ...args: any[]): BigNum;
 	public static cos(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
+		const a = x.real.components[0];
+		const v = x.imag;
+		if(v.equals(BigNum.real("0"), context))
+			return new BigNum(Component.cos(a, context));
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const a = x.real.components[0];
-		const v = x.imag;
 		const theta = BigNum.abs(v, ctx).components[0];
-		if(theta.equals(Component.ZERO, ctx))
-			return new BigNum(Component.cos(a, context));
 		const v_hat = v.div(new BigNum(theta), ctx);
 		const real = new BigNum(Component.cos(a, ctx).mul(Component.cosh(theta, ctx), ctx));
 		const imag = new BigNum(Component.sin(a, ctx).mul(Component.sinh(theta, ctx), ctx));
