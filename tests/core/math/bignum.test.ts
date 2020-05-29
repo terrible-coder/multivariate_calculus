@@ -579,4 +579,56 @@ describe("Hyperbolic trigonometry", function() {
 			values.forEach((x, i) => expect(BigNum.sinh(x)).toEqual(sinhs[i]));
 		});
 	});
+
+	describe("cosh", function() {
+		it("for real", function() {
+			const values = new Array(6).fill(0).map((_, i) => i.toString()).map(x => BigNum.real(x));
+			const coshs = [
+				"1",
+				"1.54308063481524378",
+				"3.76219569108363146",
+				"10.06766199577776585",
+				"27.30823283601648663",
+				"74.20994852478784445"
+			].map(x => BigNum.real(x));
+			values.forEach((x, i) => expect(BigNum.cosh(x)).toEqual(coshs[i]));
+			values.forEach((x, i) => expect(BigNum.cosh(x.neg)).toEqual(coshs[i]));
+		});
+
+		it("for imaginary", function() {
+			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", i.toString()));
+			const coshs = new Array(10).fill(0)
+									.map((_, i) => Component.create(`${i}`))
+									.map(x => new BigNum(Component.cos(x)));
+			values.forEach((x, i) => expect(BigNum.cosh(x)).toEqual(coshs[i]));
+		});
+	});
+
+	describe("tanh", function() {
+		it("for real", function() {
+			const values = new Array(10).fill(0).map((_, i) => BigNum.real(i));
+			const tanhs = [
+				"0",
+				"0.76159415595576489",
+				"0.96402758007581689",
+				"0.99505475368673046",
+				"0.99932929973906705",
+				"0.99990920426259514",
+				"0.99998771165079557",
+				"0.99999833694394468",
+				"0.99999977492967589",
+				"0.99999996954004098"
+			].map(x => BigNum.real(x));
+			values.forEach((x, i) => expect(BigNum.tanh(x)).toEqual(tanhs[i]));
+			values.forEach((x, i) => expect(BigNum.tanh(x.neg)).toEqual(tanhs[i].neg));
+		});
+
+		it("for imaginary", function() {
+			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", i.toString()));
+			const tanhs = new Array(10).fill(0)
+									.map((_, i) => Component.create(`${i}`))
+									.map(x => new BigNum(Component.ZERO, Component.tan(x)));
+			values.forEach((x, i) => expect(BigNum.tanh(x)).toEqual(tanhs[i]));
+		});
+	});
 });
