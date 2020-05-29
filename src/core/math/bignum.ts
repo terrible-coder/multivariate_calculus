@@ -786,6 +786,41 @@ export class BigNum extends Numerical {
 	}
 
 	/**
+	 * Calculates the inverse hyperbolic sine of a given value with rounding according
+	 * to the given context settings.
+	 * @param x A number.
+	 */
+	public static acosh(x: BigNum): BigNum;
+	/**
+	 * Calculates the inverse hyperbolic sine of a given value with rounding according
+	 * to the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static acosh(x: BigNum, context: MathContext): BigNum;
+	public static acosh(x: BigNum, ...args: any[]): BigNum;
+	public static acosh(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const a = x.real.components[0];
+		const v = x.imag;
+		if(v.equals(BigNum.real("0"), context))
+			return new BigNum(Component.acosh(a, context));
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = v.div(new BigNum(theta), ctx);
+		const [alpha, beta] = alpha_beta(theta, a, ctx);
+		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
+		const cos = alpha.sub(beta, ctx).div(Component.TWO, ctx);
+		const real = new BigNum(Component.acosh(cosh, ctx));
+		const imag = new BigNum(Component.acos(cos, ctx));
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
+	/**
 	 * Calculates the exponential of a given number with rounding according to
 	 * [[mathenv.mode]].
 	 * @param x A number.
