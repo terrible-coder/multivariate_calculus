@@ -603,4 +603,24 @@ describe("Hyperbolic trigonometry", function() {
 			values.forEach((x, i) => expect(BigNum.cosh(x)).toEqual(coshs[i]));
 		});
 	});
+
+	describe("tanh", function() {
+		it("for real", function() {
+			const values = new Array(10).fill(0).map((_, i) => BigNum.real(i));
+			const tanhs = [
+				"0",
+				"0.76159415595576489",
+				"0.96402758007581689",
+				"0.99505475368673046",
+				"0.99932929973906705",
+				"0.99990920426259514",
+				"0.99998771165079557",
+				"0.99999833694394468",
+				"0.99999977492967589",
+				"0.99999996954004098"
+			].map(x => BigNum.real(x));
+			values.forEach((x, i) => expect(BigNum.tanh(x)).toEqual(tanhs[i]));
+			values.forEach((x, i) => expect(BigNum.tanh(x.neg)).toEqual(tanhs[i].neg));
+		});
+	});
 });
