@@ -730,11 +730,23 @@ export class BigNum extends Numerical {
 	public static tanh(x: BigNum, ...args: any[]): BigNum;
 	public static tanh(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
+		const a = x.real.components[0];
+		const v = x.imag;
+		if(v.equals(BigNum.real("0"), context))
+			return new BigNum(Component.tanh(a, context));
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		}
-		const res = BigNum.sinh(x, ctx).div(BigNum.cosh(x, ctx), ctx);
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = v.div(new BigNum(theta), ctx);
+		const [two_a, two_t] = [a, theta].map(val => val.add(val, ctx));
+		const sinh = Component.sinh(two_a, ctx), cosh = Component.cosh(a, ctx);
+		const sin = Component.sin(two_t, ctx), cos = Component.cos(two_t, ctx);
+		const den = cosh.add(cos, ctx);
+		const real = new BigNum(sinh.div(den, ctx));
+		const imag = new BigNum(sin.div(den, ctx));
+		const res = real.add(v_hat.mul(imag, ctx));
 		return BigNum.round(res, context);
 	}
 
