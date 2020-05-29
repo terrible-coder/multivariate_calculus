@@ -766,15 +766,15 @@ export class BigNum extends Numerical {
 	public static asinh(x: BigNum, ...args: any[]): BigNum;
 	public static asinh(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
+		const a = x.real.components[0];
+		const v = x.imag;
+		if(v.equals(BigNum.real("0"), context))
+			return new BigNum(Component.asinh(a, context));
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		}
-		const a = x.real.components[0];
-		const v = x.imag;
 		const theta = BigNum.abs(v, ctx).components[0];
-		if(theta.equals(Component.ZERO, context))
-			return new BigNum(Component.asinh(a));
 		const v_hat = v.div(new BigNum(theta), ctx);
 		const [alpha, beta] = alpha_beta(theta, a, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
