@@ -546,7 +546,6 @@ describe("Inverse trigonometry", function() {
 			];
 			for(let s of strings) {
 				const x = BigNum.complex("0", s);
-				console.log(x);
 				const atan = new BigNum(Component.ZERO, Component.atanh(Component.create(s)));
 				expect(BigNum.atan(x)).toEqual(atan);
 			}
@@ -629,6 +628,66 @@ describe("Hyperbolic trigonometry", function() {
 									.map((_, i) => Component.create(`${i}`))
 									.map(x => new BigNum(Component.ZERO, Component.tan(x)));
 			values.forEach((x, i) => expect(BigNum.tanh(x)).toEqual(tanhs[i]));
+		});
+	});
+
+	describe("asinh", function() {
+		test("for real", function() {
+			const values = [
+				"0",
+				"100",
+				"10000",
+				"1000000"
+			].map(x => BigNum.real(x));
+			const asinhs = [
+				"0",
+				"5.29834236561058876",
+				"9.90348755503612804",
+				"14.50865773852446942"
+			].map(x => BigNum.real(x));
+			values.forEach((x, i) => expect(BigNum.asinh(x)).toEqual(asinhs[i]));
+			values.forEach((x, i) => expect(BigNum.asinh(x.neg)).toEqual(asinhs[i].neg));
+		});
+
+		test("for imaginary", function() {
+			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", `0.${i}`));
+			const asinhs = new Array(10).fill(0)
+										.map((_, i) => Component.create(`0.${i}`))
+										.map(x => Component.asin(x))
+										.map(x => new BigNum(Component.ZERO, x));
+			values.forEach((x, i) => expect(BigNum.asinh(x)).toEqual(asinhs[i]));
+		});
+	});
+
+	describe("acosh", function() {
+		test("for real", function() {
+			const values = [
+				"1",
+				"100",
+				"10000",
+				"1000000"
+			].map(x => BigNum.real(x));
+			const acoshs = [
+				"0",
+				"5.29829236561048459",
+				"9.90348755003612804",
+				"14.50865773852396942"
+			].map(x => BigNum.real(x));
+			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acoshs[i]));
+		});
+		
+		test("for imaginary", function() {
+			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", `0.${i+1}`));
+			const acoshs = new Array(10).fill(0)
+										.map((_, i) => Component.create(`0.${i+1}`))
+										.map(x => Component.acos(x))
+										.map(x => new BigNum(Component.ZERO, x));
+			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acoshs[i]));
+			expect(() => BigNum.acosh(BigNum.real("0"))).not.toThrow();
+			expect(BigNum.acosh(BigNum.real("0"))).toEqual(new BigNum(
+				Component.ZERO,
+				Component.PI.div(Component.TWO)
+			));
 		});
 	});
 });
