@@ -678,12 +678,17 @@ describe("Hyperbolic trigonometry", function() {
 		});
 		
 		test("for imaginary", function() {
-			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", `0.${i}`));
+			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", `0.${i+1}`));
 			const acoshs = new Array(10).fill(0)
-										.map((_, i) => Component.create(`0.${i}`))
+										.map((_, i) => Component.create(`0.${i+1}`))
 										.map(x => Component.acos(x))
-										.map(x => new BigNum(x));
+										.map(x => new BigNum(Component.ZERO, x));
 			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acoshs[i]));
+			expect(() => BigNum.acosh(BigNum.real("0"))).not.toThrow();
+			expect(BigNum.acosh(BigNum.real("0"))).toEqual(new BigNum(
+				Component.ZERO,
+				Component.PI.div(Component.TWO)
+			));
 		});
 	});
 });
