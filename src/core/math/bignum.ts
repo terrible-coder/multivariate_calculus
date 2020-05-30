@@ -24,6 +24,16 @@ import { alpha_beta } from "./numerical";
  * unit. The others are the imaginary units. The \\( e_1 \\) is our familiar
  * \\( \imath \\) for the complex numbers. Again, \\( e_2=\jmath \\) and \\( e_3=k \\)
  * are the [Hamilton's units for quaternions](https://en.wikipedia.org/wiki/Quaternion).
+ * 
+ * **Notation**:
+ * 
+ * In the documentation for the methods below, unless otherwise stated, the
+ * following notation is used.
+ * 
+ * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
+ * the "vector" part or the purely imaginary part.
+ * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
+ * such that \\( x = a + \hat{v} \theta \\).
  */
 export class BigNum extends Numerical {
 
@@ -371,13 +381,10 @@ export class BigNum extends Numerical {
 	 * Calculates the trigonometric sine of a given number with rounding
 	 * according to [[mathenv.mode]].
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * The sum formula works for higher dimensional numbers too.
-	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
-	 * the "vector" part or the purely imaginary part.
-	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\)
-	 * Now,
+	 * Therefore,
 	 * 
 	 * \\[ \sin (a + v) = \sin a \cosh \theta + \hat{v} \cos a \sinh \theta \\]
 	 * 
@@ -388,13 +395,10 @@ export class BigNum extends Numerical {
 	 * Calculates the trigonometric sine of a given number with rounding
 	 * according to the given context settings.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * The sum formula works for higher dimensional numbers too.
-	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
-	 * the "vector" part or the purely imaginary part.
-	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\)
-	 * Now,
+	 * Therefore,
 	 * 
 	 * \\[ \sin (a + v) = \sin a \cosh \theta + \hat{v} \cos a \sinh \theta \\]
 	 * 
@@ -425,13 +429,10 @@ export class BigNum extends Numerical {
 	 * Calculates the trigonometric cosine of a given number with rounding
 	 * according to [[mathenv.mode]].
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * The sum formula works for higher dimensional numbers too.
-	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
-	 * the "vector" part or the purely imaginary part.
-	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\)
-	 * Now,
+	 * Therefore,
 	 * 
 	 * \\[ \cos (a + v) = \cos a \cosh \theta - \hat{v} \sin a \sinh \theta \\]
 	 * 
@@ -442,13 +443,10 @@ export class BigNum extends Numerical {
 	 * Calculates the trigonometric cosine of a given number with rounding
 	 * according to the given context settings.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * The sum formula works for higher dimensional numbers too.
-	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
-	 * the "vector" part or the purely imaginary part.
-	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\)
-	 * Now,
+	 * Therefore,
 	 * 
 	 * \\[ \cos (a + v) = \cos a \cosh \theta - \hat{v} \sin a \sinh \theta \\]
 	 * 
@@ -629,12 +627,7 @@ export class BigNum extends Numerical {
 	 * **Method**:
 	 * 
 	 * The sum formula works for higher dimensional numbers too.
-	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
-	 * the "vector" part or the purely imaginary part.
-	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\).
-	 * 
-	 * Now,
+	 * Therefore,
 	 * 
 	 * \\[ \sinh (a + v) = \sinh a \cos \theta + \hat{v} \cosh a \sin \theta \\]
 	 * 
@@ -648,12 +641,7 @@ export class BigNum extends Numerical {
 	 * **Method**:
 	 * 
 	 * The sum formula works for higher dimensional numbers too.
-	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
-	 * the "vector" part or the purely imaginary part.
-	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\).
-	 * 
-	 * Now,
+	 * Therefore,
 	 * 
 	 * \\[ \sinh (a + v) = \sinh a \cos \theta + \hat{v} \cosh a \sin \theta \\]
 	 * 
@@ -679,12 +667,7 @@ export class BigNum extends Numerical {
 	 * **Method**:
 	 * 
 	 * The sum formula works for higher dimensional numbers too.
-	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
-	 * the "vector" part or the purely imaginary part.
-	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\).
-	 * 
-	 * Now,
+	 * Therefore,
 	 * 
 	 * \\[ \cosh (a + v) = \cosh a \cos \theta + \hat{v} \sinh a \sin \theta \\]
 	 * 
@@ -698,12 +681,7 @@ export class BigNum extends Numerical {
 	 * **Method**:
 	 * 
 	 * The sum formula works for higher dimensional numbers too.
-	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
-	 * the "vector" part or the purely imaginary part.
-	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\).
-	 * 
-	 * Now,
+	 * Therefore,
 	 * 
 	 * \\[ \cosh (a + v) = \cosh a \cos \theta + \hat{v} \sinh a \sin \theta \\]
 	 * 
@@ -728,11 +706,6 @@ export class BigNum extends Numerical {
 	 * 
 	 * **Method**:
 	 * 
-	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
-	 * the "vector" part or the purely imaginary part.
-	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\).
-	 * 
 	 * The easiest way to calculate \\( \tanh x \\) is to use
 	 * 
 	 * \\[ \tanh (a+v) = \frac{\sinh (a+v)}{\cosh (a+v)} \\]
@@ -750,11 +723,6 @@ export class BigNum extends Numerical {
 	 * to the given context settings.
 	 * 
 	 * **Method**:
-	 * 
-	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
-	 * the "vector" part or the purely imaginary part.
-	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\).
 	 * 
 	 * The easiest way to calculate \\( \tanh x \\) is to use
 	 * 
