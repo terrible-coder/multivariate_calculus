@@ -649,5 +649,14 @@ describe("Hyperbolic trigonometry", function() {
 			values.forEach((x, i) => expect(BigNum.asinh(x)).toEqual(asinhs[i]));
 			values.forEach((x, i) => expect(BigNum.asinh(x.neg)).toEqual(asinhs[i].neg));
 		});
+
+		test("for imaginary", function() {
+			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", `0.${i}`));
+			const asinhs = new Array(10).fill(0)
+										.map((_, i) => Component.create(`0.${i}`))
+										.map(x => Component.asin(x))
+										.map(x => new BigNum(Component.ZERO, x));
+			values.forEach((x, i) => expect(BigNum.asinh(x)).toEqual(asinhs[i]));
+		});
 	});
 });
