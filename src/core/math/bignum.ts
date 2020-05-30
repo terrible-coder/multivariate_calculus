@@ -803,14 +803,14 @@ export class BigNum extends Numerical {
 		const context = args[0] || mathenv.mode;
 		const a = x.real.components[0];
 		const v = x.imag;
-		if(v.equals(BigNum.real("0"), context))
+		if(v.equals(BigNum.real("0"), context) && !a.equals(Component.ZERO, context))
 			return new BigNum(Component.acosh(a, context));
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		}
 		const theta = BigNum.abs(v, ctx).components[0];
-		const v_hat = v.div(new BigNum(theta), ctx);
+		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex(0, 1): v.div(new BigNum(theta), ctx);
 		const [alpha, beta] = alpha_beta(theta, a, ctx);
 		const cosh = alpha.add(beta, ctx).div(Component.TWO, ctx);
 		const cos = alpha.sub(beta, ctx).div(Component.TWO, ctx);
