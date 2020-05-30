@@ -659,4 +659,22 @@ describe("Hyperbolic trigonometry", function() {
 			values.forEach((x, i) => expect(BigNum.asinh(x)).toEqual(asinhs[i]));
 		});
 	});
+
+	describe("acosh", function() {
+		test("for real", function() {
+			const values = [
+				"1",
+				"100",
+				"10000",
+				"1000000"
+			].map(x => BigNum.real(x));
+			const acoshs = [
+				"0",
+				"5.29829236561048459",
+				"9.90348755003612804",
+				"14.50865773852396942"
+			].map(x => BigNum.real(x));
+			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acoshs[i]));
+		});
+	});
 });
