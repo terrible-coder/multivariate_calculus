@@ -626,12 +626,14 @@ export class BigNum extends Numerical {
 	 * Calculates the hyperbolic sine of a given value with rounding according
 	 * to [[mathenv.mode]].
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * The sum formula works for higher dimensional numbers too.
 	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
 	 * the "vector" part or the purely imaginary part.
 	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\)
+	 * such that \\( x = a + \hat{v} \theta \\).
+	 * 
 	 * Now,
 	 * 
 	 * \\[ \sinh (a + v) = \sinh a \cos \theta + \hat{v} \cosh a \sin \theta \\]
@@ -643,12 +645,14 @@ export class BigNum extends Numerical {
 	 * Calculates the hyperbolic sine of a given value with rounding according
 	 * to the given context settings.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * The sum formula works for higher dimensional numbers too.
 	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
 	 * the "vector" part or the purely imaginary part.
 	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\)
+	 * such that \\( x = a + \hat{v} \theta \\).
+	 * 
 	 * Now,
 	 * 
 	 * \\[ \sinh (a + v) = \sinh a \cos \theta + \hat{v} \cosh a \sin \theta \\]
@@ -672,12 +676,14 @@ export class BigNum extends Numerical {
 	 * Calculates the hyperbolic cosine of a given value with rounding according
 	 * to [[mathenv.mode]].
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * The sum formula works for higher dimensional numbers too.
 	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
 	 * the "vector" part or the purely imaginary part.
 	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\)
+	 * such that \\( x = a + \hat{v} \theta \\).
+	 * 
 	 * Now,
 	 * 
 	 * \\[ \cosh (a + v) = \cosh a \cos \theta + \hat{v} \sinh a \sin \theta \\]
@@ -689,12 +695,14 @@ export class BigNum extends Numerical {
 	 * Calculates the hyperbolic cosine of a given value with rounding according
 	 * to the given context settings.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * The sum formula works for higher dimensional numbers too.
 	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
 	 * the "vector" part or the purely imaginary part.
 	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
-	 * such that \\( x = a + \hat{v} \theta \\)
+	 * such that \\( x = a + \hat{v} \theta \\).
+	 * 
 	 * Now,
 	 * 
 	 * \\[ \cosh (a + v) = \cosh a \cos \theta + \hat{v} \sinh a \sin \theta \\]
@@ -718,7 +726,8 @@ export class BigNum extends Numerical {
 	 * Calculates the hyperbolic tangent of a given value with rounding according
 	 * to the given context settings.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
 	 * the "vector" part or the purely imaginary part.
 	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
@@ -740,7 +749,8 @@ export class BigNum extends Numerical {
 	 * Calculates the hyperbolic tangent of a given value with rounding according
 	 * to the given context settings.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * Let \\( x = a + v \\) where \\( a \\) is the real part and \\( v \\) is
 	 * the "vector" part or the purely imaginary part.
 	 * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
