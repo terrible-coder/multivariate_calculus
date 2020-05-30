@@ -763,12 +763,24 @@ export class BigNum extends Numerical {
 	/**
 	 * Calculates the inverse hyperbolic sine of a given value with rounding according
 	 * to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} (\frac{\alpha(\theta, a) + \beta(\theta, a)}{2})
+	 * 					+ \hat{v} \asin (\frac{\alpha(\theta, a) - \beta(\theta, a)}{2}) \\]
+	 * 
 	 * @param x A number.
 	 */
 	public static asinh(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse hyperbolic sine of a given value with rounding according
 	 * to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} (\frac{\alpha(\theta, a) + \beta(\theta, a)}{2})
+	 * 					+ \hat{v} \asin (\frac{\alpha(\theta, a) - \beta(\theta, a)}{2}) \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
