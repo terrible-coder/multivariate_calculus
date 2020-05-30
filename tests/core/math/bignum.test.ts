@@ -676,5 +676,14 @@ describe("Hyperbolic trigonometry", function() {
 			].map(x => BigNum.real(x));
 			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acoshs[i]));
 		});
+		
+		test("for imaginary", function() {
+			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", `0.${i}`));
+			const acoshs = new Array(10).fill(0)
+										.map((_, i) => Component.create(`0.${i}`))
+										.map(x => Component.acos(x))
+										.map(x => new BigNum(x));
+			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acoshs[i]));
+		});
 	});
 });
