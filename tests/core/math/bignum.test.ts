@@ -631,4 +631,23 @@ describe("Hyperbolic trigonometry", function() {
 			values.forEach((x, i) => expect(BigNum.tanh(x)).toEqual(tanhs[i]));
 		});
 	});
+
+	describe("asinh", function() {
+		test("for real", function() {
+			const values = [
+				"0",
+				"100",
+				"10000",
+				"1000000"
+			].map(x => BigNum.real(x));
+			const asinhs = [
+				"0",
+				"5.29834236561058876",
+				"9.90348755503612804",
+				"14.50865773852446942"
+			].map(x => BigNum.real(x));
+			values.forEach((x, i) => expect(BigNum.asinh(x)).toEqual(asinhs[i]));
+			values.forEach((x, i) => expect(BigNum.asinh(x.neg)).toEqual(asinhs[i].neg));
+		});
+	});
 });
