@@ -546,7 +546,6 @@ describe("Inverse trigonometry", function() {
 			];
 			for(let s of strings) {
 				const x = BigNum.complex("0", s);
-				console.log(x);
 				const atan = new BigNum(Component.ZERO, Component.atanh(Component.create(s)));
 				expect(BigNum.atan(x)).toEqual(atan);
 			}
