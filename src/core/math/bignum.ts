@@ -25,7 +25,9 @@ import { alpha_beta } from "./numerical";
  * \\( \imath \\) for the complex numbers. Again, \\( e_2=\jmath \\) and \\( e_3=k \\)
  * are the [Hamilton's units for quaternions](https://en.wikipedia.org/wiki/Quaternion).
  * 
- * <div id="notation"> **Notation** </div>:
+ * <div id="notation">
+ * <strong>Notation</strong>:
+ * 
  * In the documentation for the methods below, unless otherwise stated, the
  * following notation is used.
  * 
@@ -33,6 +35,7 @@ import { alpha_beta } from "./numerical";
  * the "vector" part or the purely imaginary part.
  * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
  * such that \\( x = a + \hat{v} \theta \\).
+ * </div>
  */
 export class BigNum extends Numerical {
 
@@ -388,6 +391,7 @@ export class BigNum extends Numerical {
 	 * \\[ \sin (a + v) = \sin a \cosh \theta + \hat{v} \cos a \sinh \theta \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static sin(x: BigNum): BigNum;
 	/**
@@ -403,6 +407,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static sin(x: BigNum, context: MathContext): BigNum;
 	public static sin(x: BigNum, ...args: any[]): BigNum;
@@ -436,6 +441,7 @@ export class BigNum extends Numerical {
 	 * \\[ \cos (a + v) = \cos a \cosh \theta - \hat{v} \sin a \sinh \theta \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static cos(x: BigNum): BigNum;
 	/**
@@ -451,6 +457,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static cos(x: BigNum, context: MathContext): BigNum;
 	public static cos(x: BigNum, ...args: any[]): BigNum;
@@ -631,6 +638,7 @@ export class BigNum extends Numerical {
 	 * \\[ \sinh (a + v) = \sinh a \cos \theta + \hat{v} \cosh a \sin \theta \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static sinh(x: BigNum): BigNum;
 	/**
@@ -646,6 +654,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static sinh(x: BigNum, context: MathContext): BigNum;
 	public static sinh(x: BigNum, ...args: any[]): BigNum;
@@ -671,6 +680,7 @@ export class BigNum extends Numerical {
 	 * \\[ \cosh (a + v) = \cosh a \cos \theta + \hat{v} \sinh a \sin \theta \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static cosh(x: BigNum): BigNum;
 	/**
@@ -686,6 +696,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static cosh(x: BigNum, context: MathContext): BigNum;
 	public static cosh(x: BigNum, ...args: any[]): BigNum;
@@ -715,6 +726,7 @@ export class BigNum extends Numerical {
 	 * 						\hat{v} \frac{\sin 2\theta}{\cosh 2a + \cos 2\theta} \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static tanh(x: BigNum): BigNum;
 	/**
@@ -734,6 +746,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static tanh(x: BigNum, context: MathContext): BigNum;
 	public static tanh(x: BigNum, ...args: any[]): BigNum;
@@ -769,6 +782,7 @@ export class BigNum extends Numerical {
 	 * 					+ \hat{v} \asin (\frac{\alpha(\theta, a) - \beta(\theta, a)}{2}) \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static asinh(x: BigNum): BigNum;
 	/**
@@ -782,6 +796,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static asinh(x: BigNum, context: MathContext): BigNum;
 	public static asinh(x: BigNum, ...args: any[]): BigNum;
