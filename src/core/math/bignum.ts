@@ -506,14 +506,34 @@ export class BigNum extends Numerical {
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
 	 * according to [[mathenv.mode]].
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \cos^{-1} (a + v) = \sin^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
+	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static asin(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
 	 * according to the given context setings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static asin(x: BigNum, context: MathContext): BigNum;
 	public static asin(x: BigNum, ...args: any[]): BigNum;
@@ -539,15 +559,35 @@ export class BigNum extends Numerical {
 	/**
 	 * Calculates the inverse trigonometric cosine of a given value with rounding
 	 * according to [[mathenv.mode]].
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static acos(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse trigonometric cosine of a given value with rounding
 	 * according to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static acos(x: BigNum, context: MathContext): BigNum;
 	public static acos(x: BigNum, ...args: any[]): BigNum;
