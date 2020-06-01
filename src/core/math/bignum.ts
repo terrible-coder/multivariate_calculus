@@ -505,19 +505,13 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
-	 * according to [[mathenv.mode]]. This method right now works good
-	 * only for values much smaller than unity. For values close to unity
-	 * this method converges very slowly to the result. This will be fixed in
-	 * future updates.
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 */
 	public static asin(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
-	 * according to the given context setings. This method right now works good
-	 * only for values much smaller than unity. For values close to unity
-	 * this method converges very slowly to the result. This will be fixed in
-	 * future updates.
+	 * according to the given context setings.
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -544,20 +538,14 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the inverse trigonometric cosine of a given value with rounding
-	 * according to [[mathenv.mode]]. This method right now works good
-	 * only for values much smaller than unity. For values close to unity
-	 * this method converges very slowly to the result. This will be fixed in
-	 * future updates.
+	 * according to [[mathenv.mode]].
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
 	public static acos(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse trigonometric cosine of a given value with rounding
-	 * according to the given context settings. This method right now works good
-	 * only for values much smaller than unity. For values close to unity
-	 * this method converges very slowly to the result. This will be fixed in
-	 * future updates.
+	 * according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
