@@ -814,6 +814,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static asinh(x: BigNum): BigNum;
 	/**
@@ -831,6 +832,7 @@ export class BigNum extends Numerical {
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static asinh(x: BigNum, context: MathContext): BigNum;
 	public static asinh(x: BigNum, ...args: any[]): BigNum;
