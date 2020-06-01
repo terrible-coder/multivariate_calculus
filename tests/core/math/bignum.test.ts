@@ -513,7 +513,7 @@ describe("Inverse trigonometry", function() {
 			const acoss = [
 				new BigNum(Component.ZERO),
 				new BigNum(Component.round(Component.PI, mathenv.mode)),
-				new BigNum(Component.ZERO, Component.ln(two.add(three.pow(half))))
+				new BigNum(Component.ZERO, Component.ln(two.add(three.pow(half))).neg)
 			];
 			for(let i = 0; i < values.length; i++)
 				expect(BigNum.acos(values[i])).toEqual(acoss[i]);
