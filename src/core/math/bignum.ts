@@ -89,7 +89,7 @@ export class BigNum extends Numerical {
 	 * \\[ a_i = b_i \quad \forall i \\]
 	 * 
 	 * The equality is checked only upto the number of decimal places specified
-	 * by [[mathenv.mode]].
+	 * by {@link mathenv.mode}.
 	 * @param that The number to check against.
 	 */
 	public equals(that: BigNum): boolean;
@@ -151,7 +151,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Evaluates the absolute value of a number correct upto the number of
-	 * places specified by [[mathenv.mode]].
+	 * places specified by {@link mathenv.mode}.
 	 * @param x A number.
 	 * @param context Context settings to use.
 	 */
@@ -171,7 +171,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Evaluates the absolute value of a number correct upto the number of
-	 * places specified by [[mathenv.mode]].
+	 * places specified by {@link mathenv.mode}.
 	 * @param x A number.
 	 */
 	public static abs(x: BigNum): BigNum;
@@ -211,7 +211,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * \\[ a + b = \sum_i a_i + b_i \\]
 	 * 
-	 * The result is rounded according to [[mathenv.mode]].
+	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that The number to add this with.
 	 * @returns this + that.
 	 */
@@ -244,7 +244,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * \\[ a - b = \sum_i a_i - b_i \\]
 	 * 
-	 * The result is rounded according to [[mathenv.mode]].
+	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that The number to add this with.
 	 * @returns this - that.
 	 */
@@ -273,7 +273,7 @@ export class BigNum extends Numerical {
 	/**
 	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
 	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
-	 * The result is rounded according to [[mathenv.mode]].
+	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that The number to multiply with.
 	 * @returns this * that.
 	 */
@@ -324,7 +324,7 @@ export class BigNum extends Numerical {
 	/**
 	 * Divides one [[BigNum]] instance by another. This method assumes right
 	 * division. That is, the inverse of `that` is multiplied on the right.
-	 * The result is rounded according to [[mathenv.mode]].
+	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that Number to divide by.
 	 */
 	public div(that: BigNum): BigNum;
@@ -339,7 +339,7 @@ export class BigNum extends Numerical {
 	/**
 	 * Divides one [[BigNum]] instance by another. This method multiplies the
 	 * inverse of `that` on the given "side" of `this`.
-	 * The result is rounded according to [[mathenv.mode]].
+	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that Number to divide by.
 	 * @param side Side on which to divide from.
 	 */
@@ -381,7 +381,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the trigonometric sine of a given number with rounding
-	 * according to [[mathenv.mode]].
+	 * according to {@link mathenv.mode}.
 	 * 
 	 * **Method**:
 	 * 
@@ -431,7 +431,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the trigonometric cosine of a given number with rounding
-	 * according to [[mathenv.mode]].
+	 * according to {@link mathenv.mode}.
 	 * 
 	 * **Method**:
 	 * 
@@ -481,7 +481,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the trigonometric tangent of a given number with rounding
-	 * according to [[mathenv.mode]].
+	 * according to {@link mathenv.mode}.
 	 * @param x A number.
 	 */
 	public static tan(x: BigNum): BigNum;
@@ -505,7 +505,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
-	 * according to [[mathenv.mode]].
+	 * according to {@link mathenv.mode}.
 	 * 
 	 * **Method**:
 	 * 
@@ -558,7 +558,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the inverse trigonometric cosine of a given value with rounding
-	 * according to [[mathenv.mode]].
+	 * according to {@link mathenv.mode}.
 	 * 
 	 * **Method**:
 	 * 
@@ -612,7 +612,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the inverse trigonometric tangent of a given value with rounding
-	 * according to [[mathenv.mode]].
+	 * according to {@link mathenv.mode}.
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -656,7 +656,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the hyperbolic sine of a given value with rounding according
-	 * to [[mathenv.mode]].
+	 * to {@link mathenv.mode}.
 	 * 
 	 * **Method**:
 	 * 
@@ -698,7 +698,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the hyperbolic cosine of a given value with rounding according
-	 * to [[mathenv.mode]].
+	 * to {@link mathenv.mode}.
 	 * 
 	 * **Method**:
 	 * 
@@ -740,7 +740,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the hyperbolic tangent of a given value with rounding according
-	 * to the given context settings.
+	 * to {@link mathenv.mode}.
 	 * 
 	 * **Method**:
 	 * 
@@ -802,7 +802,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the inverse hyperbolic sine of a given value with rounding according
-	 * to the given context settings.
+	 * to {@link mathenv.mode}.
 	 * 
 	 * **Method**:
 	 * 
@@ -859,7 +859,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the inverse hyperbolic cosine of a given value with rounding according
-	 * to the given context settings.
+	 * to {@link mathenv.mode}.
 	 * 
 	 * **Method**:
 	 * 
@@ -914,7 +914,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the exponential of a given number with rounding according to
-	 * [[mathenv.mode]].
+	 * {@link mathenv.mode}.
 	 * @param x A number.
 	 */
 	public static exp(x: BigNum): BigNum;
@@ -947,7 +947,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
-	 * with rounding according to [[mathenv.mode]].
+	 * with rounding according to {@link mathenv.mode}.
 	 * @param x A number.
 	 */
 	public static ln(x: BigNum): BigNum;
@@ -979,7 +979,7 @@ export class BigNum extends Numerical {
 
 	// /**
 	//  * Calculates the common logarithm (to the base \\( 10 \\)) of a given number
-	//  * with rounding according to [[mathenv.mode]].
+	//  * with rounding according to {@link mathenv.mode}.
 	//  * @param x A number.
 	//  */
 	// public static log(x: BigNum): BigNum;
