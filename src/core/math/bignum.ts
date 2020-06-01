@@ -25,8 +25,7 @@ import { alpha_beta } from "./numerical";
  * \\( \imath \\) for the complex numbers. Again, \\( e_2=\jmath \\) and \\( e_3=k \\)
  * are the [Hamilton's units for quaternions](https://en.wikipedia.org/wiki/Quaternion).
  * 
- * **Notation**:
- * 
+ * <div id="notation"> **Notation** </div>:
  * In the documentation for the methods below, unless otherwise stated, the
  * following notation is used.
  * 
