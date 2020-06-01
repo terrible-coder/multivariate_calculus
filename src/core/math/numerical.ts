@@ -32,9 +32,9 @@ export function newton_raphson(f: (x: Component) => Component, f_: (x: Component
  * Helper function for inverse trig functions. Transforms the product of two
  * into a sum (\\( \alpha \\)) and difference (\\( \beta \\)).
  * 
- * \\[ \alpha = \sqrt{(x+1)^2 + y^2} \\]
+ * \\[ \alpha(x, y) = \sqrt{(x+1)^2 + y^2} \\]
  * 
- * \\[ \beta = \sqrt{(x-1)^2 + y^2} \\]
+ * \\[ \beta(x, y) = \sqrt{(x-1)^2 + y^2} \\]
  * 
  * @param x The absolute value of real part.
  * @param y The absolute value of imaginary part.
