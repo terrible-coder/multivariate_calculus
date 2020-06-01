@@ -858,14 +858,34 @@ export class BigNum extends Numerical {
 	/**
 	 * Calculates the inverse hyperbolic cosine of a given value with rounding according
 	 * to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+	 * 				+ \hat{v} \cos^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
+	 * @see {@link alpha_beta}
+	 * @see [Notation](#notation)
 	 */
 	public static acosh(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse hyperbolic cosine of a given value with rounding according
 	 * to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+	 * 				+ \hat{v} \sin^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link alpha_beta}
+	 * @see [Notation](#notation)
 	 */
 	public static acosh(x: BigNum, context: MathContext): BigNum;
 	public static acosh(x: BigNum, ...args: any[]): BigNum;
