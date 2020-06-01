@@ -87,6 +87,15 @@
 						unit. The others are the imaginary units. The \( e_1 \) is our familiar
 						\( \imath \) for the complex numbers. Again, \( e_2=\jmath \) and \( e_3=k \)
 					are the <a href="https://en.wikipedia.org/wiki/Quaternion">Hamilton&#39;s units for quaternions</a>.</p>
+					<div id="notation">
+						<strong>Notation</strong>:
+						<p>In the documentation for the methods below, unless otherwise stated, the
+						following notation is used.</p>
+						<p>Let \( x = a + v \) where \( a \) is the real part and \( v \) is
+							the &quot;vector&quot; part or the purely imaginary part.
+							Define \( \hat{v} = \frac{v}{\lvert v \rvert} \) and \( \theta = \lvert v \rvert \)
+						such that \( x = a + \hat{v} \theta \).</p>
+					</div>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -143,7 +152,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#abs" class="tsd-kind-icon">abs</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#abssq" class="tsd-kind-icon">abs<wbr>Sq</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#acos" class="tsd-kind-icon">acos</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#acosh" class="tsd-kind-icon">acosh</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#asin" class="tsd-kind-icon">asin</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#asinh" class="tsd-kind-icon">asinh</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#atan" class="tsd-kind-icon">atan</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#complex" class="tsd-kind-icon">complex</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#cos" class="tsd-kind-icon">cos</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="bignum.html#cosh" class="tsd-kind-icon">cosh</a></li>
@@ -175,7 +187,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L39">src/core/math/bignum.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L52">src/core/math/bignum.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -201,7 +213,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L47">src/core/math/bignum.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L60">src/core/math/bignum.ts:60</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -235,7 +247,7 @@
 					<div class="tsd-signature tsd-kind-icon">components<span class="tsd-signature-symbol">:</span> <a href="component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L34">src/core/math/bignum.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L47">src/core/math/bignum.ts:47</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -252,7 +264,7 @@
 					<div class="tsd-signature tsd-kind-icon">dim<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L39">src/core/math/bignum.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L52">src/core/math/bignum.ts:52</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -276,7 +288,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="numerical.html">Numerical</a>.<a href="numerical.html#classref">classRef</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L67">src/core/math/bignum.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L80">src/core/math/bignum.ts:80</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
@@ -293,7 +305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L130">src/core/math/bignum.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L143">src/core/math/bignum.ts:143</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -315,7 +327,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L123">src/core/math/bignum.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L136">src/core/math/bignum.ts:136</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -337,7 +349,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L109">src/core/math/bignum.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L122">src/core/math/bignum.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -359,7 +371,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L116">src/core/math/bignum.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L129">src/core/math/bignum.ts:129</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -386,7 +398,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L205">src/core/math/bignum.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L218">src/core/math/bignum.ts:218</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -412,7 +424,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L217">src/core/math/bignum.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L230">src/core/math/bignum.ts:230</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -444,7 +456,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L218">src/core/math/bignum.ts:218</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L231">src/core/math/bignum.ts:231</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -474,7 +486,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L317">src/core/math/bignum.ts:317</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L330">src/core/math/bignum.ts:330</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -498,7 +510,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L325">src/core/math/bignum.ts:325</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L338">src/core/math/bignum.ts:338</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -528,7 +540,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L333">src/core/math/bignum.ts:333</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L346">src/core/math/bignum.ts:346</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -558,7 +570,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L342">src/core/math/bignum.ts:342</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L355">src/core/math/bignum.ts:355</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -594,7 +606,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L343">src/core/math/bignum.ts:343</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L356">src/core/math/bignum.ts:356</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -621,7 +633,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L82">src/core/math/bignum.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L95">src/core/math/bignum.ts:95</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -648,7 +660,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L95">src/core/math/bignum.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L108">src/core/math/bignum.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -691,7 +703,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="numerical.html">Numerical</a>.<a href="numerical.html#getdefinition">getDefinition</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/definitions.ts#L133">src/core/definitions.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/definitions.ts#L133">src/core/definitions.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -728,7 +740,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L305">src/core/math/bignum.ts:305</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L318">src/core/math/bignum.ts:318</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -781,7 +793,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L267">src/core/math/bignum.ts:267</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L280">src/core/math/bignum.ts:280</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -806,7 +818,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L276">src/core/math/bignum.ts:276</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L289">src/core/math/bignum.ts:289</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -837,7 +849,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L277">src/core/math/bignum.ts:277</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L290">src/core/math/bignum.ts:290</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -863,7 +875,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L191">src/core/math/bignum.ts:191</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L204">src/core/math/bignum.ts:204</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -919,7 +931,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L238">src/core/math/bignum.ts:238</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L251">src/core/math/bignum.ts:251</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -945,7 +957,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L249">src/core/math/bignum.ts:249</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L262">src/core/math/bignum.ts:262</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -974,7 +986,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L250">src/core/math/bignum.ts:250</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L263">src/core/math/bignum.ts:263</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1002,7 +1014,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L164">src/core/math/bignum.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L177">src/core/math/bignum.ts:177</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1025,7 +1037,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L165">src/core/math/bignum.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L178">src/core/math/bignum.ts:178</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1042,7 +1054,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L166">src/core/math/bignum.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L179">src/core/math/bignum.ts:179</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1070,7 +1082,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L145">src/core/math/bignum.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L158">src/core/math/bignum.ts:158</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1093,7 +1105,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L152">src/core/math/bignum.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L165">src/core/math/bignum.ts:165</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1122,7 +1134,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L153">src/core/math/bignum.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L166">src/core/math/bignum.ts:166</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1150,17 +1162,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L518">src/core/math/bignum.ts:518</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L575">src/core/math/bignum.ts:575</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Calculates the inverse trigonometric cosine of a given value with rounding
-										according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>. This method right now works good
-										only for values much smaller than unity. For values close to unity
-										this method converges very slowly to the result. This will be fixed in
-									future updates.</p>
+									according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+								- \hat{v} \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \]</p>
+								<p>where \( \alpha(x, y) \) and \( \beta(x, y) \) are defined by the
+								function <a href="../globals.html#alpha_beta">alpha_beta</a>.</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="../globals.html#alpha_beta">alpha_beta</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1176,17 +1198,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L528">src/core/math/bignum.ts:528</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L592">src/core/math/bignum.ts:592</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Calculates the inverse trigonometric cosine of a given value with rounding
-										according to the given context settings. This method right now works good
-										only for values much smaller than unity. For values close to unity
-										this method converges very slowly to the result. This will be fixed in
-									future updates.</p>
+									according to the given context settings.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+								- \hat{v} \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \]</p>
+								<p>where \( \alpha(x, y) \) and \( \beta(x, y) \) are defined by the
+								function <a href="../globals.html#alpha_beta">alpha_beta</a>.</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="../globals.html#alpha_beta">alpha_beta</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1208,7 +1240,113 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L529">src/core/math/bignum.ts:529</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L593">src/core/math/bignum.ts:593</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="acosh" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> acosh</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">acosh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">acosh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">acosh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L875">src/core/math/bignum.ts:875</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the inverse hyperbolic cosine of a given value with rounding according
+									to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+								<p><strong>Method</strong>:</p>
+								<p>\[ \cosh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+								+ \hat{v} \cos^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \]</p>
+								<p>where \( \alpha(x, y) \) and \( \beta(x, y) \) are defined by the
+								function <a href="../globals.html#alpha_beta">alpha_beta</a>.</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="../globals.html#alpha_beta">alpha_beta</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L892">src/core/math/bignum.ts:892</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the inverse hyperbolic cosine of a given value with rounding according
+									to the given context settings.</p>
+								</div>
+								<p><strong>Method</strong>:</p>
+								<p>\[ \cosh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+								+ \hat{v} \cos^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \]</p>
+								<p>where \( \alpha(x, y) \) and \( \beta(x, y) \) are defined by the
+								function <a href="../globals.html#alpha_beta">alpha_beta</a>.</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="../globals.html#alpha_beta">alpha_beta</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L893">src/core/math/bignum.ts:893</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1236,16 +1374,225 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L478">src/core/math/bignum.ts:478</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L521">src/core/math/bignum.ts:521</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Calculates the inverse trigonometric sine of a given value with rounding
-										according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>. This method right now works good
-										only for values much smaller than unity. For values close to unity
-										this method converges very slowly to the result. This will be fixed in
-									future updates.</p>
+									according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+								<p><strong>Method</strong>:</p>
+								<p>\[ \sin^{-1} (a + v) = \sin^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+								+ \hat{v} \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \]</p>
+								<p>where \( \alpha(x, y) \) and \( \beta(x, y) \) are defined by the
+								function <a href="../globals.html#alpha_beta">alpha_beta</a>.</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="../globals.html#alpha_beta">alpha_beta</a></p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L538">src/core/math/bignum.ts:538</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the inverse trigonometric sine of a given value with rounding
+									according to the given context setings.</p>
+								</div>
+								<p><strong>Method</strong>:</p>
+								<p>\[ \sin^{-1} (a + v) = \sin^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+								+ \hat{v} \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \]</p>
+								<p>where \( \alpha(x, y) \) and \( \beta(x, y) \) are defined by the
+								function <a href="../globals.html#alpha_beta">alpha_beta</a>.</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="../globals.html#alpha_beta">alpha_beta</a></p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L539">src/core/math/bignum.ts:539</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="asinh" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> asinh</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">asinh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">asinh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">asinh<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L819">src/core/math/bignum.ts:819</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the inverse hyperbolic sine of a given value with rounding according
+									to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
+								</div>
+								<p><strong>Method</strong>:</p>
+								<p>\[ \sinh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+								+ \hat{v} \sin^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \]</p>
+								<p>where \( \alpha(x, y) \) and \( \beta(x, y) \) are defined by the
+								function <a href="../globals.html#alpha_beta">alpha_beta</a>.</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="../globals.html#alpha_beta">alpha_beta</a></p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L837">src/core/math/bignum.ts:837</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the inverse hyperbolic sine of a given value with rounding according
+									to the given context settings.</p>
+								</div>
+								<p><strong>Method</strong>:</p>
+								<p>\[ \sinh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+								+ \hat{v} \sin^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \]</p>
+								<p>where \( \alpha(x, y) \) and \( \beta(x, y) \) are defined by the
+								function <a href="../globals.html#alpha_beta">alpha_beta</a>.</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="../globals.html#alpha_beta">alpha_beta</a></p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A number.</p>
+									</div>
+								</li>
+								<li>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L838">src/core/math/bignum.ts:838</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="bignum.html" class="tsd-signature-type">BigNum</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="atan" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> atan</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">atan<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">atan<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+						<li class="tsd-signature tsd-kind-icon">atan<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L619">src/core/math/bignum.ts:619</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the inverse trigonometric tangent of a given value with rounding
+									according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1262,16 +1609,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L488">src/core/math/bignum.ts:488</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L626">src/core/math/bignum.ts:626</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Calculates the inverse trigonometric sine of a given value with rounding
-										according to the given context setings. This method right now works good
-										only for values much smaller than unity. For values close to unity
-										this method converges very slowly to the result. This will be fixed in
-									future updates.</p>
+									<p>Calculates the inverse trigonometric tangent of a given value with rounding
+									according to the given context settings.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1294,7 +1638,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L489">src/core/math/bignum.ts:489</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L627">src/core/math/bignum.ts:627</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1321,7 +1665,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L750">src/core/math/bignum.ts:750</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L1044">src/core/math/bignum.ts:1044</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1355,7 +1699,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L761">src/core/math/bignum.ts:761</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L1055">src/core/math/bignum.ts:1055</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1398,7 +1742,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L404">src/core/math/bignum.ts:404</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L446">src/core/math/bignum.ts:446</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1406,6 +1750,15 @@
 									<p>Calculates the trigonometric cosine of a given number with rounding
 									according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>The sum formula works for higher dimensional numbers too.
+								Therefore,</p>
+								<p>\[ \cos (a + v) = \cos a \cosh \theta - \hat{v} \sin a \sinh \theta \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1421,7 +1774,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L411">src/core/math/bignum.ts:411</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L462">src/core/math/bignum.ts:462</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1429,6 +1782,15 @@
 									<p>Calculates the trigonometric cosine of a given number with rounding
 									according to the given context settings.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>The sum formula works for higher dimensional numbers too.
+								Therefore,</p>
+								<p>\[ \cos (a + v) = \cos a \cosh \theta - \hat{v} \sin a \sinh \theta \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1450,7 +1812,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L412">src/core/math/bignum.ts:412</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L463">src/core/math/bignum.ts:463</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1478,7 +1840,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L578">src/core/math/bignum.ts:578</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L713">src/core/math/bignum.ts:713</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1486,6 +1848,15 @@
 									<p>Calculates the hyperbolic cosine of a given value with rounding according
 									to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>The sum formula works for higher dimensional numbers too.
+								Therefore,</p>
+								<p>\[ \cosh (a + v) = \cosh a \cos \theta + \hat{v} \sinh a \sin \theta \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1501,7 +1872,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L585">src/core/math/bignum.ts:585</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L729">src/core/math/bignum.ts:729</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1509,6 +1880,15 @@
 									<p>Calculates the hyperbolic cosine of a given value with rounding according
 									to the given context settings.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>The sum formula works for higher dimensional numbers too.
+								Therefore,</p>
+								<p>\[ \cosh (a + v) = \cosh a \cos \theta + \hat{v} \sinh a \sin \theta \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1530,7 +1910,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L586">src/core/math/bignum.ts:586</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L730">src/core/math/bignum.ts:730</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1556,7 +1936,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L827">src/core/math/bignum.ts:827</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L1121">src/core/math/bignum.ts:1121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1591,7 +1971,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L626">src/core/math/bignum.ts:626</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L920">src/core/math/bignum.ts:920</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1614,7 +1994,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L633">src/core/math/bignum.ts:633</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L927">src/core/math/bignum.ts:927</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1643,7 +2023,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L634">src/core/math/bignum.ts:634</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L928">src/core/math/bignum.ts:928</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1672,7 +2052,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L778">src/core/math/bignum.ts:778</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L1072">src/core/math/bignum.ts:1072</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1701,7 +2081,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L791">src/core/math/bignum.ts:791</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L1085">src/core/math/bignum.ts:1085</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1730,7 +2110,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L801">src/core/math/bignum.ts:801</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L1095">src/core/math/bignum.ts:1095</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1756,7 +2136,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L811">src/core/math/bignum.ts:811</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L1105">src/core/math/bignum.ts:1105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1793,7 +2173,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L659">src/core/math/bignum.ts:659</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L953">src/core/math/bignum.ts:953</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1816,7 +2196,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L666">src/core/math/bignum.ts:666</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L960">src/core/math/bignum.ts:960</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1845,7 +2225,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L667">src/core/math/bignum.ts:667</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L961">src/core/math/bignum.ts:961</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1872,7 +2252,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L720">src/core/math/bignum.ts:720</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L1014">src/core/math/bignum.ts:1014</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1897,7 +2277,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L732">src/core/math/bignum.ts:732</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L1026">src/core/math/bignum.ts:1026</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1934,7 +2314,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L181">src/core/math/bignum.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L194">src/core/math/bignum.ts:194</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1976,7 +2356,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L374">src/core/math/bignum.ts:374</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L396">src/core/math/bignum.ts:396</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1984,6 +2364,15 @@
 									<p>Calculates the trigonometric sine of a given number with rounding
 									according to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>The sum formula works for higher dimensional numbers too.
+								Therefore,</p>
+								<p>\[ \sin (a + v) = \sin a \cosh \theta + \hat{v} \cos a \sinh \theta \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1999,7 +2388,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L381">src/core/math/bignum.ts:381</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L412">src/core/math/bignum.ts:412</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2007,6 +2396,15 @@
 									<p>Calculates the trigonometric sine of a given number with rounding
 									according to the given context settings.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>The sum formula works for higher dimensional numbers too.
+								Therefore,</p>
+								<p>\[ \sin (a + v) = \sin a \cosh \theta + \hat{v} \cos a \sinh \theta \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -2028,7 +2426,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L382">src/core/math/bignum.ts:382</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L413">src/core/math/bignum.ts:413</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2056,7 +2454,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L554">src/core/math/bignum.ts:554</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L671">src/core/math/bignum.ts:671</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2064,6 +2462,15 @@
 									<p>Calculates the hyperbolic sine of a given value with rounding according
 									to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>The sum formula works for higher dimensional numbers too.
+								Therefore,</p>
+								<p>\[ \sinh (a + v) = \sinh a \cos \theta + \hat{v} \cosh a \sin \theta \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -2079,7 +2486,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L561">src/core/math/bignum.ts:561</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L687">src/core/math/bignum.ts:687</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2087,6 +2494,15 @@
 									<p>Calculates the hyperbolic sine of a given value with rounding according
 									to the given context settings.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>The sum formula works for higher dimensional numbers too.
+								Therefore,</p>
+								<p>\[ \sinh (a + v) = \sinh a \cos \theta + \hat{v} \cosh a \sin \theta \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -2108,7 +2524,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L562">src/core/math/bignum.ts:562</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L688">src/core/math/bignum.ts:688</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2136,7 +2552,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L434">src/core/math/bignum.ts:434</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L487">src/core/math/bignum.ts:487</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2159,7 +2575,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L441">src/core/math/bignum.ts:441</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L494">src/core/math/bignum.ts:494</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2188,7 +2604,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L442">src/core/math/bignum.ts:442</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L495">src/core/math/bignum.ts:495</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2216,14 +2632,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L602">src/core/math/bignum.ts:602</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L759">src/core/math/bignum.ts:759</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Calculates the hyperbolic tangent of a given value with rounding according
-									to the given context settings.</p>
+									to <a href="../globals.html#mathenv.mode">mathenv.mode</a>.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>The easiest way to calculate \( \tanh x \) is to use</p>
+								<p>\[ \tanh (a+v) = \frac{\sinh (a+v)}{\cosh (a+v)} \]</p>
+								<p>Upon simplifying,</p>
+								<p>\[ \tanh (a + v) = \frac{\sinh 2a}{\cosh 2a + \cos 2\theta} +
+								\hat{v} \frac{\sin 2\theta}{\cosh 2a + \cos 2\theta} \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -2239,7 +2666,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L609">src/core/math/bignum.ts:609</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L779">src/core/math/bignum.ts:779</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2247,6 +2674,17 @@
 									<p>Calculates the hyperbolic tangent of a given value with rounding according
 									to the given context settings.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>The easiest way to calculate \( \tanh x \) is to use</p>
+								<p>\[ \tanh (a+v) = \frac{\sinh (a+v)}{\cosh (a+v)} \]</p>
+								<p>Upon simplifying,</p>
+								<p>\[ \tanh (a + v) = \frac{\sinh 2a}{\cosh 2a + \cos 2\theta} +
+								\hat{v} \frac{\sin 2\theta}{\cosh 2a + \cos 2\theta} \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="#notation">Notation</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -2268,7 +2706,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/f17f7e7/src/core/math/bignum.ts#L610">src/core/math/bignum.ts:610</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/587eceb/src/core/math/bignum.ts#L780">src/core/math/bignum.ts:780</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2359,7 +2797,16 @@
 								<a href="bignum.html#acos" class="tsd-kind-icon">acos</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#acosh" class="tsd-kind-icon">acosh</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="bignum.html#asin" class="tsd-kind-icon">asin</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#asinh" class="tsd-kind-icon">asinh</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="bignum.html#atan" class="tsd-kind-icon">atan</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="bignum.html#complex" class="tsd-kind-icon">complex</a>
