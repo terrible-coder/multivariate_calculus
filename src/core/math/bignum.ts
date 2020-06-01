@@ -509,8 +509,8 @@ export class BigNum extends Numerical {
 	 * 
 	 * **Method**:
 	 * 
-	 * \\[ \cos^{-1} (a + v) = \sin^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
-	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * \\[ \sin^{-1} (a + v) = \sin^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+	 * 			+ \hat{v} \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
 	 * 
 	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
 	 * function {@link alpha_beta}.
@@ -525,8 +525,8 @@ export class BigNum extends Numerical {
 	 * 
 	 * **Method**:
 	 * 
-	 * \\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
-	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * \\[ \sin^{-1} (a + v) = \sin^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+	 * 			+ \hat{v} \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
 	 * 
 	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
 	 * function {@link alpha_beta}.
@@ -563,7 +563,7 @@ export class BigNum extends Numerical {
 	 * **Method**:
 	 * 
 	 * \\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
-	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * 			- \hat{v} \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
 	 * 
 	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
 	 * function {@link alpha_beta}.
@@ -580,7 +580,7 @@ export class BigNum extends Numerical {
 	 * **Method**:
 	 * 
 	 * \\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
-	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * 			- \hat{v} \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
 	 * 
 	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
 	 * function {@link alpha_beta}.
@@ -863,7 +863,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * **Method**:
 	 * 
-	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+	 * \\[ \cosh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
 	 * 				+ \hat{v} \cos^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \\]
 	 * 
 	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
@@ -879,8 +879,8 @@ export class BigNum extends Numerical {
 	 * 
 	 * **Method**:
 	 * 
-	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
-	 * 				+ \hat{v} \sin^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \\]
+	 * \\[ \cosh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+	 * 				+ \hat{v} \cos^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \\]
 	 * 
 	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
 	 * function {@link alpha_beta}.
