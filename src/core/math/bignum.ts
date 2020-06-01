@@ -816,13 +816,13 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Calculates the inverse hyperbolic sine of a given value with rounding according
+	 * Calculates the inverse hyperbolic cosine of a given value with rounding according
 	 * to the given context settings.
 	 * @param x A number.
 	 */
 	public static acosh(x: BigNum): BigNum;
 	/**
-	 * Calculates the inverse hyperbolic sine of a given value with rounding according
+	 * Calculates the inverse hyperbolic cosine of a given value with rounding according
 	 * to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
