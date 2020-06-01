@@ -606,7 +606,7 @@ export class BigNum extends Numerical {
 		const cos = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.acos(cos, ctx));
 		const imag = new BigNum(Component.acosh(cosh, ctx));
-		const res = real.add(v_hat.mul(imag, ctx), ctx);
+		const res = real.sub(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
