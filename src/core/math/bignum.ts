@@ -25,7 +25,9 @@ import { alpha_beta } from "./numerical";
  * \\( \imath \\) for the complex numbers. Again, \\( e_2=\jmath \\) and \\( e_3=k \\)
  * are the [Hamilton's units for quaternions](https://en.wikipedia.org/wiki/Quaternion).
  * 
- * <div id="notation"> **Notation** </div>:
+ * <div id="notation">
+ * <strong>Notation</strong>:
+ * 
  * In the documentation for the methods below, unless otherwise stated, the
  * following notation is used.
  * 
@@ -33,6 +35,7 @@ import { alpha_beta } from "./numerical";
  * the "vector" part or the purely imaginary part.
  * Define \\( \hat{v} = \frac{v}{\lvert v \rvert} \\) and \\( \theta = \lvert v \rvert \\)
  * such that \\( x = a + \hat{v} \theta \\).
+ * </div>
  */
 export class BigNum extends Numerical {
 
@@ -388,6 +391,7 @@ export class BigNum extends Numerical {
 	 * \\[ \sin (a + v) = \sin a \cosh \theta + \hat{v} \cos a \sinh \theta \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static sin(x: BigNum): BigNum;
 	/**
@@ -403,6 +407,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static sin(x: BigNum, context: MathContext): BigNum;
 	public static sin(x: BigNum, ...args: any[]): BigNum;
@@ -436,6 +441,7 @@ export class BigNum extends Numerical {
 	 * \\[ \cos (a + v) = \cos a \cosh \theta - \hat{v} \sin a \sinh \theta \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static cos(x: BigNum): BigNum;
 	/**
@@ -451,6 +457,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static cos(x: BigNum, context: MathContext): BigNum;
 	public static cos(x: BigNum, ...args: any[]): BigNum;
@@ -498,21 +505,35 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
-	 * according to [[mathenv.mode]]. This method right now works good
-	 * only for values much smaller than unity. For values close to unity
-	 * this method converges very slowly to the result. This will be fixed in
-	 * future updates.
+	 * according to [[mathenv.mode]].
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \cos^{-1} (a + v) = \sin^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
+	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static asin(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
-	 * according to the given context setings. This method right now works good
-	 * only for values much smaller than unity. For values close to unity
-	 * this method converges very slowly to the result. This will be fixed in
-	 * future updates.
+	 * according to the given context setings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static asin(x: BigNum, context: MathContext): BigNum;
 	public static asin(x: BigNum, ...args: any[]): BigNum;
@@ -537,22 +558,36 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Calculates the inverse trigonometric cosine of a given value with rounding
-	 * according to [[mathenv.mode]]. This method right now works good
-	 * only for values much smaller than unity. For values close to unity
-	 * this method converges very slowly to the result. This will be fixed in
-	 * future updates.
+	 * according to [[mathenv.mode]].
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static acos(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse trigonometric cosine of a given value with rounding
-	 * according to the given context settings. This method right now works good
-	 * only for values much smaller than unity. For values close to unity
-	 * this method converges very slowly to the result. This will be fixed in
-	 * future updates.
+	 * according to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \cos^{-1} (a + v) = \cos^{-1} \left( \frac{\alpha(a, \theta) - \beta(a, \theta)}{2} \right)
+	 * 					- \cosh^{-1} \left( \frac{\alpha(a, \theta) + \beta(a, \theta)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static acos(x: BigNum, context: MathContext): BigNum;
 	public static acos(x: BigNum, ...args: any[]): BigNum;
@@ -631,6 +666,7 @@ export class BigNum extends Numerical {
 	 * \\[ \sinh (a + v) = \sinh a \cos \theta + \hat{v} \cosh a \sin \theta \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static sinh(x: BigNum): BigNum;
 	/**
@@ -646,6 +682,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static sinh(x: BigNum, context: MathContext): BigNum;
 	public static sinh(x: BigNum, ...args: any[]): BigNum;
@@ -671,6 +708,7 @@ export class BigNum extends Numerical {
 	 * \\[ \cosh (a + v) = \cosh a \cos \theta + \hat{v} \sinh a \sin \theta \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static cosh(x: BigNum): BigNum;
 	/**
@@ -686,6 +724,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static cosh(x: BigNum, context: MathContext): BigNum;
 	public static cosh(x: BigNum, ...args: any[]): BigNum;
@@ -715,6 +754,7 @@ export class BigNum extends Numerical {
 	 * 						\hat{v} \frac{\sin 2\theta}{\cosh 2a + \cos 2\theta} \\]
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
 	 */
 	public static tanh(x: BigNum): BigNum;
 	/**
@@ -734,6 +774,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
 	 */
 	public static tanh(x: BigNum, context: MathContext): BigNum;
 	public static tanh(x: BigNum, ...args: any[]): BigNum;
@@ -765,10 +806,15 @@ export class BigNum extends Numerical {
 	 * 
 	 * **Method**:
 	 * 
-	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} (\frac{\alpha(\theta, a) + \beta(\theta, a)}{2})
-	 * 					+ \hat{v} \asin (\frac{\alpha(\theta, a) - \beta(\theta, a)}{2}) \\]
+	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+	 * 				+ \hat{v} \sin^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * 
 	 * @param x A number.
+	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static asinh(x: BigNum): BigNum;
 	/**
@@ -777,11 +823,16 @@ export class BigNum extends Numerical {
 	 * 
 	 * **Method**:
 	 * 
-	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} (\frac{\alpha(\theta, a) + \beta(\theta, a)}{2})
-	 * 					+ \hat{v} \asin (\frac{\alpha(\theta, a) - \beta(\theta, a)}{2}) \\]
+	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+	 * 				+ \hat{v} \sin^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see [Notation](#notation)
+	 * @see {@link alpha_beta}
 	 */
 	public static asinh(x: BigNum, context: MathContext): BigNum;
 	public static asinh(x: BigNum, ...args: any[]): BigNum;
@@ -807,16 +858,36 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Calculates the inverse hyperbolic sine of a given value with rounding according
+	 * Calculates the inverse hyperbolic cosine of a given value with rounding according
 	 * to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+	 * 				+ \hat{v} \cos^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
+	 * @see {@link alpha_beta}
+	 * @see [Notation](#notation)
 	 */
 	public static acosh(x: BigNum): BigNum;
 	/**
-	 * Calculates the inverse hyperbolic sine of a given value with rounding according
+	 * Calculates the inverse hyperbolic cosine of a given value with rounding according
 	 * to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \sinh^{-1} (a + v) = \cosh^{-1} \left( \frac{\alpha(\theta, a) + \beta(\theta, a)}{2} \right)
+	 * 				+ \hat{v} \sin^{-1} \left( \frac{\alpha(\theta, a) - \beta(\theta, a)}{2} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta}.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link alpha_beta}
+	 * @see [Notation](#notation)
 	 */
 	public static acosh(x: BigNum, context: MathContext): BigNum;
 	public static acosh(x: BigNum, ...args: any[]): BigNum;
