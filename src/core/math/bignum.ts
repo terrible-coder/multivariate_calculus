@@ -3,7 +3,7 @@ import { Component } from "./component";
 import { MathContext } from "./context";
 import { mathenv } from "../env";
 import { Numerical } from "../definitions";
-import { alpha_beta } from "./numerical";
+import { alpha_beta, alpha_beta_sq } from "./numerical";
 
 /**
  * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
@@ -640,13 +640,10 @@ export class BigNum extends Numerical {
 		if(v.equals(BigNum.real("0"), context))
 			return new BigNum(Component.atan(a, context));
 		const v_hat = v.div(new BigNum(theta), ctx);
-		const a_sq = a.mul(a, ctx);
 		const atan_arg = Component.TWO.mul(a, ctx).div(
 			Component.ONE.sub(x.norm(ctx).components[0] ,ctx), ctx);
-		const [thetap1_sq, thetam1_sq] = [
-			theta.add(Component.ONE, ctx), theta.sub(Component.ONE, ctx)
-		].map(x => x.mul(x, ctx));
-		const log_arg = a_sq.add(thetap1_sq, ctx).div(a_sq.add(thetam1_sq, ctx), ctx);
+		const [alpha2, beta2] = alpha_beta_sq(theta, a, ctx);
+		const log_arg = alpha2.div(beta2, ctx);
 		const half = Component.create("0.5"), quarter = Component.create("0.25");
 		const real = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
 		const imag = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
