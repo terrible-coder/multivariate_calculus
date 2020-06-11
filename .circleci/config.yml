@@ -101,14 +101,12 @@ workflows:
             tags:
               only: /^v.*/
             branches:
-              only: master
+              ignore: /.*/
 
       - docs:
           requires:
             - build
           filters:
-            tags:
-              ignore: /^v\d+\.\d+\.\d+/
             branches:
               only: master
 
@@ -116,7 +114,5 @@ workflows:
           requires:
             - docs
           filters:
-            tags:
-              ignore: /^v\d+\.\d+\.\d+/
             branches:
               only: master
