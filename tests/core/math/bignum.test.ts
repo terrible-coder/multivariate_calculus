@@ -721,22 +721,24 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("atanh", function() {
-		test("for real", function() {
-			const values = new Array(10).fill(0).map((_,i) => BigNum.real(`0.${i}`));
-			const atanhs = [
-				"0",
-				"0.10033534773107558",
-				"0.20273255405408219",
-				"0.30951960420311172",
-				"0.42364893019360181",
-				"0.54930614433405485",
-				"0.69314718055994531",
-				"0.86730052769405320",
-				"1.09861228866810970",
-				"1.47221948958322023"
-			].map(x => BigNum.real(x));
-			for(let i = 0; i < values.length; i++)
-				expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
+		describe("for real", function() {
+			test("less than 1", function() {
+				const values = new Array(10).fill(0).map((_,i) => BigNum.real(`0.${i}`));
+				const atanhs = [
+					"0",
+					"0.10033534773107558",
+					"0.20273255405408219",
+					"0.30951960420311172",
+					"0.42364893019360181",
+					"0.54930614433405485",
+					"0.69314718055994531",
+					"0.86730052769405320",
+					"1.09861228866810970",
+					"1.47221948958322023"
+				].map(x => BigNum.real(x));
+				for(let i = 0; i < values.length; i++)
+					expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
+			});
 		});
 	});
 });
