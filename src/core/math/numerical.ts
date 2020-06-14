@@ -30,6 +30,29 @@ export function newton_raphson(f: (x: Component) => Component, f_: (x: Component
 
 /**
  * Helper function for inverse trig functions. Transforms the product of two
+ * into the square of sum (\\( \alpha^2 \\)) and square of difference (\\( \beta^2 \\)).
+ * 
+ * \\[ \left[\alpha(x, y)\right]^2 = (x+1)^2 + y^2 \\]
+ * 
+ * \\[ \left[\beta(x, y)\right]^2 = (x-1)^2 + y^2 \\]
+ * 
+ * @param x The absolute value of real part.
+ * @param y The absolute value of imaginary part.
+ * @param ctx The context settings to use.
+ * @ignore
+ */
+export function alpha_beta_sq(x: Component, y: Component, ctx: MathContext) {
+	const one = Component.ONE;
+	const [xp1_sq, xm1_sq, y_sq] = [
+									x.add(one, ctx), x.sub(one, ctx), y
+								].map(val => val.mul(val, ctx));
+	const alpha2 = xp1_sq.add(y_sq, ctx);
+	const beta2 = xm1_sq.add(y_sq, ctx);
+	return [alpha2, beta2];
+}
+
+/**
+ * Helper function for inverse trig functions. Transforms the product of two
  * into a sum (\\( \alpha \\)) and difference (\\( \beta \\)).
  * 
  * \\[ \alpha(x, y) = \sqrt{(x+1)^2 + y^2} \\]
@@ -41,14 +64,8 @@ export function newton_raphson(f: (x: Component) => Component, f_: (x: Component
  * @param ctx The context settings to use.
  */
 export function alpha_beta(x: Component, y: Component, ctx: MathContext) {
-	const one = Component.ONE, half = Component.create("0.5");
-	const [xp1_sq, xm1_sq, y_sq] = [
-									x.add(one, ctx), x.sub(one, ctx), y
-								].map(val => val.mul(val, ctx));
-	const alpha2 = xp1_sq.add(y_sq, ctx);
-	const beta2 = xm1_sq.add(y_sq, ctx);
-	const values = [alpha2, beta2].map(val => val.pow(half, ctx));
-	return values;
+	const half = Component.create("0.5");
+	return alpha_beta_sq(x, y, ctx).map(value => value.pow(half, ctx));
 }
 
 /**

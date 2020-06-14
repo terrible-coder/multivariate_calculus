@@ -485,7 +485,7 @@ describe("Trigonometry", function() {
 
 describe("Inverse trigonometry", function() {
 	describe("asin", function() {
-		it("for real", function() {
+		test("for real", function() {
 			const three = Component.THREE, two = Component.TWO, half = Component.create("0.5");
 			const values = [
 				BigNum.real("1"),
@@ -500,10 +500,24 @@ describe("Inverse trigonometry", function() {
 			for(let i = 0; i < values.length; i++)
 				expect(BigNum.asin(values[i])).toEqual(asins[i]);
 		});
+
+		test("for imaginary", function() {
+			const values = new Array(10).fill(0)
+										.map((_, i) => `${10 * i}`)
+										.map(x => BigNum.complex("0", x));
+			const asins = new Array(10).fill(0)
+										.map((_, i) => `${10 * i}`)
+										.map(x => Component.create(x))
+										.map(x => new BigNum(Component.ZERO, Component.asinh(x)));
+			for(let i = 0; i < values.length; i++) {
+				const x = values[i];
+				expect(BigNum.asin(x)).toEqual(asins[i]);
+			}
+		});
 	});
 
 	describe("acos", function() {
-		it("for real", function() {
+		test("for real", function() {
 			const three = Component.THREE, two = Component.TWO, half = Component.create("0.5");
 			const values = [
 				BigNum.real("1"),
@@ -517,6 +531,21 @@ describe("Inverse trigonometry", function() {
 			];
 			for(let i = 0; i < values.length; i++)
 				expect(BigNum.acos(values[i])).toEqual(acoss[i]);
+		});
+
+		test("for imaginary", function() {
+			const pi = Component.PI, two = Component.TWO;
+			const values = new Array(10).fill(0)
+										.map((_, i) => `${10 * (i+1)}`)
+										.map(x => BigNum.complex("0", x));
+			const acoss = new Array(10).fill(0)
+										.map((_, i) => `${10 * (i+1)}`)
+										.map(x => Component.create(x))
+										.map(x => new BigNum(pi.div(two), Component.asinh(x).neg));
+			for(let i = 0; i < values.length; i++) {
+				const x = values[i];
+				expect(BigNum.acos(x)).toEqual(acoss[i]);
+			}
 		});
 	});
 

@@ -3,7 +3,7 @@ import { Component } from "./component";
 import { MathContext } from "./context";
 import { mathenv } from "../env";
 import { Numerical } from "../definitions";
-import { alpha_beta } from "./numerical";
+import { alpha_beta, alpha_beta_sq } from "./numerical";
 
 /**
  * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
@@ -640,13 +640,10 @@ export class BigNum extends Numerical {
 		if(v.equals(BigNum.real("0"), context))
 			return new BigNum(Component.atan(a, context));
 		const v_hat = v.div(new BigNum(theta), ctx);
-		const a_sq = a.mul(a, ctx);
 		const atan_arg = Component.TWO.mul(a, ctx).div(
 			Component.ONE.sub(x.norm(ctx).components[0] ,ctx), ctx);
-		const [thetap1_sq, thetam1_sq] = [
-			theta.add(Component.ONE, ctx), theta.sub(Component.ONE, ctx)
-		].map(x => x.mul(x, ctx));
-		const log_arg = a_sq.add(thetap1_sq, ctx).div(a_sq.add(thetam1_sq, ctx), ctx);
+		const [alpha2, beta2] = alpha_beta_sq(theta, a, ctx);
+		const log_arg = alpha2.div(beta2, ctx);
 		const half = Component.create("0.5"), quarter = Component.create("0.25");
 		const real = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
 		const imag = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
@@ -908,6 +905,32 @@ export class BigNum extends Numerical {
 		const cos = alpha.sub(beta, ctx).div(Component.TWO, ctx);
 		const real = new BigNum(Component.acosh(cosh, ctx));
 		const imag = new BigNum(Component.acos(cos, ctx));
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
+	public static atanh(x: BigNum, context: MathContext): BigNum;
+	public static atanh(x: BigNum, ...args: any[]): BigNum;
+	public static atanh(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const a = x.real.components[0];
+		const v = x.imag;
+		if(v.equals(BigNum.real("0"), context) && !a.equals(Component.ZERO, context))
+			return new BigNum(Component.acosh(a, context));
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex(0, 1): v.div(new BigNum(theta), ctx);
+		const [alpha2, beta2] = alpha_beta_sq(a, theta, ctx);
+		const half = Component.create("0.5"), quarter = Component.create("0.25");
+		const atan_arg = Component.TWO.mul(theta, ctx).div(
+			Component.ONE.sub(x.norm(ctx).components[0], ctx), ctx
+		);
+		const log_arg = alpha2.div(beta2, ctx);
+		const real = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
+		const imag = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
 		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
