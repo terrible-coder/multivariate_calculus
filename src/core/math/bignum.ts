@@ -909,6 +909,32 @@ export class BigNum extends Numerical {
 		return BigNum.round(res, context);
 	}
 
+	public static atanh(x: BigNum, context: MathContext): BigNum;
+	public static atanh(x: BigNum, ...args: any[]): BigNum;
+	public static atanh(x: BigNum, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		const a = x.real.components[0];
+		const v = x.imag;
+		if(v.equals(BigNum.real("0"), context) && !a.equals(Component.ZERO, context))
+			return new BigNum(Component.acosh(a, context));
+		const ctx: MathContext = {
+			precision: 2 * context.precision,
+			rounding: context.rounding
+		}
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex(0, 1): v.div(new BigNum(theta), ctx);
+		const [alpha2, beta2] = alpha_beta_sq(a, theta, ctx);
+		const half = Component.create("0.5"), quarter = Component.create("0.25");
+		const atan_arg = Component.TWO.mul(theta, ctx).div(
+			Component.ONE.sub(x.norm(ctx).components[0], ctx), ctx
+		);
+		const log_arg = alpha2.div(beta2, ctx);
+		const real = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
+		const imag = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
 	/**
 	 * Calculates the exponential of a given number with rounding according to
 	 * {@link mathenv.mode}.
