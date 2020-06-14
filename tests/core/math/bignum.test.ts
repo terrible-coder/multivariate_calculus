@@ -704,7 +704,7 @@ describe("Hyperbolic trigonometry", function() {
 			].map(x => BigNum.real(x));
 			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acoshs[i]));
 		});
-		
+
 		test("for imaginary", function() {
 			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", `0.${i+1}`));
 			const acoshs = new Array(10).fill(0)
@@ -717,6 +717,26 @@ describe("Hyperbolic trigonometry", function() {
 				Component.ZERO,
 				Component.PI.div(Component.TWO)
 			));
+		});
+	});
+
+	describe("atanh", function() {
+		test("for real", function() {
+			const values = new Array(10).fill(0).map((_,i) => BigNum.real(`0.${i}`));
+			const atanhs = [
+				"0",
+				"0.10033534773107558",
+				"0.20273255405408219",
+				"0.30951960420311172",
+				"0.42364893019360181",
+				"0.54930614433405485",
+				"0.69314718055994531",
+				"0.86730052769405320",
+				"1.09861228866810970",
+				"1.47221948958322023"
+			].map(x => BigNum.real(x));
+			for(let i = 0; i < values.length; i++)
+				expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
 		});
 	});
 });
