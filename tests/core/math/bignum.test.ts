@@ -746,7 +746,7 @@ describe("Hyperbolic trigonometry", function() {
 								.map((_, i) => Component.create(10*(i+1)))
 								.map(x => Component.ONE.div(x))
 								.map(x => Component.atanh(x))
-								.map(x => new BigNum(x, Component.round(Component.PI, mathenv.mode)));
+								.map(x => new BigNum(x, Component.PI.div(Component.TWO)));
 				for(let i = 0; i < values.length; i++)
 					expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
 			});
