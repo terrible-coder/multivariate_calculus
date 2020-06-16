@@ -739,6 +739,17 @@ describe("Hyperbolic trigonometry", function() {
 				for(let i = 0; i < values.length; i++)
 					expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
 			});
+
+			test("more than 1", function() {
+				const values = new Array(10).fill(0).map((_, i) => BigNum.real(10*(i+1)));
+				const atanhs = new Array(10).fill(0)
+								.map((_, i) => Component.create(10*(i+1)))
+								.map(x => Component.ONE.div(x))
+								.map(x => Component.atanh(x))
+								.map(x => new BigNum(x, Component.round(Component.PI, mathenv.mode)));
+				for(let i = 0; i < values.length; i++)
+					expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
+			});
 		});
 	});
 });
