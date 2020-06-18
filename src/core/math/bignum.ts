@@ -915,8 +915,8 @@ export class BigNum extends Numerical {
 		const context = args[0] || mathenv.mode;
 		const a = x.real.components[0];
 		const v = x.imag;
-		if(v.equals(BigNum.real("0"), context) && a.lessThan(Component.ONE))
-			return new BigNum(Component.atanh(a, context));
+		if(v.equals(BigNum.real("0"), context) && Component.abs(a).lessThan(Component.ONE))
+				return new BigNum(Component.atanh(a, context));
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -930,7 +930,7 @@ export class BigNum extends Numerical {
 		);
 		const log_arg = alpha2.div(beta2, ctx);
 		const real = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
-		const imag = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
+		const imag = new BigNum(half.mul(theta.equals(Component.ZERO, context)? Component.PI: Component.atan(atan_arg, ctx), ctx));
 		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
