@@ -1,6 +1,7 @@
 import { BigNum } from "../../../src/core/math/bignum";
 import { Component } from "../../../src/core/math/component";
 import { mathenv } from "../../../src/core/env";
+import { MathContext } from "../../../src/core/math/context";
 
 describe("Checks method definitions", function() {
 	it("Instance methods", function() {
@@ -704,7 +705,7 @@ describe("Hyperbolic trigonometry", function() {
 			].map(x => BigNum.real(x));
 			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acoshs[i]));
 		});
-		
+
 		test("for imaginary", function() {
 			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", `0.${i+1}`));
 			const acoshs = new Array(10).fill(0)
@@ -717,6 +718,43 @@ describe("Hyperbolic trigonometry", function() {
 				Component.ZERO,
 				Component.PI.div(Component.TWO)
 			));
+		});
+	});
+
+	describe("atanh", function() {
+		describe("for real", function() {
+			test("less than 1", function() {
+				const values = new Array(10).fill(0).map((_,i) => BigNum.real(`0.${i}`));
+				const atanhs = [
+					"0",
+					"0.10033534773107558",
+					"0.20273255405408219",
+					"0.30951960420311172",
+					"0.42364893019360181",
+					"0.54930614433405485",
+					"0.69314718055994531",
+					"0.86730052769405320",
+					"1.09861228866810970",
+					"1.47221948958322023"
+				].map(x => BigNum.real(x));
+				for(let i = 0; i < values.length; i++)
+					expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
+			});
+
+			test("more than 1", function() {
+				const ctx: MathContext = {
+					precision: 2 * mathenv.mode.precision,
+					rounding: mathenv.mode.rounding
+				}
+				const values = new Array(10).fill(0).map((_, i) => BigNum.real(10*(i+1)));
+				const atanhs = new Array(10).fill(0)
+								.map((_, i) => Component.create(10*(i+1)))
+								.map(x => Component.ONE.div(x, ctx))
+								.map(x => Component.atanh(x))
+								.map(x => new BigNum(x, Component.PI.div(Component.TWO)));
+				for(let i = 0; i < values.length; i++)
+					expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
+			});
 		});
 	});
 });
