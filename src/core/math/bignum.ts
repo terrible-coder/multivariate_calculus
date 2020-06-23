@@ -930,7 +930,7 @@ export class BigNum extends Numerical {
 		);
 		const log_arg = alpha2.div(beta2, ctx);
 		const real = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
-		const imag = new BigNum(half.mul(theta.equals(Component.ZERO, context)? Component.PI: Component.atan(atan_arg, ctx), ctx));
+		const imag = new BigNum(half.mul(Component.atan(atan_arg, ctx).add(Component.PI, ctx), ctx));
 		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
