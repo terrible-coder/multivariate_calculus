@@ -613,15 +613,36 @@ export class BigNum extends Numerical {
 	/**
 	 * Calculates the inverse trigonometric tangent of a given value with rounding
 	 * according to {@link mathenv.mode}.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \tan^{-1}(a+v) = \frac{1}{2} \tan^{-1} \left( \frac{2a}{1 - \lVert a+v \rVert} \right)
+	 * 				+ \hat{v} \frac{1}{4} \ln \left( \frac{\alpha^2(\theta, a)}{\beta^2(\theta, a)} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta} and \\( \lVert a+v \rVert \\) is the {@link norm} of the argument.
 	 * @param x A number.
-	 * @param context The context settings to use.
+	 * @see {@link alpha_beta}
+	 * @see {@link norm}
+	 * @see [Notation](#notation)
 	 */
 	public static atan(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse trigonometric tangent of a given value with rounding
 	 * according to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ \tan^{-1}(a+v) = \frac{1}{2} \tan^{-1} \left( \frac{2a}{1 - \lVert a+v \rVert} \right)
+	 * 				+ \hat{v} \frac{1}{4} \ln \left( \frac{\alpha^2(\theta, a)}{\beta^2(\theta, a)} \right) \\]
+	 * 
+	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
+	 * function {@link alpha_beta} and \\( \lVert a+v \rVert \\) is the {@link norm} of the argument.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link alpha_beta}
+	 * @see {@link norm}
+	 * @see [Notation](#notation)
 	 */
 	public static atan(x: BigNum, context: MathContext): BigNum;
 	public static atan(x: BigNum, ...args: any[]): BigNum;
@@ -922,6 +943,7 @@ export class BigNum extends Numerical {
 	 * function {@link alpha_beta} and \\( \lVert a+v \rVert \\) is the {@link norm} of the argument.
 	 * @param x A number.
 	 * @see {@link alpha_beta}
+	 * @see {@link norm}
 	 * @see [Notation](#notation)
 	 */
 	public static atanh(x: BigNum): BigNum;
@@ -939,6 +961,7 @@ export class BigNum extends Numerical {
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 * @see {@link alpha_beta}
+	 * @see {@link norm}
 	 * @see [Notation](#notation)
 	 */
 	public static atanh(x: BigNum, context: MathContext): BigNum;
