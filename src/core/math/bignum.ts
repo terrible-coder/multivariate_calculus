@@ -943,6 +943,7 @@ export class BigNum extends Numerical {
 	 * function {@link alpha_beta} and \\( \lVert a+v \rVert \\) is the {@link norm} of the argument.
 	 * @param x A number.
 	 * @see {@link alpha_beta}
+	 * @see {@link norm}
 	 * @see [Notation](#notation)
 	 */
 	public static atanh(x: BigNum): BigNum;
@@ -960,6 +961,7 @@ export class BigNum extends Numerical {
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 * @see {@link alpha_beta}
+	 * @see {@link norm}
 	 * @see [Notation](#notation)
 	 */
 	public static atanh(x: BigNum, context: MathContext): BigNum;
