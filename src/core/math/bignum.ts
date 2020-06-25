@@ -916,10 +916,10 @@ export class BigNum extends Numerical {
 	 * **Method**:
 	 * 
 	 * \\[ \tanh^{-1} (a + v) = \frac{1}{4} \ln \left( \frac{\alpha^2(a, \theta)}{\beta^2(a, \theta)} \right)
-	 * 				+\hat{v} \frac{1}{2} \tan^{-1} \left( \frac{2\theta}{1 - \norm{a+v}} \right) \\]
+	 * 				+\hat{v} \frac{1}{2} \tan^{-1} \left( \frac{2\theta}{1 - \lVert a+v \rVert} \right) \\]
 	 * 
 	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
-	 * function {@link alpha_beta}.
+	 * function {@link alpha_beta} and \\( \lVert a+v \rVert \\) is the {@link norm} of the argument.
 	 * @param x A number.
 	 * @see {@link alpha_beta}
 	 * @see [Notation](#notation)
@@ -932,10 +932,10 @@ export class BigNum extends Numerical {
 	 * **Method**:
 	 * 
 	 * \\[ \tanh^{-1} (a + v) = \frac{1}{4} \ln \left( \frac{\alpha^2(a, \theta)}{\beta^2(a, \theta)} \right)
-	 * 				+\hat{v} \frac{1}{2} \tan^{-1} \left( \frac{2\theta}{1 - \norm{a+v}} \right) \\]
+	 * 				+\hat{v} \frac{1}{2} \tan^{-1} \left( \frac{2\theta}{1 - \lVert a+v \rVert} \right) \\]
 	 * 
 	 * where \\( \alpha(x, y) \\) and \\( \beta(x, y) \\) are defined by the
-	 * function {@link alpha_beta}.
+	 * function {@link alpha_beta} and \\( \lVert a+v \rVert \\) is the {@link norm} of the argument.
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 * @see {@link alpha_beta}
