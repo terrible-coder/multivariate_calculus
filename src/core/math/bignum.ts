@@ -909,6 +909,7 @@ export class BigNum extends Numerical {
 		return BigNum.round(res, context);
 	}
 
+	public static atanh(x: BigNum): BigNum;
 	public static atanh(x: BigNum, context: MathContext): BigNum;
 	public static atanh(x: BigNum, ...args: any[]): BigNum;
 	public static atanh(x: BigNum, ...args: any[]) {
