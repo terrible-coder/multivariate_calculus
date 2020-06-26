@@ -164,6 +164,7 @@ export class Component extends Numerical {
 	 * @returns The absolute value of the argument.
 	 */
 	public static abs(x: Component): Component;
+	/** @internal */
 	public static abs(x: Component, ...args: any[]): Component;
 	public static abs(x: Component, ...args: any[]) {
 		return x.integer.charAt(0) === '-'? Component.create(x.integer.substring(1) + "." + x.decimal): x;
@@ -333,6 +334,7 @@ export class Component extends Numerical {
 	 * @returns this + that.
 	 */
 	public add(that: Component, context: MathContext): Component;
+	/** @internal */
 	public add(that: Component, ...args: any[]): Component;
 	public add(that: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -360,6 +362,7 @@ export class Component extends Numerical {
 	 * @returns this - that.
 	 */
 	public sub(that: Component, context: MathContext): Component;
+	/** @internal */
 	public sub(that: Component, ...args: any[]): Component;
 	public sub(that: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -387,6 +390,7 @@ export class Component extends Numerical {
 	 * @returns this * that.
 	 */
 	public mul(that: Component, context: MathContext): Component;
+	/** @internal */
 	public mul(that: Component, ...args: any[]): Component;
 	public mul(that: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -411,6 +415,7 @@ export class Component extends Numerical {
 	 * @returns this / that.
 	 */
 	public div(that: Component, context: MathContext): Component;
+	/** @internal */
 	public div(that: Component, ...args: any[]): Component;
 	public div(that: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -445,6 +450,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public mod(that: Component, context: MathContext): Component;
+	/** @internal */
 	public mod(that: Component, ...args: any[]): Component;
 	public mod(that: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -492,6 +498,7 @@ export class Component extends Numerical {
 	 * @param context The context settings object to use.
 	 */
 	public pow(ex: Component, context: MathContext): Component;
+	/** @internal */
 	public pow(ex: Component, ...args: any[]): Component;
 	public pow(ex: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -529,6 +536,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static exp(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static exp(x: Component, ...args: any[]): Component;
 	public static exp(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -548,6 +556,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static ln(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static ln(x: Component, ...args: any[]): Component;
 	public static ln(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -566,6 +575,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static sin(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static sin(x: Component, ...args: any[]): Component;
 	public static sin(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -585,6 +595,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static cos(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static cos(x: Component, ...args: any[]): Component;
 	public static cos(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -604,6 +615,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static tan(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static tan(x: Component, ...args: any[]): Component;
 	public static tan(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -623,6 +635,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static asin(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static asin(x: Component, ...args: any[]): Component;
 	public static asin(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -642,6 +655,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static acos(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static acos(x: Component, ...args: any[]): Component;
 	public static acos(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -661,6 +675,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static atan(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static atan(x: Component, ...args: any[]): Component;
 	public static atan(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -678,6 +693,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static sinh(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static sinh(x: Component, ...args: any[]): Component;
 	public static sinh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -695,6 +711,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static cosh(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static cosh(x: Component, ...args: any[]): Component;
 	public static cosh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -712,6 +729,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static tanh(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static tanh(x: Component, ...args: any[]): Component;
 	public static tanh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -730,6 +748,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static asinh(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static asinh(x: Component, ...args: any[]): Component;
 	public static asinh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -749,6 +768,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static acosh(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static acosh(x: Component, ...args: any[]): Component;
 	public static acosh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -767,6 +787,7 @@ export class Component extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static atanh(x: Component, context: MathContext): Component;
+	/** @internal */
 	public static atanh(x: Component, ...args: any[]): Component;
 	public static atanh(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;

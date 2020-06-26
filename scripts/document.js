@@ -15,7 +15,8 @@ app.bootstrap({
 	mode: "file",
 	logger: "none",
 	module: "CommonJS",
-	theme: "./theme"
+	theme: "./theme",
+	stripInternal: true
 });
 const project = app.convert(app.expandInputFiles(["./src"]));
 

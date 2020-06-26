@@ -163,6 +163,7 @@ export class BigNum extends Numerical {
 	 * @param context Context settings to use.
 	 */
 	public static absSq(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static absSq(x: BigNum, ...args: any[]): BigNum;
 	public static absSq(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -176,6 +177,7 @@ export class BigNum extends Numerical {
 	 */
 	public static abs(x: BigNum): BigNum;
 	public static abs(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static abs(x: BigNum, ...args: any[]): BigNum;
 	public static abs(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -200,7 +202,20 @@ export class BigNum extends Numerical {
 	 * number, the norm is defined as
 	 * \\[ \text{norm } a = a^* a \\]
 	 * where \\( a^* \\) is the conjugate of \\( a \\).
+	 * 
+	 * The norm is calculated with rounding according to {@link mathenv.mode}.
 	 */
+	public norm(): BigNum;
+	/**
+	 * Evaluates the norm of this number. Since `this` is not necessarily a real
+	 * number, the norm is defined as
+	 * \\[ \text{norm } a = a^* a \\]
+	 * where \\( a^* \\) is the conjugate of \\( a \\).
+	 * 
+	 * The norm is calculated with rounding according to the given context.
+	 * @param context The context settings to use.
+	 */
+	public norm(context: MathContext): BigNum;
 	public norm(context=mathenv.mode) {
 		return this.conj.mul(this, context);
 	}
@@ -228,6 +243,7 @@ export class BigNum extends Numerical {
 	 * @returns this + that.
 	 */
 	public add(that: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public add(that: BigNum, ...args: any[]): BigNum;
 	public add(that: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -260,6 +276,7 @@ export class BigNum extends Numerical {
 	 * @returns this - that.
 	 */
 	public sub(that: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public sub(that: BigNum, ...args: any[]): BigNum;
 	public sub(that: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -287,6 +304,7 @@ export class BigNum extends Numerical {
 	 * @returns this * that.
 	 */
 	public mul(that: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public mul(that: BigNum, ...args: any[]): BigNum;
 	public mul(that: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -313,8 +331,15 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Calculates the multiplicative inverse of this.
+	 * Calculates the multiplicative inverse of this. The result is rounded
+	 * according to {@link mathenv.mode}.
 	 */
+	public inv(): BigNum;
+	/**
+	 * Calculates the multiplicative inverse of this. The result is rounded
+	 * according to the given context.
+	 */
+	public inv(context: MathContext): BigNum;
 	public inv(context=mathenv.mode) {
 		const magSq = this.norm(context).components[0];
 		const scale = new BigNum(Component.ONE.div(magSq, context));
@@ -353,6 +378,7 @@ export class BigNum extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public div(that: BigNum, side: "left" | "right", context: MathContext): BigNum;
+	/** @internal */
 	public div(that: BigNum, ...args: any[]): BigNum;
 	public div(that: BigNum, ...args: any[]) {
 		const a = args[0], b = args[1];
@@ -410,6 +436,7 @@ export class BigNum extends Numerical {
 	 * @see [Notation](#notation)
 	 */
 	public static sin(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static sin(x: BigNum, ...args: any[]): BigNum;
 	public static sin(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -460,6 +487,7 @@ export class BigNum extends Numerical {
 	 * @see [Notation](#notation)
 	 */
 	public static cos(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static cos(x: BigNum, ...args: any[]): BigNum;
 	public static cos(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -492,6 +520,7 @@ export class BigNum extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static tan(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static tan(x: BigNum, ...args: any[]): BigNum;
 	public static tan(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -536,6 +565,7 @@ export class BigNum extends Numerical {
 	 * @see {@link alpha_beta}
 	 */
 	public static asin(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static asin(x: BigNum, ...args: any[]): BigNum;
 	public static asin(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -590,6 +620,7 @@ export class BigNum extends Numerical {
 	 * @see {@link alpha_beta}
 	 */
 	public static acos(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static acos(x: BigNum, ...args: any[]): BigNum;
 	public static acos(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -645,6 +676,7 @@ export class BigNum extends Numerical {
 	 * @see [Notation](#notation)
 	 */
 	public static atan(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static atan(x: BigNum, ...args: any[]): BigNum;
 	public static atan(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -703,6 +735,7 @@ export class BigNum extends Numerical {
 	 * @see [Notation](#notation)
 	 */
 	public static sinh(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static sinh(x: BigNum, ...args: any[]): BigNum;
 	public static sinh(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -745,6 +778,7 @@ export class BigNum extends Numerical {
 	 * @see [Notation](#notation)
 	 */
 	public static cosh(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static cosh(x: BigNum, ...args: any[]): BigNum;
 	public static cosh(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -795,6 +829,7 @@ export class BigNum extends Numerical {
 	 * @see [Notation](#notation)
 	 */
 	public static tanh(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static tanh(x: BigNum, ...args: any[]): BigNum;
 	public static tanh(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -853,6 +888,7 @@ export class BigNum extends Numerical {
 	 * @see {@link alpha_beta}
 	 */
 	public static asinh(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static asinh(x: BigNum, ...args: any[]): BigNum;
 	public static asinh(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -908,6 +944,7 @@ export class BigNum extends Numerical {
 	 * @see [Notation](#notation)
 	 */
 	public static acosh(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static acosh(x: BigNum, ...args: any[]): BigNum;
 	public static acosh(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -965,6 +1002,7 @@ export class BigNum extends Numerical {
 	 * @see [Notation](#notation)
 	 */
 	public static atanh(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static atanh(x: BigNum, ...args: any[]): BigNum;
 	public static atanh(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -1003,6 +1041,7 @@ export class BigNum extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static exp(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static exp(x: BigNum, ...args: any[]): BigNum;
 	public static exp(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
@@ -1036,6 +1075,7 @@ export class BigNum extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public static ln(x: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public static ln(x: BigNum, ...args: any[]): BigNum;
 	public static ln(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
