@@ -200,7 +200,20 @@ export class BigNum extends Numerical {
 	 * number, the norm is defined as
 	 * \\[ \text{norm } a = a^* a \\]
 	 * where \\( a^* \\) is the conjugate of \\( a \\).
+	 * 
+	 * The norm is calculated with rounding according to {@link mathenv.mode}.
 	 */
+	public norm(): BigNum;
+	/**
+	 * Evaluates the norm of this number. Since `this` is not necessarily a real
+	 * number, the norm is defined as
+	 * \\[ \text{norm } a = a^* a \\]
+	 * where \\( a^* \\) is the conjugate of \\( a \\).
+	 * 
+	 * The norm is calculated with rounding according to the given context.
+	 * @param context The context settings to use.
+	 */
+	public norm(context: MathContext): BigNum;
 	public norm(context=mathenv.mode) {
 		return this.conj.mul(this, context);
 	}
@@ -313,8 +326,15 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Calculates the multiplicative inverse of this.
+	 * Calculates the multiplicative inverse of this. The result is rounded
+	 * according to {@link mathenv.mode}.
 	 */
+	public inv(): BigNum;
+	/**
+	 * Calculates the multiplicative inverse of this. The result is rounded
+	 * according to the given context.
+	 */
+	public inv(context: MathContext): BigNum;
 	public inv(context=mathenv.mode) {
 		const magSq = this.norm(context).components[0];
 		const scale = new BigNum(Component.ONE.div(magSq, context));
