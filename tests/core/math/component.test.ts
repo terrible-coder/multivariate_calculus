@@ -465,6 +465,16 @@ describe("Inverse trigonometry", function() {
 			for(let x of values)
 				expect(Component.asin(x.neg)).toEqual(Component.asin(x).neg);
 		});
+
+		it("throws errors", function() {
+			const values = new Array(10).fill(0)
+							.map(() => 1.1 + Math.random())
+							.map(x => Component.create(x));
+			for(let x of values)
+				expect(() => Component.asin(x)).toThrow();
+			for(let x of values)
+				expect(() => Component.asin(x.neg)).toThrow();
+		});
 	});
 
 	describe("arc cosine", function() {
