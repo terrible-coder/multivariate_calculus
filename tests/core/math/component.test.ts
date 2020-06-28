@@ -414,6 +414,13 @@ describe("Trigonometry", function() {
 				expect(Component.sin(x)).toEqual(Component.ZERO);
 			}
 		});
+
+		it("is an odd function", function() {
+			const values = new Array(10).fill(0)
+							.map(() => Component.create(Math.random()));
+			for(let x of values)
+				expect(Component.sin(x.neg)).toEqual(Component.sin(x).neg);
+		});
 	});
 
 	describe("cosine", function() {
