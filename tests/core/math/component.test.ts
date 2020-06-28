@@ -549,6 +549,14 @@ describe("Inverse trigonometry", function() {
 				expect(Component.atan(values[i])).toEqual(atans[i]);
 		});
 	});
+
+	it("is an odd function", function() {
+		const values = new Array(10).fill(0)
+						.map(() => Math.random())
+						.map(x => Component.create(x));
+		for(let x of values)
+			expect(Component.atan(x.neg)).toEqual(Component.atan(x).neg);
+	});
 });
 
 describe("Hyperbolic trigonometry", function() {
