@@ -454,12 +454,16 @@ describe("Inverse trigonometry", function() {
 				"0.92729521800161224",
 				"1.11976951499863419"
 			].map(x => Component.create(x));
-			for(let i = 0; i < asins.length; i++) {
-				const x = values[i];
-				const asin = asins[i];
-				expect(Component.asin(x)).toEqual(asin);
-				expect(Component.asin(x.neg)).toEqual(asin.neg);
-			}
+			for(let i = 0; i < asins.length; i++)
+				expect(Component.asin(values[i])).toEqual(asins[i]);
+		});
+
+		it("is an odd function", function() {
+			const values = new Array(10).fill(0)
+							.map(() => Math.random())
+							.map(x => Component.create(x));
+			for(let x of values)
+				expect(Component.asin(x.neg)).toEqual(Component.asin(x).neg);
 		});
 	});
 
