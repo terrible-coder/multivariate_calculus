@@ -24,4 +24,4 @@ const project = app.convert(app.expandInputFiles(["./src"]));
 if(project)
 	app.generateDocs(project, outDir);
 else
-	console.log("Something went wrong.");
+	throw new Error("Something went wrong.");

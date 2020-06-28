@@ -12,7 +12,7 @@ ghpages.publish("docs", {
 	message: "Deploy to gh-pages"
 }, err => {
 	if(err !== undefined) {
-		console.log("Something went wrong.");
 		console.error(err);
+		throw new Error("Something went wrong.");
 	} else console.log("Published.");
 });
