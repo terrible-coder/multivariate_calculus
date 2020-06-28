@@ -440,6 +440,13 @@ describe("Trigonometry", function() {
 				expect(Component.cos(x)).toEqual(Component.ZERO);
 			}
 		});
+
+		it("is an even function", function() {
+			const values = new Array(10).fill(0)
+							.map(() => Component.create(Math.random()));
+			for(let x of values)
+				expect(Component.cos(x.neg)).toEqual(Component.cos(x));
+		});
 	});
 });
 
