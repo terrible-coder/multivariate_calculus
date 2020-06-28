@@ -16,7 +16,8 @@ app.bootstrap({
 	logger: "none",
 	module: "CommonJS",
 	theme: "./theme",
-	stripInternal: true
+	stripInternal: true,
+	disableOutputCheck: true
 });
 const project = app.convert(app.expandInputFiles(["./src"]));
 
