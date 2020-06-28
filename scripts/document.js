@@ -1,6 +1,8 @@
 const typedoc = require("typedoc");
 const pkg = require("../package.json");
 
+const minorVersion = pkg.version.split(".").slice(0, 2).join(".");
+
 const app = new typedoc.Application();
 app.options.addReader(new typedoc.TSConfigReader());
 
@@ -21,7 +23,9 @@ app.bootstrap({
 });
 const project = app.convert(app.expandInputFiles(["./src"]));
 
-if(project)
+if(project) {
 	app.generateDocs(project, outDir);
+	app.generateDocs(project, `./docs/${minorVersion}`);
+}
 else
 	throw new Error("Something went wrong.");
