@@ -399,7 +399,7 @@ describe("Logarithm", function() {
 describe("Trigonometry", function() {
 	const context = MathContext.HIGH_PRECISION;
 	describe("sine", function() {
-		it("odd multiples of pi/2", function() {
+		test("odd multiples of pi/2", function() {
 			const piby2 = Component.PI.div(Component.TWO);
 			for(let i = 0; i < 10; i++) {
 				const x = Component.create(2*i+1).mul(piby2);
@@ -407,7 +407,7 @@ describe("Trigonometry", function() {
 			}
 		});
 
-		it("multiples of pi", function() {
+		test("multiples of pi", function() {
 			const pi = Component.PI;
 			for(let i = 0; i < 10; i++) {
 				const x = Component.create(i).mul(pi, context);;
@@ -437,25 +437,30 @@ describe("Trigonometry", function() {
 });
 
 describe("Inverse trigonometry", function() {
-	it("arc sine", function() {
-		const values = [
-			"0",
-			"0.10016742116155980",
-			"0.20135792079033080",
-			"0.30469265401539751",
-			"0.41151684606748802",
-			"0.52359877559829888",
-			"0.64350110879328439",
-			"0.77539749661075307",
-			"0.92729521800161224",
-			"1.11976951499863419"
-		];
-		for(let i = 0; i < values.length; i++) {
-			const x = Component.create("0." + i);
-			const asin = Component.create(values[i]);
-			expect(Component.asin(x)).toEqual(asin);
-			expect(Component.asin(x.neg)).toEqual(asin.neg);
-		}
+	describe("arc sine", function() {
+		it("returns correct values", function() {
+			const values = new Array(10).fill(0)
+							.map((_, i) => `0.${i}`)
+							.map(x => Component.create(x));
+			const asins = [
+				"0",
+				"0.10016742116155980",
+				"0.20135792079033080",
+				"0.30469265401539751",
+				"0.41151684606748802",
+				"0.52359877559829888",
+				"0.64350110879328439",
+				"0.77539749661075307",
+				"0.92729521800161224",
+				"1.11976951499863419"
+			].map(x => Component.create(x));
+			for(let i = 0; i < asins.length; i++) {
+				const x = values[i];
+				const asin = asins[i];
+				expect(Component.asin(x)).toEqual(asin);
+				expect(Component.asin(x.neg)).toEqual(asin.neg);
+			}
+		});
 	});
 
 	it("arc cosine", function() {
