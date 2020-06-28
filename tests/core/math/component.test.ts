@@ -487,6 +487,16 @@ describe("Inverse trigonometry", function() {
 			for(let i = 0; i < acoss.length; i++)
 				expect(Component.acos(values[i])).toEqual(acoss[i]);
 		});
+
+		it("throws errors", function() {
+			const values = new Array(10).fill(0)
+							.map(() => 1.1 + Math.random())
+							.map(x => Component.create(x));
+			for(let x of values)
+				expect(() => Component.acos(x)).toThrow();
+			for(let x of values)
+				expect(() => Component.acos(x.neg)).toThrow();
+		});
 	});
 
 	it("arc tan", function() {
