@@ -710,6 +710,11 @@ describe("Inverse hyperbolic trigonometry", function() {
 	}
 
 	describe("asinh", function() {
+		it("calls with correct context", function() {
+			Component.asinh(Component.THREE);
+			properContext();
+		});
+
 		it("returns correct values", function() {
 			const identity = (x: Component) => {
 				const sinh = Component.sinh(x, ctx);
@@ -724,6 +729,11 @@ describe("Inverse hyperbolic trigonometry", function() {
 	});
 
 	describe("acosh", function() {
+		it("calls with correct context", function() {
+			Component.acosh(Component.THREE);
+			properContext();
+		});
+
 		it("returns correct values", function() {
 			const identity = (x: Component) => {
 				const cosh = Component.cosh(x, ctx);
@@ -738,6 +748,11 @@ describe("Inverse hyperbolic trigonometry", function() {
 	});
 
 	describe("atanh", function() {
+		it("calls with correct context", function() {
+			Component.atanh(Component.create("0.5"));
+			properContext();
+		});
+
 		it("returns correct values", function() {
 			const identity = (x: Component) => {
 				const tanh = Component.tanh(x, ctx);
