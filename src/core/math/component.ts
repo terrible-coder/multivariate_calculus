@@ -458,7 +458,7 @@ export class Component extends Numerical {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const quo = Component.floor(this.div(that));
+		const quo = Component.floor(this.div(that, ctx));
 		const res = this.sub(that.mul(quo, ctx), ctx);
 		return Component.round(res, context);
 	}
