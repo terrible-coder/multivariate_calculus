@@ -28,14 +28,14 @@ export namespace Exponent {
 		}
 		let sum = Component.ZERO;
 		let term = Component.ONE;
-		let n = Component.ZERO;
+		let n = 0;
 		while(true) {
 			sum = sum.add(term, ctx);
-			const term1 = term.mul(r, ctx).div(n.add(Component.ONE), ctx);
+			const term1 = term.mul(r, ctx).div(Component.create(n + 1), ctx);
 			if(term1.equals(Component.ZERO, ctx))
 				break;
 			term = term1;
-			n = n.add(Component.ONE);
+			n++;
 		}
 		const temp = Component.intpow(Component.TWO, Math.abs(k), ctx);
 		const twok = k >= 0? temp: Component.ONE.div(temp, ctx);
