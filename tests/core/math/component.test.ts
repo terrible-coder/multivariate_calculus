@@ -634,51 +634,72 @@ describe("Inverse trigonometry", function() {
 });
 
 describe("Hyperbolic trigonometry", function() {
-	it("sinh", function() {
-		const alsosinh = (x: Component) => {
-			const ctx: MathContext = {
-				precision: 2 * mathenv.mode.precision,
-				rounding: mathenv.mode.rounding
+		test("calls with correct context", function() {
+			Component.sinh(Component.THREE);
+			properContext();
+		});
+
+	describe("sinh", function() {
+		it("returns correct values", function() {
+			const alsosinh = (x: Component) => {
+				const ctx: MathContext = {
+					precision: 2 * mathenv.mode.precision,
+					rounding: mathenv.mode.rounding
+				}
+				const res = Component.exp(x, ctx).sub(Component.exp(x.neg, ctx)).div(Component.TWO, ctx);
+				return Component.round(res, mathenv.mode);
 			}
-			const res = Component.exp(x, ctx).sub(Component.exp(x.neg, ctx)).div(Component.TWO, ctx);
-			return Component.round(res, mathenv.mode);
-		}
-		for(let i = 0; i < 10; i++) {
-			const x = Component.create(i);
-			expect(Component.sinh(x)).toEqual(alsosinh(x));
-		}
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(i);
+				expect(Component.sinh(x)).toEqual(alsosinh(x));
+			}
+		});
 	});
 
-	it("cosh", function() {
-		const alsocosh = (x: Component) => {
-			const ctx: MathContext = {
-				precision: 2 * mathenv.mode.precision,
-				rounding: mathenv.mode.rounding
+	describe("cosh", function() {
+		it("calls with correct context", function() {
+			Component.cosh(Component.THREE);
+			properContext();
+		});
+
+		it("returns correct values", function() {
+			const alsocosh = (x: Component) => {
+				const ctx: MathContext = {
+					precision: 2 * mathenv.mode.precision,
+					rounding: mathenv.mode.rounding
+				}
+				const res = Component.exp(x, ctx).add(Component.exp(x.neg, ctx)).div(Component.TWO, ctx);
+				return Component.round(res, mathenv.mode);
 			}
-			const res = Component.exp(x, ctx).add(Component.exp(x.neg, ctx)).div(Component.TWO, ctx);
-			return Component.round(res, mathenv.mode);
-		}
-		for(let i = 0; i < 10; i++) {
-			const x = Component.create(i);
-			expect(Component.cosh(x)).toEqual(alsocosh(x));
-		}
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(i);
+				expect(Component.cosh(x)).toEqual(alsocosh(x));
+			}
+		});
 	});
 
-	it("tanh", function() {
-		const alsotanh = (x: Component) => {
-			const ctx: MathContext = {
-				precision: 2 * mathenv.mode.precision,
-				rounding: mathenv.mode.rounding
+	describe("tanh", function() {
+		it("calls with correct context", function() {
+			Component.tanh(Component.THREE);
+			properContext();
+		});
+
+		it("returns correct values", function() {
+			const alsotanh = (x: Component) => {
+				const ctx: MathContext = {
+					precision: 2 * mathenv.mode.precision,
+					rounding: mathenv.mode.rounding
+				}
+				const num = Component.exp(Component.TWO.mul(x, ctx), ctx).sub(Component.ONE, ctx);
+				const den = Component.exp(Component.TWO.mul(x, ctx), ctx).add(Component.ONE, ctx);
+				const res = num.div(den, ctx);
+				return Component.round(res, mathenv.mode);
 			}
-			const num = Component.exp(Component.TWO.mul(x, ctx), ctx).sub(Component.ONE, ctx);
-			const den = Component.exp(Component.TWO.mul(x, ctx), ctx).add(Component.ONE, ctx);
-			const res = num.div(den, ctx);
-			return Component.round(res, mathenv.mode);
-		}
-		for(let i = 0; i < 10; i++) {
-			const x = Component.create(i);
-			expect(Component.tanh(x)).toEqual(alsotanh(x));
-		}
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(i);
+				expect(Component.tanh(x)).toEqual(alsotanh(x));
+			}
+		});
 	});
 });
 
