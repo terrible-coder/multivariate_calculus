@@ -501,6 +501,11 @@ describe("Trigonometry", function() {
 
 describe("Inverse trigonometry", function() {
 	describe("arc sine", function() {
+		test("calls with correct context", function() {
+			Component.asin(Component.create("0.3"));
+			properContext();
+		});
+
 		it("returns correct values", function() {
 			const values = new Array(10).fill(0)
 							.map((_, i) => `0.${i}`)
@@ -541,6 +546,11 @@ describe("Inverse trigonometry", function() {
 	});
 
 	describe("arc cosine", function() {
+		test("calls with correct context", function() {
+			Component.acos(Component.create("0.3"));
+			properContext();
+		});
+
 		it("returns correct values", function() {
 			const values = new Array(9).fill(0)
 							.map((_, i) => Component.create(`0.${i+1}`))
@@ -573,6 +583,11 @@ describe("Inverse trigonometry", function() {
 	});
 
 	describe("arc tan", function() {
+		test("calls with correct context", function() {
+			Component.atan(Component.THREE);
+			properContext();
+		});
+
 		it("returns correct values", function() {
 			const values = [
 				"0.1",
