@@ -436,7 +436,13 @@ describe("Logarithm", function() {
 
 describe("Trigonometry", function() {
 	const context = MathContext.HIGH_PRECISION;
+
 	describe("sine", function() {
+		test("calls with correct context", function() {
+			Component.sin(Component.TWO);
+			properContext();
+		});
+
 		test("odd multiples of pi/2", function() {
 			const piby2 = Component.PI.div(Component.TWO);
 			for(let i = 0; i < 10; i++) {
@@ -462,6 +468,11 @@ describe("Trigonometry", function() {
 	});
 
 	describe("cosine", function() {
+		test("calls with correct context", function() {
+			Component.cos(Component.TWO);
+			properContext();
+		});
+
 		it("Multiples of pi", function() {
 			const pi = Component.PI;
 			for(let n = 0; n < 10; n++) {
