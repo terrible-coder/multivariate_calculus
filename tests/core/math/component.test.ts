@@ -709,39 +709,45 @@ describe("Inverse hyperbolic trigonometry", function() {
 		rounding: mathenv.mode.rounding
 	}
 
-	it("asinh", function() {
-		const identity = (x: Component) => {
-			const sinh = Component.sinh(x, ctx);
-			const asinh = Component.asinh(sinh, ctx);
-			return Component.round(asinh, mathenv.mode);
-		}
-		for(let i = 0; i < 10; i++) {
-			const x = Component.create(i);
-			expect(identity(x)).toEqual(x);
-		}
+	describe("asinh", function() {
+		it("returns correct values", function() {
+			const identity = (x: Component) => {
+				const sinh = Component.sinh(x, ctx);
+				const asinh = Component.asinh(sinh, ctx);
+				return Component.round(asinh, mathenv.mode);
+			}
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(i);
+				expect(identity(x)).toEqual(x);
+			}
+		});
 	});
 
-	it("acosh", function() {
-		const identity = (x: Component) => {
-			const cosh = Component.cosh(x, ctx);
-			const acosh = Component.acosh(cosh, ctx);
-			return Component.round(acosh, mathenv.mode);
-		}
-		for(let i = 0; i < 10; i++) {
-			const x = Component.create(i);
-			expect(identity(x)).toEqual(x);
-		}
+	describe("acosh", function() {
+		it("returns correct values", function() {
+			const identity = (x: Component) => {
+				const cosh = Component.cosh(x, ctx);
+				const acosh = Component.acosh(cosh, ctx);
+				return Component.round(acosh, mathenv.mode);
+			}
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(i);
+				expect(identity(x)).toEqual(x);
+			}
+		});
 	});
 
-	it("atanh", function() {
-		const identity = (x: Component) => {
-			const tanh = Component.tanh(x, ctx);
-			const atanh = Component.atanh(tanh, ctx);
-			return Component.round(atanh, mathenv.mode);
-		}
-		for(let i = 0; i < 10; i++) {
-			const x = Component.create(`0.${i}`);
-			expect(identity(x)).toEqual(x);
-		}
+	describe("atanh", function() {
+		it("returns correct values", function() {
+			const identity = (x: Component) => {
+				const tanh = Component.tanh(x, ctx);
+				const atanh = Component.atanh(tanh, ctx);
+				return Component.round(atanh, mathenv.mode);
+			}
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(`0.${i}`);
+				expect(identity(x)).toEqual(x);
+			}
+		});
 	});
 });
