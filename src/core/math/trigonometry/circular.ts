@@ -25,7 +25,7 @@ export namespace TrigCyclic {
 			rounding: context.rounding
 		};
 		x = x.mod(Component.TWO.mul(Component.PI, ctx), ctx);
-		if(Component.abs(x).equals(Component.PI, context))
+		if(Component.abs(x, context).equals(Component.PI, context))
 			return Component.ZERO;
 		const x_sq = x.mul(x, ctx);
 		let sum = Component.ZERO;
@@ -165,7 +165,7 @@ export namespace TrigCyclic {
 		const res = piby2.sub(Component.TWO.mul(temp, ctx), ctx);
 		return Component.round(res, context);
 	}
-	
+
 	/**
 	 * Calculates the inverse trigonometric cosine of a number with rounding
 	 * according to the given context.
@@ -178,7 +178,7 @@ export namespace TrigCyclic {
 			rounding: context.rounding
 		};
 		const half = Component.create("0.5");
-		if(Component.abs(x).lessThan(half)) {
+		if(Component.abs(x, context).lessThan(half)) {
 			const res = Component.PI.mul(half, ctx).sub(asin_less(x, ctx), ctx);
 			return Component.round(res, context);
 		}
@@ -188,7 +188,7 @@ export namespace TrigCyclic {
 		const res = Component.TWO.mul(temp, ctx);
 		return Component.round(res, context);
 	}
-	
+
 	/**
 	 * Calculates the inverse trigonometric tangent of a number (\\( x < 1 \\)).
 	 * Method:
@@ -223,7 +223,7 @@ export namespace TrigCyclic {
 			n++;
 		}
 	}
-	
+
 	/**
 	 * Calculates the inverse trigonometric tangent of a number (\\( x > 1 \\)).
 	 * Method:
@@ -251,15 +251,15 @@ export namespace TrigCyclic {
 		if(check) {
 			const less = x.sub(Component.ONE, ctx).div(x.add(Component.ONE, ctx), ctx);
 			const piby4 = Component.PI.div(Component.FOUR, ctx);
-			const res = piby4.add(atan_less(less, ctx));
+			const res = piby4.add(atan_less(less, ctx), ctx);
 			return Component.round(res, context);
 		}
 		const less = Component.ONE.div(x, ctx);
 		const piby2 = Component.PI.div(Component.TWO, ctx);
-		const res = piby2.sub(atan_less(less, ctx));
+		const res = piby2.sub(atan_less(less, ctx), ctx);
 		return Component.round(res, context);
 	}
-	
+
 	/**
 	 * Calculates the inverse trigonometric tangent of a number with rounding
 	 * according to the given context.
