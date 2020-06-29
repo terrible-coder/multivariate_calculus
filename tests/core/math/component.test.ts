@@ -3,6 +3,44 @@ import { IndeterminateForm, DivisionByZero } from "../../../src/core/errors";
 import { RoundingMode, MathContext } from "../../../src/core/math/context";
 import { mathenv } from "../../../src/core/env";
 
+const mock_add = jest.fn(Component.prototype.add);
+const mock_sub = jest.fn(Component.prototype.sub);
+const mock_mul = jest.fn(Component.prototype.mul);
+const mock_div = jest.fn(Component.prototype.div);
+const mock_pow = jest.fn(Component.prototype.pow);
+const mock_mod = jest.fn(Component.prototype.mod);
+const mock_abs = jest.fn(Component.abs);
+
+const mocks = [
+	mock_add,
+	mock_sub,
+	mock_mul,
+	mock_div,
+	mock_pow,
+	mock_mod,
+	mock_abs
+];
+Component.prototype.add = mock_add;
+Component.prototype.sub = mock_sub;
+Component.prototype.mul = mock_mul;
+Component.prototype.div = mock_div
+Component.prototype.pow = mock_pow;
+Component.prototype.mod = mock_mod;
+Component.abs = mock_abs;
+
+beforeEach(() => mocks.forEach(fn => fn.mockClear()));
+
+function properContext() {
+	mocks.forEach(fn => {
+		if(fn.mock.calls.length === 0) return;
+		fn.mock.calls.forEach(call => {
+			expect(call.length).toEqual(2);
+			expect(call[1]).toHaveProperty("precision");
+			expect(call[1]).toHaveProperty("rounding");
+		})
+	})
+}
+
 describe("Checks method definitions", function() {
 	it("Instance methods", function() {
 		const obj = Component.ONE;
