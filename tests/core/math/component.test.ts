@@ -410,6 +410,11 @@ describe("Ceil", function() {
 });
 
 describe("Exponential", function() {
+	test("calls with correct context", function() {
+		Component.exp(Component.THREE);
+		properContext();
+	});
+
 	it("exp", function() {
 		const E = Component.round(Component.E, mathenv.mode);
 		const E2 = Component.E.mul(Component.E);
@@ -426,6 +431,11 @@ describe("Exponential", function() {
 });
 
 describe("Logarithm", function() {
+	test("calls with correct context", function() {
+		Component.ln(Component.THREE);
+		properContext();
+	});
+
 	it("ln", function() {
 		expect(() => Component.ln(Component.ZERO)).toThrow();
 		expect(Component.ln(Component.ONE)).toEqual(Component.ZERO);
