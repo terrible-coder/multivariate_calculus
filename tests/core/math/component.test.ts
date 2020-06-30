@@ -715,7 +715,7 @@ describe("Inverse hyperbolic trigonometry", function() {
 			properContext();
 		});
 
-		it("returns correct values", function() {
+		test("identity property", function() {
 			const identity = (x: Component) => {
 				const sinh = Component.sinh(x, ctx);
 				const asinh = Component.asinh(sinh, ctx);
@@ -734,7 +734,7 @@ describe("Inverse hyperbolic trigonometry", function() {
 			properContext();
 		});
 
-		it("returns correct values", function() {
+		test("identity property", function() {
 			const identity = (x: Component) => {
 				const cosh = Component.cosh(x, ctx);
 				const acosh = Component.acosh(cosh, ctx);
@@ -760,7 +760,7 @@ describe("Inverse hyperbolic trigonometry", function() {
 			properContext();
 		});
 
-		it("returns correct values", function() {
+		test("identity property", function() {
 			const identity = (x: Component) => {
 				const tanh = Component.tanh(x, ctx);
 				const atanh = Component.atanh(tanh, ctx);
