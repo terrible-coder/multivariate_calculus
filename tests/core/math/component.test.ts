@@ -597,6 +597,22 @@ describe("Inverse trigonometry", function() {
 				expect(Component.acos(values[i])).toEqual(acoss[i]);
 		});
 
+		test("identity property", function() {
+			const ctx = {
+				precision: mathenv.mode.precision + 5,
+				rounding: mathenv.mode.rounding
+			}
+			const identity = (x: Component) => {
+				const cos = Component.cos(x, ctx);
+				const acos = Component.acos(cos, ctx);
+				return Component.round(acos, mathenv.mode);
+			}
+			for(let i = 0; i < Math.PI/2; i += 0.1) {
+				const x = Component.create(i);
+				expect(identity(x)).toEqual(x);
+			}
+		});
+
 		it("throws errors", function() {
 			const values = new Array(10).fill(0)
 							.map(() => 1.1 + Math.random())
