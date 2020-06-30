@@ -536,6 +536,22 @@ describe("Inverse trigonometry", function() {
 				expect(Component.asin(values[i])).toEqual(asins[i]);
 		});
 
+		test("identity property", function() {
+			const ctx = {
+				precision: mathenv.mode.precision + 5,
+				rounding: mathenv.mode.rounding
+			}
+			const identity = (x: Component) => {
+				const sin = Component.sin(x, ctx);
+				const asin = Component.asin(sin, ctx);
+				return Component.round(asin, mathenv.mode);
+			}
+			for(let i = 0; i < Math.PI/2; i += 0.1) {
+				const x = Component.create(i);
+				expect(identity(x)).toEqual(x);
+			}
+		});
+
 		it("is an odd function", function() {
 			const values = new Array(10).fill(0)
 							.map(() => Math.random())
@@ -581,6 +597,22 @@ describe("Inverse trigonometry", function() {
 				expect(Component.acos(values[i])).toEqual(acoss[i]);
 		});
 
+		test("identity property", function() {
+			const ctx = {
+				precision: mathenv.mode.precision + 5,
+				rounding: mathenv.mode.rounding
+			}
+			const identity = (x: Component) => {
+				const cos = Component.cos(x, ctx);
+				const acos = Component.acos(cos, ctx);
+				return Component.round(acos, mathenv.mode);
+			}
+			for(let i = 0; i < Math.PI/2; i += 0.1) {
+				const x = Component.create(i);
+				expect(identity(x)).toEqual(x);
+			}
+		});
+
 		it("throws errors", function() {
 			const values = new Array(10).fill(0)
 							.map(() => 1.1 + Math.random())
@@ -622,14 +654,30 @@ describe("Inverse trigonometry", function() {
 			for(let i = 0; i < values.length; i++)
 				expect(Component.atan(values[i])).toEqual(atans[i]);
 		});
-	});
 
-	it("is an odd function", function() {
-		const values = new Array(10).fill(0)
-						.map(() => Math.random())
-						.map(x => Component.create(x));
-		for(let x of values)
-			expect(Component.atan(x.neg)).toEqual(Component.atan(x).neg);
+		test("identity property", function() {
+			const ctx = {
+				precision: mathenv.mode.precision + 5,
+				rounding: mathenv.mode.rounding
+			}
+			const identity = (x: Component) => {
+				const tan = Component.tan(x, ctx);
+				const atan = Component.atan(tan, ctx);
+				return Component.round(atan, mathenv.mode);
+			}
+			for(let i = 0; i < Math.PI/2; i += 0.1) {
+				const x = Component.create(i);
+				expect(identity(x)).toEqual(x);
+			}
+		});
+
+		it("is an odd function", function() {
+			const values = new Array(10).fill(0)
+							.map(() => Math.random())
+							.map(x => Component.create(x));
+			for(let x of values)
+				expect(Component.atan(x.neg)).toEqual(Component.atan(x).neg);
+		});
 	});
 });
 
@@ -715,7 +763,7 @@ describe("Inverse hyperbolic trigonometry", function() {
 			properContext();
 		});
 
-		it("returns correct values", function() {
+		test("identity property", function() {
 			const identity = (x: Component) => {
 				const sinh = Component.sinh(x, ctx);
 				const asinh = Component.asinh(sinh, ctx);
@@ -734,7 +782,7 @@ describe("Inverse hyperbolic trigonometry", function() {
 			properContext();
 		});
 
-		it("returns correct values", function() {
+		test("identity property", function() {
 			const identity = (x: Component) => {
 				const cosh = Component.cosh(x, ctx);
 				const acosh = Component.acosh(cosh, ctx);
@@ -745,6 +793,13 @@ describe("Inverse hyperbolic trigonometry", function() {
 				expect(identity(x)).toEqual(x);
 			}
 		});
+
+		it("throws appropriate errors", function() {
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(Math.random()-0.1);
+				expect(() => Component.acosh(x)).toThrow();
+			}
+		});
 	});
 
 	describe("atanh", function() {
@@ -753,7 +808,7 @@ describe("Inverse hyperbolic trigonometry", function() {
 			properContext();
 		});
 
-		it("returns correct values", function() {
+		test("identity property", function() {
 			const identity = (x: Component) => {
 				const tanh = Component.tanh(x, ctx);
 				const atanh = Component.atanh(tanh, ctx);
@@ -762,6 +817,13 @@ describe("Inverse hyperbolic trigonometry", function() {
 			for(let i = 0; i < 10; i++) {
 				const x = Component.create(`0.${i}`);
 				expect(identity(x)).toEqual(x);
+			}
+		});
+
+		it("throws appropriate errors", function() {
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(1.1 + Math.random());
+				expect(() => Component.atanh(x)).toThrow();
 			}
 		});
 	});
