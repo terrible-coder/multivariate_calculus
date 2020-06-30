@@ -745,6 +745,13 @@ describe("Inverse hyperbolic trigonometry", function() {
 				expect(identity(x)).toEqual(x);
 			}
 		});
+
+		it("throws appropriate errors", function() {
+			for(let i = 0; i < 10; i++) {
+				const x = Component.create(Math.random()-0.1);
+				expect(() => Component.acosh(x)).toThrow();
+			}
+		});
 	});
 
 	describe("atanh", function() {
