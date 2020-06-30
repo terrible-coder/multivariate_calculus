@@ -536,6 +536,22 @@ describe("Inverse trigonometry", function() {
 				expect(Component.asin(values[i])).toEqual(asins[i]);
 		});
 
+		test("identity property", function() {
+			const ctx = {
+				precision: mathenv.mode.precision + 5,
+				rounding: mathenv.mode.rounding
+			}
+			const identity = (x: Component) => {
+				const sin = Component.sin(x, ctx);
+				const asin = Component.asin(sin, ctx);
+				return Component.round(asin, mathenv.mode);
+			}
+			for(let i = 0; i < Math.PI/2; i += 0.1) {
+				const x = Component.create(i);
+				expect(identity(x)).toEqual(x);
+			}
+		});
+
 		it("is an odd function", function() {
 			const values = new Array(10).fill(0)
 							.map(() => Math.random())
