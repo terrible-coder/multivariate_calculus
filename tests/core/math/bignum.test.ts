@@ -3,6 +3,47 @@ import { Component } from "../../../src/core/math/component";
 import { mathenv } from "../../../src/core/env";
 import { MathContext } from "../../../src/core/math/context";
 
+const mock_add = jest.fn(BigNum.prototype.add);
+const mock_sub = jest.fn(BigNum.prototype.sub);
+const mock_mul = jest.fn(BigNum.prototype.mul);
+const mock_div = jest.fn(BigNum.prototype.div);
+const mock_inv = jest.fn(BigNum.prototype.inv);
+const mock_norm = jest.fn(BigNum.prototype.norm);
+const mock_abs = jest.fn(BigNum.abs);
+const mock_absSq = jest.fn(BigNum.absSq);
+
+const mocks = [
+	mock_add,
+	mock_sub,
+	mock_mul,
+	mock_div,
+	mock_inv,
+	mock_norm,
+	mock_abs,
+	mock_absSq
+];
+BigNum.prototype.add = mock_add;
+BigNum.prototype.sub = mock_sub;
+BigNum.prototype.mul = mock_mul;
+BigNum.prototype.div = mock_div;
+BigNum.prototype.inv = mock_inv;
+BigNum.prototype.norm = mock_norm;
+BigNum.abs = mock_abs;
+BigNum.absSq = mock_absSq;
+
+beforeEach(() => mocks.forEach(fn => fn.mockClear()));
+
+function properContext() {
+	mocks.forEach(fn => {
+		if(fn.mock.calls.length === 0) return;
+		fn.mock.calls.forEach(call => {
+			expect(call.length).toEqual(2);
+			expect(call[1]).toHaveProperty("precision");
+			expect(call[1]).toHaveProperty("rounding");
+		});
+	});
+}
+
 describe("Checks method definitions", function() {
 	it("Instance methods", function() {
 		const obj = Component.ONE;
