@@ -404,6 +404,11 @@ describe("Exponential", function() {
 });
 
 describe("Logarithm", function() {
+	test("calls with proper context", function() {
+		BigNum.ln(BigNum.hyper([1, 0, 5, 2]));
+		properContext();
+	});
+
 	describe("ln", function() {
 		it("for positive reals", function() {
 			for(let i = 1; i < 10; i++) {
