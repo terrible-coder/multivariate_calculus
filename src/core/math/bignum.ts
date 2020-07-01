@@ -1057,14 +1057,14 @@ export class BigNum extends Numerical {
 		};
 		let sum = BigNum.real("0");
 		let term = BigNum.real("1");
-		let n = BigNum.real("0");
+		let n = 0;// BigNum.real("0");
 		while(true) {
 			sum = sum.add(term, ctx);
-			const term1 = term.mul(x, ctx).div(n.add(BigNum.real("1")), ctx);
+			const term1 = term.mul(x, ctx).div(BigNum.real(n+1), ctx);
 			if(term1.equals(BigNum.real("0"), ctx))
 				return BigNum.round(sum, context);
 			term = term1;
-			n = n.add(BigNum.real("1"));
+			n++;
 		}
 	}
 
