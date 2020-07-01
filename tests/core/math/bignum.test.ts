@@ -42,6 +42,8 @@ function properContext() {
 			expect(call[1]).toHaveProperty("rounding");
 		});
 	});
+	// debugger
+	// mocks.forEach(fn => console.log((<any[]>fn.mock.calls).map((call: any[]) => call.length)));
 }
 
 describe("Checks method definitions", function() {
@@ -374,6 +376,11 @@ describe("Divides", function() {
 });
 
 describe("Exponential", function() {
+	test("calls with proper context", function() {
+		BigNum.exp(BigNum.hyper([1, 0, 5, 2]));
+		properContext();
+	});
+
 	it("for 1 real", function() {
 		expect(BigNum.exp(BigNum.real("0"))).toEqual(BigNum.real("1"));
 		expect(BigNum.exp(BigNum.real("1"))).toEqual(new BigNum(Component.round(Component.E, mathenv.mode)));
