@@ -216,7 +216,10 @@ export class BigNum extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public norm(context: MathContext): BigNum;
-	public norm(context=mathenv.mode) {
+	/** @internal */
+	public norm(...args: any[]): BigNum;
+	public norm(...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		return this.conj.mul(this, context);
 	}
 
@@ -340,7 +343,10 @@ export class BigNum extends Numerical {
 	 * according to the given context.
 	 */
 	public inv(context: MathContext): BigNum;
-	public inv(context=mathenv.mode) {
+	/** @internal */
+	public inv(...args: any[]): BigNum;
+	public inv(...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const magSq = this.norm(context).components[0];
 		const scale = new BigNum(Component.ONE.div(magSq, context));
 		return this.conj.mul(scale, context);
