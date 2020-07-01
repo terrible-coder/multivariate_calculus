@@ -460,6 +460,11 @@ describe("Logarithm", function() {
 
 describe("Trigonometry", function() {
 	describe("sine", function() {
+		test("calls with proper context", function() {
+			BigNum.sin(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+	
 		it("for 1 real", function() {
 			for(let i = 0; i < 10; i++) {
 				const x = BigNum.real(i);
@@ -499,6 +504,11 @@ describe("Trigonometry", function() {
 	});
 
 	describe("cosine", function() {
+		test("calls with proper context", function() {
+			BigNum.cos(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+	
 		it("for 1 real", function() {
 			for(let i = 0; i < 10; i++) {
 				const x = BigNum.real(i);
