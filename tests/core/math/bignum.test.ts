@@ -549,6 +549,11 @@ describe("Trigonometry", function() {
 
 describe("Inverse trigonometry", function() {
 	describe("asin", function() {
+		test("calls with proper context", function() {
+			BigNum.asin(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+	
 		test("for real", function() {
 			const three = Component.THREE, two = Component.TWO, half = Component.create("0.5");
 			const values = [
@@ -581,6 +586,11 @@ describe("Inverse trigonometry", function() {
 	});
 
 	describe("acos", function() {
+		test("calls with proper context", function() {
+			BigNum.acos(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+	
 		test("for real", function() {
 			const three = Component.THREE, two = Component.TWO, half = Component.create("0.5");
 			const values = [
@@ -614,6 +624,11 @@ describe("Inverse trigonometry", function() {
 	});
 
 	describe("atan", function() {
+		test("calls with proper context", function() {
+			BigNum.atan(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+	
 		it("for real", function() {
 			const values = [
 				"1", "-1", "2", "-2", "1000000", "10000000000"
