@@ -726,7 +726,6 @@ describe("Hyperbolic trigonometry", function() {
 	describe("tanh", function() {
 		test("calls with proper context", function() {
 			BigNum.tanh(BigNum.hyper([1, 0, 5, 2]));
-			mocks.forEach(fn => console.log((<any[]>fn.mock.calls).map((call: any[]) => call.length)));
 			properContext();
 		});
 
