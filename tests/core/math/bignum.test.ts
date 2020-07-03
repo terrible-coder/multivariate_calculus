@@ -3,6 +3,51 @@ import { Component } from "../../../src/core/math/component";
 import { mathenv } from "../../../src/core/env";
 import { MathContext } from "../../../src/core/math/context";
 
+const mock_add = jest.fn(BigNum.prototype.add);
+const mock_sub = jest.fn(BigNum.prototype.sub);
+const mock_mul = jest.fn(BigNum.prototype.mul);
+const mock_div = jest.fn(BigNum.prototype.div);
+const mock_inv = jest.fn(BigNum.prototype.inv);
+const mock_norm = jest.fn(BigNum.prototype.norm);
+const mock_abs = jest.fn(BigNum.abs);
+const mock_absSq = jest.fn(BigNum.absSq);
+
+const mocks = [
+	mock_add,
+	mock_sub,
+	mock_mul,
+	mock_div,
+	mock_inv,
+	mock_norm,
+	mock_abs,
+	mock_absSq
+];
+BigNum.prototype.add = mock_add;
+BigNum.prototype.sub = mock_sub;
+BigNum.prototype.mul = mock_mul;
+BigNum.prototype.div = mock_div;
+BigNum.prototype.inv = mock_inv;
+BigNum.prototype.norm = mock_norm;
+BigNum.abs = mock_abs;
+BigNum.absSq = mock_absSq;
+
+beforeEach(() => mocks.forEach(fn => fn.mockClear()));
+
+function properContext() {
+	mocks.forEach(fn => {
+		if(fn.mock.calls.length === 0) return;
+		fn.mock.calls.some(call => {
+			const contextPassed = call.some(argument => {
+				const arg = <MathContext>argument;
+				return arg.precision !== undefined && arg.rounding !== undefined;
+			});
+			expect(contextPassed).toBe(true);
+		});
+	});
+	// debugger
+	// mocks.forEach(fn => console.log((<any[]>fn.mock.calls).map((call: any[]) => call.length)));
+}
+
 describe("Checks method definitions", function() {
 	it("Instance methods", function() {
 		const obj = Component.ONE;
@@ -333,6 +378,11 @@ describe("Divides", function() {
 });
 
 describe("Exponential", function() {
+	test("calls with proper context", function() {
+		BigNum.exp(BigNum.hyper([1, 0, 5, 2]));
+		properContext();
+	});
+
 	it("for 1 real", function() {
 		expect(BigNum.exp(BigNum.real("0"))).toEqual(BigNum.real("1"));
 		expect(BigNum.exp(BigNum.real("1"))).toEqual(new BigNum(Component.round(Component.E, mathenv.mode)));
@@ -356,6 +406,11 @@ describe("Exponential", function() {
 });
 
 describe("Logarithm", function() {
+	test("calls with proper context", function() {
+		BigNum.ln(BigNum.hyper([1, 0, 5, 2]));
+		properContext();
+	});
+
 	describe("ln", function() {
 		it("for positive reals", function() {
 			for(let i = 1; i < 10; i++) {
@@ -407,6 +462,11 @@ describe("Logarithm", function() {
 
 describe("Trigonometry", function() {
 	describe("sine", function() {
+		test("calls with proper context", function() {
+			BigNum.sin(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+	
 		it("for 1 real", function() {
 			for(let i = 0; i < 10; i++) {
 				const x = BigNum.real(i);
@@ -446,6 +506,11 @@ describe("Trigonometry", function() {
 	});
 
 	describe("cosine", function() {
+		test("calls with proper context", function() {
+			BigNum.cos(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+	
 		it("for 1 real", function() {
 			for(let i = 0; i < 10; i++) {
 				const x = BigNum.real(i);
@@ -486,6 +551,11 @@ describe("Trigonometry", function() {
 
 describe("Inverse trigonometry", function() {
 	describe("asin", function() {
+		test("calls with proper context", function() {
+			BigNum.asin(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+	
 		test("for real", function() {
 			const three = Component.THREE, two = Component.TWO, half = Component.create("0.5");
 			const values = [
@@ -518,6 +588,11 @@ describe("Inverse trigonometry", function() {
 	});
 
 	describe("acos", function() {
+		test("calls with proper context", function() {
+			BigNum.acos(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+	
 		test("for real", function() {
 			const three = Component.THREE, two = Component.TWO, half = Component.create("0.5");
 			const values = [
@@ -551,6 +626,11 @@ describe("Inverse trigonometry", function() {
 	});
 
 	describe("atan", function() {
+		test("calls with proper context", function() {
+			BigNum.atan(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+	
 		it("for real", function() {
 			const values = [
 				"1", "-1", "2", "-2", "1000000", "10000000000"
@@ -586,6 +666,11 @@ describe("Inverse trigonometry", function() {
 
 describe("Hyperbolic trigonometry", function() {
 	describe("sinh", function() {
+		test("calls with proper context", function() {
+			BigNum.sinh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		it("for real", function() {
 			const values = new Array(6).fill(0).map((_, i) => i.toString()).map(x => BigNum.real(x));
 			const sinhs = [
@@ -610,6 +695,11 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("cosh", function() {
+		test("calls with proper context", function() {
+			BigNum.cosh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		it("for real", function() {
 			const values = new Array(6).fill(0).map((_, i) => i.toString()).map(x => BigNum.real(x));
 			const coshs = [
@@ -634,6 +724,11 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("tanh", function() {
+		test("calls with proper context", function() {
+			BigNum.tanh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		it("for real", function() {
 			const values = new Array(10).fill(0).map((_, i) => BigNum.real(i));
 			const tanhs = [
@@ -662,6 +757,11 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("asinh", function() {
+		test("calls with proper context", function() {
+			BigNum.asinh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		test("for real", function() {
 			const values = [
 				"0",
@@ -690,6 +790,11 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("acosh", function() {
+		test("calls with proper context", function() {
+			BigNum.acosh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		test("for real", function() {
 			const values = [
 				"1",
@@ -722,6 +827,11 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("atanh", function() {
+		test("calls with proper context", function() {
+			BigNum.atanh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		describe("for real", function() {
 			test("less than 1", function() {
 				const values = new Array(10).fill(0).map((_,i) => BigNum.real(`0.${i}`));

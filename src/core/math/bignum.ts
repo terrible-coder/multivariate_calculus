@@ -181,7 +181,11 @@ export class BigNum extends Numerical {
 	public static abs(x: BigNum, ...args: any[]): BigNum;
 	public static abs(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const magsq = x.components.reduce((prev, curr) => prev.add(curr.pow(Component.TWO)), Component.ZERO);
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		}
+		const magsq = x.components.reduce((prev, curr) => prev.add(curr.mul(curr, ctx), ctx), Component.ZERO);
 		return new BigNum(magsq.pow(Component.create("0.5"), context));
 	}
 
@@ -216,7 +220,10 @@ export class BigNum extends Numerical {
 	 * @param context The context settings to use.
 	 */
 	public norm(context: MathContext): BigNum;
-	public norm(context=mathenv.mode) {
+	/** @internal */
+	public norm(...args: any[]): BigNum;
+	public norm(...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		return this.conj.mul(this, context);
 	}
 
@@ -340,7 +347,10 @@ export class BigNum extends Numerical {
 	 * according to the given context.
 	 */
 	public inv(context: MathContext): BigNum;
-	public inv(context=mathenv.mode) {
+	/** @internal */
+	public inv(...args: any[]): BigNum;
+	public inv(...args: any[]) {
+		const context = args[0] || mathenv.mode;
 		const magSq = this.norm(context).components[0];
 		const scale = new BigNum(Component.ONE.div(magSq, context));
 		return this.conj.mul(scale, context);
@@ -700,7 +710,7 @@ export class BigNum extends Numerical {
 		const half = Component.create("0.5"), quarter = Component.create("0.25");
 		const real = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
 		const imag = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
-		const res = real.add(v_hat.mul(imag, ctx));
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
@@ -849,7 +859,7 @@ export class BigNum extends Numerical {
 		const den = cosh.add(cos, ctx);
 		const real = new BigNum(sinh.div(den, ctx));
 		const imag = new BigNum(sin.div(den, ctx));
-		const res = real.add(v_hat.mul(imag, ctx));
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
@@ -1051,14 +1061,14 @@ export class BigNum extends Numerical {
 		};
 		let sum = BigNum.real("0");
 		let term = BigNum.real("1");
-		let n = BigNum.real("0");
+		let n = 0;// BigNum.real("0");
 		while(true) {
 			sum = sum.add(term, ctx);
-			const term1 = term.mul(x, ctx).div(n.add(BigNum.real("1")), ctx);
+			const term1 = term.mul(x, ctx).div(BigNum.real(n+1), ctx);
 			if(term1.equals(BigNum.real("0"), ctx))
 				return BigNum.round(sum, context);
 			term = term1;
-			n = n.add(BigNum.real("1"));
+			n++;
 		}
 	}
 
