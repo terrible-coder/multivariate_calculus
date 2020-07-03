@@ -33,12 +33,16 @@ beforeEach(() => mocks.forEach(fn => fn.mockClear()));
 function properContext() {
 	mocks.forEach(fn => {
 		if(fn.mock.calls.length === 0) return;
-		fn.mock.calls.forEach(call => {
-			expect(call.length).toEqual(2);
-			expect(call[1]).toHaveProperty("precision");
-			expect(call[1]).toHaveProperty("rounding");
-		})
-	})
+		fn.mock.calls.some(call => {
+			const contextPassed = call.some(argument => {
+				const arg = <MathContext>argument;
+				return arg.precision !== undefined && arg.rounding !== undefined;
+			});
+			expect(contextPassed).toBe(true);
+		});
+	});
+	// debugger
+	// mocks.forEach(fn => console.log((<any[]>fn.mock.calls).map((call: any[]) => call.length)));
 }
 
 describe("Checks method definitions", function() {
