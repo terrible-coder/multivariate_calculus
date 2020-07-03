@@ -726,6 +726,7 @@ describe("Hyperbolic trigonometry", function() {
 	describe("tanh", function() {
 		test("calls with proper context", function() {
 			BigNum.tanh(BigNum.hyper([1, 0, 5, 2]));
+			mocks.forEach(fn => console.log((<any[]>fn.mock.calls).map((call: any[]) => call.length)));
 			properContext();
 		});
 
@@ -757,6 +758,11 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("asinh", function() {
+		test("calls with proper context", function() {
+			BigNum.asinh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		test("for real", function() {
 			const values = [
 				"0",
@@ -785,6 +791,11 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("acosh", function() {
+		test("calls with proper context", function() {
+			BigNum.acosh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		test("for real", function() {
 			const values = [
 				"1",
@@ -817,6 +828,11 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("atanh", function() {
+		test("calls with proper context", function() {
+			BigNum.atanh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		describe("for real", function() {
 			test("less than 1", function() {
 				const values = new Array(10).fill(0).map((_,i) => BigNum.real(`0.${i}`));
