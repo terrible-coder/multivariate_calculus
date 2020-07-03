@@ -859,7 +859,7 @@ export class BigNum extends Numerical {
 		const den = cosh.add(cos, ctx);
 		const real = new BigNum(sinh.div(den, ctx));
 		const imag = new BigNum(sin.div(den, ctx));
-		const res = real.add(v_hat.mul(imag, ctx));
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
