@@ -181,7 +181,11 @@ export class BigNum extends Numerical {
 	public static abs(x: BigNum, ...args: any[]): BigNum;
 	public static abs(x: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		const magsq = x.components.reduce((prev, curr) => prev.add(curr.pow(Component.TWO)), Component.ZERO);
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		}
+		const magsq = x.components.reduce((prev, curr) => prev.add(curr.mul(curr, ctx), ctx), Component.ZERO);
 		return new BigNum(magsq.pow(Component.create("0.5"), context));
 	}
 
@@ -706,7 +710,7 @@ export class BigNum extends Numerical {
 		const half = Component.create("0.5"), quarter = Component.create("0.25");
 		const real = new BigNum(half.mul(Component.atan(atan_arg, ctx), ctx));
 		const imag = new BigNum(quarter.mul(Component.ln(log_arg, ctx), ctx));
-		const res = real.add(v_hat.mul(imag, ctx));
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
