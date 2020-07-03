@@ -666,6 +666,11 @@ describe("Inverse trigonometry", function() {
 
 describe("Hyperbolic trigonometry", function() {
 	describe("sinh", function() {
+		test("calls with proper context", function() {
+			BigNum.sinh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		it("for real", function() {
 			const values = new Array(6).fill(0).map((_, i) => i.toString()).map(x => BigNum.real(x));
 			const sinhs = [
@@ -690,6 +695,11 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("cosh", function() {
+		test("calls with proper context", function() {
+			BigNum.cosh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		it("for real", function() {
 			const values = new Array(6).fill(0).map((_, i) => i.toString()).map(x => BigNum.real(x));
 			const coshs = [
@@ -714,6 +724,11 @@ describe("Hyperbolic trigonometry", function() {
 	});
 
 	describe("tanh", function() {
+		test("calls with proper context", function() {
+			BigNum.tanh(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
 		it("for real", function() {
 			const values = new Array(10).fill(0).map((_, i) => BigNum.real(i));
 			const tanhs = [
