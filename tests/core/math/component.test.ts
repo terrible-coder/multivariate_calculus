@@ -683,6 +683,13 @@ describe("Inverse trigonometry", function() {
 				expect(Component.atan(x.neg)).toEqual(Component.atan(x).neg);
 		});
 	});
+
+	describe("atan2", function() {
+		test("calls with correct context", function() {
+			Component.atan2(Component.THREE, Component.FIVE.neg);
+			properContext();
+		});
+	});
 });
 
 describe("Hyperbolic trigonometry", function() {
