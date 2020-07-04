@@ -683,6 +683,26 @@ export class Component extends Numerical {
 	}
 
 	/**
+	 * Calculates the inverse trigonometric tangent of a number with rounding
+	 * according to [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static atan2(y: Component, x: Component): Component;
+	/**
+	 * Calculates the inverse trigonometric tangent of a number with rounding
+	 * according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static atan2(y: Component, x: Component, context: MathContext): Component;
+	/** @internal */
+	public static atan2(y: Component, x: Component, ...args: any[]): Component;
+	public static atan2(y: Component, x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		return TrigCyclic.atan2(y, x, context);
+	}
+
+	/**
 	 * Calculates the hyperbolic sine with rounding according to [[mathenv.mode]].
 	 * @param x A number.
 	 */

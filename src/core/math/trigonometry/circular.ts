@@ -292,4 +292,24 @@ export namespace TrigCyclic {
 			return atan_less(x, context);
 		return atan_more(x, context);
 	}
+
+	export function atan2(y: Component, x: Component, context: MathContext) {
+		const yComp = y.compareTo(Component.ZERO);
+		const xComp = x.compareTo(Component.ZERO);
+		if(xComp === 0 && yComp === 0)
+			throw new Error("undefined");
+		const pi = Component.PI;
+		const two = Component.TWO;
+		if(xComp === 0)
+			return yComp === -1? pi.div(two, context).neg: pi.div(two, context);
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		}
+		const arg = y.div(x, ctx);
+		if(xComp === 1) return atan(arg, context);
+		const value = atan(arg, ctx);
+		const res = yComp === -1? value.sub(pi, ctx): value.add(pi, ctx);
+		return Component.round(res, context);
+	}
 }
