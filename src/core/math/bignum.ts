@@ -1093,15 +1093,14 @@ export class BigNum extends Numerical {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const r = BigNum.abs(x, ctx);
-		const real = new BigNum(Component.ln(r.components[0], ctx));
-		const u = x.div(r, ctx);
-		const u0 = u.components[0]; //cos(theta)
-		const sin2 = Component.ONE.sub(u0.pow(Component.TWO, ctx), ctx);
-		const sin = new BigNum(sin2.pow(Component.create("0.5"), ctx));
-		const theta = new BigNum(Component.acos(u0, ctx));
-		const v = sin.equals(BigNum.real("0"), ctx)? BigNum.complex("0", "1"): u.imag.div(sin, ctx);
-		const res = real.add(theta.mul(v, ctx), ctx);
+		const r = BigNum.abs(x, ctx).components[0];
+		const a = x.real.components[0];
+		const v = x.imag;
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = theta.equals(Component.ZERO, context)? BigNum.complex(0, 1): v.div(new BigNum(theta), ctx);
+		const real = new BigNum(Component.ln(r, ctx));
+		const imag = new BigNum(Component.atan2(theta, a, context));
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
