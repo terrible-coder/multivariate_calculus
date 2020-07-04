@@ -28,21 +28,21 @@ type num1d = {
 export class Component extends Numerical {
 
 	/**
-	 * The circle constant \\( \pi \\) correct upto 100 decimal places.
+	 * The circle constant \\( \pi \\) correct up to 100 decimal places.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
 	public static PI = new Component({integer: "3", decimal: "1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679"});
 
 	/**
-	 * The constant Euler's number (\\( e \\)) correct upto 100 decimal places.
+	 * The constant Euler's number (\\( e \\)) correct up to 100 decimal places.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
 	 */
 	public static E = new Component({integer: "2", decimal: "7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274"});
 
 	/**
-	 * The natural logarithm of \\( 10 \\) correct upto 100 decimal places. This comes
+	 * The natural logarithm of \\( 10 \\) correct up to 100 decimal places. This comes
 	 * in very handy for natural base to common base logarithm.
 	 * 
 	 * Source: http://paulbourke.net/miscellaneous/numbers/
@@ -50,7 +50,7 @@ export class Component extends Numerical {
 	public static ln10 = new Component({integer: "2", decimal: "3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983"});
 
 	/**
-	 * The natural logarithm of \\( 2 \\) correct upto 100 decimal places.
+	 * The natural logarithm of \\( 2 \\) correct up to 100 decimal places.
 	 */
 	public static ln2 = new Component({integer: "", decimal: "6931471805599453094172321214581765680755001343602552541206800094933936219696947156058633269964186875"})
 
@@ -465,7 +465,7 @@ export class Component extends Numerical {
 
 	/**
 	 * Raises a [[Component]] to an integer power. This function may be made
-	 * private in future versions. It is adviced not to use this function
+	 * private in future versions. It is advised not to use this function
 	 * except for development purposes.
 	 * @param base The base number.
 	 * @param index The index / exponent to which the base is to be raised.
@@ -680,6 +680,26 @@ export class Component extends Numerical {
 	public static atan(x: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
 		return TrigCyclic.atan(x, context);
+	}
+
+	/**
+	 * Calculates the inverse trigonometric tangent of a number with rounding
+	 * according to [[mathenv.mode]].
+	 * @param x A number.
+	 */
+	public static atan2(y: Component, x: Component): Component;
+	/**
+	 * Calculates the inverse trigonometric tangent of a number with rounding
+	 * according to the given context.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
+	public static atan2(y: Component, x: Component, context: MathContext): Component;
+	/** @internal */
+	public static atan2(y: Component, x: Component, ...args: any[]): Component;
+	public static atan2(y: Component, x: Component, ...args: any[]) {
+		const context = args[0] || mathenv.mode;
+		return TrigCyclic.atan2(y, x, context);
 	}
 
 	/**

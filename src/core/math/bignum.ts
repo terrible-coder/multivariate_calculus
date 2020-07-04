@@ -88,7 +88,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * \\[ a_i = b_i \quad \forall i \\]
 	 * 
-	 * The equality is checked only upto the number of decimal places specified
+	 * The equality is checked only up to the number of decimal places specified
 	 * by {@link mathenv.mode}.
 	 * @param that The number to check against.
 	 */
@@ -100,7 +100,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * \\[ a_i = b_i \quad \forall i \\]
 	 * 
-	 * The equality is checked only upto the number of decimal places specified
+	 * The equality is checked only up to the number of decimal places specified
 	 * by the given context settings.
 	 * @param that The number to check against.
 	 * @param context The context settings to use.
@@ -150,14 +150,14 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Evaluates the absolute value of a number correct upto the number of
+	 * Evaluates the absolute value of a number correct up to the number of
 	 * places specified by {@link mathenv.mode}.
 	 * @param x A number.
 	 * @param context Context settings to use.
 	 */
 	public static absSq(x: BigNum): BigNum;
 	/**
-	 * Evaluates the absolute value of a number correct upto the number of
+	 * Evaluates the absolute value of a number correct up to the number of
 	 * places specified by the given context settings.
 	 * @param x A number.
 	 * @param context Context settings to use.
@@ -171,7 +171,7 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Evaluates the absolute value of a number correct upto the number of
+	 * Evaluates the absolute value of a number correct up to the number of
 	 * places specified by {@link mathenv.mode}.
 	 * @param x A number.
 	 */
@@ -296,7 +296,7 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
-	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
+	 * the [Cayley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
 	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that The number to multiply with.
 	 * @returns this * that.
@@ -304,7 +304,7 @@ export class BigNum extends Numerical {
 	public mul(that: BigNum): BigNum;
 	/**
 	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
-	 * the [Caley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
+	 * the [Cayley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
 	 * The result is rounded according to the given context settings.
 	 * @param that The number to multiply with.
 	 * @param context The context settings to use.
@@ -560,7 +560,7 @@ export class BigNum extends Numerical {
 	public static asin(x: BigNum): BigNum;
 	/**
 	 * Calculates the inverse trigonometric sine of a given value with rounding
-	 * according to the given context setings.
+	 * according to the given context settings.
 	 * 
 	 * **Method**:
 	 * 
@@ -1093,15 +1093,14 @@ export class BigNum extends Numerical {
 			precision: 2 * context.precision,
 			rounding: context.rounding
 		};
-		const r = BigNum.abs(x, ctx);
-		const real = new BigNum(Component.ln(r.components[0], ctx));
-		const u = x.div(r, ctx);
-		const u0 = u.components[0]; //cos(theta)
-		const sin2 = Component.ONE.sub(u0.pow(Component.TWO, ctx), ctx);
-		const sin = new BigNum(sin2.pow(Component.create("0.5"), ctx));
-		const theta = new BigNum(Component.acos(u0, ctx));
-		const v = sin.equals(BigNum.real("0"), ctx)? BigNum.complex("0", "1"): u.imag.div(sin, ctx);
-		const res = real.add(theta.mul(v, ctx), ctx);
+		const r = BigNum.abs(x, ctx).components[0];
+		const a = x.real.components[0];
+		const v = x.imag;
+		const theta = BigNum.abs(v, ctx).components[0];
+		const v_hat = theta.equals(Component.ZERO, context)? BigNum.complex(0, 1): v.div(new BigNum(theta), ctx);
+		const real = new BigNum(Component.ln(r, ctx));
+		const imag = new BigNum(Component.atan2(theta, a, context));
+		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
 
@@ -1231,12 +1230,12 @@ export namespace BigNum {
 	 * predictable is called directly.
 	 */
 	export function hyper(comps: string[]): BigNum;
-	export function hyper(...vals: (number | string)[] | [(number | string)[]]) {
+	export function hyper(...values: (number | string)[] | [(number | string)[]]) {
 		let args: Component[];
-		const temp = vals[0];
+		const temp = values[0];
 		if(temp instanceof Array)
 			args = temp.map(x => Component.create(x.toString()));
-		else args = (<Array<string|number>>vals).map(x => Component.create(x.toString()));
+		else args = (<Array<string|number>>values).map(x => Component.create(x.toString()));
 		return new BigNum(args);
 	}
 
