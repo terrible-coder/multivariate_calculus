@@ -689,6 +689,21 @@ describe("Inverse trigonometry", function() {
 			Component.atan2(Component.THREE, Component.FIVE.neg);
 			properContext();
 		});
+
+		describe("returns correct values", function() {
+			const ctx = MathContext.HIGH_PRECISION;
+			const piBy2 = Component.PI.div(Component.TWO, ctx);
+			test("in Quadrant I", function() {
+				const angles = new Array(9).fill(0)
+								.map((_, i) => Component.create(`0.${i+1}`))
+								.map(x => piBy2.mul(x));
+				const X = angles.map(x => Component.cos(x, ctx));
+				const Y = angles.map(x => Component.sin(x, ctx));
+				for(let i = 0; i < angles.length; i++) {
+					expect(Component.atan2(Y[i], X[i])).toEqual(angles[i]);
+				}
+			});
+		});
 	});
 });
 
