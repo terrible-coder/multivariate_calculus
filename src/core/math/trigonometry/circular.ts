@@ -229,18 +229,23 @@ export namespace TrigCyclic {
 	 * according to the given context.
 	 * 
 	 * Method:
-	 * The input can be divided into 3 regions for fast convergence.
-	 * 1. \\( x < 1 \\):
+	 * The input can be divided into 4 regions for fast convergence.
+	 * 
+	 * 1. \\( 0 \leqslant x < \sqrt{2}-1 \\):
 	 * 
 	 * \\[ \tan^{-1} = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{2n+1} \\]
 	 * 
-	 * 2. \\( (x-1)^2 < 2 \\):
+	 * 2. \\( \sqrt{2}-1 \leqslant x < 1 \\):
 	 * 
-	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{x-1}{x+1}) \\]
+	 * \\[ \tan^{-1} x = \frac{\pi}{4} - \tan^{-1} \left( \frac{1-x}{1+x} \right) \\]
 	 * 
-	 * 3. \\( (x-1)^2 \geqslant 2 \\):
+	 * 3. \\( 1 \leqslant x < \sqrt{2}+1 \\):
 	 * 
-	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{1}{x}) \\]
+	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} \left( \frac{x-1}{x+1} \right) \\]
+	 * 
+	 * 4. \\( x \geqslant \sqrt{2}+1 \\):
+	 * 
+	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} \left( \frac{1}{x} \right) \\]
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
