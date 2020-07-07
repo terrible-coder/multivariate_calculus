@@ -99,7 +99,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/4445d6b/src/core/math/trigonometry/circular.ts#L175">src/core/math/trigonometry/circular.ts:175</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/c6a32da/src/core/math/trigonometry/circular.ts#L175">src/core/math/trigonometry/circular.ts:175</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -137,7 +137,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/4445d6b/src/core/math/trigonometry/circular.ts#L151">src/core/math/trigonometry/circular.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/c6a32da/src/core/math/trigonometry/circular.ts#L151">src/core/math/trigonometry/circular.ts:151</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -183,7 +183,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/4445d6b/src/core/math/trigonometry/circular.ts#L284">src/core/math/trigonometry/circular.ts:284</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/c6a32da/src/core/math/trigonometry/circular.ts#L253">src/core/math/trigonometry/circular.ts:253</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -192,19 +192,23 @@
 									according to the given context.</p>
 								</div>
 								<p>Method:
-								The input can be divided into 3 regions for fast convergence.</p>
+								The input can be divided into 4 regions for fast convergence.</p>
 								<ol>
-									<li>\( x &lt; 1 \):</li>
+									<li>\( 0 \leqslant x &lt; \sqrt{2}-1 \):</li>
 								</ol>
 								<p>\[ \tan^{-1} = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{2n+1} \]</p>
 								<ol start="2">
-									<li>\( (x-1)^2 &lt; 2 \):</li>
+									<li>\( \sqrt{2}-1 \leqslant x &lt; 1 \):</li>
 								</ol>
-								<p>\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{x-1}{x+1}) \]</p>
+								<p>\[ \tan^{-1} x = \frac{\pi}{4} - \tan^{-1} \left( \frac{1-x}{1+x} \right) \]</p>
 								<ol start="3">
-									<li>\( (x-1)^2 \geqslant 2 \):</li>
+									<li>\( 1 \leqslant x &lt; \sqrt{2}+1 \):</li>
 								</ol>
-								<p>\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{1}{x}) \]</p>
+								<p>\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} \left( \frac{x-1}{x+1} \right) \]</p>
+								<ol start="4">
+									<li>\( x \geqslant \sqrt{2}+1 \):</li>
+								</ol>
+								<p>\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} \left( \frac{1}{x} \right) \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -235,19 +239,37 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/4445d6b/src/core/math/trigonometry/circular.ts#L296">src/core/math/trigonometry/circular.ts:296</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/c6a32da/src/core/math/trigonometry/circular.ts#L306">src/core/math/trigonometry/circular.ts:306</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the solution for \( \theta \) for the set of equations</p>
+								</div>
+								<p>\[ \begin{align}
+									x &amp;= r \cos \theta \\
+									y &amp;= r \sin \theta
+								\end{align} \]</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>y: <a href="../classes/component.html" class="tsd-signature-type">Component</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The vertical component.</p>
+									</div>
 								</li>
 								<li>
 									<h5>x: <a href="../classes/component.html" class="tsd-signature-type">Component</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The horizontal component.</p>
+									</div>
 								</li>
 								<li>
 									<h5>context: <a href="mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The context settings to use.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/component.html" class="tsd-signature-type">Component</a></h4>
@@ -264,7 +286,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/4445d6b/src/core/math/trigonometry/circular.ts#L62">src/core/math/trigonometry/circular.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/c6a32da/src/core/math/trigonometry/circular.ts#L62">src/core/math/trigonometry/circular.ts:62</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -309,7 +331,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/4445d6b/src/core/math/trigonometry/circular.ts#L22">src/core/math/trigonometry/circular.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/c6a32da/src/core/math/trigonometry/circular.ts#L22">src/core/math/trigonometry/circular.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -354,7 +376,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/4445d6b/src/core/math/trigonometry/circular.ts#L88">src/core/math/trigonometry/circular.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/c6a32da/src/core/math/trigonometry/circular.ts#L88">src/core/math/trigonometry/circular.ts:88</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
