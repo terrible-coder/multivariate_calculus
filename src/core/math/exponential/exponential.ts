@@ -5,6 +5,16 @@ export namespace Exponent {
 	/**
 	 * Calculates the exponential of a given number with rounding according to
 	 * the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * Find the values \\( k \\) such that
+	 * \\[ x = k\ln 2 + r \\]
+	 * where \\( \lvert r \rvert \leqslant \frac{\ln 2}{2} \\).
+	 * 
+	 * Therefore,
+	 * \\[ \exp{x} = 2^k e^{r} \\]
+	 * 
 	 * @param x A number
 	 * @param context The context settings to use.
 	 */
@@ -123,6 +133,28 @@ export namespace Exponent {
 	/**
 	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
 	 * with rounding according to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * For larger values of \\( x \\)(\\( > 1 \\)), the range can be adjusted
+	 * such that
+	 * \\[ x = 2^k(1 + f) \\]
+	 * 
+	 * where \\( k \\) is such that \\( |f| < 1 \\).
+	 * Therefore,
+	 * \\[ \ln x = k \ln 2 + \ln (1 + f) \\]
+	 * 
+	 * For faster convergence we can write \\( \ln (1+f) \\) as
+	 * 
+	 * \\[ \ln (1+f) = \ln (1+s) - \ln (1-s) \\]
+	 * 
+	 * This gives us \\( s = \frac{x}{2+x} \\) and
+	 * 
+	 * \\[ \ln (1+f) = 2 \sum_{n=0}^{\infty} \frac{s^{2n+1}}{2n+1} \\]
+	 * 
+	 * Finally, we can write
+	 * \\[ \ln x = k \ln 2 + 2 \sum_{n=0}^{\infty} \frac{s^{2n+1}}{2n+1} \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */

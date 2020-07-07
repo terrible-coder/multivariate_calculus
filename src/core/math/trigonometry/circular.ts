@@ -172,8 +172,18 @@ export namespace TrigCyclic {
 	/**
 	 * Calculates the inverse trigonometric cosine of a number with rounding
 	 * according to the given context.
+	 * 
+	 * **Method**:
+	 * 
+	 * If \\( \lvert x \rvert < 0.5 \\),
+	 * \\[ \cos^{-1} x = \frac{\pi}{2} - \sin^{-1} x \\]
+	 * 
+	 * otherwise,
+	 * \\[ \cos^{-1} x = 2 \sin^{-1} \sqrt{\frac{1-x}{2}} \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link asin}
 	 */
 	export function acos(x: Component, context: MathContext) {
 		const ctx: MathContext = {
@@ -303,6 +313,16 @@ export namespace TrigCyclic {
 	 * 	x &= r \cos \theta \\\\
 	 * 	y &= r \sin \theta
 	 * 	\end{align} \\]
+	 * 
+	 * Put simply, the above boils down to
+	 * \\[ \operatorname{atan2}(y, x) =
+	 * \begin{cases}
+	 * 	\tan^{-1} \left(\frac{y}{x}\right) &\text{if } x > 0, \\\\
+	 * 	\frac{\pi}{2} - \tan^{-1} \left(\frac{x}{y}\right) &\text{if } y > 0, \\\\
+	 * 	-\frac{\pi}{2} - \tan^{-1} \left(\frac{x}{y}\right) &\text{if } y < 0, \\\\
+	 * 	\tan^{-1} \left(\frac{y}{x}\right) \pm \pi &\text{if } x < 0, \\\\
+	 * 	\text{undefined} &\text{if } x = 0 \text{ and } y = 0
+	 * \end{cases} \\]
 	 * 
 	 * @param y The vertical component.
 	 * @param x The horizontal component.
