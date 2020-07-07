@@ -1075,14 +1075,56 @@ export class BigNum extends Numerical {
 	/**
 	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
 	 * with rounding according to {@link mathenv.mode}.
+	 * 
+	 * **Method**:
+	 * 
+	 * Let \\( r \\) be the absolute value of \\( x \\).
+	 * Therefore, \\( r = \lvert a + \hat{v} \theta \rvert \\).
+	 * 
+	 * \\[ \ln \left(a+\hat{v}\theta \\right) = \ln r + \hat{v} \phi \\]
+	 * 
+	 * where \\( \phi \\) is such that
+	 * 
+	 * \\[ \begin{align}
+	 * 		a &= r \cos \phi \\\\
+	 * 		\theta &= r \sin \phi
+	 * 	\end{align} \\]
+	 * 
+	 * that is,
+	 * 
+	 * \\[ \phi = \mathrm{atan2} \left(\theta, a \right) \\]
+	 * 
 	 * @param x A number.
+	 * @see {@link atan2}
+	 * @see [Notation](#notation)
 	 */
 	public static ln(x: BigNum): BigNum;
 	/**
 	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
 	 * with rounding according to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * Let \\( r \\) be the absolute value of \\( x \\).
+	 * Therefore, \\( r = \lvert a + \hat{v} \theta \rvert \\).
+	 * 
+	 * \\[ \ln \left(a+\hat{v}\theta \\right) = \ln r + \hat{v} \phi \\]
+	 * 
+	 * where \\( \phi \\) is such that
+	 * 
+	 * \\[ \begin{align}
+	 * 		a &= r \cos \phi \\\\
+	 * 		\theta &= r \sin \phi
+	 * 	\end{align} \\]
+	 * 
+	 * that is,
+	 * 
+	 * \\[ \phi = \mathrm{atan2} \left(\theta, a \right) \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link atan2}
+	 * @see [Notation](#notation)
 	 */
 	public static ln(x: BigNum, context: MathContext): BigNum;
 	/** @internal */
