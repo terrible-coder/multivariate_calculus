@@ -725,6 +725,17 @@ describe("Inverse trigonometry", function() {
 					expect(Component.atan2(Y[i], X[i])).toEqual(angles[i].sub(Component.TWO.mul(Component.PI)));
 				}
 			});
+
+			test("in Quadrant IV", function() {
+				const angles = new Array(9).fill(0)
+								.map((_, i) => Component.create(`0.${i+1}`))
+								.map(x => piBy2.mul(x, ctx).add(Component.THREE.mul(piBy2)));
+				const X = angles.map(x => Component.cos(x, ctx));
+				const Y = angles.map(x => Component.sin(x, ctx));
+				for(let i = 0; i < angles.length; i++) {
+					expect(Component.atan2(Y[i], X[i])).toEqual(angles[i].sub(Component.TWO.mul(Component.PI)));
+				}
+			});
 		});
 	});
 });
