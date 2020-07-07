@@ -99,7 +99,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/circular.ts#L175">src/core/math/trigonometry/circular.ts:175</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/circular.ts#L188">src/core/math/trigonometry/circular.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -107,6 +107,16 @@
 									<p>Calculates the inverse trigonometric cosine of a number with rounding
 									according to the given context.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>If \( \lvert x \rvert &lt; 0.5 \),
+								\[ \cos^{-1} x = \frac{\pi}{2} - \sin^{-1} x \]</p>
+								<p>otherwise,
+								\[ \cos^{-1} x = 2 \sin^{-1} \sqrt{\frac{1-x}{2}} \]</p>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="trigcyclic.html#asin">asin</a></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -137,7 +147,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/circular.ts#L151">src/core/math/trigonometry/circular.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/circular.ts#L154">src/core/math/trigonometry/circular.ts:154</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -145,8 +155,8 @@
 									<p>Calculates the inverse trigonometric sine of a number with rounding
 									according to the given context.</p>
 								</div>
-								<p>Method:
-									If \( x &lt; 0.5 \)
+								<p><strong>Method</strong>:</p>
+								<p>If \( x &lt; 0.5 \)
 								use the definition from integration:</p>
 								<p>\[ \sin^{-1} x = \int_0^x \frac{dt}{\sqrt{1-t^2}} \]</p>
 								<p>Since \( x &lt; 1 \)</p>
@@ -183,7 +193,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/circular.ts#L253">src/core/math/trigonometry/circular.ts:253</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/circular.ts#L268">src/core/math/trigonometry/circular.ts:268</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -191,8 +201,8 @@
 									<p>Calculates the inverse trigonometric tangent of a number with rounding
 									according to the given context.</p>
 								</div>
-								<p>Method:
-								The input can be divided into 4 regions for fast convergence.</p>
+								<p><strong>Method</strong>:</p>
+								<p>The input can be divided into 4 regions for fast convergence.</p>
 								<ol>
 									<li>\( 0 \leqslant x &lt; \sqrt{2}-1 \):</li>
 								</ol>
@@ -239,7 +249,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/circular.ts#L306">src/core/math/trigonometry/circular.ts:306</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/circular.ts#L331">src/core/math/trigonometry/circular.ts:331</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -250,6 +260,15 @@
 									x &amp;= r \cos \theta \\
 									y &amp;= r \sin \theta
 								\end{align} \]</p>
+								<p>Put simply, the above boils down to
+									\[ \operatorname{atan2}(y, x) =
+									\begin{cases}
+									\tan^{-1} \left(\frac{y}{x}\right) &amp;\text{if } x &gt; 0, \\
+									\frac{\pi}{2} - \tan^{-1} \left(\frac{x}{y}\right) &amp;\text{if } y &gt; 0, \\
+									-\frac{\pi}{2} - \tan^{-1} \left(\frac{x}{y}\right) &amp;\text{if } y &lt; 0, \\
+									\tan^{-1} \left(\frac{y}{x}\right) \pm \pi &amp;\text{if } x &lt; 0, \\
+									\text{undefined} &amp;\text{if } x = 0 \text{ and } y = 0
+								\end{cases} \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -286,7 +305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/circular.ts#L62">src/core/math/trigonometry/circular.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/circular.ts#L64">src/core/math/trigonometry/circular.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -294,8 +313,8 @@
 									<p>Calculates the trigonometric cosine with rounding according to the given
 									context.</p>
 								</div>
-								<p>Method:
-									For \( x &lt; 2\pi \)
+								<p><strong>Method</strong>:</p>
+								<p>For \( x &lt; 2\pi \)
 								The Taylor series converges for all \( x \).</p>
 								<p>\[ \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!} \]</p>
 								<p>For \( x \geqslant 2\pi \), range reduction can be performed.
@@ -331,7 +350,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/circular.ts#L22">src/core/math/trigonometry/circular.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/circular.ts#L23">src/core/math/trigonometry/circular.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -339,8 +358,8 @@
 									<p>Calculates the trigonometric sine with rounding according to the given
 									context.</p>
 								</div>
-								<p>Method:
-									For \( x &lt; 2\pi \)
+								<p><strong>Method</strong>:</p>
+								<p>For \( x &lt; 2\pi \)
 								The Taylor series converges for all \( x \).</p>
 								<p>\[ \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!} \]</p>
 								<p>For \( x \geqslant 2\pi \), range reduction can be performed.
@@ -376,7 +395,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/circular.ts#L88">src/core/math/trigonometry/circular.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/circular.ts#L90">src/core/math/trigonometry/circular.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

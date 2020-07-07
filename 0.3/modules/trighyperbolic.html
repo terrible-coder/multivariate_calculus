@@ -98,7 +98,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/hyperbolic.ts#L100">src/core/math/trigonometry/hyperbolic.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/hyperbolic.ts#L133">src/core/math/trigonometry/hyperbolic.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -106,6 +106,10 @@
 									<p>Calculates the inverse hyperbolic cosine with rounding according to the
 									given context.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>We know, \( \cosh y = \frac{e^y + e^{-y}}{2} \).
+									Solving for \( y \) and substituting \( \cosh y = x \),
+								\[ \cosh^{-1} x = \ln \left( x + \sqrt{x^2-1} \right) \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -136,7 +140,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/hyperbolic.ts#L82">src/core/math/trigonometry/hyperbolic.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/hyperbolic.ts#L108">src/core/math/trigonometry/hyperbolic.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -144,6 +148,10 @@
 									<p>Calculates the inverse hyperbolic sine with rounding according to the
 									given context.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>We know, \( \sinh y = \frac{e^y - e^{-y}}{2} \).
+									Solving for \( y \) and substituting \( \sinh y = x \),
+								\[ \sinh^{-1} x = \ln \left( x + \sqrt{x^2+1} \right) \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -174,7 +182,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/hyperbolic.ts#L118">src/core/math/trigonometry/hyperbolic.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/hyperbolic.ts#L158">src/core/math/trigonometry/hyperbolic.ts:158</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -182,6 +190,10 @@
 									<p>Calculates the inverse hyperbolic tangent with rounding according to the
 									given context.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>We know, \( \tanh y = \frac{e^{2y} - 1}{e^{2y} + 1} \).
+									Solving for \( y \) and substituting \( \tanh y = x \),
+								\[ \tanh^{-1} x = \frac{1}{2} \ln \left( \frac{1+x}{1-x} \right) \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -212,13 +224,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/hyperbolic.ts#L38">src/core/math/trigonometry/hyperbolic.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/hyperbolic.ts#L52">src/core/math/trigonometry/hyperbolic.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Calculates the hyperbolic cosine with rounding according to the given context.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>Use the standard series definition of \( \cosh \).</p>
+								<p>\[ \cosh x = \sum_{n=0}^{\infty} \frac{x^{2n}}{(2n)!} \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -249,13 +264,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/hyperbolic.ts#L13">src/core/math/trigonometry/hyperbolic.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/hyperbolic.ts#L20">src/core/math/trigonometry/hyperbolic.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Calculates the hyperbolic sine with rounding according to the given context.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>Use the standard series definition of \( \sinh \).</p>
+								<p>\[ \sinh x = \sum_{n=0}^{\infty} \frac{x^{2n+1}}{(2n+1)!} \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -286,13 +304,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/08a65a7/src/core/math/trigonometry/hyperbolic.ts#L63">src/core/math/trigonometry/hyperbolic.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/e835e48/src/core/math/trigonometry/hyperbolic.ts#L82">src/core/math/trigonometry/hyperbolic.ts:82</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Calculates the hyperbolic tangent with rounding according to the given context.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>\[ \tanh x = \frac{\sinh x}{\cosh x} \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
