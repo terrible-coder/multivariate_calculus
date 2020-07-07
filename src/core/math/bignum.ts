@@ -176,6 +176,12 @@ export class BigNum extends Numerical {
 	 * @param x A number.
 	 */
 	public static abs(x: BigNum): BigNum;
+	/**
+	 * Evaluates the absolute value of a number correct up to the number of
+	 * places specified by the given context settings.
+	 * @param x A number.
+	 * @param context The context settings to use.
+	 */
 	public static abs(x: BigNum, context: MathContext): BigNum;
 	/** @internal */
 	public static abs(x: BigNum, ...args: any[]): BigNum;
@@ -185,8 +191,8 @@ export class BigNum extends Numerical {
 			precision: context.precision + 5,
 			rounding: context.rounding
 		}
-		const magsq = x.components.reduce((prev, curr) => prev.add(curr.mul(curr, ctx), ctx), Component.ZERO);
-		return new BigNum(magsq.pow(Component.create("0.5"), context));
+		const magSq = x.components.reduce((prev, curr) => prev.add(curr.mul(curr, ctx), ctx), Component.ZERO);
+		return new BigNum(magSq.pow(Component.create("0.5"), context));
 	}
 
 	/**

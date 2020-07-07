@@ -436,7 +436,7 @@ export class Component extends Numerical {
 	/**
 	 * The modulo operator. The extended definition for non-integer numbers has
 	 * been used. For two numbers \\( a \\) and \\( b \\),
-	 * \\[ a mod b = a - b\lfloor\frac{a}{b}\rfloor \\]
+	 * \\[ a \bmod b = a - b \left\lfloor \frac{a}{b} \right\rfloor \\]
 	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that A number.
 	 */
@@ -444,7 +444,7 @@ export class Component extends Numerical {
 	/**
 	 * The modulo operator. The extended definition for non-integer numbers has
 	 * been used. For two numbers \\( a \\) and \\( b \\),
-	 * \\[ a mod b = a - b\lfloor\frac{a}{b}\rfloor \\]
+	 * \\[ a \bmod b = a - b \left\lfloor \frac{a}{b} \right\rfloor \\]
 	 * The result is rounded according to the given context.
 	 * @param that A number.
 	 * @param context The context settings to use.
