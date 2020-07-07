@@ -286,6 +286,18 @@ export namespace TrigCyclic {
 		return Component.round(res, context);
 	}
 
+	/**
+	 * Calculates the solution for \\( \theta \\) for the set of equations
+	 * 
+	 * \\[ \begin{align}
+	 * 	x &= r \cos \theta \\\\
+	 * 	y &= r \sin \theta
+	 * 	\end{align} \\]
+	 * 
+	 * @param y The vertical component.
+	 * @param x The horizontal component.
+	 * @param context The context settings to use.
+	 */
 	export function atan2(y: Component, x: Component, context: MathContext) {
 		const yComp = y.compareTo(Component.ZERO);
 		const xComp = x.compareTo(Component.ZERO);
