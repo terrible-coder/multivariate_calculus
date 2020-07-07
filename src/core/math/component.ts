@@ -257,7 +257,7 @@ export class Component extends Numerical {
 
 	/**
 	 * Checks whether `this` and `that` are equal numbers. Equality is checked
-	 * only till the number of decimal places specified by [[mathenv.mode]].
+	 * only till the number of decimal places specified by {@link mathenv.mode}.
 	 * @param that The number to check against.
 	 */
 	public equals(that: Component): boolean;
@@ -276,7 +276,7 @@ export class Component extends Numerical {
 
 	/**
 	 * Determines whether `this` is less than or equal to `that`. Equality is
-	 * check according to [[mathenv.mode]].
+	 * check according to {@link mathenv.mode}.
 	 * @param that Number to compare with.
 	 */
 	public lessEquals(that: Component): boolean;
@@ -293,7 +293,7 @@ export class Component extends Numerical {
 
 	/**
 	 * Determines whether `this` is more than or equal to `that`. Equality is
-	 * checked according to [[mathenv.mode]].
+	 * checked according to {@link mathenv.mode}.
 	 * @param that Number to compare with.
 	 */
 	public moreEquals(that: Component): boolean;
@@ -320,7 +320,7 @@ export class Component extends Numerical {
 	/**
 	 * Adds two [[Component]] instances. The higher precision value of the two is
 	 * chosen as the precision for the result and rounding is according to
-	 * [[mathenv.mode]].
+	 * {@link mathenv.mode}.
 	 * @param that The number to add this with.
 	 * @returns this + that.
 	 */
@@ -348,7 +348,7 @@ export class Component extends Numerical {
 	/**
 	 * Subtracts one [[Component]] instance from another. The higher precision value
 	 * of the two is chosen as the precision for the result and rounding is
-	 * according to [[mathenv.mode]].
+	 * according to {@link mathenv.mode}.
 	 * @param that The number to subtract from this.
 	 * @returns this - that.
 	 */
@@ -376,7 +376,7 @@ export class Component extends Numerical {
 	/**
 	 * Multiplies two [[Component]] instances. The sum of the precisions of the two
 	 * is chosen as the precision of the result and rounding is according to
-	 * [[mathenv.mode]].
+	 * {@link mathenv.mode}.
 	 * @param that The number to multiply this with.
 	 * @returns this * that.
 	 */
@@ -402,7 +402,7 @@ export class Component extends Numerical {
 
 	/**
 	 * Divides one [[Component]] instance by another with rounding according to
-	 * [[mathenv.mode]].
+	 * {@link mathenv.mode}.
 	 * @param that The number to divide this by.
 	 * @returns this / that.
 	 */
@@ -437,7 +437,7 @@ export class Component extends Numerical {
 	 * The modulo operator. The extended definition for non-integer numbers has
 	 * been used. For two numbers \\( a \\) and \\( b \\),
 	 * \\[ a mod b = a - b\lfloor\frac{a}{b}\rfloor \\]
-	 * The result is rounded according to [[mathenv.mode]].
+	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that A number.
 	 */
 	public mod(that: Component): Component;
@@ -489,6 +489,7 @@ export class Component extends Numerical {
 	/**
 	 * Raises `this` to the power of `ex`.
 	 * @param ex A number.
+	 * @see {@link Exponent.pow}
 	 */
 	public pow(ex: Component): Component;
 	/**
@@ -496,6 +497,7 @@ export class Component extends Numerical {
 	 * given context settings.
 	 * @param ex A number.
 	 * @param context The context settings object to use.
+	 * @see {@link Exponent.pow}
 	 */
 	public pow(ex: Component, context: MathContext): Component;
 	/** @internal */
@@ -525,8 +527,9 @@ export class Component extends Numerical {
 
 	/**
 	 * Calculates the exponential of a given number with rounding according to
-	 * [[mathenv.mode]].
+	 * {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link Exponent.exp}
 	 */
 	public static exp(x: Component): Component;
 	/**
@@ -534,6 +537,7 @@ export class Component extends Numerical {
 	 * the given context settings.
 	 * @param x A number
 	 * @param context The context settings to use.
+	 * @see {@link Exponent.exp}
 	 */
 	public static exp(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -545,8 +549,9 @@ export class Component extends Numerical {
 
 	/**
 	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
-	 * with rounding according to [[mathenv.mode]].
+	 * with rounding according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link Exponent.ln}
 	 */
 	public static ln(x: Component): Component;
 	/**
@@ -554,6 +559,7 @@ export class Component extends Numerical {
 	 * with rounding according to the given context settings.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link Exponent.ln}
 	 */
 	public static ln(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -564,8 +570,9 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Calculates the trigonometric sine with rounding according to [[mathenv.mode]].
+	 * Calculates the trigonometric sine with rounding according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigCyclic.sin}
 	 */
 	public static sin(x: Component): Component;
 	/**
@@ -573,6 +580,7 @@ export class Component extends Numerical {
 	 * context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigCyclic.sin}
 	 */
 	public static sin(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -584,8 +592,9 @@ export class Component extends Numerical {
 
 	/**
 	 * Calculates the trigonometric cosine with rounding according to
-	 * [[mathenv.mode]].
+	 * {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigCyclic.cos}
 	 */
 	public static cos(x: Component): Component;
 	/**
@@ -593,6 +602,7 @@ export class Component extends Numerical {
 	 * context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigCyclic.cos}
 	 */
 	public static cos(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -604,8 +614,9 @@ export class Component extends Numerical {
 
 	/**
 	 * Calculates the trigonometric tangent with rounding according to
-	 * [[mathenv.mode]].
+	 * {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigCyclic.tan}
 	 */
 	public static tan(x: Component): Component;
 	/**
@@ -613,6 +624,7 @@ export class Component extends Numerical {
 	 * context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigCyclic.tan}
 	 */
 	public static tan(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -624,8 +636,9 @@ export class Component extends Numerical {
 
 	/**
 	 * Calculates the inverse trigonometric sine of a number with rounding
-	 * according to [[mathenv.mode]].
+	 * according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigCyclic.asin}
 	 */
 	public static asin(x: Component): Component;
 	/**
@@ -633,6 +646,7 @@ export class Component extends Numerical {
 	 * according to the given context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigCyclic.asin}
 	 */
 	public static asin(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -644,8 +658,9 @@ export class Component extends Numerical {
 
 	/**
 	 * Calculates the inverse trigonometric cosine of a number with rounding
-	 * according to [[mathenv.mode]].
+	 * according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigCyclic.acos}
 	 */
 	public static acos(x: Component): Component;
 	/**
@@ -653,6 +668,7 @@ export class Component extends Numerical {
 	 * according to the given context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigCyclic.acos}
 	 */
 	public static acos(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -664,8 +680,9 @@ export class Component extends Numerical {
 
 	/**
 	 * Calculates the inverse trigonometric tangent of a number with rounding
-	 * according to [[mathenv.mode]].
+	 * according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigCyclic.atan}
 	 */
 	public static atan(x: Component): Component;
 	/**
@@ -673,6 +690,7 @@ export class Component extends Numerical {
 	 * according to the given context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigCyclic.atan}
 	 */
 	public static atan(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -683,16 +701,30 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Calculates the inverse trigonometric tangent of a number with rounding
-	 * according to [[mathenv.mode]].
+	 * Calculates the solution for \\( \theta \\) for the set of equations
+	 * 
+	 * \\[ \begin{align}
+	 * 	x &= r \cos \theta \\\\
+	 * 	y &= r \sin \theta
+	 * 	\end{align} \\]
+	 * 
+	 * with rounding according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigCyclic.atan2}
 	 */
 	public static atan2(y: Component, x: Component): Component;
 	/**
-	 * Calculates the inverse trigonometric tangent of a number with rounding
-	 * according to the given context.
+	 * Calculates the solution for \\( \theta \\) for the set of equations
+	 * 
+	 * \\[ \begin{align}
+	 * 	x &= r \cos \theta \\\\
+	 * 	y &= r \sin \theta
+	 * 	\end{align} \\]
+	 * 
+	 * with rounding according to the given context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigCyclic.atan2}
 	 */
 	public static atan2(y: Component, x: Component, context: MathContext): Component;
 	/** @internal */
@@ -703,14 +735,16 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Calculates the hyperbolic sine with rounding according to [[mathenv.mode]].
+	 * Calculates the hyperbolic sine with rounding according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigHyperbolic.sinh}
 	 */
 	public static sinh(x: Component): Component;
 	/**
 	 * Calculates the hyperbolic sine with rounding according to the given context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigHyperbolic.sinh}
 	 */
 	public static sinh(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -721,14 +755,16 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Calculates the hyperbolic cosine with rounding according to [[mathenv.mode]].
+	 * Calculates the hyperbolic cosine with rounding according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigHyperbolic.cosh}
 	 */
 	public static cosh(x: Component): Component;
 	/**
 	 * Calculates the hyperbolic cosine with rounding according to the given context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigHyperbolic.cosh}
 	 */
 	public static cosh(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -739,14 +775,16 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Calculates the hyperbolic tangent with rounding according to [[mathenv.mode]].
+	 * Calculates the hyperbolic tangent with rounding according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigHyperbolic.tanh}
 	 */
 	public static tanh(x: Component): Component;
 	/**
 	 * Calculates the hyperbolic tangent with rounding according to the given context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigHyperbolic.tanh}
 	 */
 	public static tanh(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -757,8 +795,9 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Calculates the inverse hyperbolic sine with rounding according to [[mathenv.mode]].
+	 * Calculates the inverse hyperbolic sine with rounding according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigHyperbolic.asinh}
 	 */
 	public static asinh(x: Component): Component;
 	/**
@@ -766,6 +805,7 @@ export class Component extends Numerical {
 	 * given context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigHyperbolic.asinh}
 	 */
 	public static asinh(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -777,8 +817,9 @@ export class Component extends Numerical {
 
 	/**
 	 * Calculates the inverse hyperbolic cosine with rounding according to
-	 * [[mathenv.mode]].
+	 * {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigHyperbolic.acosh}
 	 */
 	public static acosh(x: Component): Component;
 	/**
@@ -786,6 +827,7 @@ export class Component extends Numerical {
 	 * given context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigHyperbolic.acosh}
 	 */
 	public static acosh(x: Component, context: MathContext): Component;
 	/** @internal */
@@ -796,8 +838,9 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Calculates the inverse hyperbolic sine with rounding according to [[mathenv.mode]].
+	 * Calculates the inverse hyperbolic sine with rounding according to {@link mathenv.mode}.
 	 * @param x A number.
+	 * @see {@link TrigHyperbolic.atanh}
 	 */
 	public static atanh(x: Component): Component;
 	/**
@@ -805,6 +848,7 @@ export class Component extends Numerical {
 	 * given context.
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link TrigHyperbolic.atanh}
 	 */
 	public static atanh(x: Component, context: MathContext): Component;
 	/** @internal */
