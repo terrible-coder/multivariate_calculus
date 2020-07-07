@@ -432,8 +432,8 @@ describe("Logarithm", function() {
 		});
 
 		it("for 2 reals", function() {
-			const lnroot2 = Component.ln(Component.TWO.pow(Component.create("0.5")));
-			const piby4 = Component.PI.mul(Component.create("0.25"));
+			const lnRoot2 = Component.ln(Component.TWO.pow(Component.create("0.5")));
+			const piBy4 = Component.PI.mul(Component.create("0.25"));
 			const pi3by4 = Component.PI.mul(Component.create("0.75"));
 			const values = [
 				BigNum.complex("1", "1"),
@@ -442,19 +442,19 @@ describe("Logarithm", function() {
 				BigNum.complex("-1", "-1")
 			];
 			const logs = [
-				new BigNum(lnroot2, piby4),
-				new BigNum(lnroot2, piby4.neg),
-				new BigNum(lnroot2, pi3by4),
-				new BigNum(lnroot2, pi3by4.neg)
+				new BigNum(lnRoot2, piBy4),
+				new BigNum(lnRoot2, piBy4.neg),
+				new BigNum(lnRoot2, pi3by4),
+				new BigNum(lnRoot2, pi3by4.neg)
 			];
 			for(let i = 0; i < values.length; i++)
 				expect(BigNum.ln(values[i])).toEqual(logs[i]);
 		});
 
 		it("for 6 reals", function() {
-			const piby2 = Component.PI.div(Component.TWO);
+			const piBy2 = Component.PI.div(Component.TWO);
 			const x = BigNum.hyper("0", "3", "2", "1", "1", "1").div(BigNum.real("4"));
-			const log = new BigNum(piby2).mul(x);
+			const log = new BigNum(piBy2).mul(x);
 			expect(BigNum.ln(x)).toEqual(log);
 		});
 	});
@@ -563,26 +563,26 @@ describe("Inverse trigonometry", function() {
 				BigNum.real("-1"),
 				BigNum.real("2")
 			];
-			const asins = [
+			const asin = [
 				new BigNum(Component.PI.div(two)),
 				new BigNum(Component.PI.div(two)).neg,
 				new BigNum(Component.PI.div(two), Component.ln(two.add(three.pow(half))))
 			];
 			for(let i = 0; i < values.length; i++)
-				expect(BigNum.asin(values[i])).toEqual(asins[i]);
+				expect(BigNum.asin(values[i])).toEqual(asin[i]);
 		});
 
 		test("for imaginary", function() {
 			const values = new Array(10).fill(0)
 										.map((_, i) => `${10 * i}`)
 										.map(x => BigNum.complex("0", x));
-			const asins = new Array(10).fill(0)
+			const asin = new Array(10).fill(0)
 										.map((_, i) => `${10 * i}`)
 										.map(x => Component.create(x))
 										.map(x => new BigNum(Component.ZERO, Component.asinh(x)));
 			for(let i = 0; i < values.length; i++) {
 				const x = values[i];
-				expect(BigNum.asin(x)).toEqual(asins[i]);
+				expect(BigNum.asin(x)).toEqual(asin[i]);
 			}
 		});
 	});
@@ -600,13 +600,13 @@ describe("Inverse trigonometry", function() {
 				BigNum.real("-1"),
 				BigNum.real("2")
 			];
-			const acoss = [
+			const acos = [
 				new BigNum(Component.ZERO),
 				new BigNum(Component.round(Component.PI, mathenv.mode)),
 				new BigNum(Component.ZERO, Component.ln(two.add(three.pow(half))).neg)
 			];
 			for(let i = 0; i < values.length; i++)
-				expect(BigNum.acos(values[i])).toEqual(acoss[i]);
+				expect(BigNum.acos(values[i])).toEqual(acos[i]);
 		});
 
 		test("for imaginary", function() {
@@ -614,13 +614,13 @@ describe("Inverse trigonometry", function() {
 			const values = new Array(10).fill(0)
 										.map((_, i) => `${10 * (i+1)}`)
 										.map(x => BigNum.complex("0", x));
-			const acoss = new Array(10).fill(0)
+			const acos = new Array(10).fill(0)
 										.map((_, i) => `${10 * (i+1)}`)
 										.map(x => Component.create(x))
 										.map(x => new BigNum(pi.div(two), Component.asinh(x).neg));
 			for(let i = 0; i < values.length; i++) {
 				const x = values[i];
-				expect(BigNum.acos(x)).toEqual(acoss[i]);
+				expect(BigNum.acos(x)).toEqual(acos[i]);
 			}
 		});
 	});
@@ -635,7 +635,7 @@ describe("Inverse trigonometry", function() {
 			const values = [
 				"1", "-1", "2", "-2", "1000000", "10000000000"
 			].map(x => BigNum.real(x));
-			const atans = [
+			const atan = [
 				"0.78539816339744831",
 				"-0.78539816339744831",
 				"1.10714871779409051",
@@ -644,7 +644,7 @@ describe("Inverse trigonometry", function() {
 				"1.57079632669489662"
 			].map(x => BigNum.real(x));
 			for(let i = 0; i < values.length; i++)
-				expect(BigNum.atan(values[i])).toEqual(atans[i]);
+				expect(BigNum.atan(values[i])).toEqual(atan[i]);
 		});
 
 		it("imaginary", function() {
@@ -702,7 +702,7 @@ describe("Hyperbolic trigonometry", function() {
 
 		it("for real", function() {
 			const values = new Array(6).fill(0).map((_, i) => i.toString()).map(x => BigNum.real(x));
-			const coshs = [
+			const cosh = [
 				"1",
 				"1.54308063481524378",
 				"3.76219569108363146",
@@ -710,16 +710,16 @@ describe("Hyperbolic trigonometry", function() {
 				"27.30823283601648663",
 				"74.20994852478784445"
 			].map(x => BigNum.real(x));
-			values.forEach((x, i) => expect(BigNum.cosh(x)).toEqual(coshs[i]));
-			values.forEach((x, i) => expect(BigNum.cosh(x.neg)).toEqual(coshs[i]));
+			values.forEach((x, i) => expect(BigNum.cosh(x)).toEqual(cosh[i]));
+			values.forEach((x, i) => expect(BigNum.cosh(x.neg)).toEqual(cosh[i]));
 		});
 
 		it("for imaginary", function() {
 			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", i.toString()));
-			const coshs = new Array(10).fill(0)
+			const cosh = new Array(10).fill(0)
 									.map((_, i) => Component.create(`${i}`))
 									.map(x => new BigNum(Component.cos(x)));
-			values.forEach((x, i) => expect(BigNum.cosh(x)).toEqual(coshs[i]));
+			values.forEach((x, i) => expect(BigNum.cosh(x)).toEqual(cosh[i]));
 		});
 	});
 
@@ -731,7 +731,7 @@ describe("Hyperbolic trigonometry", function() {
 
 		it("for real", function() {
 			const values = new Array(10).fill(0).map((_, i) => BigNum.real(i));
-			const tanhs = [
+			const tanh = [
 				"0",
 				"0.76159415595576489",
 				"0.96402758007581689",
@@ -743,16 +743,16 @@ describe("Hyperbolic trigonometry", function() {
 				"0.99999977492967589",
 				"0.99999996954004098"
 			].map(x => BigNum.real(x));
-			values.forEach((x, i) => expect(BigNum.tanh(x)).toEqual(tanhs[i]));
-			values.forEach((x, i) => expect(BigNum.tanh(x.neg)).toEqual(tanhs[i].neg));
+			values.forEach((x, i) => expect(BigNum.tanh(x)).toEqual(tanh[i]));
+			values.forEach((x, i) => expect(BigNum.tanh(x.neg)).toEqual(tanh[i].neg));
 		});
 
 		it("for imaginary", function() {
 			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", i.toString()));
-			const tanhs = new Array(10).fill(0)
+			const tanh = new Array(10).fill(0)
 									.map((_, i) => Component.create(`${i}`))
 									.map(x => new BigNum(Component.ZERO, Component.tan(x)));
-			values.forEach((x, i) => expect(BigNum.tanh(x)).toEqual(tanhs[i]));
+			values.forEach((x, i) => expect(BigNum.tanh(x)).toEqual(tanh[i]));
 		});
 	});
 
@@ -769,23 +769,23 @@ describe("Hyperbolic trigonometry", function() {
 				"10000",
 				"1000000"
 			].map(x => BigNum.real(x));
-			const asinhs = [
+			const asinh = [
 				"0",
 				"5.29834236561058876",
 				"9.90348755503612804",
 				"14.50865773852446942"
 			].map(x => BigNum.real(x));
-			values.forEach((x, i) => expect(BigNum.asinh(x)).toEqual(asinhs[i]));
-			values.forEach((x, i) => expect(BigNum.asinh(x.neg)).toEqual(asinhs[i].neg));
+			values.forEach((x, i) => expect(BigNum.asinh(x)).toEqual(asinh[i]));
+			values.forEach((x, i) => expect(BigNum.asinh(x.neg)).toEqual(asinh[i].neg));
 		});
 
 		test("for imaginary", function() {
 			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", `0.${i}`));
-			const asinhs = new Array(10).fill(0)
+			const asinh = new Array(10).fill(0)
 										.map((_, i) => Component.create(`0.${i}`))
 										.map(x => Component.asin(x))
 										.map(x => new BigNum(Component.ZERO, x));
-			values.forEach((x, i) => expect(BigNum.asinh(x)).toEqual(asinhs[i]));
+			values.forEach((x, i) => expect(BigNum.asinh(x)).toEqual(asinh[i]));
 		});
 	});
 
@@ -802,22 +802,22 @@ describe("Hyperbolic trigonometry", function() {
 				"10000",
 				"1000000"
 			].map(x => BigNum.real(x));
-			const acoshs = [
+			const acosh = [
 				"0",
 				"5.29829236561048459",
 				"9.90348755003612804",
 				"14.50865773852396942"
 			].map(x => BigNum.real(x));
-			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acoshs[i]));
+			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acosh[i]));
 		});
 
 		test("for imaginary", function() {
 			const values = new Array(10).fill(0).map((_, i) => BigNum.complex("0", `0.${i+1}`));
-			const acoshs = new Array(10).fill(0)
+			const acosh = new Array(10).fill(0)
 										.map((_, i) => Component.create(`0.${i+1}`))
 										.map(x => Component.acos(x))
 										.map(x => new BigNum(Component.ZERO, x));
-			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acoshs[i]));
+			values.forEach((x, i) => expect(BigNum.acosh(x)).toEqual(acosh[i]));
 			expect(() => BigNum.acosh(BigNum.real("0"))).not.toThrow();
 			expect(BigNum.acosh(BigNum.real("0"))).toEqual(new BigNum(
 				Component.ZERO,
@@ -835,7 +835,7 @@ describe("Hyperbolic trigonometry", function() {
 		describe("for real", function() {
 			test("less than 1", function() {
 				const values = new Array(10).fill(0).map((_,i) => BigNum.real(`0.${i}`));
-				const atanhs = [
+				const atanh = [
 					"0",
 					"0.10033534773107558",
 					"0.20273255405408219",
@@ -848,7 +848,7 @@ describe("Hyperbolic trigonometry", function() {
 					"1.47221948958322023"
 				].map(x => BigNum.real(x));
 				for(let i = 0; i < values.length; i++)
-					expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
+					expect(BigNum.atanh(values[i])).toEqual(atanh[i]);
 			});
 
 			test("more than 1", function() {
@@ -857,13 +857,13 @@ describe("Hyperbolic trigonometry", function() {
 					rounding: mathenv.mode.rounding
 				}
 				const values = new Array(10).fill(0).map((_, i) => BigNum.real(10*(i+1)));
-				const atanhs = new Array(10).fill(0)
+				const atanh = new Array(10).fill(0)
 								.map((_, i) => Component.create(10*(i+1)))
 								.map(x => Component.ONE.div(x, ctx))
 								.map(x => Component.atanh(x))
 								.map(x => new BigNum(x, Component.PI.div(Component.TWO)));
 				for(let i = 0; i < values.length; i++)
-					expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
+					expect(BigNum.atanh(values[i])).toEqual(atanh[i]);
 			});
 		});
 
@@ -871,12 +871,12 @@ describe("Hyperbolic trigonometry", function() {
 			const values = new Array(10).fill(0)
 							.map((_, i) => Component.create(10).pow(Component.create(i+1)))
 							.map(x => new BigNum(Component.ZERO, x));
-			const atanhs = new Array(10).fill(0)
+			const atanh = new Array(10).fill(0)
 							.map((_, i) => Component.create(10).pow(Component.create(i+1)))
 							.map(x => Component.atan(x))
 							.map(x => new BigNum(Component.ZERO, x));
 			for(let i = 0; i < values.length; i++)
-				expect(BigNum.atanh(values[i])).toEqual(atanhs[i]);
+				expect(BigNum.atanh(values[i])).toEqual(atanh[i]);
 		});
 	});
 });

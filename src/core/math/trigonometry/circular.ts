@@ -225,58 +225,27 @@ export namespace TrigCyclic {
 	}
 
 	/**
-	 * Calculates the inverse trigonometric tangent of a number (\\( x > 1 \\)).
-	 * Method:
-	 * 
-	 * If \\( (x-1)^2 < 2 \\):
-	 * 
-	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{x-1}{x+1}) \\]
-	 * 
-	 * \\( \frac{x-1}{x+1} < 1 \\) always.
-	 * 
-	 * otherwise:
-	 * 
-	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{1}{x}) \\]
-	 * 
-	 * @param x A number.
-	 * @param context The context settings to use.
-	 * @ignore
-	 */
-	function atan_more(x: Component, context: MathContext) {
-		const ctx: MathContext = {
-			precision: context.precision + 5,
-			rounding: context.rounding
-		};
-		const check = x.sub(Component.ONE, ctx).pow(Component.TWO, ctx).lessThan(Component.TWO);
-		if(check) {
-			const less = x.sub(Component.ONE, ctx).div(x.add(Component.ONE, ctx), ctx);
-			const piby4 = Component.PI.div(Component.FOUR, ctx);
-			const res = piby4.add(atan_less(less, ctx), ctx);
-			return Component.round(res, context);
-		}
-		const less = Component.ONE.div(x, ctx);
-		const piby2 = Component.PI.div(Component.TWO, ctx);
-		const res = piby2.sub(atan_less(less, ctx), ctx);
-		return Component.round(res, context);
-	}
-
-	/**
 	 * Calculates the inverse trigonometric tangent of a number with rounding
 	 * according to the given context.
 	 * 
 	 * Method:
-	 * The input can be divided into 3 regions for fast convergence.
-	 * 1. \\( x < 1 \\):
+	 * The input can be divided into 4 regions for fast convergence.
+	 * 
+	 * 1. \\( 0 \leqslant x < \sqrt{2}-1 \\):
 	 * 
 	 * \\[ \tan^{-1} = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{2n+1} \\]
 	 * 
-	 * 2. \\( (x-1)^2 < 2 \\):
+	 * 2. \\( \sqrt{2}-1 \leqslant x < 1 \\):
 	 * 
-	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{x-1}{x+1}) \\]
+	 * \\[ \tan^{-1} x = \frac{\pi}{4} - \tan^{-1} \left( \frac{1-x}{1+x} \right) \\]
 	 * 
-	 * 3. \\( (x-1)^2 \geqslant 2 \\):
+	 * 3. \\( 1 \leqslant x < \sqrt{2}+1 \\):
 	 * 
-	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} (\frac{1}{x}) \\]
+	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} \left( \frac{x-1}{x+1} \right) \\]
+	 * 
+	 * 4. \\( x \geqslant \sqrt{2}+1 \\):
+	 * 
+	 * \\[ \tan^{-1} x = \frac{\pi}{4} + \tan^{-1} \left( \frac{1}{x} \right) \\]
 	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
@@ -286,13 +255,54 @@ export namespace TrigCyclic {
 			return Component.ZERO;
 		if(x.lessThan(Component.ZERO))
 			return atan(x.neg, context).neg;
-		if(x.equals(Component.ONE, context))
-			return Component.PI.div(Component.FOUR, context);
-		if(x.lessThan(Component.ONE))
-			return atan_less(x, context);
-		return atan_more(x, context);
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		}
+		const limit1 = Component.create("0.414213562373");
+		const limit2 = Component.ONE;
+		const limit3 = Component.create("2.414213562373");
+		let referenceValue: Component;
+		let less: Component;
+		let sign: -1 | 1;
+		if(x.lessThan(limit1)) {
+			less = x;
+			referenceValue = Component.ZERO;
+			sign = 1;
+		} else if(x.lessThan(limit2)) {
+			const num = Component.ONE.sub(x, ctx);
+			const den = Component.ONE.add(x, ctx);
+			less = num.div(den, ctx);
+			referenceValue = Component.PI.div(Component.FOUR, ctx);
+			sign = -1;
+		} else if(x.lessThan(limit3)) {
+			const num = x.sub(Component.ONE, ctx);
+			const den = x.add(Component.ONE, ctx);
+			less = num.div(den, ctx);
+			referenceValue = Component.PI.div(Component.FOUR, ctx);
+			sign = 1;
+		} else {
+			less = Component.ONE.div(x, ctx);
+			referenceValue = Component.PI.div(Component.TWO, ctx);
+			sign = -1;
+		}
+		const res = sign === 1? referenceValue.add(atan_less(less, ctx), ctx):
+								referenceValue.sub(atan_less(less, ctx), ctx);
+		return Component.round(res, context);
 	}
 
+	/**
+	 * Calculates the solution for \\( \theta \\) for the set of equations
+	 * 
+	 * \\[ \begin{align}
+	 * 	x &= r \cos \theta \\\\
+	 * 	y &= r \sin \theta
+	 * 	\end{align} \\]
+	 * 
+	 * @param y The vertical component.
+	 * @param x The horizontal component.
+	 * @param context The context settings to use.
+	 */
 	export function atan2(y: Component, x: Component, context: MathContext) {
 		const yComp = y.compareTo(Component.ZERO);
 		const xComp = x.compareTo(Component.ZERO);
