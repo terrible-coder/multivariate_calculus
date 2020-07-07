@@ -6,7 +6,8 @@ export namespace TrigCyclic {
 	 * Calculates the trigonometric sine with rounding according to the given
 	 * context.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * For \\( x < 2\pi \\)
 	 * The Taylor series converges for all \\( x \\).
 	 * 
@@ -46,7 +47,8 @@ export namespace TrigCyclic {
 	 * Calculates the trigonometric cosine with rounding according to the given
 	 * context.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * For \\( x < 2\pi \\)
 	 * The Taylor series converges for all \\( x \\).
 	 * 
@@ -131,7 +133,8 @@ export namespace TrigCyclic {
 	 * Calculates the inverse trigonometric sine of a number with rounding
 	 * according to the given context.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * If \\( x < 0.5 \\)
 	 * use the definition from integration:
 	 * 
@@ -191,7 +194,8 @@ export namespace TrigCyclic {
 
 	/**
 	 * Calculates the inverse trigonometric tangent of a number (\\( x < 1 \\)).
-	 * Method:
+	 * 
+	 * **Method**:
 	 * 
 	 * \\[ \tan^{-1} x = \int_0^x \frac{1}{1+t^2} dt \\]
 	 * Since \\( x < 1 \\)
@@ -228,7 +232,8 @@ export namespace TrigCyclic {
 	 * Calculates the inverse trigonometric tangent of a number with rounding
 	 * according to the given context.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * The input can be divided into 4 regions for fast convergence.
 	 * 
 	 * 1. \\( 0 \leqslant x < \sqrt{2}-1 \\):

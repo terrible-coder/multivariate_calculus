@@ -45,7 +45,9 @@ export namespace Exponent {
 	
 	/**
 	 * Evaluates the natural logarithm of \\( 1 + x \\) (\\( |x| < \sqrt{2}-1 \\)).
-	 * Method:
+	 * 
+	 * **Method**:
+	 * 
 	 * For faster convergence we can write \\( \ln (1+x) \\) as
 	 * 
 	 * \\[ \ln (1+x) = \ln (1+s) - \ln (1-s) \\]
@@ -85,7 +87,9 @@ export namespace Exponent {
 	
 	/**
 	 * Reduces the range of the argument of the logarithm function.
-	 * Method:
+	 * 
+	 * **Method**:
+	 * 
 	 * For every number \\( x > 1 \\) we can write it as
 	 * 
 	 * \\[ x = 2^k(1 + f) \\]
