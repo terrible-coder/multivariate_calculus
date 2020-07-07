@@ -7,6 +7,13 @@ const ln = Exponent.ln;
 export namespace TrigHyperbolic {
 	/**
 	 * Calculates the hyperbolic sine with rounding according to the given context.
+	 * 
+	 * **Method**:
+	 * 
+	 * Use the standard series definition of \\( \sinh \\).
+	 * 
+	 * \\[ \sinh x = \sum_{n=0}^{\infty} \frac{x^{2n+1}}{(2n+1)!} \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -32,6 +39,13 @@ export namespace TrigHyperbolic {
 
 	/**
 	 * Calculates the hyperbolic cosine with rounding according to the given context.
+	 * 
+	 * **Method**:
+	 * 
+	 * Use the standard series definition of \\( \cosh \\).
+	 * 
+	 * \\[ \cosh x = \sum_{n=0}^{\infty} \frac{x^{2n}}{(2n)!} \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -57,6 +71,11 @@ export namespace TrigHyperbolic {
 
 	/**
 	 * Calculates the hyperbolic tangent with rounding according to the given context.
+	 * 
+	 * **Method**:
+	 *  
+	 * \\[ \tanh x = \frac{\sinh x}{\cosh x} \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -76,6 +95,13 @@ export namespace TrigHyperbolic {
 	/**
 	 * Calculates the inverse hyperbolic sine with rounding according to the
 	 * given context.
+	 * 
+	 * **Method**:
+	 * 
+	 * We know, \\( \sinh y = \frac{e^y - e^{-y}}{2} \\).
+	 * Solving for \\( y \\) and substituting \\( \sinh y = x \\),
+	 * \\[ \sinh^{-1} x = \ln \left( x + \sqrt{x^2+1} \right) \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -94,6 +120,13 @@ export namespace TrigHyperbolic {
 	/**
 	 * Calculates the inverse hyperbolic cosine with rounding according to the
 	 * given context.
+	 * 
+	 * **Method**:
+	 * 
+	 * We know, \\( \cosh y = \frac{e^y + e^{-y}}{2} \\).
+	 * Solving for \\( y \\) and substituting \\( \cosh y = x \\),
+	 * \\[ \cosh^{-1} x = \ln \left( x + \sqrt{x^2-1} \right) \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -112,6 +145,13 @@ export namespace TrigHyperbolic {
 	/**
 	 * Calculates the inverse hyperbolic tangent with rounding according to the
 	 * given context.
+	 * 
+	 * **Method**:
+	 * 
+	 * We know, \\( \tanh y = \frac{e^{2y} - 1}{e^{2y} + 1} \\).
+	 * Solving for \\( y \\) and substituting \\( \tanh y = x \\),
+	 * \\[ \tanh^{-1} x = \frac{1}{2} \ln \left( \frac{1+x}{1-x} \right) \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */

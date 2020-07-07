@@ -1092,7 +1092,7 @@ export class BigNum extends Numerical {
 	 * 
 	 * that is,
 	 * 
-	 * \\[ \phi = \mathrm{atan2} \left(\theta, a \right) \\]
+	 * \\[ \phi = \operatorname{atan2} \left(\theta, a \right) \\]
 	 * 
 	 * @param x A number.
 	 * @see {@link atan2}

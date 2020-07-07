@@ -5,6 +5,16 @@ export namespace Exponent {
 	/**
 	 * Calculates the exponential of a given number with rounding according to
 	 * the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * Find the values \\( k \\) such that
+	 * \\[ x = k\ln 2 + r \\]
+	 * where \\( \lvert r \rvert \leqslant \frac{\ln 2}{2} \\).
+	 * 
+	 * Therefore,
+	 * \\[ \exp{x} = 2^k e^{r} \\]
+	 * 
 	 * @param x A number
 	 * @param context The context settings to use.
 	 */
@@ -38,14 +48,16 @@ export namespace Exponent {
 			n++;
 		}
 		const temp = Component.intpow(Component.TWO, Math.abs(k), ctx);
-		const twok = k >= 0? temp: Component.ONE.div(temp, ctx);
-		const res = twok.mul(sum, ctx);
+		const two_k = k >= 0? temp: Component.ONE.div(temp, ctx);
+		const res = two_k.mul(sum, ctx);
 		return Component.round(res, context);
 	}
 	
 	/**
 	 * Evaluates the natural logarithm of \\( 1 + x \\) (\\( |x| < \sqrt{2}-1 \\)).
-	 * Method:
+	 * 
+	 * **Method**:
+	 * 
 	 * For faster convergence we can write \\( \ln (1+x) \\) as
 	 * 
 	 * \\[ \ln (1+x) = \ln (1+s) - \ln (1-s) \\]
@@ -85,7 +97,9 @@ export namespace Exponent {
 	
 	/**
 	 * Reduces the range of the argument of the logarithm function.
-	 * Method:
+	 * 
+	 * **Method**:
+	 * 
 	 * For every number \\( x > 1 \\) we can write it as
 	 * 
 	 * \\[ x = 2^k(1 + f) \\]
@@ -102,23 +116,45 @@ export namespace Exponent {
 		const increment = x.lessThan(Component.ONE)? -1: 1;
 		const multiplier = increment === 1? two: half;
 		let k = 0;
-		let twok = Component.ONE;
-		let fplus1: Component;
+		let two_k = Component.ONE;
+		let fPlus1: Component;
 		while(true) {
-			fplus1 = x.div(twok, context);
-			const sq = fplus1.mul(fplus1, context);
+			fPlus1 = x.div(two_k, context);
+			const sq = fPlus1.mul(fPlus1, context);
 			if(sq.moreEquals(half, context) && sq.lessEquals(two, context))
 				break;
-			twok = twok.mul(multiplier, context);
+			two_k = two_k.mul(multiplier, context);
 			k += increment;
 		}
-		const f = fplus1.sub(Component.ONE, context);
+		const f = fPlus1.sub(Component.ONE, context);
 		return [k, f];
 	}
 	
 	/**
 	 * Calculates the natural logarithm (to the base \\( e \\)) of a given number
 	 * with rounding according to the given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * For larger values of \\( x \\)(\\( > 1 \\)), the range can be adjusted
+	 * such that
+	 * \\[ x = 2^k(1 + f) \\]
+	 * 
+	 * where \\( k \\) is such that \\( |f| < 1 \\).
+	 * Therefore,
+	 * \\[ \ln x = k \ln 2 + \ln (1 + f) \\]
+	 * 
+	 * For faster convergence we can write \\( \ln (1+f) \\) as
+	 * 
+	 * \\[ \ln (1+f) = \ln (1+s) - \ln (1-s) \\]
+	 * 
+	 * This gives us \\( s = \frac{x}{2+x} \\) and
+	 * 
+	 * \\[ \ln (1+f) = 2 \sum_{n=0}^{\infty} \frac{s^{2n+1}}{2n+1} \\]
+	 * 
+	 * Finally, we can write
+	 * \\[ \ln x = k \ln 2 + 2 \sum_{n=0}^{\infty} \frac{s^{2n+1}}{2n+1} \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */

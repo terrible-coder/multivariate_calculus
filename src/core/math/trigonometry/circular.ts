@@ -6,7 +6,8 @@ export namespace TrigCyclic {
 	 * Calculates the trigonometric sine with rounding according to the given
 	 * context.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * For \\( x < 2\pi \\)
 	 * The Taylor series converges for all \\( x \\).
 	 * 
@@ -46,7 +47,8 @@ export namespace TrigCyclic {
 	 * Calculates the trigonometric cosine with rounding according to the given
 	 * context.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * For \\( x < 2\pi \\)
 	 * The Taylor series converges for all \\( x \\).
 	 * 
@@ -131,7 +133,8 @@ export namespace TrigCyclic {
 	 * Calculates the inverse trigonometric sine of a number with rounding
 	 * according to the given context.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * If \\( x < 0.5 \\)
 	 * use the definition from integration:
 	 * 
@@ -158,19 +161,29 @@ export namespace TrigCyclic {
 			precision: context.precision + 5,
 			rounding: context.rounding
 		};
-		const piby2 = Component.PI.div(Component.TWO, ctx);
+		const piBy2 = Component.PI.div(Component.TWO, ctx);
 		const z = Component.ONE.sub(x, ctx).div(Component.TWO, ctx);
 		const s = z.pow(half, ctx);
 		const temp = asin_less(s, ctx);
-		const res = piby2.sub(Component.TWO.mul(temp, ctx), ctx);
+		const res = piBy2.sub(Component.TWO.mul(temp, ctx), ctx);
 		return Component.round(res, context);
 	}
 
 	/**
 	 * Calculates the inverse trigonometric cosine of a number with rounding
 	 * according to the given context.
+	 * 
+	 * **Method**:
+	 * 
+	 * If \\( \lvert x \rvert < 0.5 \\),
+	 * \\[ \cos^{-1} x = \frac{\pi}{2} - \sin^{-1} x \\]
+	 * 
+	 * otherwise,
+	 * \\[ \cos^{-1} x = 2 \sin^{-1} \sqrt{\frac{1-x}{2}} \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
+	 * @see {@link asin}
 	 */
 	export function acos(x: Component, context: MathContext) {
 		const ctx: MathContext = {
@@ -191,7 +204,8 @@ export namespace TrigCyclic {
 
 	/**
 	 * Calculates the inverse trigonometric tangent of a number (\\( x < 1 \\)).
-	 * Method:
+	 * 
+	 * **Method**:
 	 * 
 	 * \\[ \tan^{-1} x = \int_0^x \frac{1}{1+t^2} dt \\]
 	 * Since \\( x < 1 \\)
@@ -228,7 +242,8 @@ export namespace TrigCyclic {
 	 * Calculates the inverse trigonometric tangent of a number with rounding
 	 * according to the given context.
 	 * 
-	 * Method:
+	 * **Method**:
+	 * 
 	 * The input can be divided into 4 regions for fast convergence.
 	 * 
 	 * 1. \\( 0 \leqslant x < \sqrt{2}-1 \\):
@@ -298,6 +313,16 @@ export namespace TrigCyclic {
 	 * 	x &= r \cos \theta \\\\
 	 * 	y &= r \sin \theta
 	 * 	\end{align} \\]
+	 * 
+	 * Put simply, the above boils down to
+	 * \\[ \operatorname{atan2}(y, x) =
+	 * \begin{cases}
+	 * 	\tan^{-1} \left(\frac{y}{x}\right) &\text{if } x > 0, \\\\
+	 * 	\frac{\pi}{2} - \tan^{-1} \left(\frac{x}{y}\right) &\text{if } y > 0, \\\\
+	 * 	-\frac{\pi}{2} - \tan^{-1} \left(\frac{x}{y}\right) &\text{if } y < 0, \\\\
+	 * 	\tan^{-1} \left(\frac{y}{x}\right) \pm \pi &\text{if } x < 0, \\\\
+	 * 	\text{undefined} &\text{if } x = 0 \text{ and } y = 0
+	 * \end{cases} \\]
 	 * 
 	 * @param y The vertical component.
 	 * @param x The horizontal component.
