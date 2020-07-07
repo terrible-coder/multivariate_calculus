@@ -161,11 +161,11 @@ export namespace TrigCyclic {
 			precision: context.precision + 5,
 			rounding: context.rounding
 		};
-		const piby2 = Component.PI.div(Component.TWO, ctx);
+		const piBy2 = Component.PI.div(Component.TWO, ctx);
 		const z = Component.ONE.sub(x, ctx).div(Component.TWO, ctx);
 		const s = z.pow(half, ctx);
 		const temp = asin_less(s, ctx);
-		const res = piby2.sub(Component.TWO.mul(temp, ctx), ctx);
+		const res = piBy2.sub(Component.TWO.mul(temp, ctx), ctx);
 		return Component.round(res, context);
 	}
 

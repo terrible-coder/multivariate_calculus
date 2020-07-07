@@ -38,8 +38,8 @@ export namespace Exponent {
 			n++;
 		}
 		const temp = Component.intpow(Component.TWO, Math.abs(k), ctx);
-		const twok = k >= 0? temp: Component.ONE.div(temp, ctx);
-		const res = twok.mul(sum, ctx);
+		const two_k = k >= 0? temp: Component.ONE.div(temp, ctx);
+		const res = two_k.mul(sum, ctx);
 		return Component.round(res, context);
 	}
 	
@@ -106,17 +106,17 @@ export namespace Exponent {
 		const increment = x.lessThan(Component.ONE)? -1: 1;
 		const multiplier = increment === 1? two: half;
 		let k = 0;
-		let twok = Component.ONE;
-		let fplus1: Component;
+		let two_k = Component.ONE;
+		let fPlus1: Component;
 		while(true) {
-			fplus1 = x.div(twok, context);
-			const sq = fplus1.mul(fplus1, context);
+			fPlus1 = x.div(two_k, context);
+			const sq = fPlus1.mul(fPlus1, context);
 			if(sq.moreEquals(half, context) && sq.lessEquals(two, context))
 				break;
-			twok = twok.mul(multiplier, context);
+			two_k = two_k.mul(multiplier, context);
 			k += increment;
 		}
-		const f = fplus1.sub(Component.ONE, context);
+		const f = fPlus1.sub(Component.ONE, context);
 		return [k, f];
 	}
 	

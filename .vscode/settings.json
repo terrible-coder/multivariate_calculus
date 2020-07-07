@@ -2,7 +2,11 @@
 	"cSpell.words": [
 		"bignum",
 		"forall",
+		"geqslant",
+		"infty",
+		"leqslant",
 		"mathenv",
+		"mathrm",
 		"mcalc",
 		"multivariable",
 		"typedoc"
