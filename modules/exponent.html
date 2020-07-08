@@ -95,7 +95,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/bf79278/src/core/math/exponential/exponential.ts#L11">src/core/math/exponential/exponential.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/118e00f/src/core/math/exponential/exponential.ts#L21">src/core/math/exponential/exponential.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -103,6 +103,12 @@
 									<p>Calculates the exponential of a given number with rounding according to
 									the given context settings.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>Find the values \( k \) such that
+									\[ x = k\ln 2 + r \]
+								where \( \lvert r \rvert \leqslant \frac{\ln 2}{2} \).</p>
+								<p>Therefore,
+								\[ \exp{x} = 2^k e^{r} \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -133,7 +139,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/bf79278/src/core/math/exponential/exponential.ts#L125">src/core/math/exponential/exponential.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/118e00f/src/core/math/exponential/exponential.ts#L161">src/core/math/exponential/exponential.ts:161</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -141,6 +147,19 @@
 									<p>Calculates the natural logarithm (to the base \( e \)) of a given number
 									with rounding according to the given context settings.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>For larger values of \( x \)(\( &gt; 1 \)), the range can be adjusted
+									such that
+								\[ x = 2^k(1 + f) \]</p>
+								<p>where \( k \) is such that \( |f| &lt; 1 \).
+									Therefore,
+								\[ \ln x = k \ln 2 + \ln (1 + f) \]</p>
+								<p>For faster convergence we can write \( \ln (1+f) \) as</p>
+								<p>\[ \ln (1+f) = \ln (1+s) - \ln (1-s) \]</p>
+								<p>This gives us \( s = \frac{x}{2+x} \) and</p>
+								<p>\[ \ln (1+f) = 2 \sum_{n=0}^{\infty} \frac{s^{2n+1}}{2n+1} \]</p>
+								<p>Finally, we can write
+								\[ \ln x = k \ln 2 + 2 \sum_{n=0}^{\infty} \frac{s^{2n+1}}{2n+1} \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -171,7 +190,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/bf79278/src/core/math/exponential/exponential.ts#L146">src/core/math/exponential/exponential.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/118e00f/src/core/math/exponential/exponential.ts#L187">src/core/math/exponential/exponential.ts:187</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -179,6 +198,8 @@
 									<p>Raises <code>base</code> to the power of <code>ex</code> using the rounding according to the
 									given context settings.</p>
 								</div>
+								<p><strong>Method</strong>:</p>
+								<p>\[ a^b = e^{b \ln a} \]</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
