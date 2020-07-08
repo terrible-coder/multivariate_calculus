@@ -100,4 +100,7 @@ Check out the [documentation](https://terrible-coder.github.io/multivariate_calc
 If there are any issues or some changes you would like to see, [file an issue](https://github.com/terrible-coder/multivariate_calculus/issues).
 To check out the documentation of some previous version add the generic version
 number after the URL:
-https://terrible-coder.github.io/multivariate_calculus/0.2/
+https://terrible-coder.github.io/multivariate_calculus/0.2/.
+
+You can now take a sneak peek into the upcoming features in the next release
+and their documentation by going to https://terrible-coder.github.io/multivariate_calculus/next/.
