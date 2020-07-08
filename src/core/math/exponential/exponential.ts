@@ -176,6 +176,11 @@ export namespace Exponent {
 	/**
 	 * Raises `base` to the power of `ex` using the rounding according to the
 	 * given context settings.
+	 * 
+	 * **Method**:
+	 * 
+	 * \\[ a^b = e^{b \ln a} \\]
+	 * 
 	 * @param ex A number.
 	 * @param context The context settings object to use.
 	 */

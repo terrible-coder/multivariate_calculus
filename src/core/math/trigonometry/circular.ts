@@ -52,7 +52,7 @@ export namespace TrigCyclic {
 	 * For \\( x < 2\pi \\)
 	 * The Taylor series converges for all \\( x \\).
 	 * 
-	 * \\[ \sin x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!} \\]
+	 * \\[ \cos x = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n}}{(2n)!} \\]
 	 * 
 	 * For \\( x \geqslant 2\pi \\), range reduction can be performed.
 	 * The \\( \cos x \\) function has a periodicity of \\( 2\pi \\).
@@ -84,6 +84,11 @@ export namespace TrigCyclic {
 
 	/**
 	 * Calculates the trigonometric tangent with rounding according to the given context.
+	 * 
+	 * **Method**:
+	 *  
+	 * \\[ \tan x = \frac{\sin x}{\cos x} \\]
+	 * 
 	 * @param x A number.
 	 * @param context The context settings to use.
 	 */
@@ -317,10 +322,11 @@ export namespace TrigCyclic {
 	 * Put simply, the above boils down to
 	 * \\[ \operatorname{atan2}(y, x) =
 	 * \begin{cases}
-	 * 	\tan^{-1} \left(\frac{y}{x}\right) &\text{if } x > 0, \\\\
-	 * 	\frac{\pi}{2} - \tan^{-1} \left(\frac{x}{y}\right) &\text{if } y > 0, \\\\
-	 * 	-\frac{\pi}{2} - \tan^{-1} \left(\frac{x}{y}\right) &\text{if } y < 0, \\\\
-	 * 	\tan^{-1} \left(\frac{y}{x}\right) \pm \pi &\text{if } x < 0, \\\\
+	 * 	\arctan(\frac{y}{x}) &\text{if } x > 0, \\\\
+	 * 	\arctan(\frac{y}{x}) + \pi &\text{if } x < 0 \text{ and } y \geqslant 0, \\\\
+	 * 	\arctan(\frac{y}{x}) - \pi &\text{if } x < 0 \text{ and } y < 0, \\\\
+	 * 	+\frac{\pi}{2} &\text{if } x = 0 \text{ and } y > 0, \\\\
+	 * 	-\frac{\pi}{2} &\text{if } x = 0 \text{ and } y < 0, \\\\
 	 * 	\text{undefined} &\text{if } x = 0 \text{ and } y = 0
 	 * \end{cases} \\]
 	 * 
