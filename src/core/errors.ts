@@ -1,3 +1,23 @@
+export function ErrorFactory(name: string, message: (...args: any[]) => string) {
+	function E(this: any, ...args: any[]) {
+		const instance = Reflect.construct(Error, args);
+		instance.message = message(...args);
+		Reflect.setPrototypeOf(instance, Reflect.getPrototypeOf(this));
+		return instance;
+	}
+	E.prototype = Object.create(Error.prototype, {
+		constructor: {
+			value: Error,
+			enumerable: false,
+			writable: true,
+			configurable: true
+		}
+	});
+	Reflect.setPrototypeOf(E, Error);
+	E.prototype.name = name;
+	return E;
+}
+
 /**
  * The error thrown when attempt is made to divide by zero.
  */
