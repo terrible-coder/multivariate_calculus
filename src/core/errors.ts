@@ -1,10 +1,4 @@
-export function ErrorFactory(name: string, message: (...args: any[]) => string) {
-	function E(this: any, ...args: any[]) {
-		const instance = Reflect.construct(Error, args);
-		instance.message = message(...args);
-		Reflect.setPrototypeOf(instance, Reflect.getPrototypeOf(this));
-		return instance;
-	}
+export function setErrorPrototype(E: any) {
 	E.prototype = Object.create(Error.prototype, {
 		constructor: {
 			value: Error,
@@ -14,8 +8,14 @@ export function ErrorFactory(name: string, message: (...args: any[]) => string) 
 		}
 	});
 	Reflect.setPrototypeOf(E, Error);
-	E.prototype.name = name;
-	return E;
+}
+
+export function getErrorObject(thisArg: any, name: string, message: string, ...args: any[]): Error {
+	const instance = Reflect.construct(Error, args);
+	instance.message = message;
+	instance.name = name;
+	Reflect.setPrototypeOf(instance, Reflect.getPrototypeOf(thisArg));
+	return instance;
 }
 
 /**
