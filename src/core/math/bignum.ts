@@ -4,6 +4,7 @@ import { MathContext } from "./context";
 import { mathenv } from "../env";
 import { Numerical } from "../definitions";
 import { alpha_beta, alpha_beta_sq } from "./numerical";
+import { UndefinedValue } from "../errors";
 
 /**
  * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
@@ -705,7 +706,12 @@ export class BigNum extends Numerical {
 		const theta = BigNum.abs(v, context).components[0];
 		if(a.equals(Component.ZERO, context))
 			if(theta.moreThan(Component.ONE))
-				throw new TypeError("Undefined.");
+				throw new UndefinedValue("atan", x, [
+													"The function atan for purely",
+													"imaginary inputs is defined",
+													"only for values with absolute",
+													"value less than or equal to 1."
+												].join(" "));
 		if(v.equals(BigNum.real("0"), context))
 			return new BigNum(Component.atan(a, context));
 		const v_hat = v.div(new BigNum(theta), ctx);
