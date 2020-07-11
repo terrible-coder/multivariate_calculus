@@ -24,6 +24,7 @@ export function getErrorObject(thisArg: any, ...args: any[]) {
  */
 export interface DivisionByZero {
 	/**
+	 * The error thrown when attempt is made to divide by zero.
 	 * @param message The message to show.
 	 */
 	new (message: string): DivisionByZero;
@@ -39,7 +40,8 @@ setErrorPrototype(DivisionByZero, "division by zero");
  */
 export interface IndeterminateForm {
 	/**
-	 * Creates an {@link IndeterminateForm} error.
+	 * The error thrown when some sort of [indeterminate form](https://en.wikipedia.org/wiki/Indeterminate_form) is produced during
+	 * calculations.
 	 * @param message The message to display.
 	 */
 	new (message: string): IndeterminateForm;
@@ -56,7 +58,9 @@ setErrorPrototype(IndeterminateForm, "indeterminate form");
  */
 export interface Overwrite {
 	/**
-	 * Creates a {@link Overwrite} error.
+	 * The error thrown when some sort of illegal overwrite is attempted. It is
+	 * usually in the case of trying to define a constant with the same name
+	 * as another previously defined constant.
 	 * @param name The name of the constant which is being overwritten.
 	 */
 	new (name: string): Overwrite;
