@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Constant | multivariate_calculus</title>
+	<title>UndefinedValue | multivariate_calculus</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -58,10 +58,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="constant.html">Constant</a>
+					<a href="undefinedvalue.html">UndefinedValue</a>
 				</li>
 			</ul>
-			<h1>Interface Constant</h1>
+			<h1>Interface UndefinedValue</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,9 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A constant is such a quantity whose value is known and remains fixed always.</p>
+						<p>The error thrown when a value is passed to a function for which the function
+							value is undefined. This is a better way to handle undefined function values
+						than returning an <code>undefined</code>.</p>
 					</div>
 				</div>
 			</section>
@@ -79,138 +81,73 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="evaluable.html" class="tsd-signature-type">Evaluable</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">Constant</span>
-							</li>
-						</ul>
+						<span class="target">UndefinedValue</span>
 					</li>
 				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/vector.constant.html" class="tsd-signature-type">Constant</a></li>
-					<li><a href="../classes/scalar.constant.html" class="tsd-signature-type">Constant</a></li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-kind-interface">
-				<h3 class="tsd-before-signature">Indexable</h3>
-				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>x: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>A constant is such a quantity whose value is known and remains fixed always.</p>
-					</div>
-				</div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="constant.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="constant.html#quantity" class="tsd-kind-icon">quantity</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="constant.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="constant.html#value" class="tsd-kind-icon">value</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="constant.html#equals" class="tsd-kind-icon">equals</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-interface"><a href="undefinedvalue.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/6aa2e20/src/core/definitions.ts#L58">core/definitions.ts:58</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The string with which <code>this</code> is identified by. For a constant, this value
-								is optional. The implementing classes should take care that there is some
-								default value assigned should the user choose not to initialise a <a href="constant.html">Constant</a>
-							with a name.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="quantity" class="tsd-anchor"></a>
-					<h3>quantity</h3>
-					<div class="tsd-signature tsd-kind-icon">quantity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="evaluable.html">Evaluable</a>.<a href="evaluable.html#quantity">quantity</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/6aa2e20/src/core/definitions.ts#L26">core/definitions.ts:26</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The kind of physical quantity <code>this</code> implements.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"constant"</span></div>
-					<aside class="tsd-sources">
-						<p>Overrides <a href="evaluable.html">Evaluable</a>.<a href="evaluable.html#type">type</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/6aa2e20/src/core/definitions.ts#L50">core/definitions.ts:50</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="value" class="tsd-anchor"></a>
-					<h3>value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/6aa2e20/src/core/definitions.ts#L52">core/definitions.ts:52</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The fixed value <code>this</code> object will represent.</p>
-						</div>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="equals" class="tsd-anchor"></a>
-					<h3>equals</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">equals<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="evaluable.html" class="tsd-signature-type">Evaluable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-interface">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Undefined<wbr>Value<span class="tsd-signature-symbol">(</span>fnName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><a href="../classes/numerical.html" class="tsd-signature-type">Numerical</a>, extra<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="undefinedvalue.html" class="tsd-signature-type">UndefinedValue</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/6aa2e20/src/core/definitions.ts#L59">core/definitions.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/6aa2e20/src/core/errors.ts#L95">core/errors.ts:95</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The error thrown when a value is passed to a function for which the function
+										value is undefined. This is a better way to handle undefined function values
+									than returning an <code>undefined</code>.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>that: <a href="evaluable.html" class="tsd-signature-type">Evaluable</a></h5>
+									<h5>fnName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The name of the function called.</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>value: <a href="../classes/numerical.html" class="tsd-signature-type">Numerical</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The value passed to the function.</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> extra: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Any additional message to display.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="undefinedvalue.html" class="tsd-signature-type">UndefinedValue</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -229,22 +166,10 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="constant.html" class="tsd-kind-icon">Constant</a>
+						<a href="undefinedvalue.html" class="tsd-kind-icon">Undefined<wbr>Value</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="constant.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="constant.html#quantity" class="tsd-kind-icon">quantity</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="constant.html#type" class="tsd-kind-icon">type</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="constant.html#value" class="tsd-kind-icon">value</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="constant.html#equals" class="tsd-kind-icon">equals</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-interface">
+								<a href="undefinedvalue.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 						</ul>
 					</li>
