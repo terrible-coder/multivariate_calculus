@@ -20,16 +20,16 @@ export function getErrorObject(thisArg: any, ...args: any[]) {
 /**
  * The error thrown when attempt is made to divide by zero.
  */
-export class DivisionByZero extends Error {
+export interface DivisionByZero {
 	/**
-	 * Creates a [[DivisionByZero]] error.
-	 * @param message The message to display.
+	 * @param message The message to show.
 	 */
-	constructor(message: string) {
-		super(message);
-		this.name = "Division by zero";
-	}
+	new (message: string): DivisionByZero;
 }
+export const DivisionByZero = <DivisionByZero><unknown> function(this: any, message: string) {
+	return getErrorObject(this, message);
+}
+setErrorPrototype(DivisionByZero, "division by zero");
 
 /**
  * The error thrown when some sort of [indeterminate form](https://en.wikipedia.org/wiki/Indeterminate_form) is produced during
