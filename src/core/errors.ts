@@ -99,10 +99,12 @@ export interface UndefinedValue {
 	 * than returning an `undefined`.
 	 * @param fnName The name of the function called.
 	 * @param value The value passed to the function.
+	 * @param extra Any additional message to display.
 	 */
-	new (fnName: string, value: Numerical): UndefinedValue;
+	new (fnName: string, value: Numerical, extra?: string): UndefinedValue;
 }
-export const UndefinedValue = <UndefinedValue><unknown> function(this: any, fnName: string, value: Numerical) {
-	return getErrorObject(this, `Function ${fnName} is undefined for input ${value}.`);
+export const UndefinedValue = <UndefinedValue><unknown>function(this: any, fnName: string, value: Numerical, extra?: string) {
+	const trail = extra === undefined? "": ` ${extra}`;
+	return getErrorObject(this, `Function ${fnName} is undefined for input ${value}.${trail}`);
 }
 setErrorPrototype(UndefinedValue, "undefined value");
