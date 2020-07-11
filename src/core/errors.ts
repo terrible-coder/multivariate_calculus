@@ -1,3 +1,5 @@
+import { Numerical } from "./definitions";
+
 export function setErrorPrototype(E: any, name: string) {
 	E.prototype = Object.create(Error.prototype, {
 		constructor: {
@@ -22,6 +24,7 @@ export function getErrorObject(thisArg: any, ...args: any[]) {
  */
 export interface DivisionByZero {
 	/**
+	 * The error thrown when attempt is made to divide by zero.
 	 * @param message The message to show.
 	 */
 	new (message: string): DivisionByZero;
@@ -37,7 +40,8 @@ setErrorPrototype(DivisionByZero, "division by zero");
  */
 export interface IndeterminateForm {
 	/**
-	 * Creates an {@link IndeterminateForm} error.
+	 * The error thrown when some sort of [indeterminate form](https://en.wikipedia.org/wiki/Indeterminate_form) is produced during
+	 * calculations.
 	 * @param message The message to display.
 	 */
 	new (message: string): IndeterminateForm;
@@ -54,7 +58,9 @@ setErrorPrototype(IndeterminateForm, "indeterminate form");
  */
 export interface Overwrite {
 	/**
-	 * Creates a {@link Overwrite} error.
+	 * The error thrown when some sort of illegal overwrite is attempted. It is
+	 * usually in the case of trying to define a constant with the same name
+	 * as another previously defined constant.
 	 * @param name The name of the constant which is being overwritten.
 	 */
 	new (name: string): Overwrite;
@@ -80,3 +86,25 @@ export const InvalidIndex = <InvalidIndex><unknown> function(this: any, passed: 
 	return getErrorObject(this, `Index ${passed} does not exist. Indexing starts from ${start}.`);
 }
 setErrorPrototype(InvalidIndex, "invalid index");
+
+/**
+ * The error thrown when a value is passed to a function for which the function
+ * value is undefined. This is a better way to handle undefined function values
+ * than returning an `undefined`.
+ */
+export interface UndefinedValue {
+	/**
+	 * The error thrown when a value is passed to a function for which the function
+	 * value is undefined. This is a better way to handle undefined function values
+	 * than returning an `undefined`.
+	 * @param fnName The name of the function called.
+	 * @param value The value passed to the function.
+	 * @param extra Any additional message to display.
+	 */
+	new (fnName: string, value: Numerical, extra?: string): UndefinedValue;
+}
+export const UndefinedValue = <UndefinedValue><unknown>function(this: any, fnName: string, value: Numerical, extra?: string) {
+	const trail = extra === undefined? "": ` ${extra}`;
+	return getErrorObject(this, `Function ${fnName} is undefined for input ${value}.${trail}`);
+}
+setErrorPrototype(UndefinedValue, "undefined value");
