@@ -1,3 +1,5 @@
+import { Numerical } from "./definitions";
+
 export function setErrorPrototype(E: any, name: string) {
 	E.prototype = Object.create(Error.prototype, {
 		constructor: {
@@ -80,3 +82,23 @@ export const InvalidIndex = <InvalidIndex><unknown> function(this: any, passed: 
 	return getErrorObject(this, `Index ${passed} does not exist. Indexing starts from ${start}.`);
 }
 setErrorPrototype(InvalidIndex, "invalid index");
+
+/**
+ * The error thrown when a value is passed to a function for which the function
+ * value is undefined. This is a better way to handle undefined function values
+ * than returning an `undefined`.
+ */
+export interface UndefinedValue {
+	/**
+	 * The error thrown when a value is passed to a function for which the function
+	 * value is undefined. This is a better way to handle undefined function values
+	 * than returning an `undefined`.
+	 * @param fnName The name of the function called.
+	 * @param value The value passed to the function.
+	 */
+	new (fnName: string, value: Numerical): UndefinedValue;
+}
+export const UndefinedValue = <UndefinedValue><unknown> function(this: any, fnName: string, value: Numerical) {
+	return getErrorObject(this, `Function ${fnName} is undefined for input ${value}.`);
+}
+setErrorPrototype(UndefinedValue, "undefined value");
