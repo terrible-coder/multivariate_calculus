@@ -568,14 +568,14 @@ describe("Inverse trigonometry", function() {
 				expect(Component.asin(x.neg)).toEqual(Component.asin(x).neg);
 		});
 
-		it("throws errors", function() {
+		it("throws appropriate errors", function() {
 			const values = new Array(10).fill(0)
 							.map(() => 1.1 + Math.random())
 							.map(x => Component.create(x));
 			for(let x of values)
-				expect(() => Component.asin(x)).toThrow();
+				expect(() => Component.asin(x)).toThrow(UndefinedValue);
 			for(let x of values)
-				expect(() => Component.asin(x.neg)).toThrow();
+				expect(() => Component.asin(x.neg)).toThrow(UndefinedValue);
 		});
 	});
 
@@ -626,9 +626,9 @@ describe("Inverse trigonometry", function() {
 							.map(() => 1.1 + Math.random())
 							.map(x => Component.create(x));
 			for(let x of values)
-				expect(() => Component.acos(x)).toThrow();
+				expect(() => Component.acos(x)).toThrow(UndefinedValue);
 			for(let x of values)
-				expect(() => Component.acos(x.neg)).toThrow();
+				expect(() => Component.acos(x.neg)).toThrow(UndefinedValue);
 		});
 	});
 
@@ -740,6 +740,10 @@ describe("Inverse trigonometry", function() {
 					expect(Component.atan2(Y[i], X[i])).toEqual(angles[i].sub(Component.TWO.mul(Component.PI)));
 				}
 			});
+		});
+
+		it("throws appropriate errors", function() {
+			expect(() => Component.atan2(Component.ZERO, Component.ZERO)).toThrow(UndefinedValue);
 		});
 	});
 });
@@ -860,7 +864,7 @@ describe("Inverse hyperbolic trigonometry", function() {
 		it("throws appropriate errors", function() {
 			for(let i = 0; i < 10; i++) {
 				const x = Component.create(Math.random()-0.1);
-				expect(() => Component.acosh(x)).toThrow();
+				expect(() => Component.acosh(x)).toThrow(UndefinedValue);
 			}
 		});
 	});
@@ -886,7 +890,7 @@ describe("Inverse hyperbolic trigonometry", function() {
 		it("throws appropriate errors", function() {
 			for(let i = 0; i < 10; i++) {
 				const x = Component.create(1.1 + Math.random());
-				expect(() => Component.atanh(x)).toThrow();
+				expect(() => Component.atanh(x)).toThrow(UndefinedValue);
 			}
 		});
 	});
