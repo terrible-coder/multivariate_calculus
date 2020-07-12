@@ -1,5 +1,5 @@
 import { Component } from "../../../src/core/math/component";
-import { IndeterminateForm, DivisionByZero, UndefinedValue } from "../../../src/core/errors";
+import { IndeterminateForm, DivisionByZero, UndefinedValue, IllegalNumberFormat } from "../../../src/core/errors";
 import { RoundingMode, MathContext } from "../../../src/core/math/context";
 import { mathenv } from "../../../src/core/env";
 
@@ -215,7 +215,7 @@ describe("Throws appropriate errors", function() {
 	});
 
 	it("Illegal number format", function() {
-		expect(() => Component.create("1.1.1")).toThrowError(TypeError);
+		expect(() => Component.create("1.1.1")).toThrowError(IllegalNumberFormat);
 	});
 
 	it("Negative number to fractional power", function() {

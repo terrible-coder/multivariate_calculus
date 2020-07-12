@@ -1,3 +1,5 @@
+import { IllegalNumberFormat } from "../errors";
+
 /**
  * @ignore
  */
@@ -196,7 +198,7 @@ export function decimate(a: string, index: number) {
  */
 export function parseNum(s: string) {
 	if (!isValid(s))
-		throw new TypeError("Illegal number format.");
+		throw new IllegalNumberFormat(s);
 	let a = [];
 	if (s.indexOf('e') > -1) {
 		// The number is in scientific mode
