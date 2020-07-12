@@ -1,5 +1,5 @@
 import { Component } from "../../../src/core/math/component";
-import { IndeterminateForm, DivisionByZero } from "../../../src/core/errors";
+import { IndeterminateForm, DivisionByZero, UndefinedValue } from "../../../src/core/errors";
 import { RoundingMode, MathContext } from "../../../src/core/math/context";
 import { mathenv } from "../../../src/core/env";
 
@@ -440,11 +440,15 @@ describe("Logarithm", function() {
 		properContext();
 	});
 
-	it("ln", function() {
-		expect(() => Component.ln(Component.ZERO)).toThrow();
+	it("returns corrects value", function() {
 		expect(Component.ln(Component.ONE)).toEqual(Component.ZERO);
 		expect(Component.ln(Component.create("10"))).toEqual(Component.round(Component.ln10, mathenv.mode));
 		expect(Component.ln(Component.create("0.1"))).toEqual(Component.round(Component.ln10.neg, mathenv.mode));
+	});
+
+	it("throws appropriate errors", function() {
+		expect(() => Component.ln(Component.ZERO)).toThrow(UndefinedValue);
+		expect(() => Component.ln(Component.ONE.neg)).toThrow(UndefinedValue);
 	});
 });
 
