@@ -1,3 +1,5 @@
+import { IllegalNumberFormat } from "../errors";
+
 /**
  * @ignore
  */
@@ -196,7 +198,7 @@ export function decimate(a: string, index: number) {
  */
 export function parseNum(s: string) {
 	if (!isValid(s))
-		throw new TypeError("Illegal number format.");
+		throw new IllegalNumberFormat(s);
 	let a = [];
 	if (s.indexOf('e') > -1) {
 		// The number is in scientific mode
@@ -215,8 +217,9 @@ export function parseNum(s: string) {
 	}
 	else
 		a = s.split(".");
-	const sgn = a[0].charAt(0) === "-"? "-": "";
-	a[0] = sgn === "-"? a[0].substring(1): a[0];
+	const ch = a[0].charAt(0);
+	const sgn = ch === "-"? "-": "";
+	a[0] = (ch === "-" || ch === "+")? a[0].substring(1): a[0];
 	a[0] = trimZeroes(a[0], "start", x => x === "0");
 	if(a.length === 1) a.push("");
 	else a[1] = trimZeroes(a[1], "end", x => x ==="0");

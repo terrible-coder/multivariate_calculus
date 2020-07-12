@@ -1,5 +1,6 @@
 import { MathContext } from "../context";
 import { Component } from "../component";
+import { UndefinedValue } from "../../errors";
 
 export namespace Exponent {
 	/**
@@ -160,7 +161,7 @@ export namespace Exponent {
 	 */
 	export function ln(x: Component, context: MathContext): Component {
 		if(x.lessEquals(Component.ZERO, context))
-			throw new TypeError("Undefined.");
+			throw new UndefinedValue("ln (for reals)", x);
 		if(x.equals(Component.ONE, context))
 			return Component.ZERO;
 		const ctx: MathContext = {

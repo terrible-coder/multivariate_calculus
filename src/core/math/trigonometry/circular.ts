@@ -1,5 +1,7 @@
 import { Component } from "../component";
 import { MathContext } from "../context";
+import { UndefinedValue } from "../../errors";
+import { Numerical } from "../../definitions";
 
 export namespace TrigCyclic {
 	/**
@@ -157,6 +159,8 @@ export namespace TrigCyclic {
 	 * @param context The context settings to use.
 	 */
 	export function asin(x: Component, context: MathContext): Component {
+		if(Component.abs(x, context).moreThan(Component.ONE))
+			throw new UndefinedValue("asin (for reals)", x);
 		if(x.lessThan(Component.ZERO))
 			return asin(x.neg, context).neg;
 		const half = Component.create("0.5");
@@ -191,6 +195,8 @@ export namespace TrigCyclic {
 	 * @see {@link asin}
 	 */
 	export function acos(x: Component, context: MathContext) {
+		if(Component.abs(x, context).moreThan(Component.ONE))
+			throw new UndefinedValue("acos (for reals)", x);
 		const ctx: MathContext = {
 			precision: context.precision + 5,
 			rounding: context.rounding
@@ -338,7 +344,7 @@ export namespace TrigCyclic {
 		const yComp = y.compareTo(Component.ZERO);
 		const xComp = x.compareTo(Component.ZERO);
 		if(xComp === 0 && yComp === 0)
-			throw new Error("undefined");
+			throw new UndefinedValue("atan2", <Numerical><unknown>[0, 0]);
 		const pi = Component.PI;
 		const two = Component.TWO;
 		if(xComp === 0)

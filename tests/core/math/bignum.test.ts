@@ -2,6 +2,7 @@ import { BigNum } from "../../../src/core/math/bignum";
 import { Component } from "../../../src/core/math/component";
 import { mathenv } from "../../../src/core/env";
 import { MathContext } from "../../../src/core/math/context";
+import { DivisionByZero, UndefinedValue } from "../../../src/core/errors";
 
 const mock_add = jest.fn(BigNum.prototype.add);
 const mock_sub = jest.fn(BigNum.prototype.sub);
@@ -329,16 +330,20 @@ describe("Normalises", function() {
 });
 
 describe("Inverse", function() {
-	it("for 1 real", function() {
+	test("for 1 real", function() {
 		const a = BigNum.real("5");
 		const inv = BigNum.real("0.2");
 		expect(a.inv()).toEqual(inv);
 	});
 
-	it("for 2 reals", function() {
+	test("for 2 reals", function() {
 		const a = BigNum.complex("3", "4");
 		const inv = BigNum.complex("0.12", "-0.16");
 		expect(a.inv()).toEqual(inv);
+	});
+
+	it("throws appropriate errors", function() {
+		expect(() => BigNum.real(0).inv()).toThrow(DivisionByZero);
 	});
 });
 
@@ -406,13 +411,14 @@ describe("Exponential", function() {
 });
 
 describe("Logarithm", function() {
-	test("calls with proper context", function() {
-		BigNum.ln(BigNum.hyper([1, 0, 5, 2]));
-		properContext();
-	});
 
 	describe("ln", function() {
-		it("for positive reals", function() {
+		test("calls with proper context", function() {
+			BigNum.ln(BigNum.hyper([1, 0, 5, 2]));
+			properContext();
+		});
+
+		test("for positive reals", function() {
 			for(let i = 1; i < 10; i++) {
 				const x = BigNum.real(i);
 				const x_ = Component.create(i);
@@ -420,7 +426,7 @@ describe("Logarithm", function() {
 			}
 		});
 
-		it("for negative reals", function() {
+		test("for negative reals", function() {
 			for(let i = 1; i < 10; i++) {
 				const x = BigNum.real(i).neg;
 				const x_ = Component.create(i);
@@ -431,7 +437,7 @@ describe("Logarithm", function() {
 			}
 		});
 
-		it("for 2 reals", function() {
+		test("for 2 reals", function() {
 			const lnRoot2 = Component.ln(Component.TWO.pow(Component.create("0.5")));
 			const piBy4 = Component.PI.mul(Component.create("0.25"));
 			const pi3by4 = Component.PI.mul(Component.create("0.75"));
@@ -451,11 +457,15 @@ describe("Logarithm", function() {
 				expect(BigNum.ln(values[i])).toEqual(logs[i]);
 		});
 
-		it("for 6 reals", function() {
+		test("for 6 reals", function() {
 			const piBy2 = Component.PI.div(Component.TWO);
 			const x = BigNum.hyper("0", "3", "2", "1", "1", "1").div(BigNum.real("4"));
 			const log = new BigNum(piBy2).mul(x);
 			expect(BigNum.ln(x)).toEqual(log);
+		});
+
+		it("throws appropriate errors", function() {
+			expect(() => BigNum.ln(BigNum.real(0))).toThrow(UndefinedValue);
 		});
 	});
 });
@@ -660,6 +670,10 @@ describe("Inverse trigonometry", function() {
 				expect(BigNum.atan(x)).toEqual(atan);
 			}
 			expect(() => BigNum.atan(BigNum.complex("0", "2"))).toThrow();
+		});
+
+		it("throws appropriate errors", function() {
+			expect(() => BigNum.atan(BigNum.complex(0, 2))).toThrow(UndefinedValue);
 		});
 	});
 });

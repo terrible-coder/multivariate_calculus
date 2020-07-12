@@ -1,6 +1,7 @@
 import { Component } from "../component";
 import { MathContext } from "../context";
 import { Exponent } from "../exponential/exponential";
+import { UndefinedValue } from "../../errors";
 
 const ln = Exponent.ln;
 
@@ -131,6 +132,8 @@ export namespace TrigHyperbolic {
 	 * @param context The context settings to use.
 	 */
 	export function acosh(x: Component, context: MathContext) {
+		if(x.lessThan(Component.ONE))
+			throw new UndefinedValue("acosh (for reals)", x);
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
@@ -156,6 +159,8 @@ export namespace TrigHyperbolic {
 	 * @param context The context settings to use.
 	 */
 	export function atanh(x: Component, context: MathContext): Component {
+		if(Component.abs(x, context).moreThan(Component.ONE))
+			throw new UndefinedValue("atanh (for reals)", x);
 		if(x.lessThan(Component.ZERO))
 			return atanh(x.neg, context).neg;
 		if(x.equals(Component.ZERO, context))
