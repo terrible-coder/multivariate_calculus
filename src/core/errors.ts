@@ -108,3 +108,18 @@ export const UndefinedValue = <UndefinedValue><unknown>function(this: any, fnNam
 	return getErrorObject(this, `Function ${fnName} is undefined for input ${value}.${trail}`);
 }
 setErrorPrototype(UndefinedValue, "undefined value");
+
+/**
+ * The error thrown when the string form of a number fails to parse.
+ */
+export interface IllegalNumberFormat {
+	/**
+	 * The error thrown when the string form of a number fails to parse.
+	 * @param passed The incorrect string form of number passed.
+	 */
+	new (passed: string): IllegalNumberFormat;
+}
+export const IllegalNumberFormat = <IllegalNumberFormat><unknown>function(this: any, passed: string) {
+	return getErrorObject(this, `Number format failed to parse: ${passed}`);
+}
+setErrorPrototype(IllegalNumberFormat, "illegal number format");
