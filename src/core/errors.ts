@@ -1,5 +1,14 @@
 import { Numerical } from "./definitions";
 
+/**
+ * Attaches the prototype of the JavaScript Error object to the given object.
+ * This approach of creating error types is used over extending the Error class
+ * because native extends breaks for Error, Array and other native types. Check
+ * out [this StackOverflow thread](https://stackoverflow.com/questions/1382107/whats-a-good-way-to-extend-error-in-javascript)
+ * for further reading.
+ * @param E The constructor like function or object.
+ * @param name The name of the error type.
+ */
 function setErrorPrototype(E: any, name: string) {
 	E.prototype = Object.create(Error.prototype, {
 		constructor: {
@@ -13,6 +22,13 @@ function setErrorPrototype(E: any, name: string) {
 	E.prototype.name = name;
 }
 
+/**
+ * Creates a custom Error type object and passes the given arguments to the
+ * Error constructor.
+ * @param thisArg The object to attach the error type to.
+ * @param args Arguments to pass to the error constructor.
+ * @see {@link setErrorPrototype}
+ */
 function getErrorObject(thisArg: any, ...args: any[]) {
 	const instance = Reflect.construct(Error, args);
 	Reflect.setPrototypeOf(instance, Reflect.getPrototypeOf(thisArg));
