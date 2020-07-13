@@ -1,6 +1,6 @@
 import { Numerical } from "./definitions";
 
-export function setErrorPrototype(E: any, name: string) {
+function setErrorPrototype(E: any, name: string) {
 	E.prototype = Object.create(Error.prototype, {
 		constructor: {
 			value: Error,
@@ -13,7 +13,7 @@ export function setErrorPrototype(E: any, name: string) {
 	E.prototype.name = name;
 }
 
-export function getErrorObject(thisArg: any, ...args: any[]) {
+function getErrorObject(thisArg: any, ...args: any[]) {
 	const instance = Reflect.construct(Error, args);
 	Reflect.setPrototypeOf(instance, Reflect.getPrototypeOf(thisArg));
 	return instance;
