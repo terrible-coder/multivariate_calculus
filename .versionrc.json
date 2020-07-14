@@ -1,0 +1,6 @@
+{
+	"scripts": {
+		"postcommit": "git push",
+		"posttag": "git push --tags"
+	}
+}

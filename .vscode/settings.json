@@ -10,5 +10,8 @@
 		"mcalc",
 		"multivariable",
 		"typedoc"
+	],
+	"conventionalCommits.scopes": [
+		"npm"
 	]
 }
