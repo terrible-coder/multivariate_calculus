@@ -18,7 +18,8 @@
     "minify": "minify mcalc.js > mcalc.min.js",
     "docs": "node ./scripts/document.js",
     "deploy-gh-pages": "node ./scripts/deploy-gh-pages.js",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "release": "standard-version"
   },
   "keywords": [
     "vector",
