@@ -5,6 +5,7 @@ import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { Vector } from "./vector";
 import { Overwrite, IndeterminateForm } from "./core/errors";
 import { abs, sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, atanh, exp, log, ln, floor, ceil } from "./core/math/functions";
+import { BigNum } from "./core/math/bignum";
 
 /**
  * Base class to works with scalar quantities.
@@ -386,7 +387,7 @@ export namespace Scalar {
 		 * @param value The fixed value `this` should represent.
 		 * @param name The name by which `this` is identified.
 		 */
-		constructor(readonly value: number, readonly name: string = "") {
+		constructor(readonly value: BigNum, readonly name: string = "") {
 			super();
 		}
 
@@ -845,12 +846,14 @@ export namespace Scalar {
 		let num: Scalar.Constant | undefined;
 		if(typeof a === "number") {
 			if(b === undefined) {
-				scalar = new Scalar.Constant(a);
+				const big = BigNum.real(a);
+				scalar = new Scalar.Constant(big);
 			} else {
 				num = NAMED_CONSTANTS.get(b);
 				if(num !== undefined)
 					throw new Overwrite(b);
-				scalar = new Scalar.Constant(a, b);
+				const big = BigNum.real(a);
+				scalar = new Scalar.Constant(big, b);
 				NAMED_CONSTANTS.set(b, scalar);
 			}
 		} else {
