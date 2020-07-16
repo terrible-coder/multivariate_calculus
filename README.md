@@ -1,6 +1,5 @@
 multivariate_calculus
 =====================
-[shields]: (https://img.shields.io)
 [![CircleCI](https://img.shields.io/circleci/build/gh/terrible-coder/multivariate_calculus/master?style=flat-square&logo=circleci)](https://www.circleci.com/gh/terrible-coder/multivariate_calculus)
 
 [![npm](https://img.shields.io/npm/v/multivariate_calculus?style=flat-square&logo=npm)](https://npmjs.com/package/multivariate_calculus)
