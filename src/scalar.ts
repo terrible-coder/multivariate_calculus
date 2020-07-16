@@ -841,23 +841,25 @@ export namespace Scalar {
 	 */
 	export function constant(name: string): Scalar.Constant;
 	export function constant(a: number | string, b?: string) {
-		let c;
+		let scalar: Scalar.Constant;
+		let num: Scalar.Constant | undefined;
 		if(typeof a === "number") {
 			if(b === undefined) {
-				c = new Scalar.Constant(a);
+				scalar = new Scalar.Constant(a);
 			} else {
-				c = NAMED_CONSTANTS.get(b);
-				if(c !== undefined)
+				num = NAMED_CONSTANTS.get(b);
+				if(num !== undefined)
 					throw new Overwrite(b);
-				c = new Scalar.Constant(a, b);
-				NAMED_CONSTANTS.set(b, c);
+				scalar = new Scalar.Constant(a, b);
+				NAMED_CONSTANTS.set(b, scalar);
 			}
 		} else {
-			c = NAMED_CONSTANTS.get(a);
-			if(c === undefined)
+			num = NAMED_CONSTANTS.get(a);
+			if(num === undefined)
 				throw new Error("No such constant defined.");
+			scalar = num;
 		}
-		return c;
+		return scalar;
 	}
 
 	/**
