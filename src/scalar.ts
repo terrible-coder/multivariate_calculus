@@ -361,11 +361,6 @@ export namespace Scalar {
 	 */
 	const VARIABLES = new Map<string, Scalar.Variable>();
 	/**
-	 * A mapping from numerical constants to [[Scalar.Constant]] objects.
-	 * @ignore
-	 */
-	const CONSTANTS = new Map<number, Scalar.Constant>();
-	/**
 	 * A mapping from named scalar constants to [[Scalar.Constant]] objects.
 	 * @ignore
 	 */
@@ -849,11 +844,7 @@ export namespace Scalar {
 		let c;
 		if(typeof a === "number") {
 			if(b === undefined) {
-				c = CONSTANTS.get(a);
-				if(c === undefined) {
-					c = new Scalar.Constant(a);
-					CONSTANTS.set(a, c);
-				}
+				c = new Scalar.Constant(a);
 			} else {
 				c = NAMED_CONSTANTS.get(b);
 				if(c !== undefined)
