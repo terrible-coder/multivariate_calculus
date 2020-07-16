@@ -4,6 +4,7 @@ import { ExpressionBuilder } from "./core/expression";
 import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { Vector } from "./vector";
 import { Overwrite, IndeterminateForm } from "./core/errors";
+import { abs, sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, atanh, exp, log, ln, floor, ceil } from "./core/math/functions";
 
 /**
  * Base class to works with scalar quantities.
@@ -73,7 +74,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static abs(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static abs(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.abs(x.value));
+			return Scalar.constant(abs(x.value));
 		return new Scalar.Expression(UnaryOperator.ABS, x);
 	}
 
@@ -89,7 +90,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static sin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static sin(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.sin(x.value));
+			return Scalar.constant(sin(x.value));
 		return new Scalar.Expression(UnaryOperator.SIN, x);
 	}
 
@@ -105,7 +106,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static cos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static cos(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.cos(x.value));
+			return Scalar.constant(cos(x.value));
 		return new Scalar.Expression(UnaryOperator.COS, x);
 	}
 
@@ -121,7 +122,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static tan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static tan(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.tan(x.value));
+			return Scalar.constant(tan(x.value));
 		return new Scalar.Expression(UnaryOperator.TAN, x);
 	}
 
@@ -137,7 +138,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static asin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static asin(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.asin(x.value));
+			return Scalar.constant(asin(x.value));
 		return new Scalar.Expression(UnaryOperator.ASIN, x);
 	}
 
@@ -153,7 +154,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static acos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static acos(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.acos(x.value));
+			return Scalar.constant(acos(x.value));
 		return new Scalar.Expression(UnaryOperator.ACOS, x);
 	}
 
@@ -169,7 +170,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static atan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static atan(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.atan(x.value));
+			return Scalar.constant(atan(x.value));
 		return new Scalar.Expression(UnaryOperator.ATAN, x);
 	}
 
@@ -185,7 +186,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static sinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static sinh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.sinh(x.value));
+			return Scalar.constant(sinh(x.value));
 		return new Scalar.Expression(UnaryOperator.SINH, x);
 	}
 
@@ -201,7 +202,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static cosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static cosh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.cosh(x.value));
+			return Scalar.constant(cosh(x.value));
 		return new Scalar.Expression(UnaryOperator.COSH, x);
 	}
 
@@ -217,7 +218,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static tanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static tanh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.tanh(x.value));
+			return Scalar.constant(tanh(x.value));
 		return new Scalar.Expression(UnaryOperator.TANH, x);
 	}
 
@@ -233,7 +234,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static asinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static asinh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.asinh(x.value));
+			return Scalar.constant(asinh(x.value));
 		return new Scalar.Expression(UnaryOperator.ASINH, x);
 	}
 
@@ -249,7 +250,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static acosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static acosh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.acosh(x.value));
+			return Scalar.constant(acosh(x.value));
 		return new Scalar.Expression(UnaryOperator.ACOSH, x);
 	}
 
@@ -265,7 +266,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static atanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static atanh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.atanh(x.value));
+			return Scalar.constant(atanh(x.value));
 		return new Scalar.Expression(UnaryOperator.ATANH, x);
 	}
 
@@ -281,7 +282,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static exp(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static exp(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.exp(x.value));
+			return Scalar.constant(exp(x.value));
 		return new Scalar.Expression(UnaryOperator.EXP, x);
 	}
 
@@ -297,7 +298,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static ln(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static ln(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.log(x.value));
+			return Scalar.constant(ln(x.value));
 		return new Scalar.Expression(UnaryOperator.LN, x);
 	}
 
@@ -313,7 +314,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static log(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static log(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.log10(x.value));
+			return Scalar.constant(log(x.value));
 		return new Scalar.Expression(UnaryOperator.LOG, x);
 	}
 
@@ -329,7 +330,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static floor(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static floor(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.floor(x.value));
+			return Scalar.constant(floor(x.value));
 		return new Scalar.Expression(UnaryOperator.FLOOR, x);
 	}
 
@@ -345,7 +346,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static ceil(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static ceil(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.ceil(x.value));
+			return Scalar.constant(ceil(x.value));
 		return new Scalar.Expression(UnaryOperator.CEIL, x);
 	}
 }
