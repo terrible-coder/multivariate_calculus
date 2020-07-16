@@ -24,7 +24,7 @@ module.exports = {
   // collectCoverageFrom: null,
 
   // The directory where Jest should output its coverage files
-  // coverageDirectory: null,
+  coverageDirectory: "<rootDir>/coverage",
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -46,7 +46,7 @@ module.exports = {
   // dependencyExtractor: null,
 
   // Make calling deprecated APIs throw helpful error messages
-  // errorOnDeprecated: false,
+  errorOnDeprecated: true,
 
   // Force coverage collection from ignored files using an array of glob patterns
   // forceCoverageMatch: [],
