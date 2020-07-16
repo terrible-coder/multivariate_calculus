@@ -18,7 +18,8 @@
     "minify": "minify mcalc.js > mcalc.min.js",
     "docs": "node ./scripts/document.js",
     "deploy-gh-pages": "node ./scripts/deploy-gh-pages.js",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "release": "standard-version"
   },
   "keywords": [
     "vector",
@@ -47,6 +48,7 @@
     "jest-cli": "^25.1.0",
     "minify": "^5.1.1",
     "shelljs": "^0.8.4",
+    "standard-version": "^8.0.2",
     "ts-jest": "^25.4.0",
     "typedoc": "^0.17.4",
     "typescript": "^3.8.3",

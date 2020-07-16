@@ -1,0 +1,11 @@
+{
+	"scripts": {
+		"postcommit": "git push",
+		"posttag": "git push --tags"
+	},
+	"types": [
+		{ "type": "feat", "section": "Features Added" },
+		{ "type": "fix", "section": "Bug Fixes" },
+		{ "type": "perf", "section": "Performance Improvements" }
+	]
+}
