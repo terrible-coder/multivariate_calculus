@@ -382,7 +382,7 @@ export namespace Scalar {
 		 * One may optionally pass in a string by which `this` object
 		 * may be identified by.
 		 * 
-		 * Using the contructor directly for creating vector objects is
+		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
 		 * @see [[Scalar.constant]]
@@ -436,7 +436,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the addition of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * adding a variable scalar to another scalar always results in an expresion.
+		 * adding a variable scalar to another scalar always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
@@ -456,7 +456,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the subtraction of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * subtracting a variable scalar from another scalar always results in an expresion.
+		 * subtracting a variable scalar from another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -476,7 +476,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the multiplication of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * multiplying a variable scalar by another scalar always results in an expresion.
+		 * multiplying a variable scalar by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -491,7 +491,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the scaling of
 		 * a [[Vector]] object. The [[type]] of `this` does not matter because
-		 * scaling a variable vector by a scalar always results in an expresion.
+		 * scaling a variable vector by a scalar always results in an expression.
 		 * @param that The [[Vector]] to scale by the amount of `this`.
 		 * @return Expression for scaling `that` by `this`.
 		 */
@@ -516,7 +516,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the division of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * dividing a variable scalar by another scalar always results in an expresion.
+		 * dividing a variable scalar by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to divide `this` by `this`.
 		 * @return Expression for dividing `this` by `that`.
 		 */
@@ -539,7 +539,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for exponentiation of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * exponentiating a scalar by a variable scalar always results in an expresion.
+		 * exponentiating a scalar by a variable scalar always results in an expression.
 		 * @param that The [[Scalar]] power to raise `this` to.
 		 * @return Expression for exponentiating `this` by `that`.
 		 */
@@ -566,7 +566,7 @@ export namespace Scalar {
 		/**
 		 * Creates a [[Scalar.Variable]] object.
 		 * 
-		 * Using the contructor directly for creating vector objects is
+		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
 		 * @see [[Scalar.variable]]
@@ -583,7 +583,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the addition of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * adding a variable scalar to another scalar always results in an expresion.
+		 * adding a variable scalar to another scalar always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
@@ -594,7 +594,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the subtraction of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * subtracting a variable scalar from another scalar always results in an expresion.
+		 * subtracting a variable scalar from another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -605,7 +605,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the multiplication of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * multiplying a variable scalar by another scalar always results in an expresion.
+		 * multiplying a variable scalar by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -613,7 +613,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the scaling of
 		 * a [[Vector]] object. The [[type]] of `this` does not matter because
-		 * scaling a variable vector by a scalar always results in an expresion.
+		 * scaling a variable vector by a scalar always results in an expression.
 		 * @param that The [[Vector]] to scale by the amount of `this`.
 		 * @return Expression for scaling `that` by `this`.
 		 */
@@ -627,7 +627,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the division of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * dividing a variable scalar by another scalar always results in an expresion.
+		 * dividing a variable scalar by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to divide `this` by `this`.
 		 * @return Expression for dividing `this` by `that`.
 		 */
@@ -638,7 +638,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for exponentiation of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * exponentiating a scalar by a variable scalar always results in an expresion.
+		 * exponentiating a scalar by a variable scalar always results in an expression.
 		 * @param that The [[Scalar]] power to raise `this` to.
 		 * @return Expression for exponentiating `this` by `that`.
 		 */
@@ -727,7 +727,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the addition of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * adding a unknown scalar/scalar expression to another scalar always results in an expresion.
+		 * adding a unknown scalar/scalar expression to another scalar always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
@@ -738,7 +738,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the subtraction of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * subtracting a unknown scalar/scalar expression from another scalar always results in an expresion.
+		 * subtracting a unknown scalar/scalar expression from another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -749,7 +749,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the multiplication of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * multiplying a unknown scalar/scalar expression by another scalar always results in an expresion.
+		 * multiplying a unknown scalar/scalar expression by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -757,7 +757,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the scaling of
 		 * a [[Vector]] object. The [[type]] of `this` does not matter because
-		 * scaling a unknown vector/scalar expression by a scalar always results in an expresion.
+		 * scaling a unknown vector/scalar expression by a scalar always results in an expression.
 		 * @param that The [[Vector]] to scale by the amount of `this`.
 		 * @return Expression for scaling `that` by `this`.
 		 */
@@ -771,7 +771,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the division of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * dividing a unknown scalar/scalar expression by another scalar always results in an expresion.
+		 * dividing a unknown scalar/scalar expression by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to divide `this` by `this`.
 		 * @return Expression for dividing `this` by `that`.
 		 */
@@ -782,7 +782,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for exponentiation of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * exponentiating a scalar by a unknown scalar/scalar expression always results in an expresion.
+		 * exponentiating a scalar by a unknown scalar/scalar expression always results in an expression.
 		 * @param that The [[Scalar]] power to raise `this` to.
 		 * @return Expression for exponentiating `this` by `that`.
 		 */

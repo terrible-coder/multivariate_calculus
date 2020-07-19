@@ -74,7 +74,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	public abstract scale(k: Scalar): Vector;
 
 	/**
-	 * Computes the magnitude of a constant vector numberically.
+	 * Computes the magnitude of a constant vector numerically.
 	 * @param A The [[Vector]] whose magnitude is to be calculated.
 	 * @return The [[Scalar]] magnitude of the given [[Vector]].
 	 */
@@ -99,7 +99,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * For a given constant vector `A`, numberically evaluates the unit vector along `A`.
+	 * For a given constant vector `A`, numerically evaluates the unit vector along `A`.
 	 * @param A The [[Vector.Constant]] along which the unit vector is to be calculated.
 	 * @return The unit vector along the given [[Vector]] `A`.
 	 */
@@ -155,7 +155,7 @@ export namespace Vector {
 		 * objects. One may optionally pass in a string by which `this` object
 		 * may be identified by.
 		 * 
-		 * Using the contructor directly for creating vector objects is
+		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
 		 * @see [[Vector.constant]]
@@ -168,7 +168,7 @@ export namespace Vector {
 		 * One may optionally pass in a string by which `this` object
 		 * may be identified by.
 		 * 
-		 * Using the contructor directly for creating vector objects is
+		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
 		 * @see [[Vector.constant]]
@@ -244,7 +244,7 @@ export namespace Vector {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the addition of
 		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
-		 * adding a variable vector to another vector always results in an expresion.
+		 * adding a variable vector to another vector always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
@@ -273,7 +273,7 @@ export namespace Vector {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the subtraction of
 		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
-		 * subtracting a variable vector from another vector always results in an expresion.
+		 * subtracting a variable vector from another vector always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -304,7 +304,7 @@ export namespace Vector {
 		 * Creates and returns a [[Vector.Expression]] for the dot product of
 		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
 		 * dot multiplying a variable vector with another vector always results
-		 * in an expresion.
+		 * in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for inner product of `this` and `that`.
 		 */
@@ -330,7 +330,7 @@ export namespace Vector {
 		 * Creates and returns a [[Vector.Expression]] for the cross product of
 		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
 		 * cross multiplying a variable vector to another vector always results
-		 * in an expresion.
+		 * in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for vector product of `this` and `that`.
 		 */
@@ -372,7 +372,7 @@ export namespace Vector {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the scaling of
 		 * `this` [[Vector]] object. The [[type]] of `this` does not matter because
-		 * scaling a variable vector always results in an expresion.
+		 * scaling a variable vector always results in an expression.
 		 * @param k The scale factor.
 		 * @return Expression for scaling `this`.
 		 */
@@ -400,7 +400,7 @@ export namespace Vector {
 		/**
 		 * Creates a [[Vector.Variable]] object.
 		 * 
-		 * Using the contructor directly for creating vector objects is
+		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
 		 * @see [[Vector.variable]]
@@ -413,7 +413,7 @@ export namespace Vector {
 		 * [[Scalar.Variable]]. This allows for creation of vectors whose few
 		 * components are known before hand and the rest are not.
 		 * 
-		 * Using the contructor directly for creating vector objects is
+		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
 		 * @see [[Vector.variable]]
@@ -448,7 +448,7 @@ export namespace Vector {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the addition of
 		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
-		 * adding a variable vector to another vector always results in an expresion.
+		 * adding a variable vector to another vector always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
@@ -463,7 +463,7 @@ export namespace Vector {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the subtraction of
 		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
-		 * subtracting a variable vector from another vector always results in an expresion.
+		 * subtracting a variable vector from another vector always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -479,7 +479,7 @@ export namespace Vector {
 		 * Creates and returns a [[Vector.Expression]] for the dot product of
 		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
 		 * dot multiplying a variable vector with another vector always results
-		 * in an expresion.
+		 * in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for inner product of `this` and `that`.
 		 */
@@ -491,7 +491,7 @@ export namespace Vector {
 		 * Creates and returns a [[Vector.Expression]] for the cross product of
 		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
 		 * cross multiplying a variable vector to another vector always results
-		 * in an expresion.
+		 * in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for vector product of `this` and `that`.
 		 */
@@ -512,7 +512,7 @@ export namespace Vector {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the scaling of
 		 * `this` [[Vector]] object. The [[type]] of `that` does not matter because
-		 * scaling a variable vector always results in an expresion.
+		 * scaling a variable vector always results in an expression.
 		 * @param k The scale factor.
 		 * @return Expression for scaling `this`.
 		 */
@@ -610,7 +610,7 @@ export namespace Vector {
 		 * Creates and returns a [[Vector.Expression]] for the addition of
 		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
 		 * adding an unknown vector/vector expression to another vector always
-		 * results in an expresion.
+		 * results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
@@ -626,7 +626,7 @@ export namespace Vector {
 		 * Creates and returns a [[Vector.Expression]] for the subtraction of
 		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
 		 * subtracting an unknown vector/vector expression from another vector
-		 * always results in an expresion.
+		 * always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -643,7 +643,7 @@ export namespace Vector {
 		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
 		 * dot multiplying an unknown vector/vector expression with another vector
 		 * always results
-		 * in an expresion.
+		 * in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for inner product of `this` and `that`.
 		 */
@@ -656,7 +656,7 @@ export namespace Vector {
 		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
 		 * cross multiplying an unknown vector/vector expression to another vector
 		 * always results
-		 * in an expresion.
+		 * in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for vector product of `this` and `that`.
 		 */
@@ -677,7 +677,7 @@ export namespace Vector {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the scaling of
 		 * `this` [[Vector]] object. The [[type]] of `that` does not matter because
-		 * scaling an unknown vector/vector expression always results in an expresion.
+		 * scaling an unknown vector/vector expression always results in an expression.
 		 * @param k The scale factor.
 		 * @return Expression for scaling `this`.
 		 */
