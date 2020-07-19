@@ -54,8 +54,8 @@ describe("Vector constants", function() {
 	});
 
 	it("Checks non-duplicacy", function() {
-		expect(Vector.constant(arr)).toBe(A);
-		expect(Vector.constant([1, 1, 1])).toBe(B);
+		expect(Vector.constant(arr)).toEqual(A);
+		expect(Vector.constant([1, 1, 1])).toEqual(B);
 	});
 
 	it("Adds", function() {
@@ -117,7 +117,7 @@ describe("Vector variable", function() {
 			[B, Vector.constant([1, 1, 1, 1, 1])]
 		]));
 		expect(c_).toBeInstanceOf(Scalar);
-		expect(c_).toBe(Scalar.constant(4));
+		expect(c_).toEqual(Scalar.constant(4));
 	});
 
 	// it("Calculates cross product", function() {
