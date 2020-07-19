@@ -4,6 +4,9 @@ import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { ExpressionBuilder } from "./core/expression";
 import { Scalar } from "./scalar";
 import { InvalidIndex } from "./core/errors";
+import { MathContext } from "./core/math/context";
+import { mathenv } from "./core/env";
+import { BigNum } from "./core/math/bignum";
 
 /**
  * The double underscore.
@@ -58,7 +61,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	 * @param that The scalar to subtract from `this`.
 	 * @return The vector product of `this` and `that`.
 	 */
-	public abstract cross(that: Vector): Vector;
+	// public abstract cross(that: Vector): Vector;
 
 	/**
 	 * Scales, or multiplies the "size" (magnitude) of, `this` vector by given
@@ -75,7 +78,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	 * @param A The [[Vector]] whose magnitude is to be calculated.
 	 * @return The [[Scalar]] magnitude of the given [[Vector]].
 	 */
-	public static mag(A: Vector.Constant): Scalar.Constant;
+	// public static mag(A: Vector.Constant): Scalar.Constant;
 	/**
 	* Computes the magnitude of a given vector. If `A` vector is a constant
 	* vector then numerically calculates the magnitude otherwise creates a
@@ -83,15 +86,16 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	* @param A The [[Vector]] whose magnitude is to be calculated.
 	* @return The [[Scalar]] magnitude of the given [[Vector]].
 	*/
-	public static mag(A: Vector): Scalar.Expression;
+	// public static mag(A: Vector): Scalar.Expression;
 	public static mag(A: Vector) {
-		if(A instanceof Vector.Constant) {
-			let m = 0;
-			for(let i = 1; i <= A.value.length; i++)
-				m += Math.pow(A.X(i).value, 2);
-			return Scalar.constant(Math.sqrt(m));
-		}
-		return new Scalar.Expression(BinaryOperator.MAG, <Evaluable><unknown>Vector, A);
+		throw new Error("Not implemented");
+		// if(A instanceof Vector.Constant) {
+		// 	let m = BigNum.real(0);
+		// 	for(let i = 1; i <= A.value.length; i++)
+		// 		m = m.add(A.X(i).value.mul(A.X(i).value));
+		// 	return Scalar.constant(Math.sqrt(m));
+		// }
+		// return new Scalar.Expression(BinaryOperator.MAG, <Evaluable><unknown>Vector, A);
 	}
 
 	/**
@@ -99,27 +103,23 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	 * @param A The [[Vector.Constant]] along which the unit vector is to be calculated.
 	 * @return The unit vector along the given [[Vector]] `A`.
 	 */
-	public static unit(A: Vector.Constant): Vector.Constant;
+	// public static unit(A: Vector.Constant): Vector.Constant;
 	/**
 	 * For a given variable vector `A`, creates an [[Expression]] for the unit vector along `A`.
 	 * @param A The [[Vector.Constant]] along which the unit vector is to be calculated.
 	 * @return The unit vector along the given [[Vector]] `A`.
 	 */
-	public static unit(A: Vector): Vector.Expression;
+	// public static unit(A: Vector): Vector.Expression;
 	public static unit(A: Vector) {
-		if(A instanceof Vector.Constant)
-			return A.scale(Scalar.constant(1).div(Vector.mag(A)));
-		const m = Vector.mag(A);
-		return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A, (i: number) => A.X(i).div(m));
+		throw new Error("Not implemented");
+		// if(A instanceof Vector.Constant)
+		// 	return A.scale(Scalar.constant(1).div(Vector.mag(A)));
+		// const m = Vector.mag(A);
+		// return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A, (i: number) => A.X(i).div(m));
 	}
 }
 
 export namespace Vector {
-	/**
-	 * A mapping from stringified vector constants to [[Vector.Constant]] objects.
-	 * @ignore
-	 */
-	const CONSTANTS = new Map<string, Vector.Constant>();
 	/**
 	 * A mapping from named vector constants to [[Vector.Constant]] objects.
 	 * @ignore
@@ -142,7 +142,7 @@ export namespace Vector {
 		 * The number of dimensions `this` vector exists in.
 		 * @ignore
 		 */
-		private dimension: number;
+		// private dimension: number;
 		readonly value: Scalar.Constant[] = [];
 		/**
 		 * The name by which `this` is identified. This is optional and defaults
@@ -175,15 +175,15 @@ export namespace Vector {
 		 * @param value The fixed value `this` should represent.
 		 * @param name The name by which `this` is identified.
 		 */
-		constructor(value: number[], name?: string);
-		constructor(value: Scalar.Constant[] | number[], name = "") {
+		constructor(value: BigNum[], name?: string);
+		constructor(value: Scalar.Constant[] | BigNum[], name = "") {
 			super();
 			this.name = name;
 			for(let x of value)
 				if(x instanceof Scalar.Constant)
 					this.value.push(x);
-				else this.value.push(Scalar.constant(x));
-			this.dimension = this.value.length;
+				else this.value.push(new Scalar.Constant(x));
+			// this.dimension = this.value.length;
 		}
 
 		/**
@@ -226,11 +226,11 @@ export namespace Vector {
 		 * @param that The value to check equality with.
 		 * @param tolerance The tolerance permitted for floating point numbers.
 		 */
-		public equals(that: Vector.Constant, tolerance: number): boolean;
-		public equals(that: Vector.Constant, tolerance = 1e-14) {
+		public equals(that: Vector.Constant, context: MathContext): boolean;
+		public equals(that: Vector.Constant, context=mathenv.mode) {
 			const m = Math.max(this.value.length, that.value.length);
 			for(let i = 1; i <= m; i++)
-				if(Math.abs(this.X(i).value - that.X(i).value) >= tolerance)
+				if(!this.X(i).value.equals(that.X(i).value, context))
 					return false;
 			return true;
 		}
@@ -252,10 +252,10 @@ export namespace Vector {
 		public add(that: Vector) {
 			if(that instanceof Vector.Constant) {
 				const m = Math.max(this.value.length, that.value.length);
-				const vec: number[] = [];
+				const vec: Scalar.Constant[] = [];
 				for(let i = 1; i <= m; i++)
-					vec.push(this.X(i).value + that.X(i).value);
-				return Vector.constant(vec);
+					vec.push(this.X(i).add(that.X(i)));
+				return new Vector.Constant(vec);
 			}
 			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
 				if(i <= 0)
@@ -281,10 +281,10 @@ export namespace Vector {
 		public sub(that: Vector) {
 			if(that instanceof Vector.Constant) {
 				const m = Math.max(this.value.length, that.value.length);
-				const vec: number[] = [];
+				const vec: BigNum[] = [];
 				for(let i = 1; i <= m; i++)
-					vec.push(this.X(i).value - that.X(i).value);
-				return Vector.constant(vec);
+					vec.push(this.X(i).value.sub(that.X(i).value));
+				return new Vector.Constant(vec);
 			}
 			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
 				if(i <= 0)
@@ -311,11 +311,11 @@ export namespace Vector {
 		public dot(that: Vector.Variable | Vector.Expression): Scalar.Expression;
 		public dot(that: Vector) {
 			if(that instanceof Vector.Constant) {
-				let parallel = 0;
+				let parallel = BigNum.real(0);
 				const m = Math.max(this.value.length, that.value.length);
 				for(let i = 1; i <= m; i++)
-					parallel += this.X(i).value * that.X(i).value;
-				return Scalar.constant(parallel);
+					parallel = parallel.add(this.X(i).value.mul(that.X(i).value));
+				return new Scalar.Constant(parallel);
 			}
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
@@ -325,7 +325,7 @@ export namespace Vector {
 		 * @param that The [[Vector.Constant]] to compute cross product with `this`.
 		 * @return The vector product of `this` and `that`.
 		 */
-		public cross(that: Vector.Constant): Vector.Constant;
+		// public cross(that: Vector.Constant): Vector.Constant;
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the cross product of
 		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
@@ -334,32 +334,33 @@ export namespace Vector {
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for vector product of `this` and `that`.
 		 */
-		public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
+		// public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
 		public cross(that: Vector) {
-			if(this.dimension > 3)
-				throw new Error("Cross product defined only in 3 dimensions.");
-			if(that instanceof Vector.Constant) {
-				if(that.dimension > 3)
-					throw new Error("Cross product defined only in 3 dimensions.");
-				const a1 = this.X(1).value, a2 = this.X(2).value, a3 = this.X(3).value;
-				const b1 = that.X(1).value, b2 = that.X(2).value, b3 = that.X(3).value;
-				return Vector.constant([
-					a2 * b3 - a3 * b2,
-					a3 * b1 - a1 * b3,
-					a1 * b2 - a2 * b1
-				]);
-			}
-			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
-				if(i <= 0)
-					throw new InvalidIndex(i, 0);
-				if(this.value.length > 3)
-					throw new Error("Cross product defined only in 3 dimensions.");
-				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
-				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
-				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
-						(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
-						a1.mul(b2).sub(a2.mul(b1));
-			});
+			throw new Error("Not implemented");
+			// if(this.dimension > 3)
+			// 	throw new Error("Cross product defined only in 3 dimensions.");
+			// if(that instanceof Vector.Constant) {
+			// 	if(that.dimension > 3)
+			// 		throw new Error("Cross product defined only in 3 dimensions.");
+			// 	const a1 = this.X(1).value, a2 = this.X(2).value, a3 = this.X(3).value;
+			// 	const b1 = that.X(1).value, b2 = that.X(2).value, b3 = that.X(3).value;
+			// 	return Vector.constant([
+			// 		a2 * b3 - a3 * b2,
+			// 		a3 * b1 - a1 * b3,
+			// 		a1 * b2 - a2 * b1
+			// 	]);
+			// }
+			// return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
+			// 	if(i <= 0)
+			// 		throw new InvalidIndex(i, 0);
+			// 	if(this.value.length > 3)
+			// 		throw new Error("Cross product defined only in 3 dimensions.");
+			// 	const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
+			// 	const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
+			// 	return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
+			// 			(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
+			// 			a1.mul(b2).sub(a2.mul(b1));
+			// });
 		}
 
 		/**
@@ -378,7 +379,7 @@ export namespace Vector {
 		public scale(k: Scalar.Variable | Scalar.Expression): Vector.Expression;
 		public scale(k: Scalar) {
 			if(k instanceof Scalar.Constant)
-				return Vector.constant(this.value.map(x => k.mul(x).value));
+				return new Vector.Constant(this.value.map(x => k.mul(x).value));
 			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
@@ -768,24 +769,20 @@ export namespace Vector {
 	export function constant(a: number[] | Scalar.Constant[] | string, b?: string) {
 		let c;
 		if(Array.isArray(a)) {
-			const values: number[] = [];
+			let values: BigNum[] = [];
 			if(typeof a[0] === "number")
-				for(let i = 0; i < a.length; i++)
-					values.push(<number>a[i]);
+				// for(let i = 0; i < a.length; i++)
+				values = (<Array<number>>a).map(n => BigNum.real(n));
 			else if(a[0] instanceof Scalar.Constant)
-				for(let i = 0; i < a.length; i++)
-					values.push((<Scalar.Constant>a[i]).value);
+				// for(let i = 0; i < a.length; i++)
+				values = (<Array<Scalar.Constant>>a).map(n => n.value);
 			let i = values.length - 1;
 			for(; i >= 0; i--)
-				if(values[i] !== 0)
+				if(!values[i].equals(BigNum.real(0)))
 					break;
-			const key = values.slice(0, i+1).join();
+			values = values.slice(0, i+1);
 			if(b === undefined) {
-				c = CONSTANTS.get(key);
-				if(c === undefined) {
-					c = new Vector.Constant(values);
-					CONSTANTS.set(key, c);
-				}
+				c = new Vector.Constant(values);
 			} else {
 				c = NAMED_CONSTANTS.get(b);
 				if(c !== undefined)
