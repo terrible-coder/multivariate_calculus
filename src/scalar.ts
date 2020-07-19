@@ -8,6 +8,7 @@ import { abs, sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, a
 import { BigNum } from "./core/math/bignum";
 import { mathenv } from "./core/env";
 import { MathContext } from "./core/math/context";
+import { Component } from "./core/math/component";
 
 /**
  * Base class to works with scalar quantities.
@@ -840,11 +841,55 @@ export namespace Scalar {
 	 */
 	export function constant(value: number, name: string): Scalar.Constant;
 	/**
+	 * Creates a new [[Scalar.Constant]] object from a number
+	 * if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * 
+	 * This is the recommended way of creating [[Scalar.Constant]] objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 */
+	export function constant(value: Component): Scalar.Constant;
+	/**
+	 * Defines a named [[Scalar.Constant]] object from a number
+	 * if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * 
+	 * This is the recommended way of creating named [[Scalar.Constant]] objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 * @param name The string with which `this` object is identified.
+	 * @throws Throws an error if a [[Scalar.Constant]] with the same name has been defined previously.
+	 */
+	export function constant(value: Component, name: string): Scalar.Constant;
+	/**
+	 * Creates a new [[Scalar.Constant]] object from a number
+	 * if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * 
+	 * This is the recommended way of creating [[Scalar.Constant]] objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 */
+	export function constant(value: BigNum): Scalar.Constant;
+	/**
+	 * Defines a named [[Scalar.Constant]] object from a number
+	 * if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * 
+	 * This is the recommended way of creating named [[Scalar.Constant]] objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 * @param name The string with which `this` object is identified.
+	 * @throws Throws an error if a [[Scalar.Constant]] with the same name has been defined previously.
+	 */
+	export function constant(value: BigNum, name: string): Scalar.Constant;
+	/**
 	 * Returns a previously declared named [[Scalar.Constant]] object.
 	 * @param name The name of the named [[Scalar.Constant]] object to be retrieved.
 	 */
 	export function constant(name: string): Scalar.Constant;
-	export function constant(a: number | string, b?: string) {
+	export function constant(a: number | Component | BigNum | string, b?: string) {
 		let scalar: Scalar.Constant;
 		let num: Scalar.Constant | undefined;
 		if(typeof a === "number") {
@@ -856,6 +901,30 @@ export namespace Scalar {
 				if(num !== undefined)
 					throw new Overwrite(b);
 				const big = BigNum.real(a);
+				scalar = new Scalar.Constant(big, b);
+				NAMED_CONSTANTS.set(b, scalar);
+			}
+		} else if(a instanceof Component) {
+			if(b === undefined) {
+				const big = new BigNum(a);
+				scalar = new Scalar.Constant(big);
+			} else {
+				num = NAMED_CONSTANTS.get(b);
+				if(num !== undefined)
+					throw new Overwrite(b);
+				const big = new BigNum(a);
+				scalar = new Scalar.Constant(big, b);
+				NAMED_CONSTANTS.set(b, scalar);
+			}
+		} else if(a instanceof BigNum) {
+			if(b === undefined) {
+				const big = a;
+				scalar = new Scalar.Constant(big);
+			} else {
+				num = NAMED_CONSTANTS.get(b);
+				if(num !== undefined)
+					throw new Overwrite(b);
+				const big = a;
 				scalar = new Scalar.Constant(big, b);
 				NAMED_CONSTANTS.set(b, scalar);
 			}
