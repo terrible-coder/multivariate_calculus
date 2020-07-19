@@ -22,7 +22,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Adds two [[Scalar]]s together. If `this` and `that` are both constants
-	 * then numerically adds the two and returns a new [[Scalar.Constant]] object
+	 * then numerically adds the two and returns a new {@link Scalar.Constant} object
 	 * otherwise creates an [[Expression]] out of them and returns the same.
 	 * @param that The scalar to add `this` with.
 	 * @return The result of algebraic addition.
@@ -32,7 +32,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	/**
 	 * Subtracts `that` from `this`. If `this` and `that` are both constants
 	 * then numerically subtracts one from the other and returns a new
-	 * [[Scalar.Constant]] object otherwise creates an [[Expression]] out of them
+	 * {@link Scalar.Constant} object otherwise creates an [[Expression]] out of them
 	 * and returns the same.
 	 * @param that The scalar to subtract from `this`.
 	 * @return The result of algebraic subtraction.
@@ -41,7 +41,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Multiplies two [[Scalar]]s together. If `this` and `that` are both constants
-	 * then numerically multiplies the two and returns a new [[Scalar.Constant]] object
+	 * then numerically multiplies the two and returns a new {@link Scalar.Constant} object
 	 * otherwise creates an [[Expression]] out of them and returns the same.
 	 * @param that The scalar to multiply `this` with.
 	 * @return The result of algebraic multiplication.
@@ -50,7 +50,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Divides `this` scalar by `that`. If `this` and `that` are both constants
-	 * then numerically divides the two and returns a new [[Scalar.Constant]] object
+	 * then numerically divides the two and returns a new {@link Scalar.Constant} object
 	 * otherwise creates an [[Expression]] out of them and returns the same.
 	 * @param that The scalar to divide `this` by.
 	 * @return The result of algebraic division.
@@ -59,7 +59,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Raises `this` scalar to the power of `that`. If `this` and `that` are both constants
-	 * then numerically evaluates the exponentiation and returns a new [[Scalar.Constant]] object
+	 * then numerically evaluates the exponentiation and returns a new {@link Scalar.Constant} object
 	 * otherwise creates an [[Expression]] out of them and returns the same.
 	 * @param that The scalar to divide `this` by.
 	 * @return The result of algebraic division.
@@ -365,7 +365,7 @@ export namespace Scalar {
 	 */
 	const VARIABLES = new Map<string, Scalar.Variable>();
 	/**
-	 * A mapping from named scalar constants to [[Scalar.Constant]] objects.
+	 * A mapping from named scalar constants to {@link Scalar.Constant} objects.
 	 * @ignore
 	 */
 	const NAMED_CONSTANTS = new Map<string, Scalar.Constant>();
@@ -379,7 +379,7 @@ export namespace Scalar {
 		readonly classRef = Scalar.Constant;
 
 		/**
-		 * Creates a [[Scalar.Constant]] object from number.
+		 * Creates a {@link Scalar.Constant} object from number.
 		 * One may optionally pass in a string by which `this` object
 		 * may be identified by.
 		 * 
@@ -429,8 +429,8 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Adds two [[Scalar.Constant]] objects numerically.
-		 * @param that The [[Scalar.Constant]] to add to `this`.
+		 * Adds two {@link Scalar.Constant} objects numerically.
+		 * @param that The {@link Scalar.Constant} to add to `this`.
 		 * @return The algebraic sum of `this` and `that`.
 		 */
 		public add(that: Scalar.Constant): Scalar.Constant;
@@ -449,8 +449,8 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Subtracts one [[Scalar.Constant]] object from another numerically.
-		 * @param that The [[Scalar.Constant]] to subtract from `this`.
+		 * Subtracts one {@link Scalar.Constant} object from another numerically.
+		 * @param that The {@link Scalar.Constant} to subtract from `this`.
 		 * @return The algebraic difference of `this` from `that`.
 		 */
 		public sub(that: Scalar.Constant): Scalar.Constant;
@@ -469,8 +469,8 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Multiplies two [[Scalar.Constant]] objects numerically.
-		 * @param that The [[Scalar.Constant]] to subtract from `this`.
+		 * Multiplies two {@link Scalar.Constant} objects numerically.
+		 * @param that The {@link Scalar.Constant} to subtract from `this`.
 		 * @return The vector difference of `this` from `that`.
 		 */
 		public mul(that: Scalar.Constant): Scalar.Constant;
@@ -509,8 +509,8 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Divides one [[Scalar.Constant]] object by another numerically.
-		 * @param that The [[Scalar.Constant]] to divide `this` by.
+		 * Divides one {@link Scalar.Constant} object by another numerically.
+		 * @param that The {@link Scalar.Constant} to divide `this` by.
 		 * @return The scalar quotient of dividing `this` by `that`.
 		 */
 		public div(that: Scalar.Constant): Scalar.Constant;
@@ -532,8 +532,8 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Raises a [[Scalar.Constant]] object to the power of another numerically.
-		 * @param that The [[Scalar.Constant]] power to raise `this` to.
+		 * Raises a {@link Scalar.Constant} object to the power of another numerically.
+		 * @param that The {@link Scalar.Constant} power to raise `this` to.
 		 * @return The scalar exponentiation of `this` by `that`.
 		 */
 		// public pow(that: Scalar.Constant): Scalar.Constant;
@@ -819,74 +819,63 @@ export namespace Scalar {
 	}
 
 	/**
-	 * Creates a new [[Scalar.Constant]] object from a number
-	 * if it has not been created before.
-	 * Otherwise just returns the previously created object.
+	 * Creates a new {@link Scalar.Constant} object from a number.
 	 * 
-	 * This is the recommended way of creating [[Scalar.Constant]] objects instead of
+	 * This is the recommended way of creating {@link Scalar.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
 	 */
 	export function constant(value: number): Scalar.Constant;
 	/**
-	 * Defines a named [[Scalar.Constant]] object from a number
-	 * if it has not been created before.
-	 * Otherwise just returns the previously created object.
+	 * Defines a named {@link Scalar.Constant} object from a number.
 	 * 
-	 * This is the recommended way of creating named [[Scalar.Constant]] objects instead of
+	 * This is the recommended way of creating named {@link Scalar.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
 	 * @param name The string with which `this` object is identified.
-	 * @throws Throws an error if a [[Scalar.Constant]] with the same name has been defined previously.
+	 * @throws Throws an error if a {@link Scalar.Constant} with the same name has been defined previously.
 	 */
 	export function constant(value: number, name: string): Scalar.Constant;
 	/**
-	 * Creates a new [[Scalar.Constant]] object from a number
-	 * if it has not been created before.
-	 * Otherwise just returns the previously created object.
+	 * Creates a new {@link Scalar.Constant} object from a {@link Component} object.
 	 * 
-	 * This is the recommended way of creating [[Scalar.Constant]] objects instead of
+	 * This is the recommended way of creating {@link Scalar.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
 	 */
 	export function constant(value: Component): Scalar.Constant;
 	/**
-	 * Defines a named [[Scalar.Constant]] object from a number
-	 * if it has not been created before.
-	 * Otherwise just returns the previously created object.
+	 * Defines a named {@link Scalar.Constant} object from a {@link Component}
+	 * object.
 	 * 
-	 * This is the recommended way of creating named [[Scalar.Constant]] objects instead of
+	 * This is the recommended way of creating named {@link Scalar.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
 	 * @param name The string with which `this` object is identified.
-	 * @throws Throws an error if a [[Scalar.Constant]] with the same name has been defined previously.
+	 * @throws Throws an error if a {@link Scalar.Constant} with the same name has been defined previously.
 	 */
 	export function constant(value: Component, name: string): Scalar.Constant;
 	/**
-	 * Creates a new [[Scalar.Constant]] object from a number
-	 * if it has not been created before.
-	 * Otherwise just returns the previously created object.
+	 * Creates a new {@link Scalar.Constant} object from a {@link BigNum} object.
 	 * 
-	 * This is the recommended way of creating [[Scalar.Constant]] objects instead of
+	 * This is the recommended way of creating {@link Scalar.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
 	 */
 	export function constant(value: BigNum): Scalar.Constant;
 	/**
-	 * Defines a named [[Scalar.Constant]] object from a number
-	 * if it has not been created before.
-	 * Otherwise just returns the previously created object.
+	 * Defines a named {@link Scalar.Constant} object from a {@link BigNum} object.
 	 * 
-	 * This is the recommended way of creating named [[Scalar.Constant]] objects instead of
+	 * This is the recommended way of creating named {@link Scalar.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
 	 * @param name The string with which `this` object is identified.
-	 * @throws Throws an error if a [[Scalar.Constant]] with the same name has been defined previously.
+	 * @throws Throws an error if a {@link Scalar.Constant} with the same name has been defined previously.
 	 */
 	export function constant(value: BigNum, name: string): Scalar.Constant;
 	/**
-	 * Returns a previously declared named [[Scalar.Constant]] object.
-	 * @param name The name of the named [[Scalar.Constant]] object to be retrieved.
+	 * Returns a previously declared named {@link Scalar.Constant} object.
+	 * @param name The name of the named {@link Scalar.Constant} object to be retrieved.
 	 */
 	export function constant(name: string): Scalar.Constant;
 	export function constant(a: number | Component | BigNum | string, b?: string) {
