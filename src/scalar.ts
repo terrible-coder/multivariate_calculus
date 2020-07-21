@@ -3,7 +3,12 @@ import { BinaryOperator } from "./core/operators/binary";
 import { ExpressionBuilder } from "./core/expression";
 import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { Vector } from "./vector";
-import { Overwrite, IndeterminateForm } from "./core/errors";
+import { Overwrite } from "./core/errors";
+import { abs, sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, atanh, exp, log, ln, floor, ceil } from "./core/math/functions";
+import { BigNum } from "./core/math/bignum";
+import { mathenv } from "./core/env";
+import { MathContext } from "./core/math/context";
+import { Component } from "./core/math/component";
 
 /**
  * Base class to works with scalar quantities.
@@ -17,7 +22,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Adds two [[Scalar]]s together. If `this` and `that` are both constants
-	 * then numerically adds the two and returns a new [[Scalar.Constant]] object
+	 * then numerically adds the two and returns a new {@link Scalar.Constant} object
 	 * otherwise creates an [[Expression]] out of them and returns the same.
 	 * @param that The scalar to add `this` with.
 	 * @return The result of algebraic addition.
@@ -27,7 +32,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	/**
 	 * Subtracts `that` from `this`. If `this` and `that` are both constants
 	 * then numerically subtracts one from the other and returns a new
-	 * [[Scalar.Constant]] object otherwise creates an [[Expression]] out of them
+	 * {@link Scalar.Constant} object otherwise creates an [[Expression]] out of them
 	 * and returns the same.
 	 * @param that The scalar to subtract from `this`.
 	 * @return The result of algebraic subtraction.
@@ -36,7 +41,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Multiplies two [[Scalar]]s together. If `this` and `that` are both constants
-	 * then numerically multiplies the two and returns a new [[Scalar.Constant]] object
+	 * then numerically multiplies the two and returns a new {@link Scalar.Constant} object
 	 * otherwise creates an [[Expression]] out of them and returns the same.
 	 * @param that The scalar to multiply `this` with.
 	 * @return The result of algebraic multiplication.
@@ -45,7 +50,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Divides `this` scalar by `that`. If `this` and `that` are both constants
-	 * then numerically divides the two and returns a new [[Scalar.Constant]] object
+	 * then numerically divides the two and returns a new {@link Scalar.Constant} object
 	 * otherwise creates an [[Expression]] out of them and returns the same.
 	 * @param that The scalar to divide `this` by.
 	 * @return The result of algebraic division.
@@ -54,12 +59,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Raises `this` scalar to the power of `that`. If `this` and `that` are both constants
-	 * then numerically evaluates the exponentiation and returns a new [[Scalar.Constant]] object
+	 * then numerically evaluates the exponentiation and returns a new {@link Scalar.Constant} object
 	 * otherwise creates an [[Expression]] out of them and returns the same.
 	 * @param that The scalar to divide `this` by.
 	 * @return The result of algebraic division.
 	 */
-	public abstract pow(that: Scalar): Scalar;
+	// public abstract pow(that: Scalar): Scalar;
 
 	/**
 	 * Computes the absolute value of a [[Scalar]].
@@ -73,7 +78,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static abs(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static abs(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.abs(x.value));
+			return new Scalar.Constant(abs(x.value));
 		return new Scalar.Expression(UnaryOperator.ABS, x);
 	}
 
@@ -89,7 +94,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static sin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static sin(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.sin(x.value));
+			return new Scalar.Constant(sin(x.value));
 		return new Scalar.Expression(UnaryOperator.SIN, x);
 	}
 
@@ -105,7 +110,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static cos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static cos(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.cos(x.value));
+			return new Scalar.Constant(cos(x.value));
 		return new Scalar.Expression(UnaryOperator.COS, x);
 	}
 
@@ -121,7 +126,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static tan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static tan(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.tan(x.value));
+			return new Scalar.Constant(tan(x.value));
 		return new Scalar.Expression(UnaryOperator.TAN, x);
 	}
 
@@ -137,7 +142,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static asin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static asin(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.asin(x.value));
+			return new Scalar.Constant(asin(x.value));
 		return new Scalar.Expression(UnaryOperator.ASIN, x);
 	}
 
@@ -153,7 +158,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static acos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static acos(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.acos(x.value));
+			return new Scalar.Constant(acos(x.value));
 		return new Scalar.Expression(UnaryOperator.ACOS, x);
 	}
 
@@ -169,7 +174,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static atan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static atan(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.atan(x.value));
+			return new Scalar.Constant(atan(x.value));
 		return new Scalar.Expression(UnaryOperator.ATAN, x);
 	}
 
@@ -185,7 +190,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static sinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static sinh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.sinh(x.value));
+			return new Scalar.Constant(sinh(x.value));
 		return new Scalar.Expression(UnaryOperator.SINH, x);
 	}
 
@@ -201,7 +206,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static cosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static cosh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.cosh(x.value));
+			return new Scalar.Constant(cosh(x.value));
 		return new Scalar.Expression(UnaryOperator.COSH, x);
 	}
 
@@ -217,7 +222,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static tanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static tanh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.tanh(x.value));
+			return new Scalar.Constant(tanh(x.value));
 		return new Scalar.Expression(UnaryOperator.TANH, x);
 	}
 
@@ -233,7 +238,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static asinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static asinh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.asinh(x.value));
+			return new Scalar.Constant(asinh(x.value));
 		return new Scalar.Expression(UnaryOperator.ASINH, x);
 	}
 
@@ -249,7 +254,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static acosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static acosh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.acosh(x.value));
+			return new Scalar.Constant(acosh(x.value));
 		return new Scalar.Expression(UnaryOperator.ACOSH, x);
 	}
 
@@ -265,7 +270,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static atanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static atanh(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.atanh(x.value));
+			return new Scalar.Constant(atanh(x.value));
 		return new Scalar.Expression(UnaryOperator.ATANH, x);
 	}
 
@@ -281,7 +286,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static exp(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static exp(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.exp(x.value));
+			return new Scalar.Constant(exp(x.value));
 		return new Scalar.Expression(UnaryOperator.EXP, x);
 	}
 
@@ -297,7 +302,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static ln(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static ln(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.log(x.value));
+			return new Scalar.Constant(ln(x.value));
 		return new Scalar.Expression(UnaryOperator.LN, x);
 	}
 
@@ -313,7 +318,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static log(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static log(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.log10(x.value));
+			return new Scalar.Constant(log(x.value));
 		return new Scalar.Expression(UnaryOperator.LOG, x);
 	}
 
@@ -329,7 +334,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static floor(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static floor(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.floor(x.value));
+			return new Scalar.Constant(floor(x.value));
 		return new Scalar.Expression(UnaryOperator.FLOOR, x);
 	}
 
@@ -345,7 +350,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public static ceil(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 	public static ceil(x: Scalar) {
 		if(x instanceof Scalar.Constant)
-			return Scalar.constant(Math.ceil(x.value));
+			return new Scalar.Constant(ceil(x.value));
 		return new Scalar.Expression(UnaryOperator.CEIL, x);
 	}
 }
@@ -360,12 +365,7 @@ export namespace Scalar {
 	 */
 	const VARIABLES = new Map<string, Scalar.Variable>();
 	/**
-	 * A mapping from numerical constants to [[Scalar.Constant]] objects.
-	 * @ignore
-	 */
-	const CONSTANTS = new Map<number, Scalar.Constant>();
-	/**
-	 * A mapping from named scalar constants to [[Scalar.Constant]] objects.
+	 * A mapping from named scalar constants to {@link Scalar.Constant} objects.
 	 * @ignore
 	 */
 	const NAMED_CONSTANTS = new Map<string, Scalar.Constant>();
@@ -379,23 +379,23 @@ export namespace Scalar {
 		readonly classRef = Scalar.Constant;
 
 		/**
-		 * Creates a [[Scalar.Constant]] object from number.
+		 * Creates a {@link Scalar.Constant} object from number.
 		 * One may optionally pass in a string by which `this` object
 		 * may be identified by.
 		 * 
-		 * Using the contructor directly for creating vector objects is
+		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
 		 * @see [[Scalar.constant]]
 		 * @param value The fixed value `this` should represent.
 		 * @param name The name by which `this` is identified.
 		 */
-		constructor(readonly value: number, readonly name: string = "") {
+		constructor(readonly value: BigNum, readonly name: string = "") {
 			super();
 		}
 
 		public get neg() {
-			return Scalar.constant(-this.value);
+			return new Scalar.Constant(this.value.neg);
 		}
 
 		/**
@@ -423,61 +423,61 @@ export namespace Scalar {
 		 * @param that The value to check equality with.
 		 * @param tolerance The tolerance permitted for floating point numbers.
 		 */
-		public equals(that: Scalar.Constant, tolerance: number): boolean;
-		public equals(that: Scalar.Constant, tolerance?: number) {
-			return Math.abs(this.value - that.value) < (tolerance || 1e-14);
+		public equals(that: Scalar.Constant, context: MathContext): boolean;
+		public equals(that: Scalar.Constant, context=mathenv.mode) {
+			return this.value.equals(that.value, context);
 		}
 
 		/**
-		 * Adds two [[Scalar.Constant]] objects numerically.
-		 * @param that The [[Scalar.Constant]] to add to `this`.
+		 * Adds two {@link Scalar.Constant} objects numerically.
+		 * @param that The {@link Scalar.Constant} to add to `this`.
 		 * @return The algebraic sum of `this` and `that`.
 		 */
 		public add(that: Scalar.Constant): Scalar.Constant;
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the addition of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * adding a variable scalar to another scalar always results in an expresion.
+		 * adding a variable scalar to another scalar always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
 		public add(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		public add(that: Scalar) {
 			if(that instanceof Scalar.Constant)
-				return Scalar.constant(this.value + that.value);
+				return new Scalar.Constant(this.value.add(that.value));
 			return new Scalar.Expression(BinaryOperator.ADD, this, that);
 		}
 
 		/**
-		 * Subtracts one [[Scalar.Constant]] object from another numerically.
-		 * @param that The [[Scalar.Constant]] to subtract from `this`.
+		 * Subtracts one {@link Scalar.Constant} object from another numerically.
+		 * @param that The {@link Scalar.Constant} to subtract from `this`.
 		 * @return The algebraic difference of `this` from `that`.
 		 */
 		public sub(that: Scalar.Constant): Scalar.Constant;
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the subtraction of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * subtracting a variable scalar from another scalar always results in an expresion.
+		 * subtracting a variable scalar from another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public sub(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		public sub(that: Scalar) {
 			if(that instanceof Scalar.Constant)
-				return Scalar.constant(this.value - that.value);
+				return new Scalar.Constant(this.value.sub(that.value));
 			return new Scalar.Expression(BinaryOperator.SUB, this, that);
 		}
 
 		/**
-		 * Multiplies two [[Scalar.Constant]] objects numerically.
-		 * @param that The [[Scalar.Constant]] to subtract from `this`.
+		 * Multiplies two {@link Scalar.Constant} objects numerically.
+		 * @param that The {@link Scalar.Constant} to subtract from `this`.
 		 * @return The vector difference of `this` from `that`.
 		 */
 		public mul(that: Scalar.Constant): Scalar.Constant;
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the multiplication of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * multiplying a variable scalar by another scalar always results in an expresion.
+		 * multiplying a variable scalar by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -492,7 +492,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the scaling of
 		 * a [[Vector]] object. The [[type]] of `this` does not matter because
-		 * scaling a variable vector by a scalar always results in an expresion.
+		 * scaling a variable vector by a scalar always results in an expression.
 		 * @param that The [[Vector]] to scale by the amount of `this`.
 		 * @return Expression for scaling `that` by `this`.
 		 */
@@ -500,24 +500,24 @@ export namespace Scalar {
 		public mul(that: Scalar | Vector) {
 			if(that instanceof Scalar) {
 				if(that instanceof Scalar.Constant)
-					return Scalar.constant(this.value * that.value);
+					return new Scalar.Constant(this.value.mul(that.value));
 				return new Scalar.Expression(BinaryOperator.MUL, this, that);
 			}
 			if(that instanceof Vector.Constant)
-				return new Vector.Constant(that.value.map(x => this.value * x.value));
+				return new Vector.Constant(that.value.map(x => this.value.mul(x.value)));
 			return new Vector.Expression(BinaryOperator.MUL, this, that, (i: number) => (<Scalar>this).mul(that.X(i)));
 		}
 
 		/**
-		 * Divides one [[Scalar.Constant]] object by another numerically.
-		 * @param that The [[Scalar.Constant]] to divide `this` by.
+		 * Divides one {@link Scalar.Constant} object by another numerically.
+		 * @param that The {@link Scalar.Constant} to divide `this` by.
 		 * @return The scalar quotient of dividing `this` by `that`.
 		 */
 		public div(that: Scalar.Constant): Scalar.Constant;
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the division of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * dividing a variable scalar by another scalar always results in an expresion.
+		 * dividing a variable scalar by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to divide `this` by `this`.
 		 * @return Expression for dividing `this` by `that`.
 		 */
@@ -526,32 +526,33 @@ export namespace Scalar {
 			if(that instanceof Scalar.Constant) {
 				if(that.equals(Scalar.ZERO))
 					throw new Error("Division by zero error");
-				return Scalar.constant(this.value / that.value);
+				return new Scalar.Constant(this.value.div(that.value));
 			}
 			return new Scalar.Expression(BinaryOperator.DIV, this, that);
 		}
 
 		/**
-		 * Raises a [[Scalar.Constant]] object to the power of another numerically.
-		 * @param that The [[Scalar.Constant]] power to raise `this` to.
+		 * Raises a {@link Scalar.Constant} object to the power of another numerically.
+		 * @param that The {@link Scalar.Constant} power to raise `this` to.
 		 * @return The scalar exponentiation of `this` by `that`.
 		 */
-		public pow(that: Scalar.Constant): Scalar.Constant;
+		// public pow(that: Scalar.Constant): Scalar.Constant;
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for exponentiation of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * exponentiating a scalar by a variable scalar always results in an expresion.
+		 * exponentiating a scalar by a variable scalar always results in an expression.
 		 * @param that The [[Scalar]] power to raise `this` to.
 		 * @return Expression for exponentiating `this` by `that`.
 		 */
-		public pow(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+		// public pow(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		public pow(that: Scalar) {
-			if(that instanceof Scalar.Constant) {
-				if(this.equals(Scalar.ZERO) && that.equals(Scalar.ZERO))
-					throw new IndeterminateForm("0 raised to the power 0");
-				return Scalar.constant(Math.pow(this.value, that.value));
-			}
-			return new Scalar.Expression(BinaryOperator.POW, this, that);
+			throw new Error("Not implemented");
+			// if(that instanceof Scalar.Constant) {
+			// 	if(this.equals(Scalar.ZERO) && that.equals(Scalar.ZERO))
+			// 		throw new IndeterminateForm("0 raised to the power 0");
+			// 	return new Scalar.Constant(Math.pow(this.value, that.value));
+			// }
+			// return new Scalar.Expression(BinaryOperator.POW, this, that);
 		}
 	}
 
@@ -566,7 +567,7 @@ export namespace Scalar {
 		/**
 		 * Creates a [[Scalar.Variable]] object.
 		 * 
-		 * Using the contructor directly for creating vector objects is
+		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
 		 * @see [[Scalar.variable]]
@@ -583,7 +584,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the addition of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * adding a variable scalar to another scalar always results in an expresion.
+		 * adding a variable scalar to another scalar always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
@@ -594,7 +595,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the subtraction of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * subtracting a variable scalar from another scalar always results in an expresion.
+		 * subtracting a variable scalar from another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -605,7 +606,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the multiplication of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * multiplying a variable scalar by another scalar always results in an expresion.
+		 * multiplying a variable scalar by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -613,7 +614,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the scaling of
 		 * a [[Vector]] object. The [[type]] of `this` does not matter because
-		 * scaling a variable vector by a scalar always results in an expresion.
+		 * scaling a variable vector by a scalar always results in an expression.
 		 * @param that The [[Vector]] to scale by the amount of `this`.
 		 * @return Expression for scaling `that` by `this`.
 		 */
@@ -627,7 +628,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the division of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * dividing a variable scalar by another scalar always results in an expresion.
+		 * dividing a variable scalar by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to divide `this` by `this`.
 		 * @return Expression for dividing `this` by `that`.
 		 */
@@ -638,7 +639,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for exponentiation of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * exponentiating a scalar by a variable scalar always results in an expresion.
+		 * exponentiating a scalar by a variable scalar always results in an expression.
 		 * @param that The [[Scalar]] power to raise `this` to.
 		 * @return Expression for exponentiating `this` by `that`.
 		 */
@@ -727,7 +728,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the addition of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * adding a unknown scalar/scalar expression to another scalar always results in an expresion.
+		 * adding a unknown scalar/scalar expression to another scalar always results in an expression.
 		 * @param that The [[Vector]] to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
@@ -738,7 +739,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the subtraction of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * subtracting a unknown scalar/scalar expression from another scalar always results in an expresion.
+		 * subtracting a unknown scalar/scalar expression from another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -749,7 +750,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the multiplication of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * multiplying a unknown scalar/scalar expression by another scalar always results in an expresion.
+		 * multiplying a unknown scalar/scalar expression by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
@@ -757,7 +758,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Vector.Expression]] for the scaling of
 		 * a [[Vector]] object. The [[type]] of `this` does not matter because
-		 * scaling a unknown vector/scalar expression by a scalar always results in an expresion.
+		 * scaling a unknown vector/scalar expression by a scalar always results in an expression.
 		 * @param that The [[Vector]] to scale by the amount of `this`.
 		 * @return Expression for scaling `that` by `this`.
 		 */
@@ -771,7 +772,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for the division of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * dividing a unknown scalar/scalar expression by another scalar always results in an expresion.
+		 * dividing a unknown scalar/scalar expression by another scalar always results in an expression.
 		 * @param that The [[Scalar]] to divide `this` by `this`.
 		 * @return Expression for dividing `this` by `that`.
 		 */
@@ -782,7 +783,7 @@ export namespace Scalar {
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for exponentiation of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
-		 * exponentiating a scalar by a unknown scalar/scalar expression always results in an expresion.
+		 * exponentiating a scalar by a unknown scalar/scalar expression always results in an expression.
 		 * @param that The [[Scalar]] power to raise `this` to.
 		 * @return Expression for exponentiating `this` by `that`.
 		 */
@@ -818,54 +819,111 @@ export namespace Scalar {
 	}
 
 	/**
-	 * Creates a new [[Scalar.Constant]] object from a number
-	 * if it has not been created before.
-	 * Otherwise just returns the previously created object.
+	 * Creates a new {@link Scalar.Constant} object from a number.
 	 * 
-	 * This is the recommended way of creating [[Scalar.Constant]] objects instead of
+	 * This is the recommended way of creating {@link Scalar.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
 	 */
 	export function constant(value: number): Scalar.Constant;
 	/**
-	 * Defines a named [[Scalar.Constant]] object from a number
-	 * if it has not been created before.
-	 * Otherwise just returns the previously created object.
+	 * Defines a named {@link Scalar.Constant} object from a number.
 	 * 
-	 * This is the recommended way of creating named [[Scalar.Constant]] objects instead of
+	 * This is the recommended way of creating named {@link Scalar.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Scalar.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
 	 * @param name The string with which `this` object is identified.
-	 * @throws Throws an error if a [[Scalar.Constant]] with the same name has been defined previously.
+	 * @throws Throws an error if a {@link Scalar.Constant} with the same name has been defined previously.
 	 */
 	export function constant(value: number, name: string): Scalar.Constant;
 	/**
-	 * Returns a previously declared named [[Scalar.Constant]] object.
-	 * @param name The name of the named [[Scalar.Constant]] object to be retrieved.
+	 * Creates a new {@link Scalar.Constant} object from a {@link Component} object.
+	 * 
+	 * This is the recommended way of creating {@link Scalar.Constant} objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
+	 */
+	export function constant(value: Component): Scalar.Constant;
+	/**
+	 * Defines a named {@link Scalar.Constant} object from a {@link Component}
+	 * object.
+	 * 
+	 * This is the recommended way of creating named {@link Scalar.Constant} objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
+	 * @param name The string with which `this` object is identified.
+	 * @throws Throws an error if a {@link Scalar.Constant} with the same name has been defined previously.
+	 */
+	export function constant(value: Component, name: string): Scalar.Constant;
+	/**
+	 * Creates a new {@link Scalar.Constant} object from a {@link BigNum} object.
+	 * 
+	 * This is the recommended way of creating {@link Scalar.Constant} objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
+	 */
+	export function constant(value: BigNum): Scalar.Constant;
+	/**
+	 * Defines a named {@link Scalar.Constant} object from a {@link BigNum} object.
+	 * 
+	 * This is the recommended way of creating named {@link Scalar.Constant} objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
+	 * @param name The string with which `this` object is identified.
+	 * @throws Throws an error if a {@link Scalar.Constant} with the same name has been defined previously.
+	 */
+	export function constant(value: BigNum, name: string): Scalar.Constant;
+	/**
+	 * Returns a previously declared named {@link Scalar.Constant} object.
+	 * @param name The name of the named {@link Scalar.Constant} object to be retrieved.
 	 */
 	export function constant(name: string): Scalar.Constant;
-	export function constant(a: number | string, b?: string) {
-		let c;
+	export function constant(a: number | Component | BigNum | string, b?: string) {
+		let scalar: Scalar.Constant;
+		let num: Scalar.Constant | undefined;
 		if(typeof a === "number") {
 			if(b === undefined) {
-				c = CONSTANTS.get(a);
-				if(c === undefined) {
-					c = new Scalar.Constant(a);
-					CONSTANTS.set(a, c);
-				}
+				const big = BigNum.real(a);
+				scalar = new Scalar.Constant(big);
 			} else {
-				c = NAMED_CONSTANTS.get(b);
-				if(c !== undefined)
+				num = NAMED_CONSTANTS.get(b);
+				if(num !== undefined)
 					throw new Overwrite(b);
-				c = new Scalar.Constant(a, b);
-				NAMED_CONSTANTS.set(b, c);
+				const big = BigNum.real(a);
+				scalar = new Scalar.Constant(big, b);
+				NAMED_CONSTANTS.set(b, scalar);
+			}
+		} else if(a instanceof Component) {
+			if(b === undefined) {
+				const big = new BigNum(a);
+				scalar = new Scalar.Constant(big);
+			} else {
+				num = NAMED_CONSTANTS.get(b);
+				if(num !== undefined)
+					throw new Overwrite(b);
+				const big = new BigNum(a);
+				scalar = new Scalar.Constant(big, b);
+				NAMED_CONSTANTS.set(b, scalar);
+			}
+		} else if(a instanceof BigNum) {
+			if(b === undefined) {
+				const big = a;
+				scalar = new Scalar.Constant(big);
+			} else {
+				num = NAMED_CONSTANTS.get(b);
+				if(num !== undefined)
+					throw new Overwrite(b);
+				const big = a;
+				scalar = new Scalar.Constant(big, b);
+				NAMED_CONSTANTS.set(b, scalar);
 			}
 		} else {
-			c = NAMED_CONSTANTS.get(a);
-			if(c === undefined)
+			num = NAMED_CONSTANTS.get(a);
+			if(num === undefined)
 				throw new Error("No such constant defined.");
+			scalar = num;
 		}
-		return c;
+		return scalar;
 	}
 
 	/**
@@ -888,7 +946,7 @@ export namespace Scalar {
 /**
  * Represents the idea of infinity.
  */
-export const oo = Scalar.constant(Infinity);
+// export const oo = Scalar.constant(Infinity);
 /**
  * The irrational Euler's number. The derivative of the exponential function to
  * the base of this number gives the same exponential function.

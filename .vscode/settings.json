@@ -9,7 +9,8 @@
 		"mathrm",
 		"mcalc",
 		"multivariable",
-		"typedoc"
+		"typedoc",
+		"vectorially"
 	],
 	"conventionalCommits.scopes": [
 		"npm"

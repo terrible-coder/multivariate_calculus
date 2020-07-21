@@ -42,12 +42,12 @@ describe("Scalars", function() {
 			expect(() => a.div(Scalar.ZERO)).toThrowError("Division by zero");
 		});
 
-		it("Exponentiates", function() {
-			const res = a.pow(b);
-			expect(res).toEqual(Scalar.constant(8));
-			expect(a.pow(Scalar.ZERO)).toEqual(Scalar.constant(1));
-			expect(() => Scalar.ZERO.pow(Scalar.ZERO)).toThrowError("0 raised to the power 0");
-		});
+		// it("Exponentiates", function() {
+		// 	const res = a.pow(b);
+		// 	expect(res).toEqual(Scalar.constant(8));
+		// 	expect(a.pow(Scalar.ZERO)).toEqual(Scalar.constant(1));
+		// 	expect(() => Scalar.ZERO.pow(Scalar.ZERO)).toThrowError("0 raised to the power 0");
+		// });
 	});
 
 	describe("Variables", function() {
