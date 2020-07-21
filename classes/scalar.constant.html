@@ -133,7 +133,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="scalar.constant.html#equals" class="tsd-kind-icon">equals</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="scalar.constant.html#getdefinition" class="tsd-kind-icon">get<wbr>Definition</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="scalar.constant.html#mul" class="tsd-kind-icon">mul</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="scalar.constant.html#pow" class="tsd-kind-icon">pow</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="scalar.constant.html#pow" class="tsd-kind-icon">pow</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="scalar.constant.html#sub" class="tsd-kind-icon">sub</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="scalar.constant.html#abs" class="tsd-kind-icon">abs</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="scalar.constant.html#acos" class="tsd-kind-icon">acos</a></li>
@@ -164,13 +164,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Constant<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, name<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="scalar.constant.html" class="tsd-signature-type">Constant</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Constant<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><a href="bignum.html" class="tsd-signature-type">BigNum</a>, name<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="scalar.constant.html" class="tsd-signature-type">Constant</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L379">scalar.ts:379</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L379">scalar.ts:379</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -179,7 +179,7 @@
 										One may optionally pass in a string by which <code>this</code> object
 									may be identified by.</p>
 								</div>
-								<p>Using the contructor directly for creating vector objects is
+								<p>Using the constructor directly for creating vector objects is
 								not recommended.</p>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
@@ -190,7 +190,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>value: <span class="tsd-signature-type">number</span></h5>
+									<h5>value: <a href="bignum.html" class="tsd-signature-type">BigNum</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>The fixed value <code>this</code> should represent.</p>
@@ -220,7 +220,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="numerical.html">Numerical</a>.<a href="numerical.html#classref">classRef</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L379">scalar.ts:379</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L379">scalar.ts:379</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -231,7 +231,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/constant.html">Constant</a>.<a href="../interfaces/constant.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L393">scalar.ts:393</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L393">scalar.ts:393</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -248,7 +248,7 @@
 						<p>Implementation of <a href="../interfaces/constant.html">Constant</a>.<a href="../interfaces/constant.html#quantity">quantity</a></p>
 						<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#quantity">quantity</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L14">scalar.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L19">scalar.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -260,18 +260,18 @@
 						<p>Implementation of <a href="../interfaces/constant.html">Constant</a>.<a href="../interfaces/constant.html#type">type</a></p>
 						<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L378">scalar.ts:378</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L378">scalar.ts:378</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="value" class="tsd-anchor"></a>
 					<h3>value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <a href="bignum.html" class="tsd-signature-type">BigNum</a></div>
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/constant.html">Constant</a>.<a href="../interfaces/constant.html#value">value</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L393">scalar.ts:393</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L393">scalar.ts:393</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -294,7 +294,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#neg">neg</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L397">scalar.ts:397</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L397">scalar.ts:397</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="scalar.constant.html" class="tsd-signature-type">Constant</a></h4>
@@ -316,7 +316,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L436">scalar.ts:436</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L436">scalar.ts:436</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -340,14 +340,14 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L444">scalar.ts:444</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L444">scalar.ts:444</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and returns a <a href="scalar.expression.html">Scalar.Expression</a> for the addition of
 										two <a href="scalar.html">Scalar</a> objects. The <a href="scalar.constant.html#type">type</a> of <code>this</code> does not matter because
-									adding a variable scalar to another scalar always results in an expresion.</p>
+									adding a variable scalar to another scalar always results in an expression.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -376,7 +376,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#div">div</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L516">scalar.ts:516</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L516">scalar.ts:516</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -400,14 +400,14 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#div">div</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L524">scalar.ts:524</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L524">scalar.ts:524</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and returns a <a href="scalar.expression.html">Scalar.Expression</a> for the division of
 										two <a href="scalar.html">Scalar</a> objects. The <a href="scalar.constant.html#type">type</a> of <code>this</code> does not matter because
-									dividing a variable scalar by another scalar always results in an expresion.</p>
+									dividing a variable scalar by another scalar always results in an expression.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -429,13 +429,13 @@
 					<h3>equals</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">equals<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-						<li class="tsd-signature tsd-kind-icon">equals<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="scalar.constant.html" class="tsd-signature-type">Constant</a>, tolerance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">equals<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="scalar.constant.html" class="tsd-signature-type">Constant</a>, context<span class="tsd-signature-symbol">: </span><a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L413">scalar.ts:413</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L413">scalar.ts:413</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -465,7 +465,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L426">scalar.ts:426</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L426">scalar.ts:426</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -489,10 +489,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>tolerance: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The tolerance permitted for floating point numbers.</p>
-									</div>
+									<h5>context: <a href="../modules/mathcontext.html" class="tsd-signature-type">MathContext</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -510,7 +507,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="numerical.html">Numerical</a>.<a href="numerical.html#getdefinition">getDefinition</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/core/definitions.ts#L133">core/definitions.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/core/definitions.ts#L133">core/definitions.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -551,7 +548,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#mul">mul</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L476">scalar.ts:476</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L476">scalar.ts:476</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -575,14 +572,14 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#mul">mul</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L484">scalar.ts:484</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L484">scalar.ts:484</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and returns a <a href="scalar.expression.html">Scalar.Expression</a> for the multiplication of
 										two <a href="scalar.html">Scalar</a> objects. The <a href="scalar.constant.html#type">type</a> of <code>this</code> does not matter because
-									multiplying a variable scalar by another scalar always results in an expresion.</p>
+									multiplying a variable scalar by another scalar always results in an expression.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -601,7 +598,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#mul">mul</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L491">scalar.ts:491</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L491">scalar.ts:491</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -630,14 +627,14 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#mul">mul</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L499">scalar.ts:499</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L499">scalar.ts:499</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and returns a <a href="vector.expression.html">Vector.Expression</a> for the scaling of
 										a <a href="vector.html">Vector</a> object. The <a href="scalar.constant.html#type">type</a> of <code>this</code> does not matter because
-									scaling a variable vector by a scalar always results in an expresion.</p>
+									scaling a variable vector by a scalar always results in an expression.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -654,62 +651,36 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="pow" class="tsd-anchor"></a>
 					<h3>pow</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">pow<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="scalar.constant.html" class="tsd-signature-type">Constant</a></li>
-						<li class="tsd-signature tsd-kind-icon">pow<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="scalar.variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol"> | </span><a href="scalar.expression.html" class="tsd-signature-type">Expression</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="scalar.expression.html" class="tsd-signature-type">Expression</a></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">pow<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="scalar.html" class="tsd-signature-type">Scalar</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#pow">pow</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L539">scalar.ts:539</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Raises a <a href="scalar.constant.html">Scalar.Constant</a> object to the power of another numerically.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>that: <a href="scalar.constant.html" class="tsd-signature-type">Constant</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The <a href="scalar.constant.html">Scalar.Constant</a> power to raise <code>this</code> to.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="scalar.constant.html" class="tsd-signature-type">Constant</a></h4>
-							<p>The scalar exponentiation of <code>this</code> by <code>that</code>.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#pow">pow</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L547">scalar.ts:547</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L548">scalar.ts:548</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and returns a <a href="scalar.expression.html">Scalar.Expression</a> for exponentiation of
 										two <a href="scalar.html">Scalar</a> objects. The <a href="scalar.constant.html#type">type</a> of <code>this</code> does not matter because
-									exponentiating a scalar by a variable scalar always results in an expresion.</p>
+									exponentiating a scalar by a variable scalar always results in an expression.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>that: <a href="scalar.variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol"> | </span><a href="scalar.expression.html" class="tsd-signature-type">Expression</a></h5>
+									<h5>that: <a href="scalar.html" class="tsd-signature-type">Scalar</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The <a href="scalar.html">Scalar</a> power to raise <code>this</code> to.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="scalar.expression.html" class="tsd-signature-type">Expression</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 							<p>Expression for exponentiating <code>this</code> by <code>that</code>.</p>
 						</li>
 					</ul>
@@ -726,7 +697,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#sub">sub</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L456">scalar.ts:456</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L456">scalar.ts:456</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -750,14 +721,14 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="scalar.html">Scalar</a>.<a href="scalar.html#sub">sub</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L464">scalar.ts:464</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L464">scalar.ts:464</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates and returns a <a href="scalar.expression.html">Scalar.Expression</a> for the subtraction of
 										two <a href="scalar.html">Scalar</a> objects. The <a href="scalar.constant.html#type">type</a> of <code>this</code> does not matter because
-									subtracting a variable scalar from another scalar always results in an expresion.</p>
+									subtracting a variable scalar from another scalar always results in an expression.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -786,7 +757,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#abs">abs</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L68">scalar.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L73">scalar.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -809,7 +780,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#abs">abs</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L73">scalar.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L78">scalar.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -842,7 +813,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#acos">acos</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L148">scalar.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L153">scalar.ts:153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -865,7 +836,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#acos">acos</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L153">scalar.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L158">scalar.ts:158</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -898,7 +869,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#acosh">acosh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L244">scalar.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L249">scalar.ts:249</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -921,7 +892,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#acosh">acosh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L249">scalar.ts:249</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L254">scalar.ts:254</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -954,7 +925,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#asin">asin</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L132">scalar.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L137">scalar.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -977,7 +948,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#asin">asin</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L137">scalar.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L142">scalar.ts:142</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1010,7 +981,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#asinh">asinh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L228">scalar.ts:228</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L233">scalar.ts:233</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1033,7 +1004,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#asinh">asinh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L233">scalar.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L238">scalar.ts:238</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1066,7 +1037,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#atan">atan</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L164">scalar.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L169">scalar.ts:169</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1089,7 +1060,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#atan">atan</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L169">scalar.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L174">scalar.ts:174</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1122,7 +1093,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#atanh">atanh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L260">scalar.ts:260</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L265">scalar.ts:265</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1145,7 +1116,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#atanh">atanh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L265">scalar.ts:265</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L270">scalar.ts:270</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1178,7 +1149,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#ceil">ceil</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L340">scalar.ts:340</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L345">scalar.ts:345</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1201,7 +1172,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#ceil">ceil</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L345">scalar.ts:345</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L350">scalar.ts:350</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1234,7 +1205,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#cos">cos</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L100">scalar.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L105">scalar.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1257,7 +1228,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#cos">cos</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L105">scalar.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L110">scalar.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1290,7 +1261,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#cosh">cosh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L196">scalar.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L201">scalar.ts:201</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1313,7 +1284,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#cosh">cosh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L201">scalar.ts:201</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L206">scalar.ts:206</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1346,7 +1317,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#exp">exp</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L276">scalar.ts:276</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L281">scalar.ts:281</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1369,7 +1340,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#exp">exp</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L281">scalar.ts:281</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L286">scalar.ts:286</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1402,7 +1373,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#floor">floor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L324">scalar.ts:324</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L329">scalar.ts:329</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1425,7 +1396,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#floor">floor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L329">scalar.ts:329</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L334">scalar.ts:334</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1458,7 +1429,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#ln">ln</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L292">scalar.ts:292</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L297">scalar.ts:297</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1481,7 +1452,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#ln">ln</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L297">scalar.ts:297</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L302">scalar.ts:302</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1514,7 +1485,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#log">log</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L308">scalar.ts:308</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L313">scalar.ts:313</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1537,7 +1508,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#log">log</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L313">scalar.ts:313</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L318">scalar.ts:318</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1570,7 +1541,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#sin">sin</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L84">scalar.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L89">scalar.ts:89</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1593,7 +1564,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#sin">sin</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L89">scalar.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L94">scalar.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1626,7 +1597,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#sinh">sinh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L180">scalar.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L185">scalar.ts:185</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1649,7 +1620,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#sinh">sinh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L185">scalar.ts:185</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L190">scalar.ts:190</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1682,7 +1653,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#tan">tan</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L116">scalar.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L121">scalar.ts:121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1705,7 +1676,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#tan">tan</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L121">scalar.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L126">scalar.ts:126</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1738,7 +1709,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#tanh">tanh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L212">scalar.ts:212</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L217">scalar.ts:217</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1761,7 +1732,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="scalar.html">Scalar</a>.<a href="scalar.html#tanh">tanh</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/fa8fe8e/src/scalar.ts#L217">scalar.ts:217</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/b8a26bd/src/scalar.ts#L222">scalar.ts:222</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1838,7 +1809,7 @@
 									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 										<a href="scalar.constant.html#mul" class="tsd-kind-icon">mul</a>
 									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+									<li class=" tsd-kind-method tsd-parent-kind-class">
 										<a href="scalar.constant.html#pow" class="tsd-kind-icon">pow</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
@@ -1932,9 +1903,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="scalar.html#mul" class="tsd-kind-icon">mul</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="scalar.html#pow" class="tsd-kind-icon">pow</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="scalar.html#sub" class="tsd-kind-icon">sub</a>
