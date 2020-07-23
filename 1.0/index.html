@@ -78,6 +78,9 @@
 					multidimensional space. It works with both TypeScript and JavaScript projects
 					seamlessly. This library is so designed that you can write your mathematics code
 				as you would do maths in pen and paper.</p>
+				<blockquote>
+					<p>From version 1.0.0, the library is based completely on <a href="https://terrible-coder.github.io/multivariate_calculus/classes/bignum.html">BigNum</a> objects.</p>
+				</blockquote>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
@@ -88,8 +91,7 @@
 				<p>Once you have downloaded the file in you project folder, open up your index.html
 				file and add the following line:</p>
 				<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"mcalc.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
-				<p>This will tell the HTML that an external script is being referenced.
-				Now if you wish to, say, create a new constant scalar object, you can say</p>
+				<p>To create a new constant scalar object you can say</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> a = Scalar.constant(<span class="hljs-number">5</span>);
 print(a);</code></pre>
 				<p>If you open up the developer console window in the browser you will be able to
