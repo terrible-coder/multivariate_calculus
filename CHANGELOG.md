@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.0.0-alpha.0...v1.0.0) (2020-07-23)
+
 ## [1.0.0-alpha.0](https://github.com/terrible-coder/multivariate_calculus/compare/v0.3.11...v1.0.0-alpha.0) (2020-07-21)
 
 
