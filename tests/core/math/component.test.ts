@@ -229,89 +229,124 @@ describe("Throws appropriate errors", function() {
  * https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html
  */
 describe("Rounds", function() {
-	const a = ["5.5", "2.5", "1.6", "1.1", "1.0", "-1.0", "-1.1", "-1.6", "-2.5", "-5.5"];
+	const decimals = [
+		["5.5", "2.5", "1.6", "1.1", "1.0", "-1.0", "-1.1", "-1.6", "-2.5", "-5.5"],
+		["5.05", "2.05", "1.06", "1.01", "1.0", "-1.0", "-1.01", "-1.06", "-2.05", "-5.05"]
+	];
 	it("Up", function() {
-		const b = ["6", "3", "2", "2", "1", "-1", "-2", "-2", "-3", "-6"];
+		const rounded = ["6", "3", "2", "2", "1", "-1", "-2", "-2", "-3", "-6"];
 		const context = {
 			precision: 0,
 			rounding: RoundingMode.UP
 		};
-		for(let i = 0; i < 10; i++) {
-			const x = Component.round(Component.create(a[i]), context);
-			expect(x).toEqual(Component.create(b[i]));
-		}
+		decimals.forEach(a => {
+			for(let i = 0; i < a.length; i++) {
+				const x = Component.round(Component.create(a[i]), context);
+				expect(x).toEqual(Component.create(rounded[i]));
+			}
+		});
 	});
 
 	it("Down", function() {
-		const b = ["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"];
+		const rounded = ["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"];
 		const context = {
 			precision: 0,
 			rounding: RoundingMode.DOWN
 		};
-		for(let i = 0; i < 10; i++) {
-			const x = Component.round(Component.create(a[i]), context);
-			expect(x).toEqual(Component.create(b[i]));
-		}
+		decimals.forEach(a => {
+			for(let i = 0; i < a.length; i++) {
+				const x = Component.round(Component.create(a[i]), context);
+				expect(x).toEqual(Component.create(rounded[i]));
+			}
+		});
 	});
 
 	it("Ceiling", function() {
-		const b = ["6", "3", "2", "2", "1", "-1", "-1", "-1", "-2", "-5"];
+		const rounded = ["6", "3", "2", "2", "1", "-1", "-1", "-1", "-2", "-5"];
 		const context = {
 			precision: 0,
 			rounding: RoundingMode.CEIL
 		};
-		for(let i = 0; i < 10; i++) {
-			const x = Component.round(Component.create(a[i]), context);
-			expect(x).toEqual(Component.create(b[i]));
-		}
+		decimals.forEach(a => {
+			for(let i = 0; i < a.length; i++) {
+				const x = Component.round(Component.create(a[i]), context);
+				expect(x).toEqual(Component.create(rounded[i]));
+			}
+		});
 	});
 
 	it("Floor", function() {
-		const b = ["5", "2", "1", "1", "1", "-1", "-2", "-2", "-3", "-6"];
+		const rounded = ["5", "2", "1", "1", "1", "-1", "-2", "-2", "-3", "-6"];
 		const context = {
 			precision: 0,
 			rounding: RoundingMode.FLOOR
 		};
-		for(let i = 0; i < 10; i++) {
-			const x = Component.round(Component.create(a[i]), context);
-			expect(x).toEqual(Component.create(b[i]));
-		}
+		decimals.forEach(a => {
+			for(let i = 0; i < a.length; i++) {
+				const x = Component.round(Component.create(a[i]), context);
+				expect(x).toEqual(Component.create(rounded[i]));
+			}
+		});
 	});
 
 	it("Half up", function() {
-		const b = ["6", "3", "2", "1", "1", "-1", "-1", "-2", "-3", "-6"];
+		const rounded = [
+			["6", "3", "2", "1", "1", "-1", "-1", "-2", "-3", "-6"],
+			["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"]
+		];
 		const context = {
 			precision: 0,
 			rounding: RoundingMode.HALF_UP
 		};
-		for(let i = 0; i < 10; i++) {
-			const x = Component.round(Component.create(a[i]), context);
-			expect(x).toEqual(Component.create(b[i]));
-		}
+		let first = true;
+		decimals.forEach(a => {
+			for(let i = 0; i < a.length; i++) {
+				const x = Component.round(Component.create(a[i]), context);
+				const value = first? rounded[0][i] : rounded[1][i];
+				expect(x).toEqual(Component.create(value));
+			}
+			first = !first;
+		});
 	});
 
 	it("Half down", function() {
-		const b = ["5", "2", "2", "1", "1", "-1", "-1", "-2", "-2", "-5"];
+		const rounded = [
+			["5", "2", "2", "1", "1", "-1", "-1", "-2", "-2", "-5"],
+			["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"]
+		];
 		const context = {
 			precision: 0,
 			rounding: RoundingMode.HALF_DOWN
 		};
-		for(let i = 0; i < 10; i++) {
-			const x = Component.round(Component.create(a[i]), context);
-			expect(x).toEqual(Component.create(b[i]));
-		}
+		let first = true;
+		decimals.forEach(a => {
+			for(let i = 0; i < a.length; i++) {
+				const x = Component.round(Component.create(a[i]), context);
+				const value = first? rounded[0][i] : rounded[1][i];
+				expect(x).toEqual(Component.create(value));
+			}
+			first = !first;
+		});
 	});
 
 	it("Half even", function() {
-		const b = ["6", "2", "2", "1", "1", "-1", "-1", "-2", "-2", "-6"];
+		const rounded = [
+			["6", "2", "2", "1", "1", "-1", "-1", "-2", "-2", "-6"],
+			["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"]
+		];
 		const context = {
 			precision: 0,
 			rounding: RoundingMode.HALF_EVEN
 		};
-		for(let i = 0; i < 10; i++) {
-			const x = Component.round(Component.create(a[i]), context);
-			expect(x).toEqual(Component.create(b[i]));
-		}
+		let first = true;
+		decimals.forEach(a => {
+			for(let i = 0; i < a.length; i++) {
+				const x = Component.round(Component.create(a[i]), context);
+				const value = first? rounded[0][i] : rounded[1][i];
+				expect(x).toEqual(Component.create(value));
+			}
+			first = !first;
+		});
 	});
 
 	it("Unnecesary", function() {
@@ -319,15 +354,17 @@ describe("Rounds", function() {
 			precision: 0,
 			rounding: RoundingMode.UNNECESSARY
 		};
-		for(let i = 0; i < 10; i++) {
-			const x = Component.create(a[i]);
-			if(a[i] == "1.0")
-				expect(Component.round(x, context)).toEqual(Component.create("1"));
-			else if(a[i] == "-1.0")
-				expect(Component.round(x, context)).toEqual(Component.create("-1"));
-			else
-				expect(() => Component.round(x, context)).toThrow();
-		}
+		decimals.forEach(a => {
+			for(let i = 0; i < a.length; i++) {
+				const x = Component.create(a[i]);
+				if(a[i] == "1.0")
+					expect(Component.round(x, context)).toEqual(Component.create("1"));
+				else if(a[i] == "-1.0")
+					expect(Component.round(x, context)).toEqual(Component.create("-1"));
+				else
+					expect(() => Component.round(x, context)).toThrow();
+			}
+		});
 	});
 });
 

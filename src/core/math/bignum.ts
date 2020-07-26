@@ -423,6 +423,26 @@ export class BigNum extends Numerical {
 	}
 
 	/**
+	 * Rounds a number (for complex and hyper-complex numbers, all the components
+	 * of the number) towards positive infinity.
+	 * @param x Number to round.
+	 * @see {@link Component.ceil}
+	 */
+	public static ceil(x: BigNum) {
+		return new BigNum(x.components.map(value => Component.ceil(value)));
+	}
+
+	/**
+	 * Rounds a number (for complex and hyper-complex numbers, all the components
+	 * of the number) towards negative infinity.
+	 * @param x Number to round.
+	 * @see {@link Component.floor}
+	 */
+	public static floor(x: BigNum) {
+		return new BigNum(x.components.map(value => Component.floor(value)));
+	}
+
+	/**
 	 * Calculates the trigonometric sine of a given number with rounding
 	 * according to {@link mathenv.mode}.
 	 * 
