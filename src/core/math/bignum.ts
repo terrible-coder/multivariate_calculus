@@ -422,6 +422,10 @@ export class BigNum extends Numerical {
 		return side === "right"? this.mul(that.inv(context), context): that.inv(context).mul(this, context);
 	}
 
+	public static ceil(x: BigNum) {
+		return new BigNum(x.components.map(value => Component.ceil(value)));
+	}
+
 	/**
 	 * Calculates the trigonometric sine of a given number with rounding
 	 * according to {@link mathenv.mode}.
