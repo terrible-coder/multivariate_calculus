@@ -426,6 +426,10 @@ export class BigNum extends Numerical {
 		return new BigNum(x.components.map(value => Component.ceil(value)));
 	}
 
+	public static floor(x: BigNum) {
+		return new BigNum(x.components.map(value => Component.floor(value)));
+	}
+
 	/**
 	 * Calculates the trigonometric sine of a given number with rounding
 	 * according to {@link mathenv.mode}.
