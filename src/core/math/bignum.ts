@@ -422,10 +422,22 @@ export class BigNum extends Numerical {
 		return side === "right"? this.mul(that.inv(context), context): that.inv(context).mul(this, context);
 	}
 
+	/**
+	 * Rounds a number (for complex and hyper-complex numbers, all the components
+	 * of the number) towards positive infinity.
+	 * @param x Number to round.
+	 * @see {@link Component.ceil}
+	 */
 	public static ceil(x: BigNum) {
 		return new BigNum(x.components.map(value => Component.ceil(value)));
 	}
 
+	/**
+	 * Rounds a number (for complex and hyper-complex numbers, all the components
+	 * of the number) towards negative infinity.
+	 * @param x Number to round.
+	 * @see {@link Component.floor}
+	 */
 	public static floor(x: BigNum) {
 		return new BigNum(x.components.map(value => Component.floor(value)));
 	}
