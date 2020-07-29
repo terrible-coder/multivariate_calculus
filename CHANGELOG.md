@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1-alpha.1](https://github.com/terrible-coder/multivariate_calculus/compare/v1.0.1-alpha.0...v1.0.1-alpha.1) (2020-07-29)
+
+
+### Bug Fixes
+
+* :bug: rounding algorithms ([a9647ed](https://github.com/terrible-coder/multivariate_calculus/commit/a9647edc4d6805113c91cf6d7c0e1e6888f0b22a))
+
 ### [1.0.1-alpha.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.0.0...v1.0.1-alpha.0) (2020-07-26)
 
 
