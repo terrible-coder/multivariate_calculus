@@ -230,140 +230,106 @@ describe("Throws appropriate errors", function() {
  */
 describe("Rounds", function() {
 	const decimals = [
-		["5.5", "2.5", "1.6", "1.1", "1.0", "-1.0", "-1.1", "-1.6", "-2.5", "-5.5"],
-		["5.05", "2.05", "1.06", "1.01", "1.0", "-1.0", "-1.01", "-1.06", "-2.05", "-5.05"]
-	];
+		"5.001", "5.01", "5.0005", "5.05", "5.04", "5.06", "5.00",
+		"-5.001", "-5.01", "-5.0005", "-5.05", "-5.04", "-5.06", "-5.00"
+	].map(s => Component.create(s));
+
 	it("Up", function() {
-		const rounded = ["6", "3", "2", "2", "1", "-1", "-2", "-2", "-3", "-6"];
-		const context = {
-			precision: 0,
+		const rounded = [
+			"5.0", "5.1", "5.0", "5.1", "5.1", "5.1", "5.0",
+			"-5.0", "-5.1", "-5.0", "-5.1", "-5.1", "-5.1", "-5.0"
+		].map(s => Component.create(s));
+		const ctx: MathContext = {
+			precision: 1,
 			rounding: RoundingMode.UP
 		};
-		decimals.forEach(a => {
-			for(let i = 0; i < a.length; i++) {
-				const x = Component.round(Component.create(a[i]), context);
-				expect(x).toEqual(Component.create(rounded[i]));
-			}
-		});
+		decimals.forEach((n, i) => expect(Component.round(n, ctx)).toEqual(rounded[i]));
 	});
 
 	it("Down", function() {
-		const rounded = ["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"];
-		const context = {
-			precision: 0,
+		const rounded = [
+			"5.0", "5.0", "5.0", "5.0", "5.0", "5.0", "5.0",
+			"-5.0", "-5.0", "-5.0", "-5.0", "-5.0", "-5.0", "-5.0"
+		].map(s => Component.create(s));
+		const ctx: MathContext = {
+			precision: 1,
 			rounding: RoundingMode.DOWN
 		};
-		decimals.forEach(a => {
-			for(let i = 0; i < a.length; i++) {
-				const x = Component.round(Component.create(a[i]), context);
-				expect(x).toEqual(Component.create(rounded[i]));
-			}
-		});
+		decimals.forEach((n, i) => expect(Component.round(n, ctx)).toEqual(rounded[i]));
 	});
 
 	it("Ceiling", function() {
-		const rounded = ["6", "3", "2", "2", "1", "-1", "-1", "-1", "-2", "-5"];
-		const context = {
-			precision: 0,
+		const rounded = [
+			"5.1", "5.1", "5.1", "5.1", "5.1", "5.1", "5.0",
+			"-5.0", "-5.0", "-5.0", "-5.0", "-5.0", "-5.0", "-5.0"
+		].map(s => Component.create(s));
+		const ctx: MathContext = {
+			precision: 1,
 			rounding: RoundingMode.CEIL
 		};
-		decimals.forEach(a => {
-			for(let i = 0; i < a.length; i++) {
-				const x = Component.round(Component.create(a[i]), context);
-				expect(x).toEqual(Component.create(rounded[i]));
-			}
-		});
+		decimals.forEach((n, i) => expect(Component.round(n, ctx)).toEqual(rounded[i]));
 	});
 
 	it("Floor", function() {
-		const rounded = ["5", "2", "1", "1", "1", "-1", "-2", "-2", "-3", "-6"];
-		const context = {
-			precision: 0,
+		const rounded = [
+			"5.0", "5.0", "5.0", "5.0", "5.0", "5.0", "5.0",
+			"-5.1", "-5.1", "-5.1", "-5.1", "-5.1", "-5.1", "-5.0"
+		].map(s => Component.create(s));
+		const ctx: MathContext = {
+			precision: 1,
 			rounding: RoundingMode.FLOOR
 		};
-		decimals.forEach(a => {
-			for(let i = 0; i < a.length; i++) {
-				const x = Component.round(Component.create(a[i]), context);
-				expect(x).toEqual(Component.create(rounded[i]));
-			}
-		});
+		decimals.forEach((n, i) => expect(Component.round(n, ctx)).toEqual(rounded[i]));
 	});
 
 	it("Half up", function() {
 		const rounded = [
-			["6", "3", "2", "1", "1", "-1", "-1", "-2", "-3", "-6"],
-			["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"]
-		];
-		const context = {
-			precision: 0,
+			"5.0", "5.0", "5.0", "5.1", "5.0", "5.1", "5.0",
+			"-5.0", "-5.0", "-5.0", "-5.1", "-5.0", "-5.1", "-5.0"
+		].map(s => Component.create(s));
+		const ctx: MathContext = {
+			precision: 1,
 			rounding: RoundingMode.HALF_UP
 		};
-		let first = true;
-		decimals.forEach(a => {
-			for(let i = 0; i < a.length; i++) {
-				const x = Component.round(Component.create(a[i]), context);
-				const value = first? rounded[0][i] : rounded[1][i];
-				expect(x).toEqual(Component.create(value));
-			}
-			first = !first;
-		});
+		decimals.forEach((n, i) => expect(Component.round(n, ctx)).toEqual(rounded[i]));
 	});
 
 	it("Half down", function() {
 		const rounded = [
-			["5", "2", "2", "1", "1", "-1", "-1", "-2", "-2", "-5"],
-			["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"]
-		];
-		const context = {
-			precision: 0,
+			"5.0", "5.0", "5.0", "5.0", "5.0", "5.1", "5.0",
+			"-5.0", "-5.0", "-5.0", "-5.0", "-5.0", "-5.1", "-5.0"
+		].map(s => Component.create(s));
+		const ctx: MathContext = {
+			precision: 1,
 			rounding: RoundingMode.HALF_DOWN
 		};
-		let first = true;
-		decimals.forEach(a => {
-			for(let i = 0; i < a.length; i++) {
-				const x = Component.round(Component.create(a[i]), context);
-				const value = first? rounded[0][i] : rounded[1][i];
-				expect(x).toEqual(Component.create(value));
-			}
-			first = !first;
-		});
+		decimals.forEach((n, i) => expect(Component.round(n, ctx)).toEqual(rounded[i]));
 	});
 
 	it("Half even", function() {
 		const rounded = [
-			["6", "2", "2", "1", "1", "-1", "-1", "-2", "-2", "-6"],
-			["5", "2", "1", "1", "1", "-1", "-1", "-1", "-2", "-5"]
-		];
-		const context = {
-			precision: 0,
+			"5.0", "5.0", "5.0", "5.0", "5.0", "5.1", "5.0",
+			"-5.0", "-5.0", "-5.0", "-5.0", "-5.0", "-5.1", "-5.0"
+		].map(s => Component.create(s));
+		const ctx: MathContext = {
+			precision: 1,
 			rounding: RoundingMode.HALF_EVEN
 		};
-		let first = true;
-		decimals.forEach(a => {
-			for(let i = 0; i < a.length; i++) {
-				const x = Component.round(Component.create(a[i]), context);
-				const value = first? rounded[0][i] : rounded[1][i];
-				expect(x).toEqual(Component.create(value));
-			}
-			first = !first;
-		});
+		decimals.forEach((n, i) => expect(Component.round(n, ctx)).toEqual(rounded[i]));
 	});
 
 	it("Unnecesary", function() {
 		const context: MathContext = {
-			precision: 0,
+			precision: 1,
 			rounding: RoundingMode.UNNECESSARY
 		};
-		decimals.forEach(a => {
-			for(let i = 0; i < a.length; i++) {
-				const x = Component.create(a[i]);
-				if(a[i] == "1.0")
-					expect(Component.round(x, context)).toEqual(Component.create("1"));
-				else if(a[i] == "-1.0")
-					expect(Component.round(x, context)).toEqual(Component.create("-1"));
-				else
-					expect(() => Component.round(x, context)).toThrow();
-			}
+		decimals.forEach(n => {
+			if(n.toString() == "5.0")
+				expect(Component.round(n, context)).toEqual(Component.create("5"));
+			else if(n.toString() == "-5.0")
+				expect(Component.round(n, context)).toEqual(Component.create("-5"));
+			else
+				expect(() => Component.round(n, context)).toThrow();
 		});
 	});
 });

@@ -196,10 +196,10 @@ export class Component extends Numerical {
 		case RoundingMode.DOWN:
 			break;
 		case RoundingMode.CEIL:
-			if(last >= ONE) rounded += one;
+			if(last >= 0) rounded += one;
 			break;
 		case RoundingMode.FLOOR:
-			if(last <= -ONE) rounded -= one;
+			if(last <= 0) rounded -= one;
 			break;
 		case RoundingMode.HALF_DOWN:
 			if(last > FIVE) rounded += one;
