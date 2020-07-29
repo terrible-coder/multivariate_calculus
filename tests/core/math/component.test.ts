@@ -291,10 +291,7 @@ describe("Rounds", function() {
 			precision: 1,
 			rounding: RoundingMode.HALF_UP
 		};
-		decimals.forEach((n, i) => {
-			console.log(n.toString());
-			expect(Component.round(n, ctx)).toEqual(rounded[i])
-		});
+		decimals.forEach((n, i) => expect(Component.round(n, ctx)).toEqual(rounded[i]));
 	});
 
 	it("Half down", function() {
