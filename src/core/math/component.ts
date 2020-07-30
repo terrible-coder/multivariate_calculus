@@ -6,6 +6,7 @@ import { Numerical } from "../definitions";
 import { Exponent } from "./exponential/exponential";
 import { TrigCyclic } from "./trigonometry/circular";
 import { TrigHyperbolic } from "./trigonometry/hyperbolic";
+import { roundTo } from "./rounding";
 
 /**
  * Type of argument accepted by [[Component]] constructor.
@@ -171,12 +172,11 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Rounds off a given number according to some [[MathContext]]. The different
-	 * rounding algorithms implemented are identical to the ones defined by the
-	 * [RoundingMode](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html)
-	 * class of JAVA.
+	 * Rounds off a given number according to some {@link MathContext}. The different
+	 * rounding algorithms implemented are heavily influenced by the
+	 * [Java implementation of the same](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html).
 	 * @param x The number to round off.
-	 * @param context The [[MathContext]] which defines how the number is to be rounded.
+	 * @param context The {@link MathContext} which defines how the number is to be rounded.
 	 * @returns The number representing the rounded value of the argument according to the given context.
 	 */
 	public static round(x: Component, context: MathContext) {
@@ -184,45 +184,7 @@ export class Component extends Numerical {
 			return x;
 		const num = x.asBigInt;
 		const diff = x.precision - context.precision;
-		const divider = BigInt(pad("1", diff, "0", "end"));
-		let rounded = num / divider, last = num % divider;
-		const one = BigInt("1"), ten = BigInt("10");
-		const FIVE = BigInt(pad("5", diff - 1, "0", "end")), ONE = BigInt(pad("1", diff - 1, "0", "end"));
-		switch(context.rounding) {
-		case RoundingMode.UP:
-			if(last >= ONE) rounded += one;
-			else if(last <= -ONE) rounded -= one;
-			break;
-		case RoundingMode.DOWN:
-			break;
-		case RoundingMode.CEIL:
-			if(last >= 0) rounded += one;
-			break;
-		case RoundingMode.FLOOR:
-			if(last <= 0) rounded -= one;
-			break;
-		case RoundingMode.HALF_DOWN:
-			if(last > FIVE) rounded += one;
-			else if(last < -FIVE) rounded -= one;
-			break;
-		case RoundingMode.HALF_UP:
-			if(last >= FIVE) rounded += one;
-			else if(last <= -FIVE) rounded -= one;
-			break;
-		case RoundingMode.HALF_EVEN:
-			if(last > FIVE) rounded += one;
-			else if(last < -FIVE) rounded -= one;
-			else if(Math.abs(Number(rounded % ten)) % 2 !== 0) {
-				if(last === FIVE) rounded += one;
-				else if(last === -FIVE) rounded -= one;
-			}
-			break;
-		case RoundingMode.UNNECESSARY:
-			if(last > 0 || last < 0)
-				throw Error("Rounding necessary. Exact representation not known.");
-			break;
-		}
-		let r = rounded.toString();
+		let r = roundTo(num, diff, context.rounding).toString();
 		return Component.create(decimate(r, context.precision));
 	}
 
