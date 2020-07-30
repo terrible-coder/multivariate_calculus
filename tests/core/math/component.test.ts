@@ -223,11 +223,6 @@ describe("Throws appropriate errors", function() {
 	});
 });
 
-/*
- * These tests have been based on the rounding algorithms defined by JAVA.
- * To see all the rounding possibilities and read more about them go to
- * https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html
- */
 describe("Rounds", function() {
 	const decimals = [
 		"5.001", "5.01", "5.0005", "5.05", "5.04", "5.06", "5.00",

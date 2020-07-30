@@ -172,12 +172,11 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Rounds off a given number according to some [[MathContext]]. The different
-	 * rounding algorithms implemented are identical to the ones defined by the
-	 * [RoundingMode](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html)
-	 * class of JAVA.
+	 * Rounds off a given number according to some {@link MathContext}. The different
+	 * rounding algorithms implemented are heavily influenced by the
+	 * [Java implementation of the same](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html).
 	 * @param x The number to round off.
-	 * @param context The [[MathContext]] which defines how the number is to be rounded.
+	 * @param context The {@link MathContext} which defines how the number is to be rounded.
 	 * @returns The number representing the rounded value of the argument according to the given context.
 	 */
 	public static round(x: Component, context: MathContext) {
