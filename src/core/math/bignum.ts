@@ -1177,30 +1177,6 @@ export class BigNum extends Numerical {
 		const res = real.add(v_hat.mul(imag, ctx), ctx);
 		return BigNum.round(res, context);
 	}
-
-	// /**
-	//  * Calculates the common logarithm (to the base \\( 10 \\)) of a given number
-	//  * with rounding according to {@link mathenv.mode}.
-	//  * @param x A number.
-	//  */
-	// public static log(x: BigNum): BigNum;
-	// /**
-	//  * Calculates the common logarithm (to the base \\( 10 \\)) of a given number
-	//  * with rounding according to the given context settings.
-	//  * [[MathContext]].
-	//  * @param x A number.
-	//  * @param context The context settings to use.
-	//  */
-	// public static log(x: BigNum, context: MathContext): BigNum;
-	// public static log(x: BigNum, context=mathenv.mode) {
-	// 	const ctx: MathContext = {
-	// 		precision: 2 * context.precision,
-	// 		rounding: context.rounding
-	// 	};
-	// 	const y = BigNum.ln(x, ctx).div(BigNum.ln10, ctx);
-	// 	return BigNum.round(y, context);
-	// }
-
 }
 
 export namespace BigNum {
