@@ -1,6 +1,13 @@
 import { RoundingMode } from "./context";
 import { pad } from "./parsers";
 
+/**
+ * Rounds a number off, accurate to the given power of 10. The rounding algorithms
+ * are heavily influenced by the [Java implementation of the same](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html).
+ * @param num The number to round off.
+ * @param power The power of 10 to round the number to.
+ * @param mode Flag for which rounding algorithm to use.
+ */
 export function roundTo(num: bigint, power: number, mode: RoundingMode) {
 	const divider = BigInt(pad("1", power, "0", "end"));
 	let rounded = num / divider, last = num % divider;
