@@ -444,6 +444,50 @@ describe("Rounding", function() {
 			decimal.forEach((n, i) => expect(BigNum.round(n, ctx)).toEqual(rounded[i]));
 		});
 	});
+
+	describe("round half even", function() {
+		test("rounding for real", function() {
+			const ctx: MathContext = {
+				precision: 1,
+				rounding: RoundingMode.HALF_EVEN
+			}
+			const decimal = [
+				"5.05", "5.15", "5.04", "5.06", "-5.05", "-5.15", "-5.04", "-5.06", "5.0", "-5.0"
+			].map(s => BigNum.real(s));
+			const rounded = [
+				"5.0", "5.2", "5.0", "5.1", "-5.0", "-5.2", "-5.0", "-5.1", "5.0", "-5.0"
+			].map(s => BigNum.real(s));
+			decimal.forEach((n, i) => expect(BigNum.round(n, ctx)).toEqual(rounded[i]));
+		});
+
+		test("rounding for imaginary", function() {
+			const ctx: MathContext = {
+				precision: 1,
+				rounding: RoundingMode.HALF_EVEN
+			}
+			const decimal = [
+				"5.05", "5.15", "5.04", "5.06", "-5.05", "-5.15", "-5.04", "-5.06", "5.0", "-5.0"
+			].map(s => BigNum.complex("0", s));
+			const rounded = [
+				"5.0", "5.2", "5.0", "5.1", "-5.0", "-5.2", "-5.0", "-5.1", "5.0", "-5.0"
+			].map(s => BigNum.complex("0", s));
+			decimal.forEach((n, i) => expect(BigNum.round(n, ctx)).toEqual(rounded[i]));
+		});
+
+		test("rounding for hyper-complex", function() {
+			const ctx: MathContext = {
+				precision: 1,
+				rounding: RoundingMode.HALF_EVEN
+			}
+			const decimal = [
+				"5.05", "5.15", "5.04", "5.06", "-5.05", "-5.15", "-5.04", "-5.06", "5.0", "-5.0"
+			].map(s => BigNum.hyper(s, "0", s));
+			const rounded = [
+				"5.0", "5.2", "5.0", "5.1", "-5.0", "-5.2", "-5.0", "-5.1", "5.0", "-5.0"
+			].map(s => BigNum.hyper(s, "0", s));
+			decimal.forEach((n, i) => expect(BigNum.round(n, ctx)).toEqual(rounded[i]));
+		});
+	});
 });
 
 describe("Adds", function() {
