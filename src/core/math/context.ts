@@ -11,7 +11,7 @@ export enum RoundingMode {
 	 * Rounds the number away from 0 only if the first digit of the discarded
 	 * fraction is more than or equal to 1.
 	 * 
-	 * | Number | Rounded up |
+	 * | Number | Rounded to 1 decimal place with UP rounding |
 	 * |-------|------------|
 	 * | 5.01 | 5.1 |
 	 * | 5.001 | 5.0 |
@@ -25,7 +25,7 @@ export enum RoundingMode {
 	/**
 	 * Rounds the number towards 0.
 	 * 
-	 * | Number | Rounded up |
+	 * | Number | Rounded to 1 decimal place with DOWN rounding |
 	 * |-------|------------|
 	 * | 5.01 | 5.0 |
 	 * | 5.001 | 5.0 |
@@ -39,7 +39,7 @@ export enum RoundingMode {
 	/**
 	 * Rounds the number towards positive infinity.
 	 * 
-	 * | Number | Rounded up |
+	 * | Number | Rounded to 1 decimal place with CEIL rounding |
 	 * |-------|------------|
 	 * | 5.001 | 5.1 |
 	 * | 5.0001 | 5.1 |
@@ -53,7 +53,7 @@ export enum RoundingMode {
 	/**
 	 * Rounds the number down towards negative infinity.
 	 * 
-	 * | Number | Rounded up |
+	 * | Number | Rounded to 1 decimal place with FLOOR rounding |
 	 * |-------|------------|
 	 * | 5.001 | 5.0 |
 	 * | 5.0001 | 5.0 |
@@ -68,7 +68,7 @@ export enum RoundingMode {
 	 * Rounds towards nearest neighbour. In case it is equidistant it is rounded
 	 * up.
 	 * 
-	 * | Number | Rounded up |
+	 * | Number | Rounded to 1 decimal place with HALF_UP rounding |
 	 * |-------|------------|
 	 * | 5.06 | 5.1 |
 	 * | 5.05 | 5.1 |
@@ -85,7 +85,7 @@ export enum RoundingMode {
 	 * Rounds towards nearest neighbour. In case it is equidistant it is rounded
 	 * down.
 	 * 
-	 * | Number | Rounded up |
+	 * | Number | Rounded to 1 decimal place with HALF_DOWN rounding |
 	 * |-------|------------|
 	 * | 5.06 | 5.1 |
 	 * | 5.05 | 5.0 |
@@ -102,7 +102,7 @@ export enum RoundingMode {
 	 * Rounds towards nearest neighbour. In case it is equidistant it is rounded
 	 * to nearest even neighbour.
 	 * 
-	 * | Number | Rounded up |
+	 * | Number | Rounded to 1 decimal place with HALF_EVEN rounding |
 	 * |-------|------------|
 	 * | 5.15 | 5.2 |
 	 * | 5.06 | 5.1 |
