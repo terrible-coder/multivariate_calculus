@@ -72,8 +72,11 @@
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>Specifies a <em>rounding behaviour</em> for numerical operations on <a href="../classes/bignum.html">BigNum</a>
-							which are capable of discarding some precision. This is based on the JAVA
-						implementation of rounding behaviour. Read more <a href="https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html">here</a>.</p>
+							which are capable of discarding some precision. This is based on the <a href="https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html">Java
+							implementation of rounding behaviour</a>.
+							Each rounding mode indicates how the least significant digit of the rounded
+							result is to be calculated. If fewer digits are returned than the original
+						number then the discarded digits are called the <em>discarded fraction</em>.</p>
 					</div>
 				</div>
 			</section>
@@ -105,13 +108,45 @@
 					<div class="tsd-signature tsd-kind-icon">CEIL<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/36556ba/src/core/math/context.ts#L12">core/math/context.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/2bb377d/src/core/math/context.ts#L52">core/math/context.ts:52</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Rounds the number up towards positive infinity.</p>
+							<p>Rounds the number towards positive infinity.</p>
 						</div>
+						<table>
+							<thead>
+								<tr>
+									<th>Number</th>
+									<th>Rounded to 1 decimal place with CEIL rounding</th>
+								</tr>
+							</thead>
+							<tbody><tr>
+									<td>5.001</td>
+									<td>5.1</td>
+								</tr>
+								<tr>
+									<td>5.0001</td>
+									<td>5.1</td>
+								</tr>
+								<tr>
+									<td>5.0</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>-5.0</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.0001</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.001</td>
+									<td>-5.0</td>
+								</tr>
+						</tbody></table>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
@@ -120,13 +155,45 @@
 					<div class="tsd-signature tsd-kind-icon">DOWN<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/36556ba/src/core/math/context.ts#L10">core/math/context.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/2bb377d/src/core/math/context.ts#L38">core/math/context.ts:38</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Rounds the number down towards 0.</p>
+							<p>Rounds the number towards 0.</p>
 						</div>
+						<table>
+							<thead>
+								<tr>
+									<th>Number</th>
+									<th>Rounded to 1 decimal place with DOWN rounding</th>
+								</tr>
+							</thead>
+							<tbody><tr>
+									<td>5.01</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>5.001</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>5.0</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>-5.0</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.001</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.01</td>
+									<td>-5.0</td>
+								</tr>
+						</tbody></table>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
@@ -135,13 +202,45 @@
 					<div class="tsd-signature tsd-kind-icon">FLOOR<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/36556ba/src/core/math/context.ts#L14">core/math/context.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/2bb377d/src/core/math/context.ts#L66">core/math/context.ts:66</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Rounds the number down towards negative infinity.</p>
 						</div>
+						<table>
+							<thead>
+								<tr>
+									<th>Number</th>
+									<th>Rounded to 1 decimal place with FLOOR rounding</th>
+								</tr>
+							</thead>
+							<tbody><tr>
+									<td>5.001</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>5.0001</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>5.0</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>-5.0</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.0001</td>
+									<td>-5.1</td>
+								</tr>
+								<tr>
+									<td>-5.001</td>
+									<td>-5.1</td>
+								</tr>
+						</tbody></table>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
@@ -150,13 +249,54 @@
 					<div class="tsd-signature tsd-kind-icon">HALF_<wbr>DOWN<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/36556ba/src/core/math/context.ts#L18">core/math/context.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/2bb377d/src/core/math/context.ts#L100">core/math/context.ts:100</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded down.</p>
+							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded
+							down.</p>
 						</div>
+						<table>
+							<thead>
+								<tr>
+									<th>Number</th>
+									<th>Rounded to 1 decimal place with HALF_DOWN rounding</th>
+								</tr>
+							</thead>
+							<tbody><tr>
+									<td>5.06</td>
+									<td>5.1</td>
+								</tr>
+								<tr>
+									<td>5.05</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>5.04</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>5.0</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>-5.0</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.04</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.05</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.06</td>
+									<td>-5.1</td>
+								</tr>
+						</tbody></table>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
@@ -165,13 +305,62 @@
 					<div class="tsd-signature tsd-kind-icon">HALF_<wbr>EVEN<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/36556ba/src/core/math/context.ts#L20">core/math/context.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/2bb377d/src/core/math/context.ts#L119">core/math/context.ts:119</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded to nearest even number.</p>
+							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded
+							to nearest even neighbour.</p>
 						</div>
+						<table>
+							<thead>
+								<tr>
+									<th>Number</th>
+									<th>Rounded to 1 decimal place with HALF_EVEN rounding</th>
+								</tr>
+							</thead>
+							<tbody><tr>
+									<td>5.15</td>
+									<td>5.2</td>
+								</tr>
+								<tr>
+									<td>5.06</td>
+									<td>5.1</td>
+								</tr>
+								<tr>
+									<td>5.05</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>5.04</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>5.0</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>-5.0</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.04</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.05</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.06</td>
+									<td>-5.1</td>
+								</tr>
+								<tr>
+									<td>-5.15</td>
+									<td>-5.2</td>
+								</tr>
+						</tbody></table>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
@@ -180,13 +369,54 @@
 					<div class="tsd-signature tsd-kind-icon">HALF_<wbr>UP<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/36556ba/src/core/math/context.ts#L16">core/math/context.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/2bb377d/src/core/math/context.ts#L83">core/math/context.ts:83</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded up.</p>
+							<p>Rounds towards nearest neighbour. In case it is equidistant it is rounded
+							up.</p>
 						</div>
+						<table>
+							<thead>
+								<tr>
+									<th>Number</th>
+									<th>Rounded to 1 decimal place with HALF_UP rounding</th>
+								</tr>
+							</thead>
+							<tbody><tr>
+									<td>5.06</td>
+									<td>5.1</td>
+								</tr>
+								<tr>
+									<td>5.05</td>
+									<td>5.1</td>
+								</tr>
+								<tr>
+									<td>5.04</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>5.0</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>-5.0</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.04</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.05</td>
+									<td>-5.1</td>
+								</tr>
+								<tr>
+									<td>-5.06</td>
+									<td>-5.1</td>
+								</tr>
+						</tbody></table>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
@@ -195,12 +425,14 @@
 					<div class="tsd-signature tsd-kind-icon">UNNECESSARY<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/36556ba/src/core/math/context.ts#L22">core/math/context.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/2bb377d/src/core/math/context.ts#L124">core/math/context.ts:124</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Rounding mode to assert that no rounding is necessary as an exact representation is possible.</p>
+							<p>Rounding mode to assert that no rounding is necessary as an exact
+								representation is possible. If this mode is specified for an operation
+							with an inexact result then it throws an Error.</p>
 						</div>
 					</div>
 				</section>
@@ -210,13 +442,46 @@
 					<div class="tsd-signature tsd-kind-icon">UP<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/36556ba/src/core/math/context.ts#L8">core/math/context.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/2bb377d/src/core/math/context.ts#L24">core/math/context.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Rounds the number away from 0.</p>
+							<p>Rounds the number away from 0 only if the first digit of the discarded
+							fraction is more than or equal to 1.</p>
 						</div>
+						<table>
+							<thead>
+								<tr>
+									<th>Number</th>
+									<th>Rounded to 1 decimal place with UP rounding</th>
+								</tr>
+							</thead>
+							<tbody><tr>
+									<td>5.01</td>
+									<td>5.1</td>
+								</tr>
+								<tr>
+									<td>5.001</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>5.0</td>
+									<td>5.0</td>
+								</tr>
+								<tr>
+									<td>-5.0</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.001</td>
+									<td>-5.0</td>
+								</tr>
+								<tr>
+									<td>-5.01</td>
+									<td>-5.1</td>
+								</tr>
+						</tbody></table>
 					</div>
 				</section>
 			</section>
