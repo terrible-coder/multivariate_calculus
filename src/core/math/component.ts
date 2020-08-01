@@ -178,6 +178,7 @@ export class Component extends Numerical {
 	 * @param x The number to round off.
 	 * @param context The {@link MathContext} which defines how the number is to be rounded.
 	 * @returns The number representing the rounded value of the argument according to the given context.
+	 * @see {@link RoundingMode}
 	 */
 	public static round(x: Component, context: MathContext) {
 		if(x.precision <= context.precision)
