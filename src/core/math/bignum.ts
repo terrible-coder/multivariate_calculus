@@ -197,12 +197,14 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Rounds off a [[BigNum]] instance, component-wise, according to some
-	 * [[MathContext]]. The different rounding algorithms implemented are
-	 * identical to the ones defined by the [RoundingMode](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html)
-	 * class of JAVA.
+	 * Rounds off a {@link BigNum} instance, component-wise, according to some
+	 * {@link MathContext}. The different rounding algorithms implemented are
+	 * heavily influenced by the
+	 * [Java implementation of the same](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html).
 	 * @param x The number to be rounded off.
 	 * @param context The context settings to use for rounding.
+	 * @see {@link Component.round}
+	 * @see {@link RoundingMode}
 	 */
 	public static round(x: BigNum, context: MathContext) {
 		return new BigNum(x.components.map(comp => Component.round(comp, context)));

@@ -1,24 +1,126 @@
 /**
- * Specifies a *rounding behaviour* for numerical operations on [[BigNum]]
- * which are capable of discarding some precision. This is based on the JAVA
- * implementation of rounding behaviour. Read more [here](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html).
+ * Specifies a *rounding behaviour* for numerical operations on {@link BigNum}
+ * which are capable of discarding some precision. This is based on the [Java
+ * implementation of rounding behaviour](https://docs.oracle.com/javase/8/docs/api/java/math/RoundingMode.html).
+ * Each rounding mode indicates how the least significant digit of the rounded
+ * result is to be calculated. If fewer digits are returned than the original
+ * number then the discarded digits are called the *discarded fraction*.
  */
 export enum RoundingMode {
-	/** Rounds the number away from 0. */
+	/**
+	 * Rounds the number away from 0 only if the first digit of the discarded
+	 * fraction is more than or equal to 1.
+	 * 
+	 * | Number | Rounded to 1 decimal place with UP rounding |
+	 * |-------|------------|
+	 * | 5.01 | 5.1 |
+	 * | 5.001 | 5.0 |
+	 * | 5.0 | 5.0 |
+	 * | -5.0 | -5.0 |
+	 * | -5.001 | -5.0 |
+	 * | -5.01 | -5.1 |
+	 * 
+	 */
 	UP,
-	/** Rounds the number down towards 0. */
+	/**
+	 * Rounds the number towards 0.
+	 * 
+	 * | Number | Rounded to 1 decimal place with DOWN rounding |
+	 * |-------|------------|
+	 * | 5.01 | 5.0 |
+	 * | 5.001 | 5.0 |
+	 * | 5.0 | 5.0 |
+	 * | -5.0 | -5.0 |
+	 * | -5.001 | -5.0 |
+	 * | -5.01 | -5.0 |
+	 * 
+	 */
 	DOWN,
-	/** Rounds the number up towards positive infinity. */
+	/**
+	 * Rounds the number towards positive infinity.
+	 * 
+	 * | Number | Rounded to 1 decimal place with CEIL rounding |
+	 * |-------|------------|
+	 * | 5.001 | 5.1 |
+	 * | 5.0001 | 5.1 |
+	 * | 5.0 | 5.0 |
+	 * | -5.0 | -5.0 |
+	 * | -5.0001 | -5.0 |
+	 * | -5.001 | -5.0 |
+	 * 
+	 */
 	CEIL,
-	/** Rounds the number down towards negative infinity. */
+	/**
+	 * Rounds the number down towards negative infinity.
+	 * 
+	 * | Number | Rounded to 1 decimal place with FLOOR rounding |
+	 * |-------|------------|
+	 * | 5.001 | 5.0 |
+	 * | 5.0001 | 5.0 |
+	 * | 5.0 | 5.0 |
+	 * | -5.0 | -5.0 |
+	 * | -5.0001 | -5.1 |
+	 * | -5.001 | -5.1 |
+	 * 
+	 */
 	FLOOR,
-	/** Rounds towards nearest neighbour. In case it is equidistant it is rounded up. */
+	/**
+	 * Rounds towards nearest neighbour. In case it is equidistant it is rounded
+	 * up.
+	 * 
+	 * | Number | Rounded to 1 decimal place with HALF_UP rounding |
+	 * |-------|------------|
+	 * | 5.06 | 5.1 |
+	 * | 5.05 | 5.1 |
+	 * | 5.04 | 5.0 |
+	 * | 5.0 | 5.0 |
+	 * | -5.0 | -5.0 |
+	 * | -5.04 | -5.0 |
+	 * | -5.05 | -5.1 |
+	 * | -5.06 | -5.1 |
+	 * 
+	 */
 	HALF_UP,
-	/** Rounds towards nearest neighbour. In case it is equidistant it is rounded down. */
+	/**
+	 * Rounds towards nearest neighbour. In case it is equidistant it is rounded
+	 * down.
+	 * 
+	 * | Number | Rounded to 1 decimal place with HALF_DOWN rounding |
+	 * |-------|------------|
+	 * | 5.06 | 5.1 |
+	 * | 5.05 | 5.0 |
+	 * | 5.04 | 5.0 |
+	 * | 5.0 | 5.0 |
+	 * | -5.0 | -5.0 |
+	 * | -5.04 | -5.0 |
+	 * | -5.05 | -5.0 |
+	 * | -5.06 | -5.1 |
+	 * 
+	 */
 	HALF_DOWN,
-	/** Rounds towards nearest neighbour. In case it is equidistant it is rounded to nearest even number. */
+	/**
+	 * Rounds towards nearest neighbour. In case it is equidistant it is rounded
+	 * to nearest even neighbour.
+	 * 
+	 * | Number | Rounded to 1 decimal place with HALF_EVEN rounding |
+	 * |-------|------------|
+	 * | 5.15 | 5.2 |
+	 * | 5.06 | 5.1 |
+	 * | 5.05 | 5.0 |
+	 * | 5.04 | 5.0 |
+	 * | 5.0 | 5.0 |
+	 * | -5.0 | -5.0 |
+	 * | -5.04 | -5.0 |
+	 * | -5.05 | -5.0 |
+	 * | -5.06 | -5.1 |
+	 * | -5.15 | -5.2 |
+	 * 
+	 */
 	HALF_EVEN,
-	/** Rounding mode to assert that no rounding is necessary as an exact representation is possible. */
+	/** Rounding mode to assert that no rounding is necessary as an exact
+	 * representation is possible. If this mode is specified for an operation
+	 * with an inexact result then it throws an Error.
+	 */
 	UNNECESSARY
 }
 
