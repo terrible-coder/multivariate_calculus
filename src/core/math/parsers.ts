@@ -64,12 +64,12 @@ export function trimZeroes<T>(s: string | T[], pos: "end" | "start", zero: (x: s
 /**
  * @ignore
  */
-function isInteger(s: string, positive = false) {
-	const valids = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+function isInteger(s: string, unsigned=false) {
+	const valid_chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 	const ch = s.charAt(0);
-	const st = positive ? (ch === '+' ? s.substring(1) : s) : ((ch === '+' || ch === '-') ? s.substring(1) : s);
+	const st = unsigned ? (ch === '+' ? s.substring(1) : s) : ((ch === '+' || ch === '-') ? s.substring(1) : s);
 	for (let x of st)
-		if (!(x in valids))
+		if (!(x in valid_chars))
 			return false;
 	return true;
 }
