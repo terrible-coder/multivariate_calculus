@@ -62,7 +62,13 @@ export function trimZeroes<T>(s: string | T[], pos: "end" | "start", zero: (x: s
 }
 
 /**
- * @ignore
+ * Checks whether the given string is a valid representation of a whole number.
+ * The number can be a signed or unsigned one. The boolean flag can be used to
+ * impose an unsigned integer check. If this flag is `true` then the passed string
+ * cannot have a sign character (`+` or `-`).
+ * @param s The string representation of an integer.
+ * @param unsigned Flag to impose unsigned integer check.
+ * @internal
  */
 function isInteger(s: string, unsigned=false) {
 	const valid_chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -77,7 +83,10 @@ function isInteger(s: string, unsigned=false) {
 }
 
 /**
- * @ignore
+ * Checks whether the given string is a valid representation of a real, decimal
+ * number.
+ * @param s The string representation of a decimal number.
+ * @internal
  */
 function isDecimal(s: string) {
 	const parts = s.split('.');
@@ -89,7 +98,7 @@ function isDecimal(s: string) {
 /**
  * Checks whether the given representation of a real number is acceptable.
  * @param s String representation of a real number.
- * @ignore
+ * @internal
  */
 function isValid(s: string) {
 	if (s.indexOf('e') > -1) {
@@ -194,7 +203,8 @@ export function decimate(a: string, index: number) {
 }
 
 /**
- * Takes a string and parses into the format expected by the [[BigNum]] class.
+ * Takes a string and parses into the format expected by the {@link BigNum} class.
+ * If the string is not of a valid format then it throws error.
  * @param s String representation of the number.
  * @returns An array where the first element is the integer part and the second is the decimal part.
  */
