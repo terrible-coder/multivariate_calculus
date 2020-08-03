@@ -62,20 +62,31 @@ export function trimZeroes<T>(s: string | T[], pos: "end" | "start", zero: (x: s
 }
 
 /**
- * @ignore
+ * Checks whether the given string is a valid representation of a whole number.
+ * The number can be a signed or unsigned one. The boolean flag can be used to
+ * impose an unsigned integer check. If this flag is `true` then the passed string
+ * cannot have a sign character (`+` or `-`).
+ * @param s The string representation of an integer.
+ * @param unsigned Flag to impose unsigned integer check.
+ * @internal
  */
-function isInteger(s: string, positive = false) {
-	const valids = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-	const ch = s.charAt(0);
-	const st = positive ? (ch === '+' ? s.substring(1) : s) : ((ch === '+' || ch === '-') ? s.substring(1) : s);
-	for (let x of st)
-		if (!(x in valids))
+function isInteger(s: string, unsigned=false) {
+	const valid_chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+	const signed = ['+', '-'].indexOf(s.charAt(0)) !== -1;
+	if(signed && unsigned)
+		return false;
+	const integer = signed? s.substring(1): s;
+	for (let x of integer)
+		if (!(x in valid_chars))
 			return false;
 	return true;
 }
 
 /**
- * @ignore
+ * Checks whether the given string is a valid representation of a real, decimal
+ * number.
+ * @param s The string representation of a decimal number.
+ * @internal
  */
 function isDecimal(s: string) {
 	const parts = s.split('.');
@@ -87,7 +98,7 @@ function isDecimal(s: string) {
 /**
  * Checks whether the given representation of a real number is acceptable.
  * @param s String representation of a real number.
- * @ignore
+ * @internal
  */
 function isValid(s: string) {
 	if (s.indexOf('e') > -1) {
@@ -192,38 +203,38 @@ export function decimate(a: string, index: number) {
 }
 
 /**
- * Takes a string and parses into the format expected by the [[BigNum]] class.
+ * Takes a string and parses into the format expected by the {@link BigNum} class.
+ * If the string is not of a valid format then it throws error.
  * @param s String representation of the number.
  * @returns An array where the first element is the integer part and the second is the decimal part.
  */
 export function parseNum(s: string) {
 	if (!isValid(s))
 		throw new IllegalNumberFormat(s);
-	let a = [];
+	let num: string;
+	const signed = ['+', '-'].indexOf(s.charAt(0)) !== -1;
+	const sign = signed? s.charAt(0): '';
+	num = signed? s.substring(1): s;
+	let parts = [];
 	if (s.indexOf('e') > -1) {
 		// The number is in scientific mode
 		// Me-E
 		// M is the mantissa and E is the exponent with base 10
-		const i = s.indexOf('e');
-		const mantissa = s.substring(0, i), exponent = Number(s.substring(i + 1));
+		const mantissa_exponent = num.split("e");
+		const mantissa = mantissa_exponent[0], exponent = Number(mantissa_exponent[1]);
 		const index = mantissa.indexOf('.');
-		const precision = index == -1 ? 0 : mantissa.substring(index + 1).length;
-		let num = mantissa.split('.').join("");
-		if (exponent > precision)
-			num = pad(mantissa, exponent - precision, "0", "end");
+		const decimalPlaces = index == -1 ? 0 : mantissa.substring(index + 1).length;
+		num = mantissa.split('.').join("");
+		if (exponent > decimalPlaces)
+			num = pad(mantissa, exponent - decimalPlaces, "0", "end");
 		else
-			num = decimate(num, precision - exponent);
-		a = num.split(".");
+			num = decimate(num, decimalPlaces - exponent);
 	}
-	else
-		a = s.split(".");
-	const ch = a[0].charAt(0);
-	const sgn = ch === "-"? "-": "";
-	a[0] = (ch === "-" || ch === "+")? a[0].substring(1): a[0];
-	a[0] = trimZeroes(a[0], "start", x => x === "0");
-	if(a.length === 1) a.push("");
-	else a[1] = trimZeroes(a[1], "end", x => x ==="0");
-	if(a[0] !== "" || a[1] !== "")
-		a[0] = sgn + a[0];
-	return a;
+	parts = num.split(".");
+	if(parts.length === 1) parts.push("");
+	parts[0] = trimZeroes(parts[0], "start", x => x === "0");
+	parts[1] = trimZeroes(parts[1], "end", x => x ==="0");
+	if(parts[0] !== "" || parts[1] !== "")
+		parts[0] = (sign === '-'? sign: '') + parts[0];
+	return parts;
 }
