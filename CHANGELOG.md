@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2-alpha.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.0.1...v1.0.2-alpha.0) (2020-08-03)
+
+
+### Bug Fixes
+
+* change parsing integers ([37b70c8](https://github.com/terrible-coder/multivariate_calculus/commit/37b70c898247c3b73fce0b0b6092d4c68db06af7))
+* correctly parse scientific form ([ad9cb1c](https://github.com/terrible-coder/multivariate_calculus/commit/ad9cb1c85cd84d27cb97d2eb6ff30310d5bc3b9e))
+
 ### [1.0.1](https://github.com/terrible-coder/multivariate_calculus/compare/v1.0.1-beta.1...v1.0.1) (2020-08-01)
 
 ### [1.0.1-beta.1](https://github.com/terrible-coder/multivariate_calculus/compare/v1.0.1-beta.0...v1.0.1-beta.1) (2020-07-31)
