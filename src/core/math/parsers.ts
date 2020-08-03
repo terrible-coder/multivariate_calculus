@@ -201,31 +201,30 @@ export function decimate(a: string, index: number) {
 export function parseNum(s: string) {
 	if (!isValid(s))
 		throw new IllegalNumberFormat(s);
-	let a = [];
+	let num: string;
+	const signed = ['+', '-'].indexOf(s.charAt(0)) !== -1;
+	const sign = signed? s.charAt(0): '';
+	num = signed? s.substring(1): s;
+	let parts = [];
 	if (s.indexOf('e') > -1) {
 		// The number is in scientific mode
 		// Me-E
 		// M is the mantissa and E is the exponent with base 10
-		const i = s.indexOf('e');
-		const mantissa = s.substring(0, i), exponent = Number(s.substring(i + 1));
+		const mantissa_exponent = num.split("e");
+		const mantissa = mantissa_exponent[0], exponent = Number(mantissa_exponent[1]);
 		const index = mantissa.indexOf('.');
-		const precision = index == -1 ? 0 : mantissa.substring(index + 1).length;
-		let num = mantissa.split('.').join("");
-		if (exponent > precision)
-			num = pad(mantissa, exponent - precision, "0", "end");
+		const decimalPlaces = index == -1 ? 0 : mantissa.substring(index + 1).length;
+		num = mantissa.split('.').join("");
+		if (exponent > decimalPlaces)
+			num = pad(mantissa, exponent - decimalPlaces, "0", "end");
 		else
-			num = decimate(num, precision - exponent);
-		a = num.split(".");
+			num = decimate(num, decimalPlaces - exponent);
 	}
-	else
-		a = s.split(".");
-	const ch = a[0].charAt(0);
-	const sgn = ch === "-"? "-": "";
-	a[0] = (ch === "-" || ch === "+")? a[0].substring(1): a[0];
-	a[0] = trimZeroes(a[0], "start", x => x === "0");
-	if(a.length === 1) a.push("");
-	else a[1] = trimZeroes(a[1], "end", x => x ==="0");
-	if(a[0] !== "" || a[1] !== "")
-		a[0] = sgn + a[0];
-	return a;
+	parts = num.split(".");
+	if(parts.length === 1) parts.push("");
+	parts[0] = trimZeroes(parts[0], "start", x => x === "0");
+	parts[1] = trimZeroes(parts[1], "end", x => x ==="0");
+	if(parts[0] !== "" || parts[1] !== "")
+		parts[0] = (sign === '-'? sign: '') + parts[0];
+	return parts;
 }
