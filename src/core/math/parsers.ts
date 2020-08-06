@@ -226,7 +226,7 @@ export function parseNum(s: string) {
 		const decimalPlaces = index == -1 ? 0 : mantissa.substring(index + 1).length;
 		num = mantissa.split('.').join("");
 		if (exponent > decimalPlaces)
-			num = pad(mantissa, exponent - decimalPlaces, "0", "end");
+			num = pad(num, exponent - decimalPlaces, "0", "end");
 		else
 			num = decimate(num, decimalPlaces - exponent);
 	}
