@@ -35,3 +35,21 @@ describe("decimal notation", function() {
 		});
 	});
 });
+
+describe("Exponential notation", function() {
+	describe("positive values", function() {
+		describe("exact value of mantissa", function() {
+			test("positive exponent", function() {
+				for(let i = 1; i <= 9; i++) {
+					expect(parseNum(`1.${i}e2`)).toEqual([`1${i}0`, ""]);
+					expect(parseNum(`1.${i}e+2`)).toEqual([`1${i}0`, ""]);
+				}
+			});
+
+			test("negative exponent", function() {
+				for(let i = 1; i <= 9; i++)
+					expect(parseNum(`1.${i}e-2`)).toEqual(["", `01${i}`]);
+			});
+		});
+	});
+});
