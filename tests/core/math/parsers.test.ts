@@ -79,5 +79,19 @@ describe("Exponential notation", function() {
 					expect(parseNum(`001.${i}e-2`)).toEqual(["", `01${i}`]);
 			});
 		});
+		
+		describe("exponent with leading zeros", function() {
+			test("positive exponent", function() {
+				for(let i = 1; i <= 9; i++) {
+					expect(parseNum(`1.${i}e002`)).toEqual([`1${i}0`, ""]);
+					expect(parseNum(`1.${i}e+002`)).toEqual([`1${i}0`, ""]);
+				}
+			});
+
+			test("negative exponent", function() {
+				for(let i = 1; i <= 9; i++)
+					expect(parseNum(`1.${i}e-002`)).toEqual(["", `01${i}`]);
+			});
+		});
 	});
 });
