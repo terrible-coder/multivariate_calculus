@@ -10,34 +10,36 @@ function randomDigit() {
 
 describe("Scalars", function() {
 	describe("Creates constants", function() {
-		test("from 1 real", function() {
-			for(let i = 0; i < 100; i++) {
-				let rand;
-				rand = (10 * Math.random()) | 0;
-				const integers = new Array(rand).fill(0).map(() => randomDigit()).join("");
-				rand = (10 * Math.random()) | 0;
-				const decimals = new Array(rand).fill(0).map(() => randomDigit()).join("");
-				const numString = integers + "." + decimals;
-				const num = Component.create(numString);
-				expect(Scalar.constant(num).value).toEqual(BigNum.real(numString));
-			}
-		});
-
-		test("from 5 reals", function() {
-			for(let i = 0; i < 100; i++) {
-				const components = [];
-				for(let j = 0; j < 5; j++) {
+		describe("decimal notation", function() {
+			test("from 1 real", function() {
+				for(let i = 0; i < 100; i++) {
 					let rand;
 					rand = (10 * Math.random()) | 0;
 					const integers = new Array(rand).fill(0).map(() => randomDigit()).join("");
 					rand = (10 * Math.random()) | 0;
 					const decimals = new Array(rand).fill(0).map(() => randomDigit()).join("");
 					const numString = integers + "." + decimals;
-					components.push(numString);
+					const num = Component.create(numString);
+					expect(Scalar.constant(num).value).toEqual(BigNum.real(numString));
 				}
-				const num = BigNum.hyper(components);
-				expect(Scalar.constant(num).value).toEqual(num);
-			}
+			});
+	
+			test("from 5 reals", function() {
+				for(let i = 0; i < 100; i++) {
+					const components = [];
+					for(let j = 0; j < 5; j++) {
+						let rand;
+						rand = (10 * Math.random()) | 0;
+						const integers = new Array(rand).fill(0).map(() => randomDigit()).join("");
+						rand = (10 * Math.random()) | 0;
+						const decimals = new Array(rand).fill(0).map(() => randomDigit()).join("");
+						const numString = integers + "." + decimals;
+						components.push(numString);
+					}
+					const num = BigNum.hyper(components);
+					expect(Scalar.constant(num).value).toEqual(num);
+				}
+			});
 		});
 	});
 
