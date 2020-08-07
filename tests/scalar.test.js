@@ -41,6 +41,29 @@ describe("Scalars", function() {
 				}
 			});
 		});
+
+		describe("exponential notation", function() {
+			describe("from 1 real", function() {
+				test("positive exponent", function() {
+					for(let i = 0; i < 100; i++) {
+						const integers = randomDigit();
+						const decimals = new Array(3).fill(0).map(() => randomDigit()).join("");
+						const numString = `${integers}.${decimals}e2`;
+						const num = Component.create(numString);
+						const resultString = integers + decimals.substring(0, 2) + "." + decimals.substring(2);
+						expect(Scalar.constant(num).value).toEqual(BigNum.real(resultString));
+					}
+					for(let i = 0; i < 100; i++) {
+						const integers = randomDigit();
+						const decimals = new Array(3).fill(0).map(() => randomDigit()).join("");
+						const numString = `${integers}.${decimals}e+2`;
+						const num = Component.create(numString);
+						const resultString = integers + decimals.substring(0, 2) + "." + decimals.substring(2);
+						expect(Scalar.constant(num).value).toEqual(BigNum.real(resultString));
+					}
+				});
+			});
+		});
 	});
 
 	describe("Constants", function() {
