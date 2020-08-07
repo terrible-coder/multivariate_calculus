@@ -1,7 +1,29 @@
 const { Scalar } = require("../build/scalar");
+const { Component } = require("../build/core/math/component");
+const { BigNum } = require("../build/core/math/bignum");
 // const { DivisionByZero, Overwrite } = require("../build/core/errors");
 
+function randomDigit() {
+	const digit = (10 * Math.random()) | 0;
+	return digit.toString();
+}
+
 describe("Scalars", function() {
+	describe("Creates constants", function() {
+		test("from 1 real", function() {
+			for(let i = 0; i < 100; i++) {
+				let rand;
+				rand = (10 * Math.random()) | 0;
+				const integers = new Array(rand).fill(0).map(() => randomDigit()).join("");
+				rand = (10 * Math.random()) | 0;
+				const decimals = new Array(rand).fill(0).map(() => randomDigit()).join("");
+				const numString = integers + "." + decimals;
+				const num = Component.create(numString);
+				expect(Scalar.constant(num).value).toEqual(BigNum.real(numString));
+			}
+		});
+	});
+
 	describe("Constants", function() {
 		const a = Scalar.constant(2, "a"), b = Scalar.constant(3, "b");
 
