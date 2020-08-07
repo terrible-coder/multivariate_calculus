@@ -62,6 +62,17 @@ describe("Scalars", function() {
 						expect(Scalar.constant(num).value).toEqual(BigNum.real(resultString));
 					}
 				});
+
+				test("negative exponent", function() {
+					for(let i = 0; i < 100; i++) {
+						const integers = randomDigit();
+						const decimals = new Array(3).fill(0).map(() => randomDigit()).join("");
+						const numString = `${integers}.${decimals}e-2`;
+						const num = Component.create(numString);
+						const resultString = "0.0" + integers + decimals;
+						expect(Scalar.constant(num).value).toEqual(BigNum.real(resultString));
+					}
+				});
 			});
 		});
 	});
