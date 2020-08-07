@@ -75,6 +75,56 @@ describe("Scalars", function() {
 				});
 			});
 		});
+
+		describe("from 5 real", function() {
+			test("positive exponent", function() {
+				for(let i = 0; i < 100; i++) {
+					const components = [];
+					const result = [];
+					for(let j = 0; j < 5; j++) {
+						const integers = randomDigit();
+						const decimals = new Array(3).fill(0).map(() => randomDigit()).join("");
+						const numString = `${integers}.${decimals}e2`;
+						components.push(Component.create(numString));
+						result.push(integers + decimals.substring(0, 2) + "." + decimals.substring(2));
+					}
+					const num = BigNum.hyper(components);
+					const res = BigNum.hyper(result);
+					expect(Scalar.constant(num).value).toEqual(res);
+				}
+				for(let i = 0; i < 100; i++) {
+					const components = [];
+					const result = [];
+					for(let j = 0; j < 5; j++) {
+						const integers = randomDigit();
+						const decimals = new Array(3).fill(0).map(() => randomDigit()).join("");
+						const numString = `${integers}.${decimals}e+2`;
+						components.push(Component.create(numString));
+						result.push(integers + decimals.substring(0, 2) + "." + decimals.substring(2));
+					}
+					const num = BigNum.hyper(components);
+					const res = BigNum.hyper(result);
+					expect(Scalar.constant(num).value).toEqual(res);
+				}
+			});
+
+			test("negative exponent", function() {
+				for(let i = 0; i < 100; i++) {
+					const components = [];
+					const result = [];
+					for(let j = 0; j < 5; j++) {
+						const integers = randomDigit();
+						const decimals = new Array(3).fill(0).map(() => randomDigit()).join("");
+						const numString = `${integers}.${decimals}e-2`;
+						components.push(Component.create(numString));
+						result.push("0.0" + integers + decimals);
+					}
+					const num = BigNum.hyper(components);
+					const res = BigNum.hyper(result);
+					expect(Scalar.constant(num).value).toEqual(res);
+				}
+			});
+		});
 	});
 
 	describe("Constants", function() {
