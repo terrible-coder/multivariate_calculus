@@ -7,7 +7,7 @@ import { Overwrite } from "./core/errors";
 import { abs, sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, atanh, exp, log, ln, floor, ceil } from "./core/math/functions";
 import { BigNum } from "./core/math/bignum";
 import { mathenv } from "./core/env";
-import { MathContext } from "./core/math/context";
+import { MathContext, RoundingMode } from "./core/math/context";
 import { Component } from "./core/math/component";
 
 /**
@@ -951,14 +951,14 @@ export namespace Scalar {
  * The irrational Euler's number. The derivative of the exponential function to
  * the base of this number gives the same exponential function.
  */
-export const e = Scalar.constant(Math.E);
+export const e = Scalar.constant(Component.E);
 /**
  * The circle constant pi. It is defined as the ratio of the circumference
  * of a circle to its diameter.
  */
-export const pi = Scalar.constant(Math.PI);
+export const pi = Scalar.constant(Component.PI);
 /**
  * The circle constant tau. It is defined as the ratio of the circumference
  * of a circle to its radius. It is twice the value of pi.
  */
-export const tau = Scalar.constant(2 * Math.PI);
+export const tau = Scalar.constant(Component.TWO.mul(Component.PI, {precision: 50, rounding: RoundingMode.UP}));
