@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.0.2...v1.1.0) (2020-08-12)
+
+
+### Features Added
+
+* :sparkles: add power method ([2297f37](https://github.com/terrible-coder/multivariate_calculus/commit/2297f37e9aa18a1c76774f791830c433783942e7))
+* :sparkles: power method for Scalars ([be9a7b1](https://github.com/terrible-coder/multivariate_calculus/commit/be9a7b135c842f9d4e19bcbf93bf22a6ba972492))
+
 ### [1.0.2](https://github.com/terrible-coder/multivariate_calculus/compare/v1.0.2-beta.0...v1.0.2) (2020-08-09)
 
 
