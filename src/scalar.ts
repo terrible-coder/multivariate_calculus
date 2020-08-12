@@ -3,7 +3,7 @@ import { BinaryOperator } from "./core/operators/binary";
 import { ExpressionBuilder } from "./core/expression";
 import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { Vector } from "./vector";
-import { Overwrite } from "./core/errors";
+import { Overwrite, IndeterminateForm } from "./core/errors";
 import { abs, sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, atanh, exp, log, ln, floor, ceil } from "./core/math/functions";
 import { BigNum } from "./core/math/bignum";
 import { mathenv } from "./core/env";
@@ -64,7 +64,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	 * @param that The scalar to divide `this` by.
 	 * @return The result of algebraic division.
 	 */
-	// public abstract pow(that: Scalar): Scalar;
+	public abstract pow(that: Scalar): Scalar;
 
 	/**
 	 * Computes the absolute value of a [[Scalar]].
@@ -536,7 +536,7 @@ export namespace Scalar {
 		 * @param that The {@link Scalar.Constant} power to raise `this` to.
 		 * @return The scalar exponentiation of `this` by `that`.
 		 */
-		// public pow(that: Scalar.Constant): Scalar.Constant;
+		public pow(that: Scalar.Constant): Scalar.Constant;
 		/**
 		 * Creates and returns a [[Scalar.Expression]] for exponentiation of
 		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
@@ -544,15 +544,14 @@ export namespace Scalar {
 		 * @param that The [[Scalar]] power to raise `this` to.
 		 * @return Expression for exponentiating `this` by `that`.
 		 */
-		// public pow(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
+		public pow(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		public pow(that: Scalar) {
-			throw new Error("Not implemented");
-			// if(that instanceof Scalar.Constant) {
-			// 	if(this.equals(Scalar.ZERO) && that.equals(Scalar.ZERO))
-			// 		throw new IndeterminateForm("0 raised to the power 0");
-			// 	return new Scalar.Constant(Math.pow(this.value, that.value));
-			// }
-			// return new Scalar.Expression(BinaryOperator.POW, this, that);
+			if(that instanceof Scalar.Constant) {
+				if(this.equals(Scalar.ZERO) && that.equals(Scalar.ZERO))
+					throw new IndeterminateForm("0 raised to the power 0");
+				return new Scalar.Constant(this.value.pow(that.value));
+			}
+			return new Scalar.Expression(BinaryOperator.POW, this, that);
 		}
 	}
 
