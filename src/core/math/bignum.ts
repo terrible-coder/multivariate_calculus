@@ -4,7 +4,7 @@ import { MathContext } from "./context";
 import { mathenv } from "../env";
 import { Numerical } from "../definitions";
 import { alpha_beta, alpha_beta_sq } from "./numerical";
-import { UndefinedValue } from "../errors";
+import { UndefinedValue, IndeterminateForm } from "../errors";
 
 /**
  * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
@@ -436,7 +436,16 @@ export class BigNum extends Numerical {
 	 * @param that Number to divide by.
 	 */
 	public pow(exponent: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public pow(exponent: BigNum, context=mathenv.mode) {
+		const baseZero = this.equals(BigNum.real(0), context);
+		const expZero = exponent.equals(BigNum.real(0), context);
+		if(baseZero && expZero)
+			throw new IndeterminateForm("0 to the power 0");
+		if(baseZero)
+			return BigNum.real(0);
+		if(expZero)
+			return BigNum.real(1);
 		const ctx: MathContext = {
 			precision: context.precision + 5,
 			rounding: context.rounding

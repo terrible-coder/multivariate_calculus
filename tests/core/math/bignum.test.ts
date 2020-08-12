@@ -808,6 +808,37 @@ describe("Power", function() {
 			const res = BigNum.exp(new BigNum(Component.PI.div(Component.TWO, ctx)).neg);
 			expect(i.pow(i)).toEqual(BigNum.round(res, mathenv.mode));
 		});
+
+		test("for real and imaginary parts", function() {
+			expect(BigNum.real(1).pow(BigNum.complex(1, 1))).toEqual(BigNum.real(1));
+			const ctx = MathContext.HIGH_PRECISION;
+			const i = BigNum.complex(0, 1);
+			const res = BigNum.real(2).mul(
+				BigNum.exp(i.mul(new BigNum(Component.ln2), ctx), ctx), ctx
+			);
+			expect(BigNum.real(2).pow(BigNum.complex(1, 1))).toEqual(BigNum.round(res, mathenv.mode));
+		});
+	});
+
+	describe("for hyper complex numbers", function() {
+		test("for purely imaginary", function() {
+			const ctx = MathContext.HIGH_PRECISION;
+			const e_5 = BigNum.hyper(0, 0, 0, 0, 0, 1);
+			const res = BigNum.exp(new BigNum(Component.PI.div(Component.TWO, ctx)).neg);
+			expect(e_5.pow(e_5)).toEqual(BigNum.round(res, mathenv.mode));
+		});
+
+		test("for real and imaginary parts", function() {
+			expect(BigNum.real(1).pow(BigNum.complex(1, 1))).toEqual(BigNum.real(1));
+			const ctx = MathContext.HIGH_PRECISION;
+			const e_5 = BigNum.hyper(0, 0, 0, 0, 0, 1);
+			const res = BigNum.real(2).mul(
+				BigNum.exp(e_5.mul(new BigNum(Component.ln2), ctx), ctx), ctx
+			);
+			expect(BigNum.real(2).pow(
+				BigNum.hyper(1, 0, 0, 0, 0, 1)
+				)).toEqual(BigNum.round(res, mathenv.mode));
+		});
 	});
 });
 
