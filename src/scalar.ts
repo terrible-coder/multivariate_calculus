@@ -538,10 +538,10 @@ export namespace Scalar {
 		 */
 		public pow(that: Scalar.Constant): Scalar.Constant;
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for exponentiation of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for exponentiation of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * exponentiating a scalar by a variable scalar always results in an expression.
-		 * @param that The [[Scalar]] power to raise `this` to.
+		 * @param that The {@link Scalar} power to raise `this` to.
 		 * @return Expression for exponentiating `this` by `that`.
 		 */
 		public pow(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;

@@ -436,6 +436,7 @@ export class BigNum extends Numerical {
 	 * @param that Number to divide by.
 	 */
 	public pow(exponent: BigNum, context: MathContext): BigNum;
+	/** @internal */
 	public pow(exponent: BigNum, context=mathenv.mode) {
 		const ctx: MathContext = {
 			precision: context.precision + 5,
