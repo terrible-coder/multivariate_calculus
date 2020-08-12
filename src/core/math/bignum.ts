@@ -424,6 +424,17 @@ export class BigNum extends Numerical {
 		return side === "right"? this.mul(that.inv(context), context): that.inv(context).mul(this, context);
 	}
 
+	public pow(exponent: BigNum): BigNum;
+	public pow(exponent: BigNum, context: MathContext): BigNum;
+	public pow(exponent: BigNum, context=mathenv.mode) {
+		const ctx: MathContext = {
+			precision: context.precision + 5,
+			rounding: context.rounding
+		}
+		const res = BigNum.exp(exponent.mul(BigNum.ln(this, ctx), ctx), ctx);
+		return BigNum.round(res, context);
+	}
+
 	/**
 	 * Rounds a number (for complex and hyper-complex numbers, all the components
 	 * of the number) towards positive infinity.

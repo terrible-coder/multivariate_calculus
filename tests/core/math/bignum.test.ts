@@ -780,6 +780,37 @@ describe("Logarithm", function() {
 	});
 });
 
+describe("Power", function() {
+	describe("for reals", function() {
+		test("for integers", function() {
+			const ctx = MathContext.HIGH_PRECISION;
+			for(let i = 1; i <= 100; i++) {
+				const x = BigNum.real(i);
+				const res = x.pow(BigNum.real(2), ctx);
+				expect(BigNum.round(res, mathenv.mode)).toEqual(x.mul(x));
+			}
+		});
+
+		test("for decimals", function() {
+			const ctx = MathContext.HIGH_PRECISION;
+			for(let i = 1; i <= 100; i++) {
+				const x = BigNum.real(`${i}.0${i}`);
+				const res = x.pow(BigNum.real(2), ctx);
+				expect(BigNum.round(res, mathenv.mode)).toEqual(x.mul(x));
+			}
+		});
+	});
+
+	describe("for complex numbers", function() {
+		test("for purely imaginary", function() {
+			const ctx = MathContext.HIGH_PRECISION;
+			const i = BigNum.complex(0, 1);
+			const res = BigNum.exp(new BigNum(Component.PI.div(Component.TWO, ctx)).neg);
+			expect(i.pow(i)).toEqual(BigNum.round(res, mathenv.mode));
+		});
+	});
+});
+
 describe("Trigonometry", function() {
 	describe("sine", function() {
 		test("calls with proper context", function() {
