@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/terrible-coder/multivariate_calculus/compare/v1.1.0...v1.1.1) (2020-08-12)
+
+
+### Bug Fixes
+
+* check edge cases ([22e7c18](https://github.com/terrible-coder/multivariate_calculus/commit/22e7c18dcf0ced83cc4c650021fa8051b5f9e1e4))
+
 ## [1.1.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.0.2...v1.1.0) (2020-08-12)
 
 
