@@ -800,6 +800,15 @@ describe("Power", function() {
 			}
 		});
 	});
+
+	describe("for complex numbers", function() {
+		test("for purely imaginary", function() {
+			const ctx = MathContext.HIGH_PRECISION;
+			const i = BigNum.complex(0, 1);
+			const res = BigNum.exp(new BigNum(Component.PI.div(Component.TWO, ctx)).neg);
+			expect(i.pow(i)).toEqual(BigNum.round(res, mathenv.mode));
+		});
+	});
 });
 
 describe("Trigonometry", function() {
