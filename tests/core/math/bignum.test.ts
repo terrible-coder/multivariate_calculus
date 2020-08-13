@@ -119,6 +119,17 @@ describe("Creates numbers", function() {
 			expect(a.components).toEqual(comps.concat(Component.create("0")));
 		});
 	});
+
+	describe("Basis", function() {
+		test("creation of real basis", function() {
+			expect(BigNum.e(0)).toEqual(BigNum.real(1));
+		});
+
+		test("creation of imaginary basis", function() {
+			expect(BigNum.e(1)).toEqual(BigNum.complex(0, 1));
+			expect(BigNum.e(5)).toEqual(BigNum.hyper([0, 0, 0, 0, 0, 1]));
+		});
+	});
 });
 
 describe("Negates", function() {
