@@ -127,7 +127,10 @@ describe("Creates numbers", function() {
 
 		test("creation of imaginary basis", function() {
 			expect(BigNum.e(1)).toEqual(BigNum.complex(0, 1));
-			expect(BigNum.e(5)).toEqual(BigNum.hyper([0, 0, 0, 0, 0, 1]));
+			for(let n = 3; n < 16; n++)
+				expect(BigNum.e(n)).toEqual(BigNum.hyper(
+					new Array(n).fill(0).concat([1])
+				));
 		});
 	});
 });
