@@ -1330,8 +1330,10 @@ export namespace BigNum {
 	export function e(i: number) {
 		if(i < 0)
 			throw TypeError("Negative indices not allowed for basis.");
+		if(i === 0)
+			return new BigNum(Component.ONE);
 		const values = new Array(i).fill(0).map(() => Component.ZERO);
-		values[i-1] = Component.ONE;
+		values.push(Component.ONE);
 		return new BigNum(values);
 	}
 }
