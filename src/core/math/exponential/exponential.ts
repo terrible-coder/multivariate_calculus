@@ -169,7 +169,7 @@ export namespace Exponent {
 			rounding: context.rounding
 		};
 		const [k, f] = range_adjust(x, ctx);
-		let ln_1pf = ln_1p(f, ctx);
+		const ln_1pf = ln_1p(f, ctx);
 		const res = Component.create(k).mul(Component.ln2, ctx).add(ln_1pf, ctx);
 		return Component.round(res, context);
 	}

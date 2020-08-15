@@ -71,12 +71,12 @@ export function trimZeroes<T>(s: string | T[], pos: "end" | "start", zero: (x: s
  * @internal
  */
 function isInteger(s: string, unsigned=false) {
-	const valid_chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-	const signed = ['+', '-'].indexOf(s.charAt(0)) !== -1;
+	const valid_chars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+	const signed = ["+", "-"].indexOf(s.charAt(0)) !== -1;
 	if(signed && unsigned)
 		return false;
 	const integer = signed? s.substring(1): s;
-	for (let x of integer)
+	for (const x of integer)
 		if (!(x in valid_chars))
 			return false;
 	return true;
@@ -89,7 +89,7 @@ function isInteger(s: string, unsigned=false) {
  * @internal
  */
 function isDecimal(s: string) {
-	const parts = s.split('.');
+	const parts = s.split(".");
 	if (parts.length > 2)
 		return false;
 	return parts.length === 1 ? isInteger(parts[0]) : isInteger(parts[0]) && isInteger(parts[1], true);
@@ -101,11 +101,11 @@ function isDecimal(s: string) {
  * @internal
  */
 function isValid(s: string) {
-	if (s.indexOf('e') > -1) {
+	if (s.indexOf("e") > -1) {
 		// The number is in scientific mode
 		// Me-E
 		// M is the mantissa and E is the exponent with base 10
-		const i = s.indexOf('e');
+		const i = s.indexOf("e");
 		const mantissa = s.substring(0, i), exponent = s.substring(i + 1);
 		return isDecimal(mantissa) && isInteger(exponent);
 	}
@@ -191,7 +191,7 @@ export function decimate(a: string, index: number) {
 	if (index < 0)
 		throw new Error("Cannot put decimal point at negative index.");
 	let s = a, sgn = "";
-	if (s.charAt(0) === '-') {
+	if (s.charAt(0) === "-") {
 		s = s.substring(1);
 		sgn = "-";
 	}
@@ -212,19 +212,19 @@ export function parseNum(s: string) {
 	if (!isValid(s))
 		throw new IllegalNumberFormat(s);
 	let num: string;
-	const signed = ['+', '-'].indexOf(s.charAt(0)) !== -1;
-	const sign = signed? s.charAt(0): '';
+	const signed = ["+", "-"].indexOf(s.charAt(0)) !== -1;
+	const sign = signed? s.charAt(0): "";
 	num = signed? s.substring(1): s;
 	let parts = [];
-	if (s.indexOf('e') > -1) {
+	if (s.indexOf("e") > -1) {
 		// The number is in scientific mode
 		// Me-E
 		// M is the mantissa and E is the exponent with base 10
 		const mantissa_exponent = num.split("e");
 		const mantissa = mantissa_exponent[0], exponent = Number(mantissa_exponent[1]);
-		const index = mantissa.indexOf('.');
+		const index = mantissa.indexOf(".");
 		const decimalPlaces = index == -1 ? 0 : mantissa.substring(index + 1).length;
-		num = mantissa.split('.').join("");
+		num = mantissa.split(".").join("");
 		if (exponent > decimalPlaces)
 			num = pad(num, exponent - decimalPlaces, "0", "end");
 		else
@@ -235,6 +235,6 @@ export function parseNum(s: string) {
 	parts[0] = trimZeroes(parts[0], "start", x => x === "0");
 	parts[1] = trimZeroes(parts[1], "end", x => x ==="0");
 	if(parts[0] !== "" || parts[1] !== "")
-		parts[0] = (sign === '-'? sign: '') + parts[0];
+		parts[0] = (sign === "-"? sign: "") + parts[0];
 	return parts;
 }

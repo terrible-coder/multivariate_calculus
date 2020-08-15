@@ -1,6 +1,8 @@
 {
 	"cSpell.words": [
+		"arctan",
 		"bignum",
+		"comatrix",
 		"forall",
 		"geqslant",
 		"infty",
@@ -9,10 +11,12 @@
 		"mathrm",
 		"mcalc",
 		"multivariable",
+		"operatorname",
 		"typedoc",
 		"vectorially"
 	],
 	"conventionalCommits.scopes": [
-		"npm"
+		"npm",
+		"lint"
 	]
 }

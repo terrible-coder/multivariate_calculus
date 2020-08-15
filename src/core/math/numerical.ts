@@ -44,8 +44,8 @@ export function newton_raphson(f: (x: Component) => Component, f_: (x: Component
 export function alpha_beta_sq(x: Component, y: Component, ctx: MathContext) {
 	const one = Component.ONE;
 	const [xp1_sq, xm1_sq, y_sq] = [
-									x.add(one, ctx), x.sub(one, ctx), y
-								].map(val => val.mul(val, ctx));
+		x.add(one, ctx), x.sub(one, ctx), y
+	].map(val => val.mul(val, ctx));
 	const alpha2 = xp1_sq.add(y_sq, ctx);
 	const beta2 = xm1_sq.add(y_sq, ctx);
 	return [alpha2, beta2];

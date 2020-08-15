@@ -520,6 +520,6 @@ export function ceil<T extends Numerical>(x: number | T, ...args: any[]) {
 export function print(...obj: any[]) {
 	const prototypes = obj.map(x => Object.getPrototypeOf(x));
 	const properties = prototypes.map(proto => Object.getOwnPropertyNames(proto));
-	const toPrint = properties.map((x, index) => x.indexOf("toString") !== -1? obj[index].toString(): obj[index])
+	const toPrint = properties.map((x, index) => x.indexOf("toString") !== -1? obj[index].toString(): obj[index]);
 	console.log(...toPrint);
 }

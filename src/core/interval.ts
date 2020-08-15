@@ -22,7 +22,7 @@ export class Interval {
 	}
 
 	/**
-	 * Creates and returns a closed interval onject.
+	 * Creates and returns a closed interval object.
 	 * @param a The left side limit of the interval.
 	 * @param b The right side limit of the interval.
 	 */
@@ -38,7 +38,7 @@ export class Interval {
 	}
 
 	/**
-	 * Creates and returns a closed interval onject.
+	 * Creates and returns a closed interval object.
 	 * @param a The left side limit of the interval.
 	 * @param b The right side limit of the interval.
 	 */
@@ -54,7 +54,7 @@ export class Interval {
 	}
 
 	/**
-	 * Creates and returns a left-open right-closed interval onject.
+	 * Creates and returns a left-open right-closed interval object.
 	 * @param a The left side limit of the interval.
 	 * @param b The right side limit of the interval.
 	 */
@@ -70,7 +70,7 @@ export class Interval {
 	}
 
 	/**
-	 * Creates and returns a left-closed and right-open interval onject.
+	 * Creates and returns a left-closed and right-open interval object.
 	 * @param a The left side limit of the interval.
 	 * @param b The right side limit of the interval.
 	 */

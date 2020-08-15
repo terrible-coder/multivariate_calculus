@@ -10,7 +10,8 @@ import { pad } from "./parsers";
  */
 export function roundTo(num: bigint, power: number, mode: RoundingMode) {
 	const divider = BigInt(pad("1", power, "0", "end"));
-	let rounded = num / divider, last = num % divider;
+	let rounded = num / divider;
+	const last = num % divider;
 	const one = BigInt("1"), ten = BigInt("10");
 	const FIVE = BigInt(pad("5", power - 1, "0", "end")), ONE = BigInt(pad("1", power - 1, "0", "end"));
 	switch(mode) {

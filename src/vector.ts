@@ -179,7 +179,7 @@ export namespace Vector {
 		constructor(value: Scalar.Constant[] | BigNum[], name = "") {
 			super();
 			this.name = name;
-			for(let x of value)
+			for(const x of value)
 				if(x instanceof Scalar.Constant)
 					this.value.push(x);
 				else this.value.push(new Scalar.Constant(x));
@@ -198,7 +198,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (i <= value.length)?value[i - 1]: Scalar.constant(0);
-			}
+			};
 		}
 
 		/**
@@ -435,14 +435,13 @@ export namespace Vector {
 		 * @return The [[Scalar]] element at given index.
 		 */
 		public get X() {
-			const self = this;
-			return function(i: number) {
+			return (i: number) => {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
-				if(self.value.length === 0)
-					return Scalar.variable(self.name + "_" + i);
-				return (i <= self.value.length)? self.value[i - 1]: Scalar.constant(0);
-			}
+				if(this.value.length === 0)
+					return Scalar.variable(this.name + "_" + i);
+				return (i <= this.value.length)? this.value[i - 1]: Scalar.constant(0);
+			};
 		}
 
 		/**
@@ -504,7 +503,7 @@ export namespace Vector {
 				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
 				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
 				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
-						(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
+					(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
 						a1.mul(b2).sub(a2.mul(b1));
 			});
 		}
@@ -568,7 +567,7 @@ export namespace Vector {
 				this.X = args[2];
 				this.rest = args.slice(3);
 			} else if(isUnaryOperator(op)) {
-				a = args[0]
+				a = args[0];
 				this.operands.push(a);
 				this.X = args[1];
 				this.rest = args.slice(2);
@@ -669,7 +668,7 @@ export namespace Vector {
 				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
 				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
 				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
-						(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
+					(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
 						a1.mul(b2).sub(a2.mul(b1));
 			});
 		}

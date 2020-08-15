@@ -28,6 +28,10 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
+          name: Running linter
+          command: npm run lint
+
+      - run:
           name: Transpiling to .js files
           command: npm run build
       

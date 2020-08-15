@@ -1,6 +1,6 @@
 function isValidMatrix(matrix2x2:number[][]) {
-	let row = matrix2x2.length;
-	let col = matrix2x2[0].length;
+	const row = matrix2x2.length;
+	const col = matrix2x2[0].length;
 	for(let i = 0; i < row; i++) {
 		if(matrix2x2[i].length !== col) return false;
 		if(!matrix2x2[i].every(x => typeof x === "number")) return false;
@@ -36,7 +36,7 @@ export class Matrix {
 		if(typeof a === "number" && typeof b === "number") {
 			this.row = a;
 			this.col = b;
-			this.elements = new Array(a).fill(0).map(_=>new Array(b).fill(c?c:0));
+			this.elements = new Array(a).fill(0).map(() => new Array(b).fill(c?c:0));
 		} else if(a instanceof Array) {
 			if(!isValidMatrix(a)) throw "Illegal values in matrix.";
 			this.elements = a.map(r=>r.slice());
@@ -52,12 +52,10 @@ export class Matrix {
 		return new Matrix(this.elements);
 	}
 
-	public get data() {
-		const self = this;
-		function dataAt(i:number, j:number,):number;
-		function dataAt(i:number):number[];
-		function dataAt(i:number, j?:number) {return j !== undefined? self.elements[i][j]: self.elements[i];}
-		return dataAt;
+	public data(i:number, j:number): number;
+	public data(i: number): number[];
+	public data(i:number, j?:number) {
+		return j !== undefined? this.elements[i][j]: this.elements[i];
 	}
 
 	/**

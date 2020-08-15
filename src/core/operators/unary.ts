@@ -49,7 +49,7 @@ export enum UnaryOperator {
  */
 export function isUnaryOperator(s: string): s is UnaryOperator {
 	type iter = keyof typeof UnaryOperator;
-	for(let elt in UnaryOperator)
+	for(const elt in UnaryOperator)
 		if(UnaryOperator[<iter>elt] === s)
 			return true;
 	return false;
