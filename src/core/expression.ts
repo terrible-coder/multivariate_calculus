@@ -8,7 +8,7 @@ import * as func from "./math/functions";
  */
 export namespace ExpressionBuilder {
 	/**
-	 * Given any one or two [[Evaluable]] quantities, contructs a `Set` of
+	 * Given any one or two [[Evaluable]] quantities, constructs a `Set` of
 	 * unknowns it/they depend on.
 	 * @param a First [[Evaluable]]
 	 * @param b Second [[Evaluable]]

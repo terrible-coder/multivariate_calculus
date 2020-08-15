@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-new */
 import { Numerical } from "./definitions";
 
 /**
@@ -47,7 +48,7 @@ export interface DivisionByZero {
 }
 export const DivisionByZero = <DivisionByZero><unknown> function(this: any, message: string) {
 	return getErrorObject(this, message);
-}
+};
 setErrorPrototype(DivisionByZero, "division by zero");
 
 /**
@@ -64,7 +65,7 @@ export interface IndeterminateForm {
 }
 export const IndeterminateForm = <IndeterminateForm><unknown> function(this: any, message: string) {
 	return getErrorObject(this, message);
-}
+};
 setErrorPrototype(IndeterminateForm, "indeterminate form");
 
 /**
@@ -83,7 +84,7 @@ export interface Overwrite {
 }
 export const Overwrite = <Overwrite><unknown> function(this: any, name: string) {
 	return getErrorObject(this, `A constant with name ${name} has already been declared.`);
-}
+};
 setErrorPrototype(Overwrite, "overwrite");
 
 /**
@@ -100,7 +101,7 @@ export interface InvalidIndex {
 }
 export const InvalidIndex = <InvalidIndex><unknown> function(this: any, passed: number, start: number) {
 	return getErrorObject(this, `Index ${passed} does not exist. Indexing starts from ${start}.`);
-}
+};
 setErrorPrototype(InvalidIndex, "invalid index");
 
 /**
@@ -122,7 +123,7 @@ export interface UndefinedValue {
 export const UndefinedValue = <UndefinedValue><unknown>function(this: any, fnName: string, value: Numerical, extra?: string) {
 	const trail = extra === undefined? "": ` ${extra}`;
 	return getErrorObject(this, `Function ${fnName} is undefined for input ${value}.${trail}`);
-}
+};
 setErrorPrototype(UndefinedValue, "undefined value");
 
 /**
@@ -137,5 +138,5 @@ export interface IllegalNumberFormat {
 }
 export const IllegalNumberFormat = <IllegalNumberFormat><unknown>function(this: any, passed: string) {
 	return getErrorObject(this, `Number format failed to parse: ${passed}`);
-}
+};
 setErrorPrototype(IllegalNumberFormat, "illegal number format");
