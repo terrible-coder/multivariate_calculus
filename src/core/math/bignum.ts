@@ -191,7 +191,7 @@ export class BigNum extends Numerical {
 		const ctx: MathContext = {
 			precision: context.precision + 5,
 			rounding: context.rounding
-		}
+		};
 		const magSq = x.components.reduce((prev, curr) => prev.add(curr.mul(curr, ctx), ctx), Component.ZERO);
 		return new BigNum(magSq.pow(Component.create("0.5"), context));
 	}
@@ -263,7 +263,7 @@ export class BigNum extends Numerical {
 	public add(that: BigNum, ...args: any[]): BigNum;
 	public add(that: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
+		const [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
 			sum.push(a[i].add(b[i], context));
@@ -296,7 +296,7 @@ export class BigNum extends Numerical {
 	public sub(that: BigNum, ...args: any[]): BigNum;
 	public sub(that: BigNum, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		let [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
+		const [a, b] = align(this.components, that.components, Component.ZERO, this.dim - that.dim);
 		const sum: Component[] = [];
 		for(let i = 0; i < a.length; i++)
 			sum.push(a[i].sub(b[i], context));
@@ -335,9 +335,9 @@ export class BigNum extends Numerical {
 			return new BigNum(this.components.map(x => x.mul(that.components[0], context)));
 		const n = Math.max(this.dim, that.dim);
 		const a1 = new BigNum(this.components.slice(0, n/2)),
-			  a2 = new BigNum(this.components.slice(n/2));
+			a2 = new BigNum(this.components.slice(n/2));
 		const b1 = new BigNum(that.components.slice(0, n/2)),
-			  b2 = new BigNum(that.components.slice(n/2));
+			b2 = new BigNum(that.components.slice(n/2));
 		let q1 = a1.mul(b1, context).sub(b2.conj.mul(a2, context), context).components;
 		let q2 = b2.mul(a1, context).add(a2.mul(b1.conj, context), context).components;
 		q1 = pad(q1, n/2-q1.length, Component.ZERO, "end");
@@ -449,7 +449,7 @@ export class BigNum extends Numerical {
 		const ctx: MathContext = {
 			precision: context.precision + 5,
 			rounding: context.rounding
-		}
+		};
 		const res = BigNum.exp(exponent.mul(BigNum.ln(this, ctx), ctx), ctx);
 		return BigNum.round(res, context);
 	}
@@ -596,7 +596,7 @@ export class BigNum extends Numerical {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
-		}
+		};
 		const res = BigNum.sin(x, ctx).div(BigNum.cos(x, ctx), ctx);
 		return BigNum.round(res, context);
 	}
@@ -696,7 +696,7 @@ export class BigNum extends Numerical {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
-		}
+		};
 		const a = x.real.components[0];
 		const v = x.imag;
 		const theta = BigNum.abs(v, ctx).components[0];
@@ -752,18 +752,18 @@ export class BigNum extends Numerical {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
-		}
+		};
 		const a = x.real.components[0];
 		const v = x.imag;
 		const theta = BigNum.abs(v, context).components[0];
 		if(a.equals(Component.ZERO, context))
 			if(theta.moreThan(Component.ONE))
 				throw new UndefinedValue("atan", x, [
-													"The function atan for purely",
-													"imaginary inputs is defined",
-													"only for values with absolute",
-													"value less than or equal to 1."
-												].join(" "));
+					"The function atan for purely",
+					"imaginary inputs is defined",
+					"only for values with absolute",
+					"value less than or equal to 1."
+				].join(" "));
 		if(v.equals(BigNum.real("0"), context))
 			return new BigNum(Component.atan(a, context));
 		const v_hat = v.div(new BigNum(theta), ctx);
@@ -816,7 +816,7 @@ export class BigNum extends Numerical {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
-		}
+		};
 		const res = BigNum.exp(x, ctx).sub(BigNum.exp(x.neg, ctx), ctx).div(BigNum.real("2"), ctx);
 		return BigNum.round(res, context);
 	}
@@ -859,7 +859,7 @@ export class BigNum extends Numerical {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
-		}
+		};
 		const res = BigNum.exp(x, ctx).add(BigNum.exp(x.neg, ctx), ctx).div(BigNum.real("2"), ctx);
 		return BigNum.round(res, context);
 	}
@@ -914,7 +914,7 @@ export class BigNum extends Numerical {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
-		}
+		};
 		const theta = BigNum.abs(v, ctx).components[0];
 		const v_hat = v.div(new BigNum(theta), ctx);
 		const [two_a, two_t] = [a, theta].map(val => val.add(val, ctx));
@@ -973,7 +973,7 @@ export class BigNum extends Numerical {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
-		}
+		};
 		const theta = BigNum.abs(v, ctx).components[0];
 		const v_hat = v.div(new BigNum(theta), ctx);
 		const [alpha, beta] = alpha_beta(theta, a, ctx);
@@ -1029,7 +1029,7 @@ export class BigNum extends Numerical {
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
-		}
+		};
 		const theta = BigNum.abs(v, ctx).components[0];
 		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex(0, 1): v.div(new BigNum(theta), ctx);
 		const [alpha, beta] = alpha_beta(theta, a, ctx);
@@ -1083,11 +1083,11 @@ export class BigNum extends Numerical {
 		const a = x.real.components[0];
 		const v = x.imag;
 		if(v.equals(BigNum.real("0"), context) && Component.abs(a).lessThan(Component.ONE))
-				return new BigNum(Component.atanh(a, context));
+			return new BigNum(Component.atanh(a, context));
 		const ctx: MathContext = {
 			precision: 2 * context.precision,
 			rounding: context.rounding
-		}
+		};
 		const theta = BigNum.abs(v, ctx).components[0];
 		const v_hat = theta.equals(Component.ZERO, ctx)? BigNum.complex(0, 1): v.div(new BigNum(theta), ctx);
 		const [alpha2, beta2] = alpha_beta_sq(a, theta, ctx);
@@ -1234,7 +1234,7 @@ export namespace BigNum {
 	 */
 	export function real(num: number): BigNum;
 	export function real(a: number|string) {
-		let num = a.toString();
+		const num = a.toString();
 		return new BigNum(Component.create(num));
 	}
 

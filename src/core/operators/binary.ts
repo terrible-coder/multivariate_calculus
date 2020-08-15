@@ -29,7 +29,7 @@ export enum BinaryOperator {
  */
 export function isBinaryOperator(s: string): s is BinaryOperator {
 	type iter = keyof typeof BinaryOperator;
-	for(let elt in BinaryOperator)
+	for(const elt in BinaryOperator)
 		if(BinaryOperator[<iter>elt] === s)
 			return true;
 	return false;

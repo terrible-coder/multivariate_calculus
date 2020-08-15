@@ -154,7 +154,7 @@ export class Component extends Numerical {
 	public get sign() {
 		if(this.integer === "" && this.decimal === "")
 			return 0;
-		if(this.integer.charAt(0) === '-')
+		if(this.integer.charAt(0) === "-")
 			return -1;
 		return 1;
 	}
@@ -168,7 +168,7 @@ export class Component extends Numerical {
 	/** @internal */
 	public static abs(x: Component, ...args: any[]): Component;
 	public static abs(x: Component, ...args: any[]) {
-		return x.integer.charAt(0) === '-'? Component.create(x.integer.substring(1) + "." + x.decimal): x;
+		return x.integer.charAt(0) === "-"? Component.create(x.integer.substring(1) + "." + x.decimal): x;
 	}
 
 	/**
@@ -185,7 +185,7 @@ export class Component extends Numerical {
 			return x;
 		const num = x.asBigInt;
 		const diff = x.precision - context.precision;
-		let r = roundTo(num, diff, context.rounding).toString();
+		const r = roundTo(num, diff, context.rounding).toString();
 		return Component.create(decimate(r, context.precision));
 	}
 
@@ -275,7 +275,7 @@ export class Component extends Numerical {
 	 * The negative value of `this`.
 	 */
 	public get neg() {
-		if(this.integer.charAt(0) === '-')
+		if(this.integer.charAt(0) === "-")
 			return Component.create(this.integer.substring(1) + "." + this.decimal);
 		return Component.create("-" + this.toString());
 	}
@@ -302,7 +302,7 @@ export class Component extends Numerical {
 	public add(that: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
 		const [a, b] = align(this.asString, that.asString, "0", this.precision - that.precision);
-		let sum = (BigInt(a) + BigInt(b)).toString();
+		const sum = (BigInt(a) + BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
 		const res = Component.create(decimate(sum, precision));
 		return Component.round(res, context);
@@ -330,7 +330,7 @@ export class Component extends Numerical {
 	public sub(that: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
 		const [a, b] = align(this.asString, that.asString, "0", this.precision - that.precision);
-		let sum = (BigInt(a) - BigInt(b)).toString();
+		const sum = (BigInt(a) - BigInt(b)).toString();
 		const precision = Math.max(this.precision, that.precision);
 		const res = Component.create(decimate(sum, precision));
 		return Component.round(res, context);
@@ -357,7 +357,7 @@ export class Component extends Numerical {
 	public mul(that: Component, ...args: any[]): Component;
 	public mul(that: Component, ...args: any[]) {
 		const context = args[0] || mathenv.mode;
-		let prod = (this.asBigInt * that.asBigInt).toString();
+		const prod = (this.asBigInt * that.asBigInt).toString();
 		const precision = this.precision + that.precision;
 		const res = Component.create(decimate(prod, precision));
 		return Component.round(res, context);
@@ -391,7 +391,7 @@ export class Component extends Numerical {
 		const p1 = this.precision, p2 = that.precision, p = precision - p1 + p2;
 		const a = p < 0? this.asBigInt: BigInt(pad(this.asString, p, "0", "end"));
 		const b = that.asBigInt;
-		let quo = (a / b).toString();
+		const quo = (a / b).toString();
 		const res = Component.create(decimate(quo, (p < 0)? p1: precision));
 		return Component.round(res, context);
 	}

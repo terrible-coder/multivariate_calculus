@@ -17,6 +17,6 @@ type env = {
  * Stores information about the Math environment.
  */
 export const mathenv: env = {
-    mode: MathContext.DEFAULT_CONTEXT,
-    coordinate_system: "cartesian"
-}
+	mode: MathContext.DEFAULT_CONTEXT,
+	coordinate_system: "cartesian"
+};

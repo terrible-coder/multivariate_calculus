@@ -14,7 +14,7 @@ export interface Token {
 /**
  * Anything that has a value or can be later assigned a value.
  * A tagging interface which all classes representing some mathematical object
- * whose value can be evaluated, at run time or when user suppiles the value,
+ * whose value can be evaluated, at run time or when user supplies the value,
  * must implement.
  */
 export interface Evaluable extends Token {
@@ -27,7 +27,9 @@ export interface Evaluable extends Token {
 	[x: string]: any;
 }
 /** Checks whether a given `Token` is an `Evaluable`. */
-export function isEvaluable(e: Token): e is Evaluable {return e.type !== "operator"}
+export function isEvaluable(e: Token): e is Evaluable {
+	return e.type !== "operator";
+}
 
 /**
  * A variable is a symbolic representation of some quantity whose value we do

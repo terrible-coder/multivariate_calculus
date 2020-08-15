@@ -284,7 +284,7 @@ export namespace TrigCyclic {
 		const ctx: MathContext = {
 			precision: context.precision + 5,
 			rounding: context.rounding
-		}
+		};
 		const limit1 = Component.create("0.414213562373");
 		const limit2 = Component.ONE;
 		const limit3 = Component.create("2.414213562373");
@@ -313,7 +313,7 @@ export namespace TrigCyclic {
 			sign = -1;
 		}
 		const res = sign === 1? referenceValue.add(atan_less(less, ctx), ctx):
-								referenceValue.sub(atan_less(less, ctx), ctx);
+			referenceValue.sub(atan_less(less, ctx), ctx);
 		return Component.round(res, context);
 	}
 
@@ -352,7 +352,7 @@ export namespace TrigCyclic {
 		const ctx: MathContext = {
 			precision: context.precision + 5,
 			rounding: context.rounding
-		}
+		};
 		const arg = y.div(x, ctx);
 		if(xComp === 1) return atan(arg, context);
 		const value = atan(arg, ctx);
