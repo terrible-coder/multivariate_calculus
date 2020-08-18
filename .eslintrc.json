@@ -20,6 +20,7 @@
     "plugins": [
         "@typescript-eslint"
     ],
+    "ignorePatterns": ["**/*.js", "tests/**/*.ts"],
     "rules": {
         "indent": [
             "error",
@@ -42,5 +43,10 @@
         "@typescript-eslint/no-namespace": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-explicit-any": "off"
-    }
+    },
+    "overrides": [
+        {
+            "files": ["src/**/*.ts"]
+        }
+    ]
 }
