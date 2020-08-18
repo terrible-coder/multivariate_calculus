@@ -78,7 +78,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	 * @param A The [[Vector]] whose magnitude is to be calculated.
 	 * @return The [[Scalar]] magnitude of the given [[Vector]].
 	 */
-	// public static mag(A: Vector.Constant): Scalar.Constant;
+	public static mag(A: Vector.Constant): Scalar.Constant;
 	/**
 	* Computes the magnitude of a given vector. If `A` vector is a constant
 	* vector then numerically calculates the magnitude otherwise creates a
@@ -86,16 +86,15 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	* @param A The [[Vector]] whose magnitude is to be calculated.
 	* @return The [[Scalar]] magnitude of the given [[Vector]].
 	*/
-	// public static mag(A: Vector): Scalar.Expression;
+	public static mag(A: Vector): Scalar.Expression;
 	public static mag(A: Vector) {
-		throw new Error("Not implemented");
-		// if(A instanceof Vector.Constant) {
-		// 	let m = BigNum.real(0);
-		// 	for(let i = 1; i <= A.value.length; i++)
-		// 		m = m.add(A.X(i).value.mul(A.X(i).value));
-		// 	return Scalar.constant(Math.sqrt(m));
-		// }
-		// return new Scalar.Expression(BinaryOperator.MAG, <Evaluable><unknown>Vector, A);
+		if(A instanceof Vector.Constant) {
+			let m = BigNum.real(0);
+			for(let i = 1; i <= A.value.length; i++)
+				m = m.add(A.X(i).value.mul(A.X(i).value));
+			return Scalar.constant(m.pow(BigNum.real("0.5")));
+		}
+		return new Scalar.Expression(BinaryOperator.MAG, <Evaluable><unknown>Vector, A);
 	}
 
 	/**
@@ -103,19 +102,18 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	 * @param A The [[Vector.Constant]] along which the unit vector is to be calculated.
 	 * @return The unit vector along the given [[Vector]] `A`.
 	 */
-	// public static unit(A: Vector.Constant): Vector.Constant;
+	public static unit(A: Vector.Constant): Vector.Constant;
 	/**
 	 * For a given variable vector `A`, creates an [[Expression]] for the unit vector along `A`.
 	 * @param A The [[Vector.Constant]] along which the unit vector is to be calculated.
 	 * @return The unit vector along the given [[Vector]] `A`.
 	 */
-	// public static unit(A: Vector): Vector.Expression;
+	public static unit(A: Vector): Vector.Expression;
 	public static unit(A: Vector) {
-		throw new Error("Not implemented");
-		// if(A instanceof Vector.Constant)
-		// 	return A.scale(Scalar.constant(1).div(Vector.mag(A)));
-		// const m = Vector.mag(A);
-		// return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A, (i: number) => A.X(i).div(m));
+		if(A instanceof Vector.Constant)
+			return A.scale(Scalar.constant(1).div(Vector.mag(A)));
+		const m = Vector.mag(A);
+		return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A, (i: number) => A.X(i).div(m));
 	}
 }
 
