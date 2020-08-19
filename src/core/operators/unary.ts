@@ -41,7 +41,11 @@ export enum UnaryOperator {
 	/** Represents the greatest integer function. */
 	FLOOR = "floor",
 	/** Represents the least integer function. */
-	CEIL = "ceil"
+	CEIL = "ceil",
+	/** The operator to evaluate magnitude of a vector. */
+	MAG = "mag",
+	/** The operator to evaluate the unit vector along a given vector. */
+	UNIT = "unit"
 }
 
 /**

@@ -94,7 +94,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 				m = m.add(A.X(i).value.mul(A.X(i).value));
 			return Scalar.constant(m.pow(BigNum.real("0.5")));
 		}
-		return new Scalar.Expression(BinaryOperator.MAG, <Evaluable><unknown>Vector, A);
+		return new Scalar.Expression(UnaryOperator.MAG, A);
 	}
 
 	/**
@@ -113,7 +113,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 		if(A instanceof Vector.Constant)
 			return A.scale(Scalar.constant(1).div(Vector.mag(A)));
 		const m = Vector.mag(A);
-		return new Vector.Expression(BinaryOperator.UNIT, <Evaluable><unknown>Vector, A, (i: number) => A.X(i).div(m));
+		return new Vector.Expression(UnaryOperator.UNIT, A, (i: number) => A.X(i).div(m));
 	}
 }
 

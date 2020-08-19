@@ -28,6 +28,67 @@ export function neg<T extends Numerical>(x: number | T, ...args: any[]) {
 }
 
 /**
+ * The magnitude of a number. Returns the same value as {@link abs}.
+ * @param x A number.
+ */
+export function mag(x: number): number;
+/**
+ * The magnitude value of its argument. This function looks for the definition of
+ * the magnitude function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical} object.
+ * @param args Any additional parameters required by the object's magnitude function.
+ * @throws If magnitude is not defined for the argument object type.
+ */
+export function mag<T extends Numerical>(x: T, ...args: any[]): T;
+export function mag<T extends Numerical>(x: number | T, ...args: any[]) {
+	if(typeof x === "number")
+		return x < 0? -x: x;
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
+	const def = x.getDefinition("mag");
+	if(def === "undefined")
+		throw new TypeError("Operation mag not defined for object of type " + x.classRef.name);
+	if(def === "instance")
+		return (<any>x).mag(...args);
+	return x.classRef.mag(x, ...args);
+}
+
+/**
+ * The signed unit of a number. Mathematically it is equivalent to
+ * 
+ * \\[ \operatorname{unit}(x) = \begin{cases}
+ * 		0 & x = 0 \\
+ * 		\frac{x}{\lvert x \rvert}
+ * \end{cases} \\]
+ * @param x A number.
+ */
+export function unit(x: number): -1 | 0 | 1;
+/**
+ * The unit value of its argument. This function looks for the definition of
+ * the unit function in the {@link Numerical} object. This is defined and makes
+ * sense for vectors. For vector arguments, the function returns the unit vector
+ * in the same direction as the argument vector.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical} object.
+ * @param args Any additional parameters required by the object's unit function.
+ * @throws If unit is not defined for the argument object type.
+ */
+export function unit<T extends Numerical>(x: T, ...args: any[]): T;
+export function unit<T extends Numerical>(x: number | T, ...args: any[]) {
+	if(typeof x === "number")
+		return x === 0? 0: Math.abs(x) / x;
+	if(!(x instanceof Numerical))
+		throw TypeError("Numerical operations not defined on object.");
+	const def = x.getDefinition("unit");
+	if(def === "undefined")
+		throw new TypeError("Operation unit not defined for object of type " + x.classRef.name);
+	if(def === "instance")
+		return (<any>x).unit(...args);
+	return x.classRef.unit(x, ...args);
+}
+
+/**
  * The trigonometric sine function.
  * @param x A number.
  */
