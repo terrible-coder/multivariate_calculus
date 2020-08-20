@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.3](https://github.com/terrible-coder/multivariate_calculus/compare/v1.1.2...v1.1.3) (2020-08-20)
+
+
+### Bug Fixes
+
+* :fire: put back unit and mag methods ([a69f51f](https://github.com/terrible-coder/multivariate_calculus/commit/a69f51f7bef1919342b15e761ed959d96460e2d9))
+
 ### [1.1.2](https://github.com/terrible-coder/multivariate_calculus/compare/v1.1.1...v1.1.2) (2020-08-13)
 
 
