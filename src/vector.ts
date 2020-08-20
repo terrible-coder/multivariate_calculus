@@ -12,8 +12,8 @@ import { BigNum } from "./core/math/bignum";
  * The double underscore.
  * 
  * Represents any unknown value. When passed in along with other known values
- * this gets interpreted as an unknown or a [[Variable]].
- * @see [[Vector.variable]] for a use case example.
+ * this gets interpreted as an unknown or a {@link Variable}.
+ * @see {@link Vector.variable} for a use case example.
  */
 export const __ = undefined;
 
@@ -27,9 +27,9 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	readonly quantity = "vector";
 
 	/**
-	 * Adds two [[Vector]]s together. If `this` and `that` are both constants
-	 * then vectorially adds the two and returns a new [[Vector.Constant]] object
-	 * otherwise creates an [[Expression]] out of them and returns the same.
+	 * Adds two {@link Vector}s together. If `this` and `that` are both constants
+	 * then vectorially adds the two and returns a new {@link Vector.Constant} object
+	 * otherwise creates an {@link Expression} out of them and returns the same.
 	 * @param that The scalar to add `this` with.
 	 * @return The result of algebraic addition.
 	 */
@@ -38,7 +38,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	/**
 	 * Subtracts `that` from `this`. If `this` and `that` are both constants
 	 * then vectorially subtracts one from the other and returns a new
-	 * [[Vector.Constant]] object otherwise creates an [[Expression]] out of them
+	 * {@link Vector.Constant]] object otherwise creates an [[Expression} out of them
 	 * and returns the same.
 	 * @param that The scalar to subtract from `this`.
 	 * @return The result of algebraic subtraction.
@@ -47,8 +47,8 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Evaluates the scalar product of `this` and `that`. If both are constants
-	 * then numerically computes the product and returns a [[Scalar.Constant]] object
-	 * otherwise creates an [[Expression]] out of them and returns the same.
+	 * then numerically computes the product and returns a {@link Scalar.Constant} object
+	 * otherwise creates an {@link Expression} out of them and returns the same.
 	 * @param that The scalar to subtract from `this`.
 	 * @return The inner product of `this` and `that`.
 	 */
@@ -56,8 +56,8 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Evaluates the vector product of `this` and `that`. If both are constants
-	 * then numerically computes the product and returns a [[Vector.Constant]] object
-	 * otherwise creates an [[Expression]] out of them and returns the same.
+	 * then numerically computes the product and returns a {@link Vector.Constant} object
+	 * otherwise creates an {@link Expression} out of them and returns the same.
 	 * @param that The scalar to subtract from `this`.
 	 * @return The vector product of `this` and `that`.
 	 */
@@ -66,7 +66,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	/**
 	 * Scales, or multiplies the "size" (magnitude) of, `this` vector by given
 	 * amount. If `this` and `k` are both constants then numerically calculates
-	 * the scaled vector otherwise creates an [[Expression]] out of them and
+	 * the scaled vector otherwise creates an {@link Expression} out of them and
 	 * returns the same.
 	 * @param k The scale factor.
 	 * @return The scaled vector.
@@ -75,16 +75,16 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 
 	/**
 	 * Computes the magnitude of a constant vector numerically.
-	 * @param A The [[Vector]] whose magnitude is to be calculated.
-	 * @return The [[Scalar]] magnitude of the given [[Vector]].
+	 * @param A The {@link Vector} whose magnitude is to be calculated.
+	 * @return The {@link Scalar]] magnitude of the given [[Vector}.
 	 */
 	public static mag(A: Vector.Constant): Scalar.Constant;
 	/**
 	* Computes the magnitude of a given vector. If `A` vector is a constant
 	* vector then numerically calculates the magnitude otherwise creates a
-	* scalar [[Expression]] and returns the same.
-	* @param A The [[Vector]] whose magnitude is to be calculated.
-	* @return The [[Scalar]] magnitude of the given [[Vector]].
+	* scalar {@link Expression} and returns the same.
+	* @param A The {@link Vector} whose magnitude is to be calculated.
+	* @return The {@link Scalar]] magnitude of the given [[Vector}.
 	*/
 	public static mag(A: Vector): Scalar.Expression;
 	public static mag(A: Vector) {
@@ -99,14 +99,14 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 
 	/**
 	 * For a given constant vector `A`, numerically evaluates the unit vector along `A`.
-	 * @param A The [[Vector.Constant]] along which the unit vector is to be calculated.
-	 * @return The unit vector along the given [[Vector]] `A`.
+	 * @param A The {@link Vector.Constant} along which the unit vector is to be calculated.
+	 * @return The unit vector along the given {@link Vector} `A`.
 	 */
 	public static unit(A: Vector.Constant): Vector.Constant;
 	/**
-	 * For a given variable vector `A`, creates an [[Expression]] for the unit vector along `A`.
-	 * @param A The [[Vector.Constant]] along which the unit vector is to be calculated.
-	 * @return The unit vector along the given [[Vector]] `A`.
+	 * For a given variable vector `A`, creates an {@link Expression} for the unit vector along `A`.
+	 * @param A The {@link Vector.Constant} along which the unit vector is to be calculated.
+	 * @return The unit vector along the given {@link Vector} `A`.
 	 */
 	public static unit(A: Vector): Vector.Expression;
 	public static unit(A: Vector) {
@@ -119,18 +119,18 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 
 export namespace Vector {
 	/**
-	 * A mapping from named vector constants to [[Vector.Constant]] objects.
+	 * A mapping from named vector constants to {@link Vector.Constant} objects.
 	 * @ignore
 	 */
 	const NAMED_CONSTANTS = new Map<string, Vector.Constant>();
 	/**
-	 * A mapping from name of vector variables to [[Vector.Variable]] objects.
+	 * A mapping from name of vector variables to {@link Vector.Variable} objects.
 	 * @ignore
 	 */
 	const VARIABLES = new Map<string, Vector.Variable>();
 
 	/**
-	 * @extends [[Vector]]
+	 * @extends {@link Vector}
 	 */
 	export class Constant extends Vector implements _Constant {
 		readonly type = "constant";
@@ -149,27 +149,27 @@ export namespace Vector {
 		readonly name: string;
 
 		/**
-		 * Creates a [[Vector.Constant]] object from a list of [[Scalar.Constant]]
+		 * Creates a {@link Vector.Constant]] object from a list of [[Scalar.Constant}
 		 * objects. One may optionally pass in a string by which `this` object
 		 * may be identified by.
 		 * 
 		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
-		 * @see [[Vector.constant]]
+		 * @see {@link Vector.constant}
 		 * @param value The fixed value `this` should represent.
 		 * @param name The name by which `this` is identified.
 		 */
 		constructor(value: Scalar.Constant[], name?: string);
 		/**
-		 * Creates a [[Vector.Constant]] object from a list of numbers.
+		 * Creates a {@link Vector.Constant} object from a list of numbers.
 		 * One may optionally pass in a string by which `this` object
 		 * may be identified by.
 		 * 
 		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
-		 * @see [[Vector.constant]]
+		 * @see {@link Vector.constant}
 		 * @param value The fixed value `this` should represent.
 		 * @param name The name by which `this` is identified.
 		 */
@@ -188,7 +188,7 @@ export namespace Vector {
 		 * Returns the components of `this` vector. The index values start
 		 * from `1` instead of the commonly used starting index `0`.
 		 * @param i The index of the desired component.
-		 * @return The [[Scalar]] element at given index.
+		 * @return The {@link Scalar} element at given index.
 		 */
 		public get X() {
 			const value = this.value;
@@ -234,16 +234,16 @@ export namespace Vector {
 		}
 
 		/**
-		 * Adds two [[Vector.Constant]] objects numerically.
-		 * @param that The [[Vector.Constant]] to add to `this`.
+		 * Adds two {@link Vector.Constant} objects numerically.
+		 * @param that The {@link Vector.Constant} to add to `this`.
 		 * @return The vector sum of `this` and `that`.
 		 */
 		public add(that: Vector.Constant): Vector.Constant;
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the addition of
-		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the addition of
+		 * two {@link Vector]] objects. The [[type} of `this` does not matter because
 		 * adding a variable vector to another vector always results in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
 		public add(that: Vector.Variable | Vector.Expression): Vector.Expression;
@@ -263,16 +263,16 @@ export namespace Vector {
 		}
 
 		/**
-		 * Subtracts one [[Vector.Constant]] object from another numerically.
-		 * @param that The [[Vector.Constant]] to subtract from `this`.
+		 * Subtracts one {@link Vector.Constant} object from another numerically.
+		 * @param that The {@link Vector.Constant} to subtract from `this`.
 		 * @return The vector difference of `this` from `that`.
 		 */
 		public sub(that: Vector.Constant): Vector.Constant;
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the subtraction of
-		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the subtraction of
+		 * two {@link Vector]] objects. The [[type} of `this` does not matter because
 		 * subtracting a variable vector from another vector always results in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public sub(that: Vector.Variable | Vector.Expression): Vector.Expression;
@@ -292,18 +292,18 @@ export namespace Vector {
 		}
 
 		/**
-		 * Calculates the scalar product of two [[Vector.Constant]] objects
+		 * Calculates the scalar product of two {@link Vector.Constant} objects
 		 * numerically.
-		 * @param that The [[Vector.Constant]] to compute scalar product with `this`.
+		 * @param that The {@link Vector.Constant} to compute scalar product with `this`.
 		 * @return The inner product of `this` and `that`.
 		 */
 		public dot(that: Vector.Constant): Scalar.Constant;
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the dot product of
-		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the dot product of
+		 * two {@link Vector]] objects. The [[type} of `this` does not matter because
 		 * dot multiplying a variable vector with another vector always results
 		 * in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for inner product of `this` and `that`.
 		 */
 		public dot(that: Vector.Variable | Vector.Expression): Scalar.Expression;
@@ -319,17 +319,17 @@ export namespace Vector {
 		}
 
 		/**
-		 * Calculates the vector product of two [[Vector.Constant]] objects numerically.
-		 * @param that The [[Vector.Constant]] to compute cross product with `this`.
+		 * Calculates the vector product of two {@link Vector.Constant} objects numerically.
+		 * @param that The {@link Vector.Constant} to compute cross product with `this`.
 		 * @return The vector product of `this` and `that`.
 		 */
 		// public cross(that: Vector.Constant): Vector.Constant;
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the cross product of
-		 * two [[Vector]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the cross product of
+		 * two {@link Vector]] objects. The [[type} of `this` does not matter because
 		 * cross multiplying a variable vector to another vector always results
 		 * in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for vector product of `this` and `that`.
 		 */
 		// public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
@@ -362,14 +362,14 @@ export namespace Vector {
 		}
 
 		/**
-		 * Scales `this` [[Vector.Constant]] object numerically.
+		 * Scales `this` {@link Vector.Constant} object numerically.
 		 * @param k The scale factor.
 		 * @return The scaled vector.
 		 */
 		public scale(k: Scalar.Constant): Vector.Constant;
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the scaling of
-		 * `this` [[Vector]] object. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the scaling of
+		 * `this` {@link Vector]] object. The [[type} of `this` does not matter because
 		 * scaling a variable vector always results in an expression.
 		 * @param k The scale factor.
 		 * @return Expression for scaling `this`.
@@ -387,7 +387,7 @@ export namespace Vector {
 	}
 
 	/**
-	 * @extends [[Vector]]
+	 * @extends {@link Vector}
 	 */
 	export class Variable extends Vector implements _Variable {
 		readonly type = "variable";
@@ -396,26 +396,26 @@ export namespace Vector {
 		readonly value: (Scalar.Variable | Scalar.Constant)[] = [];
 
 		/**
-		 * Creates a [[Vector.Variable]] object.
+		 * Creates a {@link Vector.Variable} object.
 		 * 
 		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
-		 * @see [[Vector.variable]]
-		 * @param name The name with which the [[Vector.Variable]] is going to be identified.
+		 * @see {@link Vector.variable}
+		 * @param name The name with which the {@link Vector.Variable} is going to be identified.
 		 */
 		constructor(name: string);
 		/**
-		 * Creates a [[Vector.Variable]] object from an array. The array may
-		 * contain known [[Scalar.Constants]] and, for the components yet unknown,
-		 * [[Scalar.Variable]]. This allows for creation of vectors whose few
+		 * Creates a {@link Vector.Variable} object from an array. The array may
+		 * contain known {@link Scalar.Constants} and, for the components yet unknown,
+		 * {@link Scalar.Variable}. This allows for creation of vectors whose few
 		 * components are known before hand and the rest are not.
 		 * 
 		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
-		 * @see [[Vector.variable]]
-		 * @param name The name with which the [[Vector.Variable]] is going to be identified.
+		 * @see {@link Vector.variable}
+		 * @param name The name with which the {@link Vector.Variable} is going to be identified.
 		 * @param value The array containing the values with which to initialise the vector variable object.
 		 */
 		constructor(name: string, value: (Scalar.Variable | Scalar.Constant)[]);
@@ -430,7 +430,7 @@ export namespace Vector {
 		 * Returns the components of `this` vector. The index values start
 		 * from `1` instead of the commonly used starting index `0`.
 		 * @param i The index of the desired component.
-		 * @return The [[Scalar]] element at given index.
+		 * @return The {@link Scalar} element at given index.
 		 */
 		public get X() {
 			return (i: number) => {
@@ -443,10 +443,10 @@ export namespace Vector {
 		}
 
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the addition of
-		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the addition of
+		 * two {@link Vector]] objects. The [[type} of `that` does not matter because
 		 * adding a variable vector to another vector always results in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
 		public add(that: Vector) {
@@ -458,10 +458,10 @@ export namespace Vector {
 		}
 
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the subtraction of
-		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the subtraction of
+		 * two {@link Vector]] objects. The [[type} of `that` does not matter because
 		 * subtracting a variable vector from another vector always results in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public sub(that: Vector) {
@@ -473,11 +473,11 @@ export namespace Vector {
 		}
 
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the dot product of
-		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the dot product of
+		 * two {@link Vector]] objects. The [[type} of `that` does not matter because
 		 * dot multiplying a variable vector with another vector always results
 		 * in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for inner product of `this` and `that`.
 		 */
 		public dot(that: Vector) {
@@ -485,11 +485,11 @@ export namespace Vector {
 		}
 
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the cross product of
-		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the cross product of
+		 * two {@link Vector]] objects. The [[type} of `that` does not matter because
 		 * cross multiplying a variable vector to another vector always results
 		 * in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for vector product of `this` and `that`.
 		 */
 		public cross(that: Vector) {
@@ -507,8 +507,8 @@ export namespace Vector {
 		}
 
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the scaling of
-		 * `this` [[Vector]] object. The [[type]] of `that` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the scaling of
+		 * `this` {@link Vector]] object. The [[type} of `that` does not matter because
 		 * scaling a variable vector always results in an expression.
 		 * @param k The scale factor.
 		 * @return Expression for scaling `this`.
@@ -523,7 +523,7 @@ export namespace Vector {
 	}
 
 	/**
-	 * @extends [[Vector]]
+	 * @extends {@link Vector}
 	 */
 	export class Expression extends Vector implements _Expression {
 		readonly type = "expression";
@@ -535,7 +535,7 @@ export namespace Vector {
 		 * Returns the components of `this` vector. The index values start
 		 * from `1` instead of the commonly used starting index `0`.
 		 * @param i The index of the desired component.
-		 * @return The [[Scalar]] element at given index.
+		 * @return The {@link Scalar} element at given index.
 		 */
 		readonly X: (i: number) => Scalar;
 
@@ -604,11 +604,11 @@ export namespace Vector {
 		}
 
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the addition of
-		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the addition of
+		 * two {@link Vector]] objects. The [[type} of `that` does not matter because
 		 * adding an unknown vector/vector expression to another vector always
 		 * results in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
 		public add(that: Vector) {
@@ -620,11 +620,11 @@ export namespace Vector {
 		}
 
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the subtraction of
-		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the subtraction of
+		 * two {@link Vector]] objects. The [[type} of `that` does not matter because
 		 * subtracting an unknown vector/vector expression from another vector
 		 * always results in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public sub(that: Vector) {
@@ -636,12 +636,12 @@ export namespace Vector {
 		}
 
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the dot product of
-		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the dot product of
+		 * two {@link Vector]] objects. The [[type} of `that` does not matter because
 		 * dot multiplying an unknown vector/vector expression with another vector
 		 * always results
 		 * in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for inner product of `this` and `that`.
 		 */
 		public dot(that: Vector) {
@@ -649,12 +649,12 @@ export namespace Vector {
 		}
 
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the cross product of
-		 * two [[Vector]] objects. The [[type]] of `that` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the cross product of
+		 * two {@link Vector]] objects. The [[type} of `that` does not matter because
 		 * cross multiplying an unknown vector/vector expression to another vector
 		 * always results
 		 * in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for vector product of `this` and `that`.
 		 */
 		public cross(that: Vector) {
@@ -672,8 +672,8 @@ export namespace Vector {
 		}
 
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the scaling of
-		 * `this` [[Vector]] object. The [[type]] of `that` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the scaling of
+		 * `this` {@link Vector]] object. The [[type} of `that` does not matter because
 		 * scaling an unknown vector/vector expression always results in an expression.
 		 * @param k The scale factor.
 		 * @return Expression for scaling `this`.
@@ -687,20 +687,20 @@ export namespace Vector {
 		}
 
 		/**
-		 * Checks whether `this` [[Vector.Expression]] depends on a given
-		 * [[Variable]].
-		 * @param v The [[Variable]] to check against.
+		 * Checks whether `this` {@link Vector.Expression} depends on a given
+		 * {@link Variable}.
+		 * @param v The {@link Variable} to check against.
 		 */
 		public isFunctionOf(v: _Variable) {
 			return this.arg_list.has(v);
 		}
 
 		/**
-		 * Evaluates this [[Vector.Expression]] at the given values for the
-		 * [[Variable]] objects `this` depends on. In case `this` is not a
+		 * Evaluates this {@link Vector.Expression} at the given values for the
+		 * {@link Variable} objects `this` depends on. In case `this` is not a
 		 * function of any of the variables in the mapping then `this` is returned
 		 * as is. 
-		 * @param values A map from the [[Variable]] quantities to [[Constant]] quantities.
+		 * @param values A map from the {@link Variable]] quantities to [[Constant} quantities.
 		 * @return The result after evaluating `this` at the given values.
 		 */
 		public at(values: Map<_Variable, _Constant>) {
@@ -714,53 +714,53 @@ export namespace Vector {
 	}
 
 	/**
-	 * Creates a new [[Vector.Constant]] object from a list of numbers
+	 * Creates a new {@link Vector.Constant} object from a list of numbers
 	 * if it has not been created before.
 	 * Otherwise just returns the previously created object.
 	 * 
-	 * This is the recommended way of creating [[Vector.Constant]] objects instead of
+	 * This is the recommended way of creating {@link Vector.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Vector.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Vector.Constant} is supposed to represent.
 	 */
 	export function constant(value: number[]): Vector.Constant;
 	/**
-	 * Defines a named [[Vector.Constant]] object from a list of numbers
+	 * Defines a named {@link Vector.Constant} object from a list of numbers
 	 * if it has not been created before.
 	 * Otherwise just returns the previously created object.
 	 * 
-	 * This is the recommended way of creating named [[Vector.Constant]] objects instead of
+	 * This is the recommended way of creating named {@link Vector.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Vector.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Vector.Constant} is supposed to represent.
 	 * @param name The string with which `this` object is identified.
-	 * @throws Throws an error if a [[Vector.Constant]] with the same name has been defined previously.
+	 * @throws Throws an error if a {@link Vector.Constant} with the same name has been defined previously.
 	 */
 	export function constant(value: number[], name: string): Vector.Constant;
 	/**
-	 * Creates a new [[Vector.Constant]] object from a list of [[Scalar.Constant]] objects
+	 * Creates a new {@link Vector.Constant]] object from a list of [[Scalar.Constant} objects
 	 * if it has not been created before.
 	 * Otherwise just returns the previously created object.
 	 * 
-	 * This is the recommended way of creating [[Vector.Constant]] objects instead of
+	 * This is the recommended way of creating {@link Vector.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Vector.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Vector.Constant} is supposed to represent.
 	 */
 	export function constant(value: Scalar.Constant[]): Vector.Constant;
 	/**
-	 * Defines a named [[Vector.Constant]] object from a list of [[Scalar.Constant]] objects
+	 * Defines a named {@link Vector.Constant]] object from a list of [[Scalar.Constant} objects
 	 * if it has not been created before.
 	 * Otherwise just returns the previously created object.
 	 * 
-	 * This is the recommended way of creating named [[Vector.Constant]] objects instead of
+	 * This is the recommended way of creating named {@link Vector.Constant} objects instead of
 	 * using the constructor.
-	 * @param value The fixed value the [[Vector.Constant]] is supposed to represent.
+	 * @param value The fixed value the {@link Vector.Constant} is supposed to represent.
 	 * @param name The string with which `this` object is identified.
 	 * 
-	 * @throws Throws an error if a [[Vector.Constant]] with the same name has been defined previously.
+	 * @throws Throws an error if a {@link Vector.Constant} with the same name has been defined previously.
 	 */
 	export function constant(value: Scalar.Constant[], name: string): Vector.Constant;
 	/**
-	 * Returns a previously declared named [[Vector.Constant]] object.
-	 * @param name The name of the named [[Vector.Constant]] object to be retrieved.
+	 * Returns a previously declared named {@link Vector.Constant} object.
+	 * @param name The name of the named {@link Vector.Constant} object to be retrieved.
 	 */
 	export function constant(name: string): Vector.Constant;
 	export function constant(a: number[] | Scalar.Constant[] | string, b?: string) {
@@ -796,16 +796,16 @@ export namespace Vector {
 	}
 
 	/**
-	 * Creates a new [[Vector.Variable]] object if it has not been created before.
+	 * Creates a new {@link Vector.Variable} object if it has not been created before.
 	 * Otherwise just returns the previously created object.
 	 * 
-	 * This is the recommended way of creating [[Vector.Variable]] objects instead of
+	 * This is the recommended way of creating {@link Vector.Variable} objects instead of
 	 * using the constructor.
 	 * @param name The string with which `this` object will be identified.
 	 */
 	export function variable(name: string): Vector.Variable;
 	/**
-	 * Creates a [[Vector.Variable]] object from an array. The array may
+	 * Creates a {@link Vector.Variable} object from an array. The array may
 	 * contain known scalar constants and, for the components yet unknown,
 	 * [\_\_](../globals.html#__). Passing ``__`` as an element of the `value` array automatically
 	 * gets interpreted as having a variable at that index. This allows for 
@@ -816,12 +816,12 @@ export namespace Vector {
 	 * console.log(A);
 	 * ```
 	 * This line of code will create a vector whose 2nd and 4th components are
-	 * [[Scalar.Variable]] objects and the remaining will be [[Scalar.Constant]]
+	 * {@link Scalar.Variable]] objects and the remaining will be [[Scalar.Constant}
 	 * objects.
 	 * 
-	 * This is the recommended way of creating [[Vector.Variable]] objects instead of
+	 * This is the recommended way of creating {@link Vector.Variable} objects instead of
 	 * using the constructor.
-	 * @param name The name with which the [[Vector.Variable]] is going to be identified.
+	 * @param name The name with which the {@link Vector.Variable} is going to be identified.
 	 * @param value The array containing the values with which to initialise the vector variable object.
 	 */
 	export function variable(name: string, value: (Scalar.Constant | undefined | number)[]): Vector.Variable;
