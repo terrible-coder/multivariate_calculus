@@ -13,6 +13,29 @@ describe("Checks mathematical functions", function() {
 		});
 	});
 
+	describe("unit", function() {
+		it("Accessor", function() {
+			expect(func["unit"]).toBe(func.unit);
+		});
+
+		it("Number", function() {
+			for(let i = -2; i <= 2; i += 0.1)
+				expect(func.unit(i)).toBeCloseTo(i === 0? 0: i / Math.abs(i));
+		});
+	});
+
+	describe("mag", function() {
+		it("Accessor", function() {
+			expect(func["mag"]).toBe(func.mag);
+		});
+
+		it("Number", function() {
+			for(let i = -2; i <= 2; i += 0.1)
+				expect(func.mag(i)).toBe(Math.abs(i));
+		});
+	});
+
+
 	describe("sin", function() {
 		it("Accessor", function() {
 			expect(func["sin"]).toBe(func.sin);
