@@ -73,22 +73,22 @@ describe("Vector constants", function() {
 	// 	expect(i.cross(j)).toEqual(Vector.constant([0, 0, 1]));
 	// });
 
-	// it("Calculates magnitude", function() {
-	// 	const mag = Scalar.constant(Math.sqrt(random.dot(random).value));
-	// 	expect(Vector.mag(random).equals(mag)).toBe(true);
-	// 	expect(Vector.mag(B).value).toBe(Math.sqrt(3));
-	// });
+	it("Calculates magnitude", function() {
+		const mag = Scalar.constant(random.dot(random).value.pow(BigNum.real("0.5")));
+		expect(Vector.mag(random)).toEqual(mag);
+		expect(Vector.mag(B).value).toEqual(BigNum.real(3).pow(BigNum.real(0.5)));
+	});
 
-	// it("Scales", function() {
-	// 	const scaled = A.scale(Scalar.constant(2));
-	// 	expect(Vector.mag(scaled)).toBe(Vector.mag(A).mul(Scalar.constant(2)));
-	// });
+	it("Scales", function() {
+		const scaled = A.scale(Scalar.constant(2));
+		expect(Vector.mag(scaled)).toEqual(Vector.mag(A).mul(Scalar.constant(2)));
+	});
 
-	// it("Unit vector", function() {
-	// 	const one = Scalar.constant(1);
-	// 	expect(Vector.mag(Vector.unit(random)).equals(one)).toBe(true);
-	// 	expect(Vector.mag(Vector.unit(B)).equals(one)).toBe(true);
-	// });
+	it("Unit vector", function() {
+		const one = Scalar.constant(1);
+		// expect(Vector.mag(Vector.unit(random))).toEqual(one);
+		expect(Vector.mag(Vector.unit(B))).toEqual(one);
+	});
 });
 
 describe("Vector variable", function() {
@@ -132,22 +132,22 @@ describe("Vector variable", function() {
 	// 	]))).toEqual(Vector.constant([0, 0, 1]));
 	// });
 
-	// it("Evaluates magnitude", function() {
-	// 	const M = Vector.mag(B);
-	// 	expect(M).toBeInstanceOf(Scalar);
-	// 	expect(isExpression(M)).toBe(true);
-	// 	expect(M.at(new Map([
-	// 		[B, Vector.constant([1, 1, 1, 1, 1])]
-	// 	]))).toBe(Scalar.constant(Math.sqrt(5)));
-	// });
+	it("Evaluates magnitude", function() {
+		const M = Vector.mag(B);
+		expect(M).toBeInstanceOf(Scalar);
+		expect(isExpression(M)).toBe(true);
+		// expect(M.at(new Map([
+		// 	[B, Vector.constant([1, 1, 1, 1, 1])]
+		// ]))).toEqual(Scalar.constant(Math.sqrt(5)));
+	});
 
-	// it("Evaluates unit vector", function() {
-	// 	const u = Vector.unit(B);
-	// 	expect(u).toBeInstanceOf(Vector.Expression);
-	// 	expect(u.at(new Map([
-	// 		[B, Vector.constant([2, 0])]
-	// 	]))).toEqual(Vector.constant([1, 0]));
-	// });
+	it("Evaluates unit vector", function() {
+		const u = Vector.unit(B);
+		expect(u).toBeInstanceOf(Vector.Expression);
+		expect(u.at(new Map([
+			[B, Vector.constant([2, 0])]
+		]))).toEqual(Vector.constant([1, 0]));
+	});
 
 	it("Checks multiplication by scalar", function() {
 		const x = Scalar.constant(2);
