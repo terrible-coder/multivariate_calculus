@@ -1,6 +1,7 @@
 import { MathContext } from "./context";
 import { Component } from "./component";
 import { mathenv } from "../env";
+import { pad } from "./parsers";
 /**
  * Uses the Newton-Raphson algorithm to find the root of a given equation.
  * The exact derivative (found analytically) is assumed to be known.
@@ -141,4 +142,64 @@ export function kronecker(i: number | number[], j: number | number[]) {
 		return i === j ? 1: 0;
 	else if(i instanceof Array && j instanceof Array)
 		return !distinct(j)? 0: evenPerm(i, j)? 1: -1;
+}
+
+type hyperComplex = Array<-1 | 0 | 1>;
+
+export function hBase(i: number) {
+	i = i | 0;
+	if(i < 0) throw TypeError("Cannot work with negative numbers");
+	const n = Math.pow(2, Math.ceil(Math.log2(i+1)));
+	const hyper = new Array<-1 | 0 | 1>(n).fill(0) as hyperComplex;
+	hyper[i] = 1;
+	return hyper;
+}
+
+export function hConjugate(hyper: hyperComplex) {
+	return hyper.map((x, i) => i === 0? x: -x) as hyperComplex;
+}
+
+export function hAdd(h1: hyperComplex, h2: hyperComplex) {
+	const n = Math.max(h1.length, h2.length);
+	const a = pad(h1, n - h1.length, 0, "end");
+	const b = pad(h2, n - h2.length, 0, "end");
+	return new Array(n).fill(0).map((_, i) => a[i] + b[i]) as hyperComplex;
+}
+
+export function hSub(h1: hyperComplex, h2: hyperComplex) {
+	const n = Math.max(h1.length, h2.length);
+	const a = pad(h1, n - h1.length, 0, "end");
+	const b = pad(h2, n - h2.length, 0, "end");
+	return new Array(n).fill(0).map((_, i) => a[i] - b[i]) as hyperComplex;
+}
+
+export function hMul(h1: hyperComplex, h2: hyperComplex) {
+	const n = Math.max(h1.length, h2.length);
+	const a = pad(h1, n - h1.length, 0, "end");
+	const b = pad(h2, n - h2.length, 0, "end");
+	if(n === 1)
+		return [a[0] * b[0]] as hyperComplex;
+	if(n === 2)
+		return [
+			a[0] * b[0] - a[1] * b[1],
+			a[0] * b[1] + a[1] * b[0]
+		] as hyperComplex;
+	const a1 = a.slice(0, n/2),
+		a2 = a.slice(n/2);
+	const b1 = b.slice(0, n/2),
+		b2 = b.slice(n/2);
+	const b1_star = hConjugate(b1),
+		b2_star = hConjugate(b2);
+	const q1 = hSub(hMul(a1, b1), hMul(b2_star, a2));
+	const q2 = hAdd(hMul(b2, a1), hMul(a2, b1_star));
+	return q1.concat(q2);
+}
+
+export function hyper_cross(i: number, j: number) {
+	if(i < 0 || j < 0)
+		throw new TypeError("Cannot work with negative indices");
+	const e1 = hBase(i), e2 = hBase(j);
+	const e3 = hMul(e1, e2);
+	const index = e3.findIndex(x => x !== 0);
+	return index * e3[index];
 }
