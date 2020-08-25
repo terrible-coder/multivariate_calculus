@@ -853,4 +853,12 @@ export namespace Vector {
 		}
 		return v;
 	}
+
+	export function e(i: number) {
+		if(i <= 0)
+			throw TypeError("Non-positive indices not allowed for basis.");
+		const values = new Array(i).fill(0).map(() => Scalar.ZERO);
+		values[i - 1] = Scalar.constant(1);
+		return new Vector.Constant(values);
+	}
 }
