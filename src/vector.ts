@@ -847,6 +847,12 @@ export namespace Vector {
 		return v;
 	}
 
+	/**
+	 * Returns a single cartesian vector unit corresponding to a given index.
+	 * The indexing starts from 1. With \\( \hat{e_1} = \hat{i} \\) and so on
+	 * (for \\( i>0 \\)) are the orthogonal cartesian vector units.
+	 * @param i The index.
+	 */
 	export function e(i: number) {
 		if(i <= 0)
 			throw TypeError("Non-positive indices not allowed for basis.");
