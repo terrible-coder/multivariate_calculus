@@ -7,6 +7,7 @@ import { InvalidIndex } from "./core/errors";
 import { MathContext } from "./core/math/context";
 import { mathenv } from "./core/env";
 import { BigNum } from "./core/math/bignum";
+import { hyper_cross } from "./core/math/numerical";
 
 /**
  * The double underscore.
@@ -323,7 +324,7 @@ export namespace Vector {
 		 * @param that The {@link Vector.Constant} to compute cross product with `this`.
 		 * @return The vector product of `this` and `that`.
 		 */
-		// public cross(that: Vector.Constant): Vector.Constant;
+		public cross(that: Vector.Constant): Vector.Constant;
 		/**
 		 * Creates and returns a {@link Vector.Expression} for the cross product of
 		 * two {@link Vector} objects. The {@link type} of `this` does not matter because
@@ -333,32 +334,24 @@ export namespace Vector {
 		 * @return Expression for vector product of `this` and `that`.
 		 */
 		// public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
-		public cross(that: Vector) {
-			throw new Error("Not implemented");
-			// if(this.dimension > 3)
-			// 	throw new Error("Cross product defined only in 3 dimensions.");
-			// if(that instanceof Vector.Constant) {
-			// 	if(that.dimension > 3)
-			// 		throw new Error("Cross product defined only in 3 dimensions.");
-			// 	const a1 = this.X(1).value, a2 = this.X(2).value, a3 = this.X(3).value;
-			// 	const b1 = that.X(1).value, b2 = that.X(2).value, b3 = that.X(3).value;
-			// 	return Vector.constant([
-			// 		a2 * b3 - a3 * b2,
-			// 		a3 * b1 - a1 * b3,
-			// 		a1 * b2 - a2 * b1
-			// 	]);
-			// }
-			// return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
-			// 	if(i <= 0)
-			// 		throw new InvalidIndex(i, 0);
-			// 	if(this.value.length > 3)
-			// 		throw new Error("Cross product defined only in 3 dimensions.");
-			// 	const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
-			// 	const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
-			// 	return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
-			// 			(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
-			// 			a1.mul(b2).sub(a2.mul(b1));
-			// });
+		public cross(that: Vector.Constant) {
+			// if(!(that instanceof Vector.Constant))
+			// 	throw new Error();
+			const n = Math.max(this.value.length, that.value.length);
+			const resLength = n === 2? 3: Math.pow(2, Math.ceil(Math.log2(n - 1)) + 1) - 1;
+			const res = new Array(resLength).fill(0).map(() => Scalar.ZERO);
+			for(let i = 1; i <= n; i++) {
+				for(let j = 1; j <= n; j++) {
+					if(i === j) continue;
+					const signedBase = hyper_cross(i, j);
+					const Ai = this.X(i), Bj = that.X(j);
+					const sign = Math.sign(signedBase);
+					const e3 = sign * signedBase;
+					const resComp = Ai.mul(Bj);
+					res[e3 - 1] = res[e3 - 1].add(sign === 1? resComp: resComp.neg);
+				}
+			}
+			return Vector.constant(res);
 		}
 
 		/**
