@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.1.3...v1.2.0) (2020-08-25)
+
+
+### Features Added
+
+* :sparkles: Cross product for higher dimensions ([538b71f](https://github.com/terrible-coder/multivariate_calculus/commit/538b71f44987ac8f8f756d3001201653c94ce694))
+* :sparkles: function for vector basis ([74df131](https://github.com/terrible-coder/multivariate_calculus/commit/74df131cbb15e915ea070c22de736b30af2434e8))
+
 ### [1.1.3](https://github.com/terrible-coder/multivariate_calculus/compare/v1.1.2...v1.1.3) (2020-08-20)
 
 
