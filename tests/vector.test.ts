@@ -1,8 +1,7 @@
-const { Vector, __ } = require("../build/vector");
-const { isExpression } = require("../build/core/definitions");
-const { Scalar } = require("../build/scalar");
-const { sqrt } = require("../build/core/math/functions");
-const { BigNum } = require("../build/core/math/bignum");
+import { Vector, __ } from "../src/vector";
+import { isExpression } from "../src/core/definitions";
+import { Scalar } from "../src/scalar";
+import { BigNum } from "../src/core/math/bignum";
 
 it("checks unknown value alias", function() {
 	expect(__).toBe(undefined);
@@ -64,7 +63,7 @@ describe("Vector constants", function() {
 	});
 
 	it("generalises dot", function() {
-		expect(_=> A.dot(random)).not.toThrow();
+		expect(() => A.dot(random)).not.toThrow();
 	});
 
 	// it("Calculates cross product", function() {
