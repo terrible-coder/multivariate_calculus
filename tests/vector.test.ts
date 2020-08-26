@@ -66,11 +66,11 @@ describe("Vector constants", function() {
 		expect(() => A.dot(random)).not.toThrow();
 	});
 
-	// it("Calculates cross product", function() {
-	// 	const i = Vector.constant([1, 0]);
-	// 	const j = Vector.constant([0, 1]);
-	// 	expect(i.cross(j)).toEqual(Vector.constant([0, 0, 1]));
-	// });
+	it("Calculates cross product", function() {
+		const i = Vector.constant([1, 0]);
+		const j = Vector.constant([0, 1]);
+		expect(i.cross(j)).toEqual(Vector.constant([0, 0, 1]));
+	});
 
 	it("Calculates magnitude", function() {
 		const mag = Scalar.constant(random.dot(random).value.pow(BigNum.real("0.5")));
