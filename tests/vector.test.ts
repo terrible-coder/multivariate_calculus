@@ -57,6 +57,12 @@ describe("Vector constants", function() {
 		expect(Vector.constant([1, 1, 1])).toEqual(B);
 	});
 
+	it("Negates", function() {
+		const A_neg = A.neg;
+		expect(A_neg).toEqual(Vector.constant([-1, -1, -2]));
+		expect(A.add(A_neg)).toEqual(Vector.constant([0]));
+	});
+
 	it("Adds", function() {
 		expect(A.add(B)).toBeInstanceOf(Vector);
 		expect(A.add(B)).toEqual(Vector.constant([2, 2, 3]));
@@ -174,5 +180,13 @@ describe("Vector variable", function() {
 		]))).toEqual(expr2.at(new Map([
 			[B, A]
 		])));
+	});
+
+	it("Negates", function() {
+		const expr = B.add(B.neg);
+		const zero = expr.at(new Map([
+			[B, A]
+		]));
+		expect(zero).toEqual(Vector.constant([0]));
 	});
 });
