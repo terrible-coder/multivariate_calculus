@@ -105,7 +105,6 @@ describe("Vector constants", function() {
 
 	it("Unit vector", function() {
 		const one = Scalar.constant(1);
-		// expect(Vector.mag(Vector.unit(random))).toEqual(one);
 		expect(Vector.mag(Vector.unit(B))).toEqual(one);
 	});
 });
@@ -155,9 +154,9 @@ describe("Vector variable", function() {
 		const M = Vector.mag(B);
 		expect(M).toBeInstanceOf(Scalar);
 		expect(isExpression(M)).toBe(true);
-		// expect(M.at(new Map([
-		// 	[B, Vector.constant([1, 1, 1, 1, 1])]
-		// ]))).toEqual(Scalar.constant(Math.sqrt(5)));
+		expect(M.at(new Map([
+			[B, Vector.constant([1, 1, 1, 1, 1])]
+		]))).toEqual(Scalar.constant(5).pow(Scalar.constant(0.5)));
 	});
 
 	it("Evaluates unit vector", function() {
