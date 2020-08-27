@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.2.0...v1.3.0) (2020-08-27)
+
+
+### Bug Fixes
+
+* :bug: use wrapper function ([5d3d83a](https://github.com/terrible-coder/multivariate_calculus/commit/5d3d83afb5bf3d83a2d847e5592d1279d655a56f))
+
+
+### Features Added
+
+* :sparkles: Negate vectors. ([649aa25](https://github.com/terrible-coder/multivariate_calculus/commit/649aa25cd2aafee35839dd11d803d3df572f3717))
+
 ## [1.2.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.1.3...v1.2.0) (2020-08-25)
 
 
