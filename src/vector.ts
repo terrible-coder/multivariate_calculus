@@ -335,8 +335,6 @@ export namespace Vector {
 		 */
 		// public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
 		public cross(that: Vector.Constant) {
-			// if(!(that instanceof Vector.Constant))
-			// 	throw new Error();
 			const n = Math.max(this.value.length, that.value.length);
 			const resLength = n === 2? 3: Math.pow(2, Math.ceil(Math.log2(n - 1)) + 1) - 1;
 			const res = new Array(resLength).fill(0).map(() => Scalar.ZERO);
@@ -654,8 +652,6 @@ export namespace Vector {
 			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
 				if(i <= 0)
 					throw new Error("Indexing starts from `1`.");
-				// if(this.value.length > 3)
-				// 	throw new Error("Cross product defined only in 3 dimensions.");
 				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
 				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
 				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
@@ -761,10 +757,8 @@ export namespace Vector {
 		if(Array.isArray(a)) {
 			let values: BigNum[] = [];
 			if(typeof a[0] === "number")
-				// for(let i = 0; i < a.length; i++)
 				values = (<Array<number>>a).map(n => BigNum.real(n));
 			else if(a[0] instanceof Scalar.Constant)
-				// for(let i = 0; i < a.length; i++)
 				values = (<Array<Scalar.Constant>>a).map(n => n.value);
 			let i = values.length - 1;
 			for(; i >= 0; i--)
