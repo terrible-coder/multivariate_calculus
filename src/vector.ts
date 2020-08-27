@@ -26,6 +26,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
 	readonly abstract X: (i: number) => Scalar;
 	readonly quantity = "vector";
+	readonly abstract neg: Vector;
 
 	/**
 	 * Adds two {@link Vector}s together. If `this` and `that` are both constants
@@ -234,6 +235,10 @@ export namespace Vector {
 			return true;
 		}
 
+		public get neg() {
+			return Vector.constant(this.value.map(x => x.neg));
+		}
+
 		/**
 		 * Adds two {@link Vector.Constant} objects numerically.
 		 * @param that The {@link Vector.Constant} to add to `this`.
@@ -433,6 +438,10 @@ export namespace Vector {
 			};
 		}
 
+		public get neg() {
+			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg);
+		}
+
 		/**
 		 * Creates and returns a {@link Vector.Expression} for the addition of
 		 * two {@link Vector} objects. The {@link type} of `that` does not matter because
@@ -592,6 +601,10 @@ export namespace Vector {
 			if(isUnaryOperator(this.op))
 				return this.operands[0];
 			throw new Error("Binary operators have two arguments.");
+		}
+
+		public get neg() {
+			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg);
 		}
 
 		/**
