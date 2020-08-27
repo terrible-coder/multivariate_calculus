@@ -181,7 +181,7 @@ export namespace Vector {
 			for(const x of value)
 				if(x instanceof Scalar.Constant)
 					this.value.push(x);
-				else this.value.push(new Scalar.Constant(x));
+				else this.value.push(Scalar.constant(x));
 			// this.dimension = this.value.length;
 		}
 
@@ -254,7 +254,7 @@ export namespace Vector {
 				const vec: Scalar.Constant[] = [];
 				for(let i = 1; i <= m; i++)
 					vec.push(this.X(i).add(that.X(i)));
-				return new Vector.Constant(vec);
+				return Vector.constant(vec);
 			}
 			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
 				if(i <= 0)
@@ -280,10 +280,10 @@ export namespace Vector {
 		public sub(that: Vector) {
 			if(that instanceof Vector.Constant) {
 				const m = Math.max(this.value.length, that.value.length);
-				const vec: BigNum[] = [];
+				const vec: Scalar.Constant[] = [];
 				for(let i = 1; i <= m; i++)
-					vec.push(this.X(i).value.sub(that.X(i).value));
-				return new Vector.Constant(vec);
+					vec.push(this.X(i).sub(that.X(i)));
+				return Vector.constant(vec);
 			}
 			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
 				if(i <= 0)
@@ -314,7 +314,7 @@ export namespace Vector {
 				const m = Math.max(this.value.length, that.value.length);
 				for(let i = 1; i <= m; i++)
 					parallel = parallel.add(this.X(i).value.mul(that.X(i).value));
-				return new Scalar.Constant(parallel);
+				return Scalar.constant(parallel);
 			}
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
@@ -370,7 +370,7 @@ export namespace Vector {
 		public scale(k: Scalar.Variable | Scalar.Expression): Vector.Expression;
 		public scale(k: Scalar) {
 			if(k instanceof Scalar.Constant)
-				return new Vector.Constant(this.value.map(x => k.mul(x).value));
+				return Vector.constant(this.value.map(x => k.mul(x)));
 			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
