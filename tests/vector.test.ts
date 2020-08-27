@@ -33,7 +33,7 @@ describe("Vector constants", function() {
 		expect(v).toEqual(A);
 	});
 
-	it("Checks naming system", function() {
+	test("Naming system", function() {
 		expect(Vector.constant("A")).toBe(a);
 		expect(a).not.toBe(A);
 		expect(A.equals(a)).toBe(true);
@@ -41,7 +41,7 @@ describe("Vector constants", function() {
 	});
 
 	it("Gets components", function() {
-		let i;
+		let i: number;
 		for(i = 1; i <= arr.length; i++)
 			expect(A.X(i)).toEqual(Scalar.constant(arr[i - 1]));
 		for(; i < 10; i++)
@@ -64,6 +64,7 @@ describe("Vector constants", function() {
 
 	it("generalises dot", function() {
 		expect(() => A.dot(random)).not.toThrow();
+		expect(A.dot(random)).toBeInstanceOf(Scalar.Constant);
 	});
 
 	describe("Calculates cross product", function() {
