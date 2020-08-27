@@ -66,10 +66,23 @@ describe("Vector constants", function() {
 		expect(() => A.dot(random)).not.toThrow();
 	});
 
-	it("Calculates cross product", function() {
-		const i = Vector.constant([1, 0]);
-		const j = Vector.constant([0, 1]);
-		expect(i.cross(j)).toEqual(Vector.constant([0, 0, 1]));
+	describe("Calculates cross product", function() {
+		test("anti-symmetric values", function() {
+			const e1 = 1 + Math.floor(5 * Math.random());
+			const e2 = 6 + Math.floor(5 * Math.random());
+			const e12 = Vector.e(e1).cross(Vector.e(e2));
+			const e21 = Vector.e(e2).cross(Vector.e(e1));
+			const sum = e12.add(e21);
+			const res = Vector.constant([0]);
+			console.log(sum.value.length, res.value.length);
+			expect(sum).toEqual(res);
+		});
+
+		it("calculates correct cross", function() {
+			const i = Vector.constant([1, 0]);
+			const j = Vector.constant([0, 1]);
+			expect(i.cross(j)).toEqual(Vector.constant([0, 0, 1]));
+		});
 	});
 
 	it("Calculates magnitude", function() {
