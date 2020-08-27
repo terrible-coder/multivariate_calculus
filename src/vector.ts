@@ -235,6 +235,17 @@ export namespace Vector {
 			return true;
 		}
 
+		/**
+		 * Evaluates and returns the negated value of a vector constant. A
+		 * negative vector \\( - \overrightarrow{A} \\) is defined such that
+		 * 
+		 * \\[ \overrightarrow{A} + \left( - \overrightarrow{A} \right) = \overrightarrow{0} \\].
+		 * 
+		 * Component wise, if \\( \overrightarrow{A} = a_i \hat{e_i} \\), it can
+		 * be expressed as
+		 * 
+		 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
+		 */
 		public get neg() {
 			return Vector.constant(this.value.map(x => x.neg));
 		}
@@ -438,6 +449,17 @@ export namespace Vector {
 			};
 		}
 
+		/**
+		 * Evaluates and returns the negated value of a vector constant. A
+		 * negative vector \\( - \overrightarrow{A} \\) is defined such that
+		 * 
+		 * \\[ \overrightarrow{A} + \left( - \overrightarrow{A} \right) = \overrightarrow{0} \\].
+		 * 
+		 * Component wise, if \\( \overrightarrow{A} = a_i \hat{e_i} \\), it can
+		 * be expressed as
+		 * 
+		 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
+		 */
 		public get neg() {
 			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg);
 		}
@@ -603,6 +625,17 @@ export namespace Vector {
 			throw new Error("Binary operators have two arguments.");
 		}
 
+		/**
+		 * Evaluates and returns the negated value of a vector constant. A
+		 * negative vector \\( - \overrightarrow{A} \\) is defined such that
+		 * 
+		 * \\[ \overrightarrow{A} + \left( - \overrightarrow{A} \right) = \overrightarrow{0} \\].
+		 * 
+		 * Component wise, if \\( \overrightarrow{A} = a_i \hat{e_i} \\), it can
+		 * be expressed as
+		 * 
+		 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
+		 */
 		public get neg() {
 			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg);
 		}
