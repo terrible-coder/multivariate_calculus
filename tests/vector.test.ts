@@ -1,8 +1,7 @@
-const { Vector, __ } = require("../build/vector");
-const { isExpression } = require("../build/core/definitions");
-const { Scalar } = require("../build/scalar");
-const { sqrt } = require("../build/core/math/functions");
-const { BigNum } = require("../build/core/math/bignum");
+import { Vector, __ } from "../src/vector";
+import { isExpression } from "../src/core/definitions";
+import { Scalar } from "../src/scalar";
+import { BigNum } from "../src/core/math/bignum";
 
 it("checks unknown value alias", function() {
 	expect(__).toBe(undefined);
@@ -34,7 +33,7 @@ describe("Vector constants", function() {
 		expect(v).toEqual(A);
 	});
 
-	it("Checks naming system", function() {
+	test("Naming system", function() {
 		expect(Vector.constant("A")).toBe(a);
 		expect(a).not.toBe(A);
 		expect(A.equals(a)).toBe(true);
@@ -42,7 +41,7 @@ describe("Vector constants", function() {
 	});
 
 	it("Gets components", function() {
-		let i;
+		let i: number;
 		for(i = 1; i <= arr.length; i++)
 			expect(A.X(i)).toEqual(Scalar.constant(arr[i - 1]));
 		for(; i < 10; i++)
@@ -58,20 +57,40 @@ describe("Vector constants", function() {
 		expect(Vector.constant([1, 1, 1])).toEqual(B);
 	});
 
+	it("Negates", function() {
+		const A_neg = A.neg;
+		expect(A_neg).toEqual(Vector.constant([-1, -1, -2]));
+		expect(A.add(A_neg)).toEqual(Vector.constant([0]));
+	});
+
 	it("Adds", function() {
 		expect(A.add(B)).toBeInstanceOf(Vector);
 		expect(A.add(B)).toEqual(Vector.constant([2, 2, 3]));
 	});
 
 	it("generalises dot", function() {
-		expect(_=> A.dot(random)).not.toThrow();
+		expect(() => A.dot(random)).not.toThrow();
+		expect(A.dot(random)).toBeInstanceOf(Scalar.Constant);
 	});
 
-	// it("Calculates cross product", function() {
-	// 	const i = Vector.constant([1, 0]);
-	// 	const j = Vector.constant([0, 1]);
-	// 	expect(i.cross(j)).toEqual(Vector.constant([0, 0, 1]));
-	// });
+	describe("Calculates cross product", function() {
+		test("anti-symmetric values", function() {
+			const e1 = 1 + Math.floor(5 * Math.random());
+			const e2 = 6 + Math.floor(5 * Math.random());
+			const e12 = Vector.e(e1).cross(Vector.e(e2));
+			const e21 = Vector.e(e2).cross(Vector.e(e1));
+			const sum = e12.add(e21);
+			const res = Vector.constant([0]);
+			console.log(sum.value.length, res.value.length);
+			expect(sum).toEqual(res);
+		});
+
+		it("calculates correct cross", function() {
+			const i = Vector.constant([1, 0]);
+			const j = Vector.constant([0, 1]);
+			expect(i.cross(j)).toEqual(Vector.constant([0, 0, 1]));
+		});
+	});
 
 	it("Calculates magnitude", function() {
 		const mag = Scalar.constant(random.dot(random).value.pow(BigNum.real("0.5")));
@@ -86,7 +105,6 @@ describe("Vector constants", function() {
 
 	it("Unit vector", function() {
 		const one = Scalar.constant(1);
-		// expect(Vector.mag(Vector.unit(random))).toEqual(one);
 		expect(Vector.mag(Vector.unit(B))).toEqual(one);
 	});
 });
@@ -136,9 +154,9 @@ describe("Vector variable", function() {
 		const M = Vector.mag(B);
 		expect(M).toBeInstanceOf(Scalar);
 		expect(isExpression(M)).toBe(true);
-		// expect(M.at(new Map([
-		// 	[B, Vector.constant([1, 1, 1, 1, 1])]
-		// ]))).toEqual(Scalar.constant(Math.sqrt(5)));
+		expect(M.at(new Map([
+			[B, Vector.constant([1, 1, 1, 1, 1])]
+		]))).toEqual(Scalar.constant(5).pow(Scalar.constant(0.5)));
 	});
 
 	it("Evaluates unit vector", function() {
@@ -161,5 +179,13 @@ describe("Vector variable", function() {
 		]))).toEqual(expr2.at(new Map([
 			[B, A]
 		])));
+	});
+
+	it("Negates", function() {
+		const expr = B.add(B.neg);
+		const zero = expr.at(new Map([
+			[B, A]
+		]));
+		expect(zero).toEqual(Vector.constant([0]));
 	});
 });

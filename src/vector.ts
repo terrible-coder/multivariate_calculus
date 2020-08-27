@@ -26,6 +26,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
 	readonly abstract X: (i: number) => Scalar;
 	readonly quantity = "vector";
+	readonly abstract neg: Vector;
 
 	/**
 	 * Adds two {@link Vector}s together. If `this` and `that` are both constants
@@ -181,7 +182,7 @@ export namespace Vector {
 			for(const x of value)
 				if(x instanceof Scalar.Constant)
 					this.value.push(x);
-				else this.value.push(new Scalar.Constant(x));
+				else this.value.push(Scalar.constant(x));
 			// this.dimension = this.value.length;
 		}
 
@@ -235,6 +236,21 @@ export namespace Vector {
 		}
 
 		/**
+		 * Evaluates and returns the negated value of a vector constant. A
+		 * negative vector \\( - \overrightarrow{A} \\) is defined such that
+		 * 
+		 * \\[ \overrightarrow{A} + \left( - \overrightarrow{A} \right) = \overrightarrow{0} \\].
+		 * 
+		 * Component wise, if \\( \overrightarrow{A} = a_i \hat{e_i} \\), it can
+		 * be expressed as
+		 * 
+		 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
+		 */
+		public get neg() {
+			return Vector.constant(this.value.map(x => x.neg));
+		}
+
+		/**
 		 * Adds two {@link Vector.Constant} objects numerically.
 		 * @param that The {@link Vector.Constant} to add to `this`.
 		 * @return The vector sum of `this` and `that`.
@@ -254,7 +270,7 @@ export namespace Vector {
 				const vec: Scalar.Constant[] = [];
 				for(let i = 1; i <= m; i++)
 					vec.push(this.X(i).add(that.X(i)));
-				return new Vector.Constant(vec);
+				return Vector.constant(vec);
 			}
 			return new Vector.Expression(BinaryOperator.ADD, this, that, (i: number) => {
 				if(i <= 0)
@@ -280,10 +296,10 @@ export namespace Vector {
 		public sub(that: Vector) {
 			if(that instanceof Vector.Constant) {
 				const m = Math.max(this.value.length, that.value.length);
-				const vec: BigNum[] = [];
+				const vec: Scalar.Constant[] = [];
 				for(let i = 1; i <= m; i++)
-					vec.push(this.X(i).value.sub(that.X(i).value));
-				return new Vector.Constant(vec);
+					vec.push(this.X(i).sub(that.X(i)));
+				return Vector.constant(vec);
 			}
 			return new Vector.Expression(BinaryOperator.SUB, this, that, (i: number) => {
 				if(i <= 0)
@@ -314,7 +330,7 @@ export namespace Vector {
 				const m = Math.max(this.value.length, that.value.length);
 				for(let i = 1; i <= m; i++)
 					parallel = parallel.add(this.X(i).value.mul(that.X(i).value));
-				return new Scalar.Constant(parallel);
+				return Scalar.constant(parallel);
 			}
 			return new Scalar.Expression(BinaryOperator.DOT, this, that);
 		}
@@ -335,8 +351,6 @@ export namespace Vector {
 		 */
 		// public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
 		public cross(that: Vector.Constant) {
-			// if(!(that instanceof Vector.Constant))
-			// 	throw new Error();
 			const n = Math.max(this.value.length, that.value.length);
 			const resLength = n === 2? 3: Math.pow(2, Math.ceil(Math.log2(n - 1)) + 1) - 1;
 			const res = new Array(resLength).fill(0).map(() => Scalar.ZERO);
@@ -370,7 +384,7 @@ export namespace Vector {
 		public scale(k: Scalar.Variable | Scalar.Expression): Vector.Expression;
 		public scale(k: Scalar) {
 			if(k instanceof Scalar.Constant)
-				return new Vector.Constant(this.value.map(x => k.mul(x).value));
+				return Vector.constant(this.value.map(x => k.mul(x)));
 			return new Vector.Expression(BinaryOperator.SCALE, this, k, (i: number) => {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
@@ -433,6 +447,21 @@ export namespace Vector {
 					return Scalar.variable(this.name + "_" + i);
 				return (i <= this.value.length)? this.value[i - 1]: Scalar.constant(0);
 			};
+		}
+
+		/**
+		 * Evaluates and returns the negated value of a vector constant. A
+		 * negative vector \\( - \overrightarrow{A} \\) is defined such that
+		 * 
+		 * \\[ \overrightarrow{A} + \left( - \overrightarrow{A} \right) = \overrightarrow{0} \\].
+		 * 
+		 * Component wise, if \\( \overrightarrow{A} = a_i \hat{e_i} \\), it can
+		 * be expressed as
+		 * 
+		 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
+		 */
+		public get neg() {
+			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg);
 		}
 
 		/**
@@ -597,6 +626,21 @@ export namespace Vector {
 		}
 
 		/**
+		 * Evaluates and returns the negated value of a vector constant. A
+		 * negative vector \\( - \overrightarrow{A} \\) is defined such that
+		 * 
+		 * \\[ \overrightarrow{A} + \left( - \overrightarrow{A} \right) = \overrightarrow{0} \\].
+		 * 
+		 * Component wise, if \\( \overrightarrow{A} = a_i \hat{e_i} \\), it can
+		 * be expressed as
+		 * 
+		 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
+		 */
+		public get neg() {
+			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg);
+		}
+
+		/**
 		 * Creates and returns a {@link Vector.Expression} for the addition of
 		 * two {@link Vector} objects. The {@link type} of `that` does not matter because
 		 * adding an unknown vector/vector expression to another vector always
@@ -654,8 +698,6 @@ export namespace Vector {
 			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
 				if(i <= 0)
 					throw new Error("Indexing starts from `1`.");
-				// if(this.value.length > 3)
-				// 	throw new Error("Cross product defined only in 3 dimensions.");
 				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
 				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
 				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
@@ -761,10 +803,8 @@ export namespace Vector {
 		if(Array.isArray(a)) {
 			let values: BigNum[] = [];
 			if(typeof a[0] === "number")
-				// for(let i = 0; i < a.length; i++)
 				values = (<Array<number>>a).map(n => BigNum.real(n));
 			else if(a[0] instanceof Scalar.Constant)
-				// for(let i = 0; i < a.length; i++)
 				values = (<Array<Scalar.Constant>>a).map(n => n.value);
 			let i = values.length - 1;
 			for(; i >= 0; i--)
