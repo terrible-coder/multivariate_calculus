@@ -1,7 +1,6 @@
 const { Scalar } = require("../build/scalar");
 const { Component } = require("../build/core/math/component");
 const { BigNum } = require("../build/core/math/bignum");
-// const { DivisionByZero, Overwrite } = require("../build/core/errors");
 
 function randomDigit() {
 	const digit = (10 * Math.random()) | 0;
@@ -13,7 +12,7 @@ describe("Scalars", function() {
 		describe("decimal notation", function() {
 			test("from 1 real", function() {
 				for(let i = 0; i < 100; i++) {
-					let rand;
+					let rand: number;
 					rand = (10 * Math.random()) | 0;
 					const integers = new Array(rand).fill(0).map(() => randomDigit()).join("");
 					rand = (10 * Math.random()) | 0;
@@ -167,12 +166,12 @@ describe("Scalars", function() {
 			expect(() => a.div(Scalar.ZERO)).toThrowError("Division by zero");
 		});
 
-		// it("Exponentiates", function() {
-		// 	const res = a.pow(b);
-		// 	expect(res).toEqual(Scalar.constant(8));
-		// 	expect(a.pow(Scalar.ZERO)).toEqual(Scalar.constant(1));
-		// 	expect(() => Scalar.ZERO.pow(Scalar.ZERO)).toThrowError("0 raised to the power 0");
-		// });
+		it("Exponentiates", function() {
+			const res = a.pow(b);
+			expect(res).toEqual(Scalar.constant(8));
+			expect(a.pow(Scalar.ZERO)).toEqual(Scalar.constant(1));
+			expect(() => Scalar.ZERO.pow(Scalar.ZERO)).toThrowError("0 raised to the power 0");
+		});
 	});
 
 	describe("Variables", function() {
