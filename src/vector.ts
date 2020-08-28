@@ -830,9 +830,9 @@ export namespace Vector {
 				if(!values[i].equals(BigNum.real(0)))
 					break;
 			values = values.slice(0, i+1);
-			if(b === undefined) {
+			if(b === undefined)
 				c = new Vector.Constant(values);
-			} else {
+			else {
 				c = NAMED_CONSTANTS.get(b);
 				if(c !== undefined)
 					throw new Error("Attempt to redefine a constant: A constant with the same name already exists.");
@@ -879,30 +879,27 @@ export namespace Vector {
 	export function variable(name: string, value: (Scalar.Constant | undefined | number)[]): Vector.Variable;
 	export function variable(name: string, value?: (Scalar.Constant | undefined | number)[]) {
 		let v = VARIABLES.get(name);
-		if(v === undefined) {
-			if(value === undefined)
-				v = new Vector.Variable(name);
-			else {
-				const arr: (Scalar.Constant | Scalar.Variable)[] = [];
-				if(value !== undefined) {
-					let i = value.length - 1;
-					for(; i >= 0; i--)
-						if(value[i] !== Scalar.constant(0) || value[i] !== 0)
-							break;
-					for(let j = 0; j <= i; j++) {
-						const x = value[j];
-						if(x === undefined)
-							arr.push(Scalar.variable(name + "_" + (j+1)));
-						else if(x instanceof Scalar.Constant)
-							arr.push(x);
-						else
-							arr.push(Scalar.constant(x));
-					}
+		if(v !== undefined)
+			return v;
+		if(value === undefined)
+			v = new Vector.Variable(name);
+		else {
+			const arr: (Scalar.Constant | Scalar.Variable)[] = [];
+			if(value !== undefined) {
+				let i = value.length - 1;
+				for(; i >= 0; i--)
+					if(value[i] !== Scalar.constant(0) || value[i] !== 0)
+						break;
+				for(let j = 0; j <= i; j++) {
+					const x = value[j];
+					if(x === undefined) arr.push(Scalar.variable(name + "_" + (j+1)));
+					else if(x instanceof Scalar.Constant) arr.push(x);
+					else arr.push(Scalar.constant(x));
 				}
-				v = new Vector.Variable(name, arr);
 			}
-			VARIABLES.set(name, v);
+			v = new Vector.Variable(name, arr);
 		}
+		VARIABLES.set(name, v);
 		return v;
 	}
 
