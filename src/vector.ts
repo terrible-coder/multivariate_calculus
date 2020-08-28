@@ -857,6 +857,15 @@ export namespace Vector {
 	 */
 	export function variable(name: string): Vector.Variable;
 	/**
+	 * Creates a new {@link Vector.Variable} object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * 
+	 * This is the recommended way of creating {@link Vector.Variable} objects instead of
+	 * using the constructor.
+	 * @param name The string with which `this` object will be identified.
+	 */
+	export function variable(name: string, dimension: number): Vector.Variable;
+	/**
 	 * Creates a {@link Vector.Variable} object from an array. The array may
 	 * contain known scalar constants and, for the components yet unknown,
 	 * [\_\_](../globals.html#__). Passing ``__`` as an element of the `value` array automatically
@@ -877,25 +886,25 @@ export namespace Vector {
 	 * @param value The array containing the values with which to initialise the vector variable object.
 	 */
 	export function variable(name: string, value: (Scalar.Constant | undefined | number)[]): Vector.Variable;
-	export function variable(name: string, value?: (Scalar.Constant | undefined | number)[]) {
+	export function variable(name: string, b?: number | (Scalar.Constant | undefined | number)[]) {
 		let v = VARIABLES.get(name);
 		if(v !== undefined)
 			return v;
-		if(value === undefined)
+		if(b === undefined)
 			v = new Vector.Variable(name);
+		else if(typeof b === "number")
+			v = new Vector.Variable(name, b);
 		else {
 			const arr: (Scalar.Constant | Scalar.Variable)[] = [];
-			if(value !== undefined) {
-				let i = value.length - 1;
-				for(; i >= 0; i--)
-					if(value[i] !== Scalar.constant(0) || value[i] !== 0)
-						break;
-				for(let j = 0; j <= i; j++) {
-					const x = value[j];
-					if(x === undefined) arr.push(Scalar.variable(name + "_" + (j+1)));
-					else if(x instanceof Scalar.Constant) arr.push(x);
-					else arr.push(Scalar.constant(x));
-				}
+			let i = b.length - 1;
+			for(; i >= 0; i--)
+				if(b[i] !== Scalar.constant(0) || b[i] !== 0)
+					break;
+			for(let j = 0; j <= i; j++) {
+				const x = b[j];
+				if(x === undefined) arr.push(Scalar.variable(name + "_" + (j+1)));
+				else if(x instanceof Scalar.Constant) arr.push(x);
+				else arr.push(Scalar.constant(x));
 			}
 			v = new Vector.Variable(name, arr);
 		}
