@@ -26,6 +26,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
 	readonly abstract X: (i: number) => Scalar;
 	readonly quantity = "vector";
+	readonly abstract dimension: number;
 	readonly abstract neg: Vector;
 
 	/**
@@ -115,7 +116,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 		if(A instanceof Vector.Constant)
 			return A.scale(Scalar.constant(1).div(Vector.mag(A)));
 		const m = Vector.mag(A);
-		return new Vector.Expression(UnaryOperator.UNIT, A, (i: number) => A.X(i).div(m));
+		return new Vector.Expression(UnaryOperator.UNIT, A, (i: number) => A.X(i).div(m), A.dimension);
 	}
 }
 
@@ -201,6 +202,10 @@ export namespace Vector {
 			};
 		}
 
+		public get dimension() {
+			return this.value.length;
+		}
+
 		/**
 		 * Checks for equality of two vector constants. The equality check
 		 * for floating point numbers becomes problematic in the decimal system.
@@ -276,7 +281,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).add(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -305,7 +310,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).sub(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -389,7 +394,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).mul(k);
-			});
+			}, this.dimension);
 		}
 	}
 
@@ -400,7 +405,8 @@ export namespace Vector {
 		readonly type = "variable";
 		readonly classRef = Vector.Variable;
 		readonly name: string;
-		readonly value: (Scalar.Variable | Scalar.Constant)[] = [];
+		readonly dimension: number;
+		readonly value: (Scalar.Variable | Scalar.Constant)[];
 
 		/**
 		 * Creates a {@link Vector.Variable} object.
@@ -411,7 +417,7 @@ export namespace Vector {
 		 * @see {@link Vector.variable}
 		 * @param name The name with which the {@link Vector.Variable} is going to be identified.
 		 */
-		constructor(name: string);
+		constructor(name: string, dimension?: number);
 		/**
 		 * Creates a {@link Vector.Variable} object from an array. The array may
 		 * contain known {@link Scalar.Constants} and, for the components yet unknown,
@@ -426,11 +432,19 @@ export namespace Vector {
 		 * @param value The array containing the values with which to initialise the vector variable object.
 		 */
 		constructor(name: string, value: (Scalar.Variable | Scalar.Constant)[]);
-		constructor(a: string, b?: (Scalar.Variable | Scalar.Constant)[]) {
+		constructor(a: string, b: undefined | number | (Scalar.Variable | Scalar.Constant)[]) {
 			super();
 			this.name = a;
-			if(b !== undefined)
+			if(b === undefined) {
+				this.value = [];
+				this.dimension = 3;
+			} else if(typeof b === "number") {
+				this.value = [];
+				this.dimension = b;
+			} else {
 				this.value = b;
+				this.dimension = this.value.length;
+			}
 		}
 
 		/**
@@ -461,7 +475,7 @@ export namespace Vector {
 		 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
 		 */
 		public get neg() {
-			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg);
+			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg, this.dimension);
 		}
 
 		/**
@@ -476,7 +490,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).add(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -491,7 +505,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).sub(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -525,7 +539,7 @@ export namespace Vector {
 				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
 					(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
 						a1.mul(b2).sub(a2.mul(b1));
-			});
+			}, 3); // implement actual algorithm later
 		}
 
 		/**
@@ -540,7 +554,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).mul(k);
-			});
+			}, this.dimension);
 		}
 	}
 
@@ -552,6 +566,8 @@ export namespace Vector {
 		readonly classRef = Vector.Expression;
 		readonly arg_list: Set<_Variable>;
 		readonly rest: any[];
+		readonly dimension: number;
+		readonly op: Operator;
 		readonly operands: Evaluable[] = [];
 		/**
 		 * Returns the components of `this` vector. The index values start
@@ -569,7 +585,7 @@ export namespace Vector {
 		 * @param rhs The right hand side argument for the root operator.
 		 * @param X The accessor function which defines what the `i`th element should be.
 		 */
-		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, X: (i: number) => Scalar, ...args: any[]);
+		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, X: (i: number) => Scalar, dimension: number, ...args: any[]);
 		/**
 		 * Creates a vector expression for a binary operator with left and right
 		 * hand side arguments.
@@ -577,19 +593,22 @@ export namespace Vector {
 		 * @param arg The argument for the root operator.
 		 * @param X The accessor function which defines what the `i`th element should be.
 		 */
-		constructor(op: UnaryOperator, arg: Evaluable, X: (i: number) => Scalar, ...args: any[]);
-		constructor(readonly op: Operator, ...args: any[]) {
+		constructor(op: UnaryOperator, arg: Evaluable, X: (i: number) => Scalar, dimension: number, ...args: any[]);
+		constructor(op: Operator, ...args: any[]) {
 			super();
+			this.op = op;
 			let a, b = undefined;
 			if(isBinaryOperator(op)) {
 				[a, b] = args.slice(0, 2);
 				this.operands.push(a, b);
 				this.X = args[2];
-				this.rest = args.slice(3);
+				this.dimension = args[3];
+				this.rest = args.slice(4);
 			} else if(isUnaryOperator(op)) {
 				a = args[0];
 				this.operands.push(a);
 				this.X = args[1];
+				this.dimension = args[2];
 				this.rest = args.slice(2);
 			} else throw new Error("Illegal argument.");
 			this.arg_list = ExpressionBuilder.createArgList(a, b);
@@ -637,7 +656,7 @@ export namespace Vector {
 		 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
 		 */
 		public get neg() {
-			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg);
+			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg, this.dimension);
 		}
 
 		/**
@@ -653,7 +672,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return this.X(i).add(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -669,7 +688,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return this.X(i).sub(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -703,7 +722,7 @@ export namespace Vector {
 				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
 					(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
 						a1.mul(b2).sub(a2.mul(b1));
-			});
+			}, 3); // implement actual algorithm later
 		}
 
 		/**
@@ -718,7 +737,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return this.X(i).mul(k);
-			});
+			}, this.dimension);
 		}
 
 		/**
