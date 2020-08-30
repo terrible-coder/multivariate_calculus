@@ -64,7 +64,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	 * @param that The scalar to subtract from `this`.
 	 * @return The vector product of `this` and `that`.
 	 */
-	// public abstract cross(that: Vector): Vector;
+	public abstract cross(that: Vector): Vector;
 
 	/**
 	 * Scales, or multiplies the "size" (magnitude) of, `this` vector by given
