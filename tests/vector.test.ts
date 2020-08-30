@@ -138,17 +138,17 @@ describe("Vector variable", function() {
 		expect(c_).toEqual(Scalar.constant(4));
 	});
 
-	// it("Calculates cross product", function() {
-	// 	const i = Vector.variable("i");
-	// 	const j = Vector.constant([0, 1]);
-	// 	const c = i.cross(j);
-	// 	for(let I = 1; I <= 3; I++)
-	// 		expect(c.X(I)).toBeInstanceOf(Scalar.Expression);
-	// 	expect(c).toBeInstanceOf(Vector.Expression);
-	// 	expect(c.at(new Map([
-	// 		[i, Vector.constant([1, 0])]
-	// 	]))).toEqual(Vector.constant([0, 0, 1]));
-	// });
+	it("Calculates cross product", function() {
+		const i = Vector.variable("i");
+		const j = Vector.constant([0, 1]);
+		const c = i.cross(j);
+		for(let I = 1; I <= 3; I++)
+			expect(c.X(I)).toBeInstanceOf(Scalar.Expression);
+		expect(c).toBeInstanceOf(Vector.Expression);
+		expect(c.at(new Map([
+			[i, Vector.constant([1, 0])]
+		]))).toEqual(Vector.constant([0, 0, 1]));
+	});
 
 	it("Evaluates magnitude", function() {
 		const M = Vector.mag(B);
