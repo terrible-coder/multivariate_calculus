@@ -917,14 +917,38 @@ export namespace Vector {
 	}
 }
 
+/**
+ * Creates an array of {@link Scalar.Constant} as expected by the {@link Vector.Constant}
+ * constructor. Trims out the trailing zeroes in the array.
+ * @param value List of constant scalars.
+ * @internal
+ */
 function constantFromScalars(value: Scalar.Constant[]) {
 	const zeroIndex = value.length - value.reverse().findIndex(x => !x.equals(Scalar.ZERO));
 	value.reverse();
 	return zeroIndex === value.length + 1? []: value.slice(0, zeroIndex);
 }
 
+/**
+ * Creates an array of {@link Scalar.Constant} as expected by the {@link Vector.Constant}
+ * constructor from an array of numbers. Trims out the trailing zeroes in the array.
+ * @param value List of numbers.
+ * @internal
+ */
 function constantFromNumbers(value: number[]): Scalar.Constant[];
+/**
+ * Creates an array of {@link Scalar.Constant} as expected by the {@link Vector.Constant}
+ * constructor from an array of {@link BigNum}. Trims out the trailing zeroes in the array.
+ * @param value List of numbers.
+ * @internal
+ */
 function constantFromNumbers(value: BigNum[]): Scalar.Constant[];
+/**
+ * Creates an array of {@link Scalar.Constant} as expected by the {@link Vector.Constant}
+ * constructor from an array of numbers. Trims out the trailing zeroes in the array.
+ * @param value List of numbers.
+ * @internal
+ */
 function constantFromNumbers(value: (number | BigNum)[]): Scalar.Constant[];
 function constantFromNumbers(value: (number | BigNum)[]) {
 	const scalars = value.map(x => x instanceof BigNum? Scalar.constant(x): Scalar.constant(x));
