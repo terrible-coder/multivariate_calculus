@@ -110,6 +110,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="vector.variable.html#classref" class="tsd-kind-icon">class<wbr>Ref</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="vector.variable.html#dimension" class="tsd-kind-icon">dimension</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="vector.variable.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="vector.variable.html#quantity" class="tsd-kind-icon">quantity</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="vector.variable.html#type" class="tsd-kind-icon">type</a></li>
@@ -127,7 +128,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="vector.variable.html#add" class="tsd-kind-icon">add</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="vector.variable.html#cross" class="tsd-kind-icon">cross</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="vector.variable.html#cross" class="tsd-kind-icon">cross</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="vector.variable.html#dot" class="tsd-kind-icon">dot</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="vector.variable.html#getdefinition" class="tsd-kind-icon">get<wbr>Definition</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="vector.variable.html#scale" class="tsd-kind-icon">scale</a></li>
@@ -145,14 +146,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Variable<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vector.variable.html" class="tsd-signature-type">Variable</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Variable<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, dimension<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vector.variable.html" class="tsd-signature-type">Variable</a></li>
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Variable<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><a href="scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> | </span><a href="scalar.variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vector.variable.html" class="tsd-signature-type">Variable</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L403">vector.ts:403</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L417">vector.ts:417</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -177,13 +178,16 @@
 										</div>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> dimension: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="vector.variable.html" class="tsd-signature-type">Variable</a></h4>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L414">vector.ts:414</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L428">vector.ts:428</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -234,7 +238,18 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="numerical.html">Numerical</a>.<a href="numerical.html#classref">classRef</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L401">vector.ts:401</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L414">vector.ts:414</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
+					<a name="dimension" class="tsd-anchor"></a>
+					<h3>dimension</h3>
+					<div class="tsd-signature tsd-kind-icon">dimension<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<p>Overrides <a href="vector.html">Vector</a>.<a href="vector.html#dimension">dimension</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L416">vector.ts:416</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -245,7 +260,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/variable.html">Variable</a>.<a href="../interfaces/variable.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L402">vector.ts:402</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L415">vector.ts:415</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -257,7 +272,7 @@
 						<p>Implementation of <a href="../interfaces/variable.html">Variable</a>.<a href="../interfaces/variable.html#quantity">quantity</a></p>
 						<p>Inherited from <a href="vector.html">Vector</a>.<a href="vector.html#quantity">quantity</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L28">vector.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L28">vector.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -269,17 +284,17 @@
 						<p>Implementation of <a href="../interfaces/variable.html">Variable</a>.<a href="../interfaces/variable.html#type">type</a></p>
 						<p>Overrides <a href="vector.html">Vector</a>.<a href="vector.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L400">vector.ts:400</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L413">vector.ts:413</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="value" class="tsd-anchor"></a>
 					<h3>value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><a href="scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> | </span><a href="scalar.variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><a href="scalar.constant.html" class="tsd-signature-type">Constant</a><span class="tsd-signature-symbol"> | </span><a href="scalar.variable.html" class="tsd-signature-type">Variable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L403">vector.ts:403</a></li>
+							<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L417">vector.ts:417</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -297,7 +312,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="vector.html">Vector</a>.<a href="vector.html#x">X</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L442">vector.ts:442</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L464">vector.ts:464</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -322,7 +337,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="vector.html">Vector</a>.<a href="vector.html#neg">neg</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L463">vector.ts:463</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L485">vector.ts:485</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -353,7 +368,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="vector.html">Vector</a>.<a href="vector.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L474">vector.ts:474</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L496">vector.ts:496</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -377,17 +392,18 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="cross" class="tsd-anchor"></a>
 					<h3>cross</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">cross<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="vector.html" class="tsd-signature-type">Vector</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vector.expression.html" class="tsd-signature-type">Expression</a></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">cross<span class="tsd-signature-symbol">(</span>that<span class="tsd-signature-symbol">: </span><a href="vector.html" class="tsd-signature-type">Vector</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="vector.html">Vector</a>.<a href="vector.html#cross">cross</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L517">vector.ts:517</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L539">vector.ts:539</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -407,7 +423,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="vector.expression.html" class="tsd-signature-type">Expression</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 							<p>Expression for vector product of <code>this</code> and <code>that</code>.</p>
 						</li>
 					</ul>
@@ -423,7 +439,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="vector.html">Vector</a>.<a href="vector.html#dot">dot</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L505">vector.ts:505</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L527">vector.ts:527</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -459,7 +475,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="numerical.html">Numerical</a>.<a href="numerical.html#getdefinition">getDefinition</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/core/definitions.ts#L135">core/definitions.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/core/definitions.ts#L135">core/definitions.ts:135</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -497,7 +513,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="vector.html">Vector</a>.<a href="vector.html#scale">scale</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L538">vector.ts:538</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L555">vector.ts:555</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -532,7 +548,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="vector.html">Vector</a>.<a href="vector.html#sub">sub</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L489">vector.ts:489</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L511">vector.ts:511</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -568,7 +584,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="vector.html">Vector</a>.<a href="vector.html#mag">mag</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L83">vector.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L84">vector.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -592,7 +608,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="vector.html">Vector</a>.<a href="vector.html#mag">mag</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L91">vector.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L92">vector.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -628,7 +644,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="vector.html">Vector</a>.<a href="vector.html#unit">unit</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L107">vector.ts:107</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L108">vector.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -652,7 +668,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="vector.html">Vector</a>.<a href="vector.html#unit">unit</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/1eea0c0/src/vector.ts#L113">vector.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/terrible-coder/multivariate_calculus/blob/d94567e/src/vector.ts#L114">vector.ts:114</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -706,6 +722,9 @@
 									<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
 										<a href="vector.variable.html#classref" class="tsd-kind-icon">class<wbr>Ref</a>
 									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
+										<a href="vector.variable.html#dimension" class="tsd-kind-icon">dimension</a>
+									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-class">
 										<a href="vector.variable.html#name" class="tsd-kind-icon">name</a>
 									</li>
@@ -727,7 +746,7 @@
 									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 										<a href="vector.variable.html#add" class="tsd-kind-icon">add</a>
 									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-class">
+									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 										<a href="vector.variable.html#cross" class="tsd-kind-icon">cross</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
@@ -757,6 +776,9 @@
 								<a href="vector.html#classref" class="tsd-kind-icon">class<wbr>Ref</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="vector.html#dimension" class="tsd-kind-icon">dimension</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="vector.html#neg" class="tsd-kind-icon">neg</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -767,6 +789,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="vector.html#add" class="tsd-kind-icon">add</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="vector.html#cross" class="tsd-kind-icon">cross</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="vector.html#dot" class="tsd-kind-icon">dot</a>
