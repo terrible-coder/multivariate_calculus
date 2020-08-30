@@ -3,7 +3,7 @@ import { BinaryOperator, isBinaryOperator } from "./core/operators/binary";
 import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { ExpressionBuilder } from "./core/expression";
 import { Scalar } from "./scalar";
-import { InvalidIndex } from "./core/errors";
+import { InvalidIndex, Overwrite } from "./core/errors";
 import { MathContext } from "./core/math/context";
 import { mathenv } from "./core/env";
 import { BigNum } from "./core/math/bignum";
@@ -818,33 +818,23 @@ export namespace Vector {
 	 */
 	export function constant(name: string): Vector.Constant;
 	export function constant(a: number[] | Scalar.Constant[] | string, b?: string) {
-		let c;
-		if(Array.isArray(a)) {
-			let values: BigNum[] = [];
-			if(typeof a[0] === "number")
-				values = (<Array<number>>a).map(n => BigNum.real(n));
-			else if(a[0] instanceof Scalar.Constant)
-				values = (<Array<Scalar.Constant>>a).map(n => n.value);
-			let i = values.length - 1;
-			for(; i >= 0; i--)
-				if(!values[i].equals(BigNum.real(0)))
-					break;
-			values = values.slice(0, i+1);
-			if(b === undefined)
-				c = new Vector.Constant(values);
-			else {
-				c = NAMED_CONSTANTS.get(b);
-				if(c !== undefined)
-					throw new Error("Attempt to redefine a constant: A constant with the same name already exists.");
-				c = new Vector.Constant(values, b);
-				NAMED_CONSTANTS.set(b, c);
-			}
-		} else {
-			c = NAMED_CONSTANTS.get(a);
-			if(c === undefined)
-				throw new Error("No such constant defined.");
+		if(typeof a === "string") {
+			const value = NAMED_CONSTANTS.get(a);
+			if(value === undefined) throw new Error("No such constant defined.");
+			return value;
 		}
-		return c;
+		let scalars: Scalar.Constant[];
+		let name = "";
+		if(b !== undefined) {
+			if(NAMED_CONSTANTS.get(b) !== undefined)
+				throw new Overwrite(b);
+			name = b;
+		}
+		if(typeof a[0] === "number") scalars = constantFromNumbers(<Array<number>>a);
+		else scalars = constantFromScalars(<Array<Scalar.Constant>>a);
+		const value = name === ""? new Vector.Constant(scalars): new Vector.Constant(scalars, name);
+		if(name !== "") NAMED_CONSTANTS.set(name, value);
+		return value;
 	}
 
 	/**
@@ -923,6 +913,20 @@ export namespace Vector {
 			throw TypeError("Non-positive indices not allowed for basis.");
 		const values = new Array(i).fill(0).map(() => Scalar.ZERO);
 		values[i - 1] = Scalar.constant(1);
-		return new Vector.Constant(values);
+		return Vector.constant(values);
 	}
+}
+
+function constantFromScalars(value: Scalar.Constant[]) {
+	const zeroIndex = value.length - value.reverse().findIndex(x => !x.equals(Scalar.ZERO));
+	value.reverse();
+	return zeroIndex === value.length + 1? []: value.slice(0, zeroIndex);
+}
+
+function constantFromNumbers(value: number[]): Scalar.Constant[];
+function constantFromNumbers(value: BigNum[]): Scalar.Constant[];
+function constantFromNumbers(value: (number | BigNum)[]): Scalar.Constant[];
+function constantFromNumbers(value: (number | BigNum)[]) {
+	const scalars = value.map(x => x instanceof BigNum? Scalar.constant(x): Scalar.constant(x));
+	return constantFromScalars(scalars);
 }
