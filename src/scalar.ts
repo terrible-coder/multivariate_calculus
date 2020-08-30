@@ -505,7 +505,7 @@ export namespace Scalar {
 			}
 			if(that instanceof Vector.Constant)
 				return new Vector.Constant(that.value.map(x => this.value.mul(x.value)));
-			return new Vector.Expression(BinaryOperator.MUL, this, that, (i: number) => (<Scalar>this).mul(that.X(i)));
+			return new Vector.Expression(BinaryOperator.MUL, this, that, (i: number) => (<Scalar>this).mul(that.X(i)), that.dimension);
 		}
 
 		/**
@@ -621,7 +621,7 @@ export namespace Scalar {
 		public mul(that: Scalar | Vector) {
 			if(that instanceof Scalar)
 				return new Scalar.Expression(BinaryOperator.MUL, this, that);
-			return new Vector.Expression(BinaryOperator.MUL, this, that, (i: number) => this.mul(that.X(i)));
+			return new Vector.Expression(BinaryOperator.MUL, this, that, (i: number) => this.mul(that.X(i)), that.dimension);
 		}
 
 		/**
@@ -765,7 +765,7 @@ export namespace Scalar {
 		public mul(that: Scalar | Vector) {
 			if(that instanceof Scalar)
 				return new Scalar.Expression(BinaryOperator.MUL, this, that);
-			return new Vector.Expression(BinaryOperator.MUL, this, that, (i: number) => this.mul(that.X(i)));
+			return new Vector.Expression(BinaryOperator.MUL, this, that, (i: number) => this.mul(that.X(i)), that.dimension);
 		}
 
 		/**

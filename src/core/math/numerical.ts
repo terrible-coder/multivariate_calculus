@@ -146,7 +146,10 @@ export function kronecker(i: number | number[], j: number | number[]) {
 
 type hyperComplex = Array<-1 | 0 | 1>;
 
-/** @internal */
+/**
+ * Creates a real or imaginary base for hyper-complex numbers.
+ * @internal
+ */
 export function hBase(i: number) {
 	i = i | 0;
 	if(i < 0) throw TypeError("Cannot work with negative numbers");
@@ -156,12 +159,18 @@ export function hBase(i: number) {
 	return hyper;
 }
 
-/** @internal */
+/**
+ * Returns the conjugate of a hyper-complex like construct.
+ * @internal
+ */
 export function hConjugate(hyper: hyperComplex) {
 	return hyper.map((x, i) => i === 0? x: -x) as hyperComplex;
 }
 
-/** @internal */
+/**
+ * Adds two hyper-complex like constructs.
+ * @internal
+ */
 export function hAdd(h1: hyperComplex, h2: hyperComplex) {
 	const n = Math.max(h1.length, h2.length);
 	const a = pad(h1, n - h1.length, 0, "end");
@@ -169,7 +178,10 @@ export function hAdd(h1: hyperComplex, h2: hyperComplex) {
 	return new Array(n).fill(0).map((_, i) => a[i] + b[i]) as hyperComplex;
 }
 
-/** @internal */
+/**
+ * Subtracts two hyper-complex like constructs.
+ * @internal
+ */
 export function hSub(h1: hyperComplex, h2: hyperComplex) {
 	const n = Math.max(h1.length, h2.length);
 	const a = pad(h1, n - h1.length, 0, "end");
@@ -177,7 +189,10 @@ export function hSub(h1: hyperComplex, h2: hyperComplex) {
 	return new Array(n).fill(0).map((_, i) => a[i] - b[i]) as hyperComplex;
 }
 
-/** @internal */
+/**
+ * Multiplies two hyper-complex like constructs.
+ * @internal
+ */
 export function hMul(h1: hyperComplex, h2: hyperComplex) {
 	const n = Math.max(h1.length, h2.length);
 	const a = pad(h1, n - h1.length, 0, "end");
@@ -200,7 +215,11 @@ export function hMul(h1: hyperComplex, h2: hyperComplex) {
 	return q1.concat(q2);
 }
 
-/** @internal */
+/**
+ * Computes the cross products of two vector bases using the multiplication
+ * algorithm for hyper-complex numbers.
+ * @internal
+ */
 export function hyper_cross(i: number, j: number) {
 	if(i < 0 || j < 0)
 		throw new TypeError("Cannot work with negative indices");

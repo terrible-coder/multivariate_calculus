@@ -3,7 +3,7 @@ import { BinaryOperator, isBinaryOperator } from "./core/operators/binary";
 import { UnaryOperator, isUnaryOperator } from "./core/operators/unary";
 import { ExpressionBuilder } from "./core/expression";
 import { Scalar } from "./scalar";
-import { InvalidIndex } from "./core/errors";
+import { InvalidIndex, Overwrite } from "./core/errors";
 import { MathContext } from "./core/math/context";
 import { mathenv } from "./core/env";
 import { BigNum } from "./core/math/bignum";
@@ -26,6 +26,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
 	readonly abstract X: (i: number) => Scalar;
 	readonly quantity = "vector";
+	readonly abstract dimension: number;
 	readonly abstract neg: Vector;
 
 	/**
@@ -63,7 +64,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 	 * @param that The scalar to subtract from `this`.
 	 * @return The vector product of `this` and `that`.
 	 */
-	// public abstract cross(that: Vector): Vector;
+	public abstract cross(that: Vector): Vector;
 
 	/**
 	 * Scales, or multiplies the "size" (magnitude) of, `this` vector by given
@@ -115,7 +116,7 @@ export abstract class Vector extends Numerical implements Token, Evaluable {
 		if(A instanceof Vector.Constant)
 			return A.scale(Scalar.constant(1).div(Vector.mag(A)));
 		const m = Vector.mag(A);
-		return new Vector.Expression(UnaryOperator.UNIT, A, (i: number) => A.X(i).div(m));
+		return new Vector.Expression(UnaryOperator.UNIT, A, (i: number) => A.X(i).div(m), A.dimension);
 	}
 }
 
@@ -201,6 +202,10 @@ export namespace Vector {
 			};
 		}
 
+		public get dimension() {
+			return this.value.length;
+		}
+
 		/**
 		 * Checks for equality of two vector constants. The equality check
 		 * for floating point numbers becomes problematic in the decimal system.
@@ -276,7 +281,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).add(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -305,7 +310,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).sub(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -349,10 +354,18 @@ export namespace Vector {
 		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for vector product of `this` and `that`.
 		 */
-		// public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
-		public cross(that: Vector.Constant) {
+		public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
+		public cross(that: Vector) {
+			if(!(that instanceof Vector.Constant)) {
+				const N = Math.max(this.dimension, that.dimension);
+				const properDimension = properVectorDimension(N);
+				return new Vector.Expression(
+					BinaryOperator.CROSS,
+					this, that,
+					cross_index(this, that), properDimension);
+			}
 			const n = Math.max(this.value.length, that.value.length);
-			const resLength = n === 2? 3: Math.pow(2, Math.ceil(Math.log2(n - 1)) + 1) - 1;
+			const resLength = properVectorDimension(n);
 			const res = new Array(resLength).fill(0).map(() => Scalar.ZERO);
 			for(let i = 1; i <= n; i++) {
 				for(let j = 1; j <= n; j++) {
@@ -389,7 +402,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).mul(k);
-			});
+			}, this.dimension);
 		}
 	}
 
@@ -400,7 +413,8 @@ export namespace Vector {
 		readonly type = "variable";
 		readonly classRef = Vector.Variable;
 		readonly name: string;
-		readonly value: (Scalar.Variable | Scalar.Constant)[] = [];
+		readonly dimension: number;
+		readonly value: (Scalar.Variable | Scalar.Constant)[];
 
 		/**
 		 * Creates a {@link Vector.Variable} object.
@@ -411,7 +425,7 @@ export namespace Vector {
 		 * @see {@link Vector.variable}
 		 * @param name The name with which the {@link Vector.Variable} is going to be identified.
 		 */
-		constructor(name: string);
+		constructor(name: string, dimension?: number);
 		/**
 		 * Creates a {@link Vector.Variable} object from an array. The array may
 		 * contain known {@link Scalar.Constants} and, for the components yet unknown,
@@ -426,11 +440,19 @@ export namespace Vector {
 		 * @param value The array containing the values with which to initialise the vector variable object.
 		 */
 		constructor(name: string, value: (Scalar.Variable | Scalar.Constant)[]);
-		constructor(a: string, b?: (Scalar.Variable | Scalar.Constant)[]) {
+		constructor(a: string, b: undefined | number | (Scalar.Variable | Scalar.Constant)[]) {
 			super();
 			this.name = a;
-			if(b !== undefined)
+			if(b === undefined) {
+				this.value = [];
+				this.dimension = 3;
+			} else if(typeof b === "number") {
+				this.value = [];
+				this.dimension = b;
+			} else {
 				this.value = b;
+				this.dimension = this.value.length;
+			}
 		}
 
 		/**
@@ -461,7 +483,7 @@ export namespace Vector {
 		 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
 		 */
 		public get neg() {
-			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg);
+			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg, this.dimension);
 		}
 
 		/**
@@ -476,7 +498,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).add(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -491,7 +513,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).sub(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -515,17 +537,12 @@ export namespace Vector {
 		 * @return Expression for vector product of `this` and `that`.
 		 */
 		public cross(that: Vector) {
-			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
-				if(i <= 0)
-					throw new Error("Indexing starts from `1`.");
-				if(this.value.length > 3)
-					throw new Error("Cross product defined only in 3 dimensions.");
-				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
-				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
-				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
-					(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
-						a1.mul(b2).sub(a2.mul(b1));
-			});
+			const N = Math.max(this.dimension, that.dimension);
+			const properDimension = properVectorDimension(N);
+			return new Vector.Expression(
+				BinaryOperator.CROSS,
+				this, that,
+				cross_index(this, that), properDimension);
 		}
 
 		/**
@@ -540,7 +557,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return (<Scalar>this.X(i)).mul(k);
-			});
+			}, this.dimension);
 		}
 	}
 
@@ -552,6 +569,8 @@ export namespace Vector {
 		readonly classRef = Vector.Expression;
 		readonly arg_list: Set<_Variable>;
 		readonly rest: any[];
+		readonly dimension: number;
+		readonly op: Operator;
 		readonly operands: Evaluable[] = [];
 		/**
 		 * Returns the components of `this` vector. The index values start
@@ -569,7 +588,7 @@ export namespace Vector {
 		 * @param rhs The right hand side argument for the root operator.
 		 * @param X The accessor function which defines what the `i`th element should be.
 		 */
-		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, X: (i: number) => Scalar, ...args: any[]);
+		constructor(op: BinaryOperator, lhs: Evaluable, rhs: Evaluable, X: (i: number) => Scalar, dimension: number, ...args: any[]);
 		/**
 		 * Creates a vector expression for a binary operator with left and right
 		 * hand side arguments.
@@ -577,19 +596,22 @@ export namespace Vector {
 		 * @param arg The argument for the root operator.
 		 * @param X The accessor function which defines what the `i`th element should be.
 		 */
-		constructor(op: UnaryOperator, arg: Evaluable, X: (i: number) => Scalar, ...args: any[]);
-		constructor(readonly op: Operator, ...args: any[]) {
+		constructor(op: UnaryOperator, arg: Evaluable, X: (i: number) => Scalar, dimension: number, ...args: any[]);
+		constructor(op: Operator, ...args: any[]) {
 			super();
+			this.op = op;
 			let a, b = undefined;
 			if(isBinaryOperator(op)) {
 				[a, b] = args.slice(0, 2);
 				this.operands.push(a, b);
 				this.X = args[2];
-				this.rest = args.slice(3);
+				this.dimension = args[3];
+				this.rest = args.slice(4);
 			} else if(isUnaryOperator(op)) {
 				a = args[0];
 				this.operands.push(a);
 				this.X = args[1];
+				this.dimension = args[2];
 				this.rest = args.slice(2);
 			} else throw new Error("Illegal argument.");
 			this.arg_list = ExpressionBuilder.createArgList(a, b);
@@ -637,7 +659,7 @@ export namespace Vector {
 		 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
 		 */
 		public get neg() {
-			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg);
+			return new Vector.Expression(UnaryOperator.NEG, this, i => this.X(i).neg, this.dimension);
 		}
 
 		/**
@@ -653,7 +675,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return this.X(i).add(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -669,7 +691,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return this.X(i).sub(that.X(i));
-			});
+			}, Math.max(this.dimension, that.dimension));
 		}
 
 		/**
@@ -695,15 +717,12 @@ export namespace Vector {
 		 * @return Expression for vector product of `this` and `that`.
 		 */
 		public cross(that: Vector) {
-			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
-				if(i <= 0)
-					throw new Error("Indexing starts from `1`.");
-				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
-				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
-				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
-					(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
-						a1.mul(b2).sub(a2.mul(b1));
-			});
+			const N = Math.max(this.dimension, that.dimension);
+			const properDimension = properVectorDimension(N);
+			return new Vector.Expression(
+				BinaryOperator.CROSS,
+				this, that,
+				cross_index(this, that), properDimension);
 		}
 
 		/**
@@ -718,7 +737,7 @@ export namespace Vector {
 				if(i <= 0)
 					throw new InvalidIndex(i, 0);
 				return this.X(i).mul(k);
-			});
+			}, this.dimension);
 		}
 
 		/**
@@ -799,33 +818,23 @@ export namespace Vector {
 	 */
 	export function constant(name: string): Vector.Constant;
 	export function constant(a: number[] | Scalar.Constant[] | string, b?: string) {
-		let c;
-		if(Array.isArray(a)) {
-			let values: BigNum[] = [];
-			if(typeof a[0] === "number")
-				values = (<Array<number>>a).map(n => BigNum.real(n));
-			else if(a[0] instanceof Scalar.Constant)
-				values = (<Array<Scalar.Constant>>a).map(n => n.value);
-			let i = values.length - 1;
-			for(; i >= 0; i--)
-				if(!values[i].equals(BigNum.real(0)))
-					break;
-			values = values.slice(0, i+1);
-			if(b === undefined) {
-				c = new Vector.Constant(values);
-			} else {
-				c = NAMED_CONSTANTS.get(b);
-				if(c !== undefined)
-					throw new Error("Attempt to redefine a constant: A constant with the same name already exists.");
-				c = new Vector.Constant(values, b);
-				NAMED_CONSTANTS.set(b, c);
-			}
-		} else {
-			c = NAMED_CONSTANTS.get(a);
-			if(c === undefined)
-				throw new Error("No such constant defined.");
+		if(typeof a === "string") {
+			const value = NAMED_CONSTANTS.get(a);
+			if(value === undefined) throw new Error("No such constant defined.");
+			return value;
 		}
-		return c;
+		let scalars: Scalar.Constant[];
+		let name = "";
+		if(b !== undefined) {
+			if(NAMED_CONSTANTS.get(b) !== undefined)
+				throw new Overwrite(b);
+			name = b;
+		}
+		if(typeof a[0] === "number") scalars = constantFromNumbers(<Array<number>>a);
+		else scalars = constantFromScalars(<Array<Scalar.Constant>>a);
+		const value = name === ""? new Vector.Constant(scalars): new Vector.Constant(scalars, name);
+		if(name !== "") NAMED_CONSTANTS.set(name, value);
+		return value;
 	}
 
 	/**
@@ -837,6 +846,15 @@ export namespace Vector {
 	 * @param name The string with which `this` object will be identified.
 	 */
 	export function variable(name: string): Vector.Variable;
+	/**
+	 * Creates a new {@link Vector.Variable} object if it has not been created before.
+	 * Otherwise just returns the previously created object.
+	 * 
+	 * This is the recommended way of creating {@link Vector.Variable} objects instead of
+	 * using the constructor.
+	 * @param name The string with which `this` object will be identified.
+	 */
+	export function variable(name: string, dimension: number): Vector.Variable;
 	/**
 	 * Creates a {@link Vector.Variable} object from an array. The array may
 	 * contain known scalar constants and, for the components yet unknown,
@@ -858,32 +876,29 @@ export namespace Vector {
 	 * @param value The array containing the values with which to initialise the vector variable object.
 	 */
 	export function variable(name: string, value: (Scalar.Constant | undefined | number)[]): Vector.Variable;
-	export function variable(name: string, value?: (Scalar.Constant | undefined | number)[]) {
+	export function variable(name: string, b?: number | (Scalar.Constant | undefined | number)[]) {
 		let v = VARIABLES.get(name);
-		if(v === undefined) {
-			if(value === undefined)
-				v = new Vector.Variable(name);
-			else {
-				const arr: (Scalar.Constant | Scalar.Variable)[] = [];
-				if(value !== undefined) {
-					let i = value.length - 1;
-					for(; i >= 0; i--)
-						if(value[i] !== Scalar.constant(0) || value[i] !== 0)
-							break;
-					for(let j = 0; j <= i; j++) {
-						const x = value[j];
-						if(x === undefined)
-							arr.push(Scalar.variable(name + "_" + (j+1)));
-						else if(x instanceof Scalar.Constant)
-							arr.push(x);
-						else
-							arr.push(Scalar.constant(x));
-					}
-				}
-				v = new Vector.Variable(name, arr);
+		if(v !== undefined)
+			return v;
+		if(b === undefined)
+			v = new Vector.Variable(name);
+		else if(typeof b === "number")
+			v = new Vector.Variable(name, b);
+		else {
+			const arr: (Scalar.Constant | Scalar.Variable)[] = [];
+			let i = b.length - 1;
+			for(; i >= 0; i--)
+				if(b[i] !== Scalar.constant(0) || b[i] !== 0)
+					break;
+			for(let j = 0; j <= i; j++) {
+				const x = b[j];
+				if(x === undefined) arr.push(Scalar.variable(name + "_" + (j+1)));
+				else if(x instanceof Scalar.Constant) arr.push(x);
+				else arr.push(Scalar.constant(x));
 			}
-			VARIABLES.set(name, v);
+			v = new Vector.Variable(name, arr);
 		}
+		VARIABLES.set(name, v);
 		return v;
 	}
 
@@ -898,6 +913,68 @@ export namespace Vector {
 			throw TypeError("Non-positive indices not allowed for basis.");
 		const values = new Array(i).fill(0).map(() => Scalar.ZERO);
 		values[i - 1] = Scalar.constant(1);
-		return new Vector.Constant(values);
+		return Vector.constant(values);
 	}
+}
+
+function properVectorDimension(n: number) {
+	return n === 2 ? 3 : Math.pow(2, Math.ceil(Math.log2(n - 1)) + 1) - 1;
+}
+
+function cross_index(A: Vector, B: Vector) {
+	const N = Math.max(A.dimension, B.dimension);
+	return (i: number) => {
+		if(i <= 0)
+			throw new Error("Indexing starts from `1`.");
+		if(i > properVectorDimension(N)) return Scalar.ZERO;
+		let sum: Scalar = Scalar.ZERO;
+		for(let j = 1; j <= N; j++)
+			for(let k = 1; k <= N; k++) {
+				if(j === k) continue;
+				const signedIndex = hyper_cross(j, k);
+				if(Math.abs(signedIndex) !== i) continue;
+				const sign = Math.sign(signedIndex);
+				const prod = (A.X(j) as Scalar).mul(B.X(k));
+				sum = sign === 1? sum.add(prod): sum.sub(prod);
+			}
+		return sum;
+	};
+}
+
+/**
+ * Creates an array of {@link Scalar.Constant} as expected by the {@link Vector.Constant}
+ * constructor. Trims out the trailing zeroes in the array.
+ * @param value List of constant scalars.
+ * @internal
+ */
+function constantFromScalars(value: Scalar.Constant[]) {
+	const zeroIndex = value.length - value.reverse().findIndex(x => !x.equals(Scalar.ZERO));
+	value.reverse();
+	return zeroIndex === value.length + 1? []: value.slice(0, zeroIndex);
+}
+
+/**
+ * Creates an array of {@link Scalar.Constant} as expected by the {@link Vector.Constant}
+ * constructor from an array of numbers. Trims out the trailing zeroes in the array.
+ * @param value List of numbers.
+ * @internal
+ */
+function constantFromNumbers(value: number[]): Scalar.Constant[];
+/**
+ * Creates an array of {@link Scalar.Constant} as expected by the {@link Vector.Constant}
+ * constructor from an array of {@link BigNum}. Trims out the trailing zeroes in the array.
+ * @param value List of numbers.
+ * @internal
+ */
+function constantFromNumbers(value: BigNum[]): Scalar.Constant[];
+/**
+ * Creates an array of {@link Scalar.Constant} as expected by the {@link Vector.Constant}
+ * constructor from an array of numbers. Trims out the trailing zeroes in the array.
+ * @param value List of numbers.
+ * @internal
+ */
+function constantFromNumbers(value: (number | BigNum)[]): Scalar.Constant[];
+function constantFromNumbers(value: (number | BigNum)[]) {
+	const scalars = value.map(x => x instanceof BigNum? Scalar.constant(x): Scalar.constant(x));
+	return constantFromScalars(scalars);
 }
