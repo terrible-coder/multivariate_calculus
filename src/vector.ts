@@ -354,10 +354,18 @@ export namespace Vector {
 		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for vector product of `this` and `that`.
 		 */
-		// public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
-		public cross(that: Vector.Constant) {
+		public cross(that: Vector.Variable | Vector.Expression): Vector.Expression;
+		public cross(that: Vector) {
+			if(!(that instanceof Vector.Constant)) {
+				const N = Math.max(this.dimension, that.dimension);
+				const properDimension = properVectorDimension(N);
+				return new Vector.Expression(
+					BinaryOperator.CROSS,
+					this, that,
+					cross_index(this, that), properDimension);
+			}
 			const n = Math.max(this.value.length, that.value.length);
-			const resLength = n === 2? 3: Math.pow(2, Math.ceil(Math.log2(n - 1)) + 1) - 1;
+			const resLength = properVectorDimension(n);
 			const res = new Array(resLength).fill(0).map(() => Scalar.ZERO);
 			for(let i = 1; i <= n; i++) {
 				for(let j = 1; j <= n; j++) {
@@ -529,17 +537,12 @@ export namespace Vector {
 		 * @return Expression for vector product of `this` and `that`.
 		 */
 		public cross(that: Vector) {
-			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
-				if(i <= 0)
-					throw new Error("Indexing starts from `1`.");
-				if(this.value.length > 3)
-					throw new Error("Cross product defined only in 3 dimensions.");
-				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
-				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
-				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
-					(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
-						a1.mul(b2).sub(a2.mul(b1));
-			}, 3); // implement actual algorithm later
+			const N = Math.max(this.dimension, that.dimension);
+			const properDimension = properVectorDimension(N);
+			return new Vector.Expression(
+				BinaryOperator.CROSS,
+				this, that,
+				cross_index(this, that), properDimension);
 		}
 
 		/**
@@ -714,15 +717,12 @@ export namespace Vector {
 		 * @return Expression for vector product of `this` and `that`.
 		 */
 		public cross(that: Vector) {
-			return new Vector.Expression(BinaryOperator.CROSS, this, that, (i: number) => {
-				if(i <= 0)
-					throw new Error("Indexing starts from `1`.");
-				const a1 = <Scalar>this.X(1), a2 = <Scalar>this.X(2), a3 = <Scalar>this.X(3);
-				const b1 = <Scalar>that.X(1), b2 = <Scalar>that.X(2), b3 = <Scalar>that.X(3);
-				return (i === 1)? a2.mul(b3).sub(a3.mul(b2)):
-					(i === 2)? a3.mul(b1).sub(a1.mul(b3)):
-						a1.mul(b2).sub(a2.mul(b1));
-			}, 3); // implement actual algorithm later
+			const N = Math.max(this.dimension, that.dimension);
+			const properDimension = properVectorDimension(N);
+			return new Vector.Expression(
+				BinaryOperator.CROSS,
+				this, that,
+				cross_index(this, that), properDimension);
 		}
 
 		/**
@@ -915,6 +915,30 @@ export namespace Vector {
 		values[i - 1] = Scalar.constant(1);
 		return Vector.constant(values);
 	}
+}
+
+function properVectorDimension(n: number) {
+	return n === 2 ? 3 : Math.pow(2, Math.ceil(Math.log2(n - 1)) + 1) - 1;
+}
+
+function cross_index(A: Vector, B: Vector) {
+	const N = Math.max(A.dimension, B.dimension);
+	return (i: number) => {
+		if(i <= 0)
+			throw new Error("Indexing starts from `1`.");
+		if(i > properVectorDimension(N)) return Scalar.ZERO;
+		let sum: Scalar = Scalar.ZERO;
+		for(let j = 1; j <= N; j++)
+			for(let k = 1; k <= N; k++) {
+				if(j === k) continue;
+				const signedIndex = hyper_cross(j, k);
+				if(Math.abs(signedIndex) !== i) continue;
+				const sign = Math.sign(signedIndex);
+				const prod = (A.X(j) as Scalar).mul(B.X(k));
+				sum = sign === 1? sum.add(prod): sum.sub(prod);
+			}
+		return sum;
+	};
 }
 
 /**
