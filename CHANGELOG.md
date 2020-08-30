@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.3.0...v1.4.0) (2020-08-30)
+
+
+### Bug Fixes
+
+* :ambulance: Use predetermined dimensions for vectors ([c7dc554](https://github.com/terrible-coder/multivariate_calculus/commit/c7dc55452f2edc44a8d9a0d6300e477f33703816))
+* Wrapper overload for dimension ([cabba8a](https://github.com/terrible-coder/multivariate_calculus/commit/cabba8ad7e4d1003a5aa7f93dedf1ae5f2357308))
+
+
+### Features Added
+
+* :sparkles: Add back cross as vector operation ([efbd718](https://github.com/terrible-coder/multivariate_calculus/commit/efbd7185f103c0facf3dcf0b803c555489e3e82c))
+* :sparkles: Cross product for variable vectors ([3fb1a42](https://github.com/terrible-coder/multivariate_calculus/commit/3fb1a42e4873f8b3b28fbbc08130e49dcbf65eae))
+* :sparkles: Dimension of vectors ([fea43e3](https://github.com/terrible-coder/multivariate_calculus/commit/fea43e32d6676a74813e8fee502c18e4d4d4d449))
+
 ## [1.3.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.2.0...v1.3.0) (2020-08-27)
 
 
