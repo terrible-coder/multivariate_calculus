@@ -111,7 +111,7 @@ describe("Calls with rest parameters", function() {
 			const atValue = Scalar.constant(2);
 			atValue.add = jest.fn();
 			try {
-			const res = exp.at(new Map([
+			exp.at(new Map([
 					[x, atValue]
 				]));
 			} catch {}
