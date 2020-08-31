@@ -190,26 +190,11 @@ export namespace Vector {
 		 * @param name The name by which `this` is identified.
 		 */
 		constructor(value: Scalar.Constant[], name?: string);
-		/**
-		 * Creates a {@link Vector.Constant} object from a list of numbers.
-		 * One may optionally pass in a string by which `this` object
-		 * may be identified by.
-		 * 
-		 * Using the constructor directly for creating vector objects is
-		 * not recommended.
-		 * 
-		 * @see {@link Vector.constant}
-		 * @param value The fixed value `this` should represent.
-		 * @param name The name by which `this` is identified.
-		 */
-		constructor(value: BigNum[], name?: string);
-		constructor(value: Scalar.Constant[] | BigNum[], name = "") {
+		constructor(value: Scalar.Constant[], name = "") {
 			super();
 			this.name = name;
 			for(const x of value)
-				if(x instanceof Scalar.Constant)
-					this.value.push(x);
-				else this.value.push(Scalar.constant(x));
+				this.value.push(x);
 		}
 
 		/**

@@ -504,7 +504,7 @@ export namespace Scalar {
 				return new Scalar.Expression(BinaryOperator.MUL, this, that);
 			}
 			if(that instanceof Vector.Constant)
-				return new Vector.Constant(that.value.map(x => this.value.mul(x.value)));
+				return Vector.constant(that.value.map(x => this.mul(x)));
 			return new Vector.Expression(BinaryOperator.MUL, this, that, (i: number) => (<Scalar>this).mul(that.X(i)), that.dimension);
 		}
 
