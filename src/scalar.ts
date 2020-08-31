@@ -21,9 +21,9 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public abstract neg: Scalar;
 
 	/**
-	 * Adds two [[Scalar]]s together. If `this` and `that` are both constants
+	 * Adds two {@link Scalar}s together. If `this` and `that` are both constants
 	 * then numerically adds the two and returns a new {@link Scalar.Constant} object
-	 * otherwise creates an [[Expression]] out of them and returns the same.
+	 * otherwise creates an {@link Expression} out of them and returns the same.
 	 * @param that The scalar to add `this` with.
 	 * @return The result of algebraic addition.
 	 */
@@ -32,7 +32,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	/**
 	 * Subtracts `that` from `this`. If `this` and `that` are both constants
 	 * then numerically subtracts one from the other and returns a new
-	 * {@link Scalar.Constant} object otherwise creates an [[Expression]] out of them
+	 * {@link Scalar.Constant} object otherwise creates an {@link Expression} out of them
 	 * and returns the same.
 	 * @param that The scalar to subtract from `this`.
 	 * @return The result of algebraic subtraction.
@@ -40,9 +40,9 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	public abstract sub(that: Scalar): Scalar;
 
 	/**
-	 * Multiplies two [[Scalar]]s together. If `this` and `that` are both constants
+	 * Multiplies two {@link Scalar}s together. If `this` and `that` are both constants
 	 * then numerically multiplies the two and returns a new {@link Scalar.Constant} object
-	 * otherwise creates an [[Expression]] out of them and returns the same.
+	 * otherwise creates an {@link Expression} out of them and returns the same.
 	 * @param that The scalar to multiply `this` with.
 	 * @return The result of algebraic multiplication.
 	 */
@@ -51,7 +51,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	/**
 	 * Divides `this` scalar by `that`. If `this` and `that` are both constants
 	 * then numerically divides the two and returns a new {@link Scalar.Constant} object
-	 * otherwise creates an [[Expression]] out of them and returns the same.
+	 * otherwise creates an {@link Expression} out of them and returns the same.
 	 * @param that The scalar to divide `this` by.
 	 * @return The result of algebraic division.
 	 */
@@ -60,19 +60,19 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	/**
 	 * Raises `this` scalar to the power of `that`. If `this` and `that` are both constants
 	 * then numerically evaluates the exponentiation and returns a new {@link Scalar.Constant} object
-	 * otherwise creates an [[Expression]] out of them and returns the same.
+	 * otherwise creates an {@link Expression} out of them and returns the same.
 	 * @param that The scalar to divide `this` by.
 	 * @return The result of algebraic division.
 	 */
 	public abstract pow(that: Scalar): Scalar;
 
 	/**
-	 * Computes the absolute value of a [[Scalar]].
+	 * Computes the absolute value of a {@link Scalar}.
 	 * @param x A constant scalar.
 	 */
 	public static abs(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Computes the absolute value of a [[Scalar]].
+	 * Computes the absolute value of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static abs(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -83,12 +83,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the trigonometric sine of a [[Scalar]].
+	 * Calculates the trigonometric sine of a {@link Scalar}.
 	 * @param x A constant scalar.
 	 */
 	public static sin(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the trigonometric sine of a [[Scalar]].
+	 * Calculates the trigonometric sine of a {@link Scalar}.
 	 * @param x A scalar variable or expression
 	 */
 	public static sin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -99,12 +99,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the trigonometric cosine of a [[Scalar]].
+	 * Calculates the trigonometric cosine of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static cos(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the trigonometric cosine of a [[Scalar]].
+	 * Calculates the trigonometric cosine of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static cos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -115,12 +115,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the trigonometric tangent of a [[Scalar]].
+	 * Calculates the trigonometric tangent of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static tan(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the trigonometric tangent of a [[Scalar]].
+	 * Calculates the trigonometric tangent of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static tan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -131,12 +131,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the inverse trigonometric sine of a [[Scalar]].
+	 * Calculates the inverse trigonometric sine of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static asin(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the inverse trigonometric sine of a [[Scalar]].
+	 * Calculates the inverse trigonometric sine of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static asin(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -147,12 +147,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the inverse trigonometric cosine of a [[Scalar]].
+	 * Calculates the inverse trigonometric cosine of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static acos(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the inverse trigonometric cosine of a [[Scalar]].
+	 * Calculates the inverse trigonometric cosine of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static acos(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -163,12 +163,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the inverse trigonometric tangent of a [[Scalar]].
+	 * Calculates the inverse trigonometric tangent of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static atan(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the inverse trigonometric tangent of a [[Scalar]].
+	 * Calculates the inverse trigonometric tangent of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static atan(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -179,12 +179,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the hyperbolic sine of a [[Scalar]].
+	 * Calculates the hyperbolic sine of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static sinh(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the hyperbolic sine of a [[Scalar]].
+	 * Calculates the hyperbolic sine of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static sinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -195,12 +195,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the hyperbolic cosine of a [[Scalar]].
+	 * Calculates the hyperbolic cosine of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static cosh(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the hyperbolic cosine of a [[Scalar]].
+	 * Calculates the hyperbolic cosine of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static cosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -211,12 +211,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the hyperbolic tangent of a [[Scalar]].
+	 * Calculates the hyperbolic tangent of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static tanh(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the hyperbolic tangent of a [[Scalar]].
+	 * Calculates the hyperbolic tangent of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static tanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -227,12 +227,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the inverse hyperbolic sine of a [[Scalar]].
+	 * Calculates the inverse hyperbolic sine of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static asinh(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the inverse hyperbolic sine of a [[Scalar]].
+	 * Calculates the inverse hyperbolic sine of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static asinh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -243,12 +243,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the inverse hyperbolic cosine of a [[Scalar]].
+	 * Calculates the inverse hyperbolic cosine of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static acosh(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the inverse hyperbolic cosine of a [[Scalar]].
+	 * Calculates the inverse hyperbolic cosine of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static acosh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -259,12 +259,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the inverse hyperbolic tangent of a [[Scalar]].
+	 * Calculates the inverse hyperbolic tangent of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static atanh(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the inverse hyperbolic tangent of a [[Scalar]].
+	 * Calculates the inverse hyperbolic tangent of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static atanh(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -275,12 +275,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the exponential of a [[Scalar]].
+	 * Calculates the exponential of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static exp(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the exponential of a [[Scalar]].
+	 * Calculates the exponential of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static exp(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -291,12 +291,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the natural logarithm (to the base \\( e \\)) of a [[Scalar]].
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static ln(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the natural logarithm (to the base \\( e \\)) of a [[Scalar]].
+	 * Calculates the natural logarithm (to the base \\( e \\)) of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static ln(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -307,12 +307,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Calculates the common logarithm (to the base \\( 10 \\)) of a [[Scalar]].
+	 * Calculates the common logarithm (to the base \\( 10 \\)) of a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static log(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Calculates the common logarithm (to the base \\( 10 \\)) of a [[Scalar]].
+	 * Calculates the common logarithm (to the base \\( 10 \\)) of a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static log(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -323,12 +323,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Evaluates the largest integer less than or equal to a [[Scalar]].
+	 * Evaluates the largest integer less than or equal to a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static floor(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Evaluates the largest integer less than or equal to a [[Scalar]].
+	 * Evaluates the largest integer less than or equal to a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static floor(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -339,12 +339,12 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
 	}
 
 	/**
-	 * Evaluates the smallest integer greater than or equal to a [[Scalar]].
+	 * Evaluates the smallest integer greater than or equal to a {@link Scalar}.
 	 * @param x A scalar constant.
 	 */
 	public static ceil(x: Scalar.Constant): Scalar.Constant;
 	/**
-	 * Evaluates the smallest integer greater than or equal to a [[Scalar]].
+	 * Evaluates the smallest integer greater than or equal to a {@link Scalar}.
 	 * @param x A scalar variable or expression.
 	 */
 	public static ceil(x: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -360,7 +360,7 @@ export abstract class Scalar extends Numerical implements Token, Evaluable {
  */
 export namespace Scalar {
 	/**
-	 * A mapping from name of scalar variables to [[Scalar.Variable]] objects.
+	 * A mapping from name of scalar variables to {@link Scalar.Variable} objects.
 	 * @ignore
 	 */
 	const VARIABLES = new Map<string, Scalar.Variable>();
@@ -372,7 +372,7 @@ export namespace Scalar {
 
 	/**
 	 * Represents a constant scalar quantity with a fixed value.
-	 * @extends [[Scalar]]
+	 * @extends {@link Scalar}
 	 */
 	export class Constant extends Scalar implements _Constant {
 		readonly type = "constant";
@@ -386,7 +386,7 @@ export namespace Scalar {
 		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
-		 * @see [[Scalar.constant]]
+		 * @see {@link Scalar.constant}
 		 * @param value The fixed value `this` should represent.
 		 * @param name The name by which `this` is identified.
 		 */
@@ -435,10 +435,10 @@ export namespace Scalar {
 		 */
 		public add(that: Scalar.Constant): Scalar.Constant;
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the addition of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the addition of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * adding a variable scalar to another scalar always results in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
 		public add(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -455,10 +455,10 @@ export namespace Scalar {
 		 */
 		public sub(that: Scalar.Constant): Scalar.Constant;
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the subtraction of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the subtraction of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * subtracting a variable scalar from another scalar always results in an expression.
-		 * @param that The [[Scalar]] to add to `this`.
+		 * @param that The {@link Scalar} to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public sub(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -475,25 +475,25 @@ export namespace Scalar {
 		 */
 		public mul(that: Scalar.Constant): Scalar.Constant;
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the multiplication of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the multiplication of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * multiplying a variable scalar by another scalar always results in an expression.
-		 * @param that The [[Scalar]] to add to `this`.
+		 * @param that The {@link Scalar} to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public mul(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
 		/**
-		 * Scales a [[Vector.Constant]] object numerically.
-		 * @see [[Vector.scale]]
-		 * @param that The [[Vector.Constant]] to scale by the amount of `this`.
+		 * Scales a {@link Vector.Constant} object numerically.
+		 * @see {@link Vector.scale}
+		 * @param that The {@link Vector.Constant} to scale by the amount of `this`.
 		 * @return The scaled vector.
 		 */
 		public mul(that: Vector.Constant): Vector.Constant;
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the scaling of
-		 * a [[Vector]] object. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the scaling of
+		 * a {@link Vector} object. The {@link type} of `this` does not matter because
 		 * scaling a variable vector by a scalar always results in an expression.
-		 * @param that The [[Vector]] to scale by the amount of `this`.
+		 * @param that The {@link Vector} to scale by the amount of `this`.
 		 * @return Expression for scaling `that` by `this`.
 		 */
 		public mul(that: Vector.Variable | Vector.Expression): Vector.Expression;
@@ -515,10 +515,10 @@ export namespace Scalar {
 		 */
 		public div(that: Scalar.Constant): Scalar.Constant;
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the division of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the division of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * dividing a variable scalar by another scalar always results in an expression.
-		 * @param that The [[Scalar]] to divide `this` by `this`.
+		 * @param that The {@link Scalar} to divide `this` by `this`.
 		 * @return Expression for dividing `this` by `that`.
 		 */
 		public div(that: Scalar.Variable | Scalar.Expression): Scalar.Expression;
@@ -557,20 +557,20 @@ export namespace Scalar {
 
 	/**
 	 * Represents a variable scalar quantity with no fixed value.
-	 * @extends [[Scalar]]
+	 * @extends {@link Scalar}
 	 */
 	export class Variable extends Scalar implements _Variable {
 		readonly type = "variable";
 		readonly classRef = Scalar.Variable;
 
 		/**
-		 * Creates a [[Scalar.Variable]] object.
+		 * Creates a {@link Scalar.Variable} object.
 		 * 
 		 * Using the constructor directly for creating vector objects is
 		 * not recommended.
 		 * 
-		 * @see [[Scalar.variable]]
-		 * @param name The name with which the [[Scalar.Variable]] is going to be identified.
+		 * @see {@link Scalar.variable}
+		 * @param name The name with which the {@link Scalar.Variable} is going to be identified.
 		 */
 		constructor(readonly name: string) {
 			super();
@@ -581,10 +581,10 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the addition of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the addition of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * adding a variable scalar to another scalar always results in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
 		public add(that: Scalar) {
@@ -592,10 +592,10 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the subtraction of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the subtraction of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * subtracting a variable scalar from another scalar always results in an expression.
-		 * @param that The [[Scalar]] to add to `this`.
+		 * @param that The {@link Scalar} to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public sub(that: Scalar) {
@@ -603,18 +603,18 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the multiplication of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the multiplication of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * multiplying a variable scalar by another scalar always results in an expression.
-		 * @param that The [[Scalar]] to add to `this`.
+		 * @param that The {@link Scalar} to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public mul(that: Scalar): Scalar.Expression;
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the scaling of
-		 * a [[Vector]] object. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the scaling of
+		 * a {@link Vector} object. The {@link type} of `this` does not matter because
 		 * scaling a variable vector by a scalar always results in an expression.
-		 * @param that The [[Vector]] to scale by the amount of `this`.
+		 * @param that The {@link Vector} to scale by the amount of `this`.
 		 * @return Expression for scaling `that` by `this`.
 		 */
 		public mul(that: Vector): Vector.Expression;
@@ -625,10 +625,10 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the division of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the division of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * dividing a variable scalar by another scalar always results in an expression.
-		 * @param that The [[Scalar]] to divide `this` by `this`.
+		 * @param that The {@link Scalar} to divide `this` by `this`.
 		 * @return Expression for dividing `this` by `that`.
 		 */
 		public div(that: Scalar) {
@@ -636,10 +636,10 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for exponentiation of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for exponentiation of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * exponentiating a scalar by a variable scalar always results in an expression.
-		 * @param that The [[Scalar]] power to raise `this` to.
+		 * @param that The {@link Scalar} power to raise `this` to.
 		 * @return Expression for exponentiating `this` by `that`.
 		 */
 		public pow(that: Scalar) {
@@ -648,13 +648,13 @@ export namespace Scalar {
 	}
 
 	/**
-	 * @extends [[Scalar]]
+	 * @extends {@link Scalar}
 	 */
 	export class Expression extends Scalar implements _Expression {
 		readonly type = "expression";
 		readonly classRef = Scalar.Expression;
 
-		/** `Set` of [[Variable]] quantities `this` depends on. */
+		/** `Set` of {@link Variable} quantities `this` depends on. */
 		readonly arg_list: Set<_Variable>;
 		/** Array of `Evaluable` quantity/quantities `this.op` operates on. */
 		readonly operands: Evaluable[] = [];
@@ -725,10 +725,10 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the addition of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the addition of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * adding a unknown scalar/scalar expression to another scalar always results in an expression.
-		 * @param that The [[Vector]] to add to `this`.
+		 * @param that The {@link Vector} to add to `this`.
 		 * @return Expression for sum of `this` and `that`.
 		 */
 		public add(that: Scalar) {
@@ -736,10 +736,10 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the subtraction of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the subtraction of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * subtracting a unknown scalar/scalar expression from another scalar always results in an expression.
-		 * @param that The [[Scalar]] to add to `this`.
+		 * @param that The {@link Scalar} to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public sub(that: Scalar) {
@@ -747,18 +747,18 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the multiplication of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the multiplication of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * multiplying a unknown scalar/scalar expression by another scalar always results in an expression.
-		 * @param that The [[Scalar]] to add to `this`.
+		 * @param that The {@link Scalar} to add to `this`.
 		 * @return Expression for subtracting `that` from `this`.
 		 */
 		public mul(that: Scalar): Scalar.Expression;
 		/**
-		 * Creates and returns a [[Vector.Expression]] for the scaling of
-		 * a [[Vector]] object. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Vector.Expression} for the scaling of
+		 * a {@link Vector} object. The {@link type} of `this` does not matter because
 		 * scaling a unknown vector/scalar expression by a scalar always results in an expression.
-		 * @param that The [[Vector]] to scale by the amount of `this`.
+		 * @param that The {@link Vector} to scale by the amount of `this`.
 		 * @return Expression for scaling `that` by `this`.
 		 */
 		public mul(that: Vector): Vector.Expression;
@@ -769,10 +769,10 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for the division of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for the division of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * dividing a unknown scalar/scalar expression by another scalar always results in an expression.
-		 * @param that The [[Scalar]] to divide `this` by `this`.
+		 * @param that The {@link Scalar} to divide `this` by `this`.
 		 * @return Expression for dividing `this` by `that`.
 		 */
 		public div(that: Scalar) {
@@ -780,10 +780,10 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Creates and returns a [[Scalar.Expression]] for exponentiation of
-		 * two [[Scalar]] objects. The [[type]] of `this` does not matter because
+		 * Creates and returns a {@link Scalar.Expression} for exponentiation of
+		 * two {@link Scalar} objects. The {@link type} of `this` does not matter because
 		 * exponentiating a scalar by a unknown scalar/scalar expression always results in an expression.
-		 * @param that The [[Scalar]] power to raise `this` to.
+		 * @param that The {@link Scalar} power to raise `this` to.
 		 * @return Expression for exponentiating `this` by `that`.
 		 */
 		public pow(that: Scalar) {
@@ -791,20 +791,20 @@ export namespace Scalar {
 		}
 
 		/**
-		 * Checks whether `this` [[Scalar.Expression]] depends on a given
-		 * [[Variable]].
-		 * @param v The [[Variable]] to check against.
+		 * Checks whether `this` {@link Scalar.Expression} depends on a given
+		 * {@link Variable}.
+		 * @param v The {@link Variable} to check against.
 		 */
 		public isFunctionOf(v: _Variable): boolean {
 			return this.arg_list.has(v);
 		}
 
 		/**
-		 * Evaluates this [[Scalar.Expression]] at the given values for the
-		 * [[Variable]] objects `this` depends on. In case `this` is not a
+		 * Evaluates this {@link Scalar.Expression} at the given values for the
+		 * {@link Variable} objects `this` depends on. In case `this` is not a
 		 * function of any of the variables in the mapping then `this` is returned
 		 * as is. 
-		 * @param values A map from the [[Variable]] quantities to [[Constant]] quantities.
+		 * @param values A map from the {@link Variable} quantities to {@link Constant} quantities.
 		 * @return The result after evaluating `this` at the given values.
 		 */
 		public at(values: Map<_Variable, _Constant>) {
@@ -926,7 +926,7 @@ export namespace Scalar {
 	}
 
 	/**
-	 * Creates a new [[Scalar.Variable]] object if it has not been created before.
+	 * Creates a new {@link Scalar.Variable} object if it has not been created before.
 	 * Otherwise just returns the previously created object.
 	 * @param value 
 	 */

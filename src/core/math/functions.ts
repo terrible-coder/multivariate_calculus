@@ -7,9 +7,9 @@ import { Numerical } from "../definitions";
 export function neg(x: number): number;
 /**
  * The negative value of its argument. This function looks for the definition of
- * the negation function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the negation function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's negation function.
  * @throws If negation is not defined for the argument object type.
  */
@@ -95,9 +95,9 @@ export function unit<T extends Numerical>(x: number | T, ...args: any[]) {
 export function sin(x: number): number;
 /**
  * The trigonometric sine function. This function looks for the definition of
- * the sine function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the sine function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's sine function.
  * @throws If the sine function is not defined for the argument object type.
  */
@@ -122,9 +122,9 @@ export function sin<T extends Numerical>(x: number | T, ...args: any[]) {
 export function cos(x: number): number;
 /**
  * The trigonometric cosine function. This function looks for the definition of
- * the cosine function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the cosine function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's cosine function.
  * @throws If the cosine function is not defined for the argument object type.
  */
@@ -149,9 +149,9 @@ export function cos<T extends Numerical>(x: number | T, ...args: any[]) {
 export function tan(x: number): number;
 /**
  * The trigonometric tangent function. This function looks for the definition of
- * the tangent function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the tangent function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's tangent function.
  * @throws If the tangent function is not defined for the argument object type.
  */
@@ -176,9 +176,9 @@ export function tan<T extends Numerical>(x: number | T, ...args: any[]) {
 export function asin(x: number): number;
 /**
  * The inverse trigonometric sine function. This function looks for the definition of
- * the inverse sine function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the inverse sine function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's inverse sine function.
  * @throws If the inverse sine function is not defined for the argument object type.
  */
@@ -203,9 +203,9 @@ export function asin<T extends Numerical>(x: number | T, ...args: any[]) {
 export function acos(x: number): number;
 /**
  * The inverse trigonometric cosine function. This function looks for the definition of
- * the inverse cosine function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the inverse cosine function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's inverse cosine function.
  * @throws If the inverse cosine function is not defined for the argument object type.
  */
@@ -230,9 +230,9 @@ export function acos<T extends Numerical>(x: number | T, ...args: any[]) {
 export function atan(x: number): number;
 /**
  * The inverse trigonometric tangent function. This function looks for the definition of
- * the inverse tangent function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the inverse tangent function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's inverse tangent function.
  * @throws If the inverse tangent function is not defined for the argument object type.
  */
@@ -257,9 +257,9 @@ export function atan<T extends Numerical>(x: number | T, ...args: any[]) {
 export function sinh(x: number): number;
 /**
  * The hyperbolic sine function. This function looks for the definition of
- * the sinh function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the sinh function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's hyperbolic sine function.
  * @throws If the hyperbolic sine function is not defined for the argument object type.
  */
@@ -284,9 +284,9 @@ export function sinh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function cosh(x: number): number;
 /**
  * The hyperbolic cosine function. This function looks for the definition of
- * the cosh function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the cosh function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's hyperbolic cosine function.
  * @throws If the hyperbolic cosine function is not defined for the argument object type.
  */
@@ -311,9 +311,9 @@ export function cosh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function tanh(x: number): number;
 /**
  * The hyperbolic tangent function. This function looks for the definition of
- * the tanh function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the tanh function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's hyperbolic tangent function.
  * @throws If the hyperbolic tangent function is not defined for the argument object type.
  */
@@ -338,9 +338,9 @@ export function tanh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function asinh(x: number): number;
 /**
  * The inverse hyperbolic sine function. This function looks for the definition of
- * the inverse sinh function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the inverse sinh function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's inverse hyperbolic sine function.
  * @throws If the inverse hyperbolic sine function is not defined for the argument object type.
  */
@@ -365,9 +365,9 @@ export function asinh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function acosh(x: number): number;
 /**
  * The inverse hyperbolic cosine function. This function looks for the definition of
- * the inverse cosh function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the inverse cosh function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's inverse hyperbolic cosine function.
  * @throws If the inverse hyperbolic cosine function is not defined for the argument object type.
  */
@@ -392,9 +392,9 @@ export function acosh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function atanh(x: number): number;
 /**
  * The inverse hyperbolic tangent function. This function looks for the definition of
- * the inverse tanh function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the inverse tanh function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's inverse hyperbolic tangent function.
  * @throws If the inverse hyperbolic tangent function is not defined for the argument object type.
  */
@@ -419,9 +419,9 @@ export function atanh<T extends Numerical>(x: number | T, ...args: any[]) {
 export function log(x: number): number;
 /**
  * The common logarithm function (to the base \\( 10 \\)). This function looks for the definition of
- * the log function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the log function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's common log function.
  * @throws If the common log function is not defined for the argument object type.
  */
@@ -446,9 +446,9 @@ export function log<T extends Numerical>(x: number | T, ...args: any[]) {
 export function ln(x: number): number;
 /**
  * The natural logarithm function (to the base \\( e \\)). This function looks for the definition of
- * the ln function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the ln function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's log function.
  * @throws If the log function is not defined for the argument object type.
  */
@@ -473,9 +473,9 @@ export function ln<T extends Numerical>(x: number | T, ...args: any[]) {
 export function exp(x: number): number;
 /**
  * The exponential function. This function looks for the definition of
- * the exp function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the exp function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's exponential function.
  * @throws If the exponential function is not defined for the argument object type.
  */
@@ -500,9 +500,9 @@ export function exp<T extends Numerical>(x: number | T, ...args: any[]) {
 export function abs(x: number): number;
 /**
  * The absolute value function. This function looks for the definition of
- * the absolute value function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the absolute value function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's sine function.
  * @throws If the sine function is not defined for the argument object type.
  */
@@ -527,9 +527,9 @@ export function abs<T extends Numerical>(x: number | T, ...args: any[]) {
 export function floor(x: number): number;
 /**
  * The greatest integer function. This function looks for the definition of
- * the floor function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the floor function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's floor function.
  * @throws If the floor function is not defined for the argument object type.
  */
@@ -554,9 +554,9 @@ export function floor<T extends Numerical>(x: number | T, ...args: any[]) {
 export function ceil(x: number): number;
 /**
  * The smallest integer function. This function looks for the definition of
- * the ceil function in the [[Numerical]] object.
- * @template T Asserts object passed to be [[Numerical]].
- * @param x A [[Numerical]].
+ * the ceil function in the {@link Numerical} object.
+ * @template T Asserts object passed to be {@link Numerical}.
+ * @param x A {@link Numerical}.
  * @param args Any additional parameters required by the object's ceil function.
  * @throws If the ceil function is not defined for the argument object type.
  */

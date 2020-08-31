@@ -9,6 +9,7 @@ import { Numerical } from "./definitions";
  * for further reading.
  * @param E The constructor like function or object.
  * @param name The name of the error type.
+ * @internal
  */
 function setErrorPrototype(E: any, name: string) {
 	E.prototype = Object.create(Error.prototype, {
@@ -29,6 +30,7 @@ function setErrorPrototype(E: any, name: string) {
  * @param thisArg The object to attach the error type to.
  * @param args Arguments to pass to the error constructor.
  * @see {@link setErrorPrototype}
+ * @internal
  */
 function getErrorObject(thisArg: any, ...args: any[]) {
 	const instance = Reflect.construct(Error, args);
@@ -93,7 +95,7 @@ setErrorPrototype(Overwrite, "overwrite");
  */
 export interface InvalidIndex {
 	/**
-	 * Creates an [[InvalidIndex]] error.
+	 * Creates an {@link InvalidIndex} error.
 	 * @param passed The index value being accessed.
 	 * @param start The value from which indexing starts.
 	 */

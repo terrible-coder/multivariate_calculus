@@ -139,11 +139,6 @@ export namespace Vector {
 		readonly type = "constant";
 		readonly classRef = Vector.Constant;
 
-		/**
-		 * The number of dimensions `this` vector exists in.
-		 * @ignore
-		 */
-		// private dimension: number;
 		readonly value: Scalar.Constant[] = [];
 		/**
 		 * The name by which `this` is identified. This is optional and defaults
@@ -184,7 +179,6 @@ export namespace Vector {
 				if(x instanceof Scalar.Constant)
 					this.value.push(x);
 				else this.value.push(Scalar.constant(x));
-			// this.dimension = this.value.length;
 		}
 
 		/**

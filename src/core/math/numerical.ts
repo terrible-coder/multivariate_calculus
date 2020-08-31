@@ -9,7 +9,7 @@ import { pad } from "./parsers";
  * @param f_ The derivative of `f`.
  * @param x The initial trial solution.
  * @returns The root of the given function `f` correct upto the number of decimal
- * 			places specified by the default [[MathContext]].
+ * 			places specified by the default {@link MathContext}.
  * @ignore
  */
 export function newton_raphson(f: (x: Component) => Component, f_: (x: Component) => Component, x: Component, context = mathenv.mode) {
