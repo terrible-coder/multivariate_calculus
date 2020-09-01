@@ -1,24 +1,25 @@
-const { Scalar } = require("../../build/scalar");
-const { BinaryOperator } = require("../../build/core/operators/binary");
-const { UnaryOperator } = require("../../build/core/operators/unary");
-const { ExpressionBuilder } = require("../../build/core/expression");
+import { Scalar } from "../../src/scalar";
+import { BinaryOperator } from "../../src/core/operators/binary";
+import { UnaryOperator } from "../../src/core/operators/unary";
+import { ExpressionBuilder } from "../../src/core/expression";
+import { Variable, Expression } from "../../src/core/definitions";
 
-const a = {
+const a = <Variable>{
 	name: "a",
 	type: "variable"
-}, b = {
+}, b = <Variable>{
 	name: "b",
 	type: "variable"
-}, c = {
+}, c = <Variable>{
 	name: "b",
 	type: "variable"
 };
 
-const e1 = {
+const e1 = <Expression>{
 	type: "expression",
 	quantity: "random",
 	arg_list: new Set([a, b])
-}, e2 = {
+}, e2 = <Expression>{
 	type: "expression",
 	quantity: "random",
 	arg_list: new Set([c, b])
@@ -89,14 +90,15 @@ describe("Calls with rest parameters", function() {
 		});
 
 		it("passes rest parameters", function() {
-			Scalar.abs = jest.fn();
+			const mock_abs = jest.fn(Scalar.abs as any);
+			Scalar.abs = mock_abs as any;
 			try {
 				exp.at(new Map([
 					[x, Scalar.constant(2)]
 				]));
 			} catch {}
-			expect(Scalar.abs.mock.calls[0].length).toEqual(2);
-			expect(Scalar.abs.mock.calls[0][1]).toBe(obj);
+			expect(mock_abs.mock.calls[0].length).toEqual(2);
+			expect(mock_abs.mock.calls[0][1]).toBe(obj);
 		});
 	});
 
@@ -108,15 +110,16 @@ describe("Calls with rest parameters", function() {
 		});
 
 		it("passes rest parameters", function() {
+			const mock_add = jest.fn(Scalar.Constant.prototype.add as any);
+			Scalar.Constant.prototype.add = mock_add as any;
 			const atValue = Scalar.constant(2);
-			atValue.add = jest.fn();
 			try {
 			exp.at(new Map([
 					[x, atValue]
 				]));
 			} catch {}
-			expect(atValue.add.mock.calls[0].length).toBe(2);
-			expect(atValue.add.mock.calls[0][1]).toBe(obj);
+			expect(mock_add.mock.calls[0].length).toBe(2);
+			expect(mock_add.mock.calls[0][1]).toBe(obj);
 		});
 	});
 });
