@@ -40,10 +40,6 @@ jobs:
       - run:
           name: Running linter
           command: npm run lint
-      
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
 
   test:
     <<: *defaults
