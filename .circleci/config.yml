@@ -116,12 +116,20 @@ workflows:
 
   package:
     jobs:
+      - prep:
+          tags:
+            only: /.*/
+
       - lint:
+          requires:
+            - prep
           filters:
             tags:
               only: /.*/
 
       - test:
+          requires:
+            - prep
           filters:
             tags:
               only: /.*/
