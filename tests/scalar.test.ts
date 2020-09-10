@@ -1,6 +1,6 @@
-const { Scalar } = require("../build/scalar");
-const { Component } = require("../build/core/math/component");
-const { BigNum } = require("../build/core/math/bignum");
+import { Scalar } from "../src/scalar";
+import { Component } from "../src/core/math/component";
+import { BigNum } from "../src/core/math/bignum";
 
 function randomDigit() {
 	const digit = (10 * Math.random()) | 0;
@@ -25,7 +25,7 @@ describe("Scalars", function() {
 	
 			test("from 5 reals", function() {
 				for(let i = 0; i < 100; i++) {
-					const components = [];
+					const components: string[] = [];
 					for(let j = 0; j < 5; j++) {
 						let rand;
 						rand = (10 * Math.random()) | 0;
@@ -78,13 +78,13 @@ describe("Scalars", function() {
 		describe("from 5 real", function() {
 			test("positive exponent", function() {
 				for(let i = 0; i < 100; i++) {
-					const components = [];
+					const components: string[] = [];
 					const result = [];
 					for(let j = 0; j < 5; j++) {
 						const integers = randomDigit();
 						const decimals = new Array(3).fill(0).map(() => randomDigit()).join("");
 						const numString = `${integers}.${decimals}e2`;
-						components.push(Component.create(numString));
+						components.push(numString);
 						result.push(integers + decimals.substring(0, 2) + "." + decimals.substring(2));
 					}
 					const num = BigNum.hyper(components);
@@ -92,13 +92,13 @@ describe("Scalars", function() {
 					expect(Scalar.constant(num).value).toEqual(res);
 				}
 				for(let i = 0; i < 100; i++) {
-					const components = [];
+					const components: string[] = [];
 					const result = [];
 					for(let j = 0; j < 5; j++) {
 						const integers = randomDigit();
 						const decimals = new Array(3).fill(0).map(() => randomDigit()).join("");
 						const numString = `${integers}.${decimals}e+2`;
-						components.push(Component.create(numString));
+						components.push(numString);
 						result.push(integers + decimals.substring(0, 2) + "." + decimals.substring(2));
 					}
 					const num = BigNum.hyper(components);
@@ -109,13 +109,13 @@ describe("Scalars", function() {
 
 			test("negative exponent", function() {
 				for(let i = 0; i < 100; i++) {
-					const components = [];
+					const components: string[] = [];
 					const result = [];
 					for(let j = 0; j < 5; j++) {
 						const integers = randomDigit();
 						const decimals = new Array(3).fill(0).map(() => randomDigit()).join("");
 						const numString = `${integers}.${decimals}e-2`;
-						components.push(Component.create(numString));
+						components.push(numString);
 						result.push("0.0" + integers + decimals);
 					}
 					const num = BigNum.hyper(components);

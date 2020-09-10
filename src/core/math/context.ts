@@ -130,7 +130,7 @@ export enum RoundingMode {
  */
 export type MathContext = {
 	/**
-	 * The number of decimal places a [[BigNum]] object should store. This does
+	 * The number of decimal places a {@link BigNum} object should store. This does
 	 * not represent the number of significant digits in the number unlike the
 	 * JAVA implementation of the same concept.
 	 */
@@ -147,7 +147,7 @@ export type MathContext = {
 
 export namespace MathContext {
 	/**
-	 * The default [[MathContext]] used when an exact representation cannot be
+	 * The default {@link MathContext} used when an exact representation cannot be
 	 * achieved for some operation.
 	 */
 	export const DEFAULT_CONTEXT: MathContext = {
@@ -156,8 +156,8 @@ export namespace MathContext {
 	};
 
 	/**
-	 * The [[MathContext]] used for high precision calculation. Stores up to
-	 * 50 places after the decimal point with [[RoundingMode.UP]] rounding algorithm.
+	 * The {@link MathContext} used for high precision calculation. Stores up to
+	 * 50 places after the decimal point with {@link RoundingMode.UP} rounding algorithm.
 	 */
 	export const HIGH_PRECISION: MathContext = {
 		precision: 50,
@@ -165,9 +165,9 @@ export namespace MathContext {
 	};
 
 	/**
-	 * The [[MathContext]] which defines how numbers are dealt with in science.
+	 * The {@link MathContext} which defines how numbers are dealt with in science.
 	 * It has slightly higher precision value than the default context with
-	 * [[RoundingMode.HALF_EVEN]] rounding algorithm.
+	 * {@link RoundingMode.HALF_EVEN} rounding algorithm.
 	 */
 	export const SCIENTIFIC: MathContext = {
 		precision: 20,
@@ -175,9 +175,9 @@ export namespace MathContext {
 	};
 
 	/**
-	 * The [[MathContext]] which defines how to deal with high precision
+	 * The {@link MathContext} which defines how to deal with high precision
 	 * numbers in science. It has the same precision value as the high precision one
-	 * and [[RoundingMode.HALF_EVEN]] rounding algorithm.
+	 * and {@link RoundingMode.HALF_EVEN} rounding algorithm.
 	 */
 	export const HIGH_PREC_SCIENTIFIC: MathContext = {
 		precision: 50,

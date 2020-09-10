@@ -54,7 +54,7 @@ export interface Constant extends Evaluable {
 	readonly value: any;
 	/** The string with which `this` is identified by. For a constant, this value
 	 * is optional. The implementing classes should take care that there is some
-	 * default value assigned should the user choose not to initialise a [[Constant]]
+	 * default value assigned should the user choose not to initialise a {@link Constant}
 	 * with a name.
 	 */
 	readonly name: string;

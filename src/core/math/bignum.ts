@@ -8,7 +8,7 @@ import { UndefinedValue, IndeterminateForm } from "../errors";
 
 /**
  * Immutable, arbitrary precision, higher dimensional numbers. A BigNum consists of a
- * real part and imaginary part(s) stored as [[Component]] objects. A [[MathContext]] object
+ * real part and imaginary part(s) stored as {@link Component} objects. A {@link MathContext} object
  * is used to specify the number of decimal places (not significant figures) the
  * user wants and what rounding algorithm should be used. Every operation is
  * carried out by an intermediate result which is then rounded to the preferred
@@ -54,15 +54,15 @@ export class BigNum extends Numerical {
 
 	/**
 	 * Creates a higher dimensional number from its components.
-	 * For end users it is recommended that they use the [[BigNum.real]],
-	 * [[BigNum.complex]] and [[BigNum.hyper]] functions to create new numbers.
+	 * For end users it is recommended that they use the {@link BigNum.real},
+	 * {@link BigNum.complex} and {@link BigNum.hyper} functions to create new numbers.
 	 * @param values The components of the number.
 	 */
 	constructor(...values: Component[]);
 	/**
 	 * Creates a higher dimensional number from its components.
-	 * For end users it is recommended that they use the [[BigNum.real]],
-	 * [[BigNum.complex]] and [[BigNum.hyper]] functions to create new numbers.
+	 * For end users it is recommended that they use the {@link BigNum.real},
+	 * {@link BigNum.complex} and {@link BigNum.hyper} functions to create new numbers.
 	 * @param values The components of the number.
 	 */
 	constructor(values: Component[]);
@@ -237,7 +237,7 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
+	 * Adds two {@link BigNum} instances. Addition is defined component-wise.
 	 * That is, for two numbers \\( a \\) and \\( b \\), their addition is defined as
 	 * 
 	 * \\[ a + b = \sum_i a_i + b_i \\]
@@ -248,7 +248,7 @@ export class BigNum extends Numerical {
 	 */
 	public add(that: BigNum): BigNum;
 	/**
-	 * Adds two [[BigNum]] instances. Addition is defined component-wise.
+	 * Adds two {@link BigNum} instances. Addition is defined component-wise.
 	 * That is, for two numbers \\( a \\) and \\( b \\), their addition is defined as
 	 * 
 	 * \\[ a + b = \sum_i a_i + b_i \\]
@@ -271,7 +271,7 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
+	 * Subtracts one {@link BigNum} instance from another. Subtraction is defined component-wise.
 	 * That is, for two numbers \\( a \\) and \\( b \\), their difference is defined as
 	 * 
 	 * \\[ a - b = \sum_i a_i - b_i \\]
@@ -282,7 +282,7 @@ export class BigNum extends Numerical {
 	 */
 	public sub(that: BigNum): BigNum;
 	/**
-	 * Subtracts one [[BigNum]] instance from another. Subtraction is defined component-wise.
+	 * Subtracts one {@link BigNum} instance from another. Subtraction is defined component-wise.
 	 * That is, for two numbers \\( a \\) and \\( b \\), their difference is defined as
 	 * 
 	 * \\[ a - b = \sum_i a_i - b_i \\]
@@ -304,7 +304,7 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
+	 * Multiplies two {@link BigNum} instances. Multiplication is defined using
 	 * the [Cayley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
 	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that The number to multiply with.
@@ -312,7 +312,7 @@ export class BigNum extends Numerical {
 	 */
 	public mul(that: BigNum): BigNum;
 	/**
-	 * Multiplies two [[BigNum]] instances. Multiplication is defined using
+	 * Multiplies two {@link BigNum} instances. Multiplication is defined using
 	 * the [Cayley-Dickson definition](https://en.wikipedia.org/wiki/Cayley–Dickson_construction#Octonions).
 	 * The result is rounded according to the given context settings.
 	 * @param that The number to multiply with.
@@ -366,14 +366,14 @@ export class BigNum extends Numerical {
 	}
 
 	/**
-	 * Divides one [[BigNum]] instance by another. This method assumes right
+	 * Divides one {@link BigNum} instance by another. This method assumes right
 	 * division. That is, the inverse of `that` is multiplied on the right.
 	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that Number to divide by.
 	 */
 	public div(that: BigNum): BigNum;
 	/**
-	 * Divides one [[BigNum]] instance by another. This method assumes right
+	 * Divides one {@link BigNum} instance by another. This method assumes right
 	 * division. That is, the inverse of `that` is multiplied on the right.
 	 * The result is rounded according to the given context settings.
 	 * @param that Number to divide by.
@@ -381,7 +381,7 @@ export class BigNum extends Numerical {
 	 */
 	public div(that: BigNum, context: MathContext): BigNum;
 	/**
-	 * Divides one [[BigNum]] instance by another. This method multiplies the
+	 * Divides one {@link BigNum} instance by another. This method multiplies the
 	 * inverse of `that` on the given "side" of `this`.
 	 * The result is rounded according to {@link mathenv.mode}.
 	 * @param that Number to divide by.
@@ -389,7 +389,7 @@ export class BigNum extends Numerical {
 	 */
 	public div(that: BigNum, side: "left" | "right"): BigNum;
 	/**
-	 * Divides one [[BigNum]] instance by another. This method multiplies the
+	 * Divides one {@link BigNum} instance by another. This method multiplies the
 	 * inverse of `that` on the given "side" of `this`.
 	 * The result is rounded according to the given context settings.
 	 * @param that Number to divide by.
@@ -1213,21 +1213,21 @@ export class BigNum extends Numerical {
 
 export namespace BigNum {
 	/**
-	 * Creates a [[BigNum]] instance from the string representation of a real number.
+	 * Creates a {@link BigNum} instance from the string representation of a real number.
 	 * 
-	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * The use of this function to create a new {@link BigNum} instance is recommended
 	 * over using the constructor for the same. The constructor may not always be
 	 * predictable is called directly.
 	 * @param num The string representation of a real number in decimal system.
 	 */
 	export function real(num: string): BigNum;
 	/**
-	 * Creates a [[BigNum]] instance from the decimal representation of a real
+	 * Creates a {@link BigNum} instance from the decimal representation of a real
 	 * number. This instance created will store the exact binary floating
 	 * point value of the number. Even though it uses the `toString()` method
 	 * to convert the number to a string it might be unpredictable at times.
 	 * 
-	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * The use of this function to create a new {@link BigNum} instance is recommended
 	 * over using the constructor for the same. The constructor may not always be
 	 * predictable is called directly.
 	 * @param num A numeric expression.
@@ -1239,12 +1239,12 @@ export namespace BigNum {
 	}
 
 	/**
-	 * Creates a [[BigNum]] instance of a complex number from the decimal representations
+	 * Creates a {@link BigNum} instance of a complex number from the decimal representations
 	 * of the real and imaginary part. This instance will store the exact binary
 	 * floating point value of the number. Even though it uses the `toString()`
 	 * method to convert number to string it might be unpredictable at times.
 	 * 
-	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * The use of this function to create a new {@link BigNum} instance is recommended
 	 * over using the constructor for the same. The constructor may not always be
 	 * predictable is called directly.
 	 * @param real The real part of the number.
@@ -1252,10 +1252,10 @@ export namespace BigNum {
 	 */
 	export function complex(real: number, imag: number): BigNum;
 	/**
-	 * Creates a [[BigNum]] instance from the string representations of the real
+	 * Creates a {@link BigNum} instance from the string representations of the real
 	 * and imaginary parts.
 	 * 
-	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * The use of this function to create a new {@link BigNum} instance is recommended
 	 * over using the constructor for the same. The constructor may not always be
 	 * predictable is called directly.
 	 * @param real The real part of the number.
@@ -1267,47 +1267,47 @@ export namespace BigNum {
 	}
 
 	/**
-	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * Creates a {@link BigNum} instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
 	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
 	 * This instance will use the exact binary floating point representations
 	 * of the components. Even though it uses the `toString()` method to convert
 	 * numbers to strings it might be unpredictable at times.
 	 * 
-	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * The use of this function to create a new {@link BigNum} instance is recommended
 	 * over using the constructor for the same. The constructor may not always be
 	 * predictable is called directly.
 	 * @param comps The components of the number.
 	 */
 	export function hyper(...comps: number[]): BigNum;
 	/**
-	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * Creates a {@link BigNum} instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
 	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
 	 * This instance will use the exact binary floating point representations
 	 * of the components. Even though it uses the `toString()` method to convert
 	 * numbers to strings it might be unpredictable at times.
 	 * 
-	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * The use of this function to create a new {@link BigNum} instance is recommended
 	 * over using the constructor for the same. The constructor may not always be
 	 * predictable is called directly.
 	 * @param comps The components of the number.
 	 */
 	export function hyper(comps: number[]): BigNum;
 	/**
-	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * Creates a {@link BigNum} instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
 	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
 	 * @param comps The components of the number.
 	 * 
-	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * The use of this function to create a new {@link BigNum} instance is recommended
 	 * over using the constructor for the same. The constructor may not always be
 	 * predictable is called directly.
 	 */
 	export function hyper(...comps: string[]): BigNum;
 	/**
-	 * Creates a [[BigNum]] instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
+	 * Creates a {@link BigNum} instance from the components of a [hyper-complex](https://en.wikipedia.org/wiki/Hypercomplex_number)
 	 * number that follow the [Cayley-Dickson construction](https://en.wikipedia.org/wiki/Cayley–Dickson_construction).
 	 * @param comps The components of the number.
 	 * 
-	 * The use of this function to create a new [[BigNum]] instance is recommended
+	 * The use of this function to create a new {@link BigNum} instance is recommended
 	 * over using the constructor for the same. The constructor may not always be
 	 * predictable is called directly.
 	 */

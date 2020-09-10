@@ -19,14 +19,42 @@ import { hyper_cross } from "./core/math/numerical";
 export const __ = undefined;
 
 /**
- * Base class to work with vector quantities.
+ * Base class to work with vector quantities. Vectors can be represented as a
+ * list of numbers, the vector components. The current implementation of this
+ * class work only with Cartesian vector systems and therefore, Cartesian coordinates.
+ * Any particular vector object has a pre-assigned value for dimension. The
+ * dimensionality of vectors which are results of vector operations are
+ * calculated depending on the dimension of the vectors being operated upon.
  * @abstract
  */
 export abstract class Vector extends Numerical implements Token, Evaluable {
 	readonly abstract type: "constant" | "variable" | "expression";
-	readonly abstract X: (i: number) => Scalar;
 	readonly quantity = "vector";
+
+	/**
+	 * Returns the components of `this` vector. The index values start
+	 * from `1` instead of the commonly used starting index `0`.
+	 * @param i The index of the desired component.
+	 * @return The {@link Scalar} element at given index.
+	 */
+	readonly abstract X: (i: number) => Scalar;
+
+	/**
+	 * The number of components `this` has.
+	 */
 	readonly abstract dimension: number;
+
+	/**
+	 * Evaluates and returns the negated value of a vector constant. A
+	 * negative vector \\( - \overrightarrow{A} \\) is defined such that
+	 * 
+	 * \\[ \overrightarrow{A} + \left( - \overrightarrow{A} \right) = \overrightarrow{0} \\].
+	 * 
+	 * Component wise, if \\( \overrightarrow{A} = a_i \hat{e_i} \\), it can
+	 * be expressed as
+	 * 
+	 * \\[ - \overrightarrow{A} = -a_i \hat{e_i} \\].
+	 */
 	readonly abstract neg: Vector;
 
 	/**
@@ -133,17 +161,15 @@ export namespace Vector {
 	const VARIABLES = new Map<string, Vector.Variable>();
 
 	/**
+	 * Represents constant vectors. That is, all the vector components are
+	 * {@link Scalar.Constant}s. All the components are interpreted as in the
+	 * Cartesian system.
 	 * @extends {@link Vector}
 	 */
 	export class Constant extends Vector implements _Constant {
 		readonly type = "constant";
 		readonly classRef = Vector.Constant;
 
-		/**
-		 * The number of dimensions `this` vector exists in.
-		 * @ignore
-		 */
-		// private dimension: number;
 		readonly value: Scalar.Constant[] = [];
 		/**
 		 * The name by which `this` is identified. This is optional and defaults
@@ -164,27 +190,11 @@ export namespace Vector {
 		 * @param name The name by which `this` is identified.
 		 */
 		constructor(value: Scalar.Constant[], name?: string);
-		/**
-		 * Creates a {@link Vector.Constant} object from a list of numbers.
-		 * One may optionally pass in a string by which `this` object
-		 * may be identified by.
-		 * 
-		 * Using the constructor directly for creating vector objects is
-		 * not recommended.
-		 * 
-		 * @see {@link Vector.constant}
-		 * @param value The fixed value `this` should represent.
-		 * @param name The name by which `this` is identified.
-		 */
-		constructor(value: BigNum[], name?: string);
-		constructor(value: Scalar.Constant[] | BigNum[], name = "") {
+		constructor(value: Scalar.Constant[], name = "") {
 			super();
 			this.name = name;
 			for(const x of value)
-				if(x instanceof Scalar.Constant)
-					this.value.push(x);
-				else this.value.push(Scalar.constant(x));
-			// this.dimension = this.value.length;
+				this.value.push(x);
 		}
 
 		/**
@@ -407,6 +417,9 @@ export namespace Vector {
 	}
 
 	/**
+	 * Represents vector variables. That is, all the vector components are
+	 * either {@link Scalar.Constant}s or {@link Scalar.Variable}s. All the
+	 * components are interpreted as in the Cartesian system.
 	 * @extends {@link Vector}
 	 */
 	export class Variable extends Vector implements _Variable {
@@ -562,6 +575,10 @@ export namespace Vector {
 	}
 
 	/**
+	 * Represents vector expressions. That is, all the vector components are
+	 * either {@link Scalar.Constant}s or {@link Scalar.Variable}s or
+	 * {@link Scalar.Variable}s or {@link Scalar.Expression}s. All the components
+	 * are interpreted as in the Cartesian system.
 	 * @extends {@link Vector}
 	 */
 	export class Expression extends Vector implements _Expression {
@@ -917,10 +934,23 @@ export namespace Vector {
 	}
 }
 
+/**
+ * Calculates the minimum dimension for an algebra, closed under cross product
+ * using The Cayley-Dickson construction, in which the vector exists.
+ * @param n The number of components in said vector.
+ * @internal
+ */
 function properVectorDimension(n: number) {
 	return n === 2 ? 3 : Math.pow(2, Math.ceil(Math.log2(n - 1)) + 1) - 1;
 }
 
+/**
+ * Returns an indexing function for the components of the cross product of 2
+ * vectors.
+ * @param A
+ * @param B
+ * @internal
+ */
 function cross_index(A: Vector, B: Vector) {
 	const N = Math.max(A.dimension, B.dimension);
 	return (i: number) => {

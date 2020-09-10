@@ -9,7 +9,7 @@ import { TrigHyperbolic } from "./trigonometry/hyperbolic";
 import { roundTo } from "./rounding";
 
 /**
- * Type of argument accepted by [[Component]] constructor.
+ * Type of argument accepted by {@link Component} constructor.
  * @ignore
  */
 type num1d = {
@@ -20,7 +20,7 @@ type num1d = {
 /**
  * Immutable, arbitrary precision decimal numbers. A Component consists of an
  * integer part and a decimal part stored as string objects. The precision of
- * the number is completely controlled by the user. A [[MathContext]] object
+ * the number is completely controlled by the user. A {@link MathContext} object
  * helps to specify the number of decimal places (not significant figures) the
  * user wants and what rounding algorithm should be used. Every operation is
  * carried out by an intermediate result which is then rounded to the preferred
@@ -106,9 +106,9 @@ export class Component extends Numerical {
 	readonly decimal: string;
 
 	/**
-	 * Creates an instance of [[Component]] class. This is not the recommended
-	 * way of creating new [[Component]] instances. For end users it is recommended
-	 * that they use the [[Component.create]] function instead.
+	 * Creates an instance of {@link Component} class. This is not the recommended
+	 * way of creating new {@link Component} instances. For end users it is recommended
+	 * that they use the {@link Component.create} function instead.
 	 * @param real The value of the number in the required format.
 	 */
 	constructor(real: num1d) {
@@ -228,7 +228,7 @@ export class Component extends Numerical {
 	 * Checks whether `this` and `that` are equal numbers. Equality is checked
 	 * only till the number of decimal places specified by `context`.
 	 * @param that The number to check against.
-	 * @param context The [[MathContext]] value to use for equality check.
+	 * @param context The {@link MathContext} value to use for equality check.
 	 */
 	public equals(that: Component, context: MathContext): boolean;
 	public equals(that: Component, context = mathenv.mode) {
@@ -281,7 +281,7 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Adds two [[Component]] instances. The higher precision value of the two is
+	 * Adds two {@link Component} instances. The higher precision value of the two is
 	 * chosen as the precision for the result and rounding is according to
 	 * {@link mathenv.mode}.
 	 * @param that The number to add this with.
@@ -289,7 +289,7 @@ export class Component extends Numerical {
 	 */
 	public add(that: Component): Component;
 	/**
-	 * Adds two [[Component]] instances. The higher precision value of the two is
+	 * Adds two {@link Component} instances. The higher precision value of the two is
 	 * chosen as the precision for the result and rounding is according to the
 	 * given context settings.
 	 * @param that The number to add this with.
@@ -309,7 +309,7 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Subtracts one [[Component]] instance from another. The higher precision value
+	 * Subtracts one {@link Component} instance from another. The higher precision value
 	 * of the two is chosen as the precision for the result and rounding is
 	 * according to {@link mathenv.mode}.
 	 * @param that The number to subtract from this.
@@ -317,7 +317,7 @@ export class Component extends Numerical {
 	 */
 	public sub(that: Component): Component;
 	/**
-	 * Subtracts one [[Component]] instance from another. The higher precision value
+	 * Subtracts one {@link Component} instance from another. The higher precision value
 	 * of the two is chosen as the precision for the result and rounding is
 	 * according to the given context settings.
 	 * @param that The number to subtract from this.
@@ -337,7 +337,7 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Multiplies two [[Component]] instances. The sum of the precisions of the two
+	 * Multiplies two {@link Component} instances. The sum of the precisions of the two
 	 * is chosen as the precision of the result and rounding is according to
 	 * {@link mathenv.mode}.
 	 * @param that The number to multiply this with.
@@ -345,7 +345,7 @@ export class Component extends Numerical {
 	 */
 	public mul(that: Component): Component;
 	/**
-	 * Multiplies two [[Component]] instances. The sum of the precisions of the two
+	 * Multiplies two {@link Component} instances. The sum of the precisions of the two
 	 * is chosen as the precision of the result and rounding is according to
 	 * the given context settings.
 	 * @param that The number to multiply this with.
@@ -364,14 +364,14 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Divides one [[Component]] instance by another with rounding according to
+	 * Divides one {@link Component} instance by another with rounding according to
 	 * {@link mathenv.mode}.
 	 * @param that The number to divide this by.
 	 * @returns this / that.
 	 */
 	public div(that: Component): Component;
 	/**
-	 * Divides one [[Component]] instance by another with rounding according to the
+	 * Divides one {@link Component} instance by another with rounding according to the
 	 * given context settings.
 	 * @param that The number to divide this by.
 	 * @param context The context settings object to use.
@@ -427,7 +427,7 @@ export class Component extends Numerical {
 	}
 
 	/**
-	 * Raises a [[Component]] to an integer power. This function may be made
+	 * Raises a {@link Component} to an integer power. This function may be made
 	 * private in future versions. It is advised not to use this function
 	 * except for development purposes.
 	 * @param base The base number.
@@ -839,12 +839,12 @@ export class Component extends Numerical {
 
 export namespace Component {
 	/**
-	 * Creates a [[Component]] instance from the string representation of the number.
+	 * Creates a {@link Component} instance from the string representation of the number.
 	 * @param num The string representation of the number in decimal system.
 	 */
 	export function create(num: number): Component;
 	/**
-	 * Creates a [[Component]] instance from the decimal representation of the
+	 * Creates a {@link Component} instance from the decimal representation of the
 	 * number. This instance created will store the exact binary floating
 	 * point value of the number. Even though it uses the `toString()` method
 	 * to convert the number to a string it might be unpredictable at times.
@@ -852,7 +852,7 @@ export namespace Component {
 	 */
 	export function create(num: string): Component;
 	/**
-	 * Creates a [[Component]] instance from the integral and fractional part
+	 * Creates a {@link Component} instance from the integral and fractional part
 	 * of the number. Both the arguments are expected to be string
 	 * representations of integers.
 	 * @param integer The whole part of the number.

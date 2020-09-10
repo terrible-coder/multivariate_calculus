@@ -4,14 +4,14 @@ import { isUnaryOperator } from "./operators/unary";
 import * as func from "./math/functions";
 
 /**
- * Contains helper functions needed by any class that is an [[Expression]].
+ * Contains helper functions needed by any class that is an {@link Expression}.
  */
 export namespace ExpressionBuilder {
 	/**
-	 * Given any one or two [[Evaluable]] quantities, constructs a `Set` of
+	 * Given any one or two {@link Evaluable} quantities, constructs a `Set` of
 	 * unknowns it/they depend on.
-	 * @param a First [[Evaluable]]
-	 * @param b Second [[Evaluable]]
+	 * @param a First {@link Evaluable}
+	 * @param b Second {@link Evaluable}
 	 */
 	export function createArgList(a: Evaluable, b?: Evaluable) {
 		const list = new Set<Variable>();
@@ -39,12 +39,12 @@ export namespace ExpressionBuilder {
 	}
 
 	/**
-	 * Given an [[Expression]] and a `Map` of variables to constants, evaluates
+	 * Given an {@link Expression} and a `Map` of variables to constants, evaluates
 	 * the value of the given expression at the given values of variables.
 	 * It is like evaluating the expression by substituting the specified
 	 * variables by respective constant values.
-	 * @param exp The [[Expression]] to evaluate
-	 * @param values The map of [[Variable]]s to [[Constant]]s.
+	 * @param exp The {@link Expression} to evaluate
+	 * @param values The map of {@link Variable}s to {@link Constant}s.
 	 */
 	export function evaluateAt(exp: Expression, values: Map<Variable, Constant>) {
 		if(isBinaryOperator(exp.op))

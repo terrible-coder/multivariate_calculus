@@ -1,4 +1,4 @@
-const Matrix = require("../build/matrix").Matrix;
+import { Matrix } from "../src/matrix";
 
 describe("Matrix", function() {
 	const I = new Matrix([
@@ -64,21 +64,21 @@ describe("Matrix", function() {
 	});
 	describe("Errors", function() {
 		it("Initialisation", function() {
-			expect(_=>new Matrix([2, 2, [3, 8]])).toThrow();
-			expect(_=>new Matrix([[1, 2, 3], "hello", [7, 8, 9]])).toThrow();
+			expect(() => new Matrix([2, 2, [3, 8]] as any)).toThrow();
+			expect(() => new Matrix([[1, 2, 3], "hello", [7, 8, 9]] as any)).toThrow();
 		});
 		it("Addition", function() {
-			expect(_=>A.add(I)).toThrow();
+			expect(() => A.add(I)).toThrow();
 		});
-		it("Subtration", function() {
-			expect(_=>I.sub(A)).toThrow();
+		it("Subtraction", function() {
+			expect(() => I.sub(A)).toThrow();
 		});
 		it("Multiplication", function() {
-			expect(_=>A.mul(B)).toThrow();
+			expect(() => A.mul(B)).toThrow();
 		});
 		it("Inverse", function() {
-			expect(_=>B.inv()).toThrow();
-			expect(_=>C.inv()).toThrow();
+			expect(() => B.inv()).toThrow();
+			expect(() => C.inv()).toThrow();
 		});
 	});
 });
