@@ -117,8 +117,9 @@ workflows:
   package:
     jobs:
       - prep:
-          tags:
-            only: /.*/
+          filters:
+            tags:
+              only: /.*/
 
       - lint:
           requires:
