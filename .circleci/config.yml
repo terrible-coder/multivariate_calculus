@@ -6,7 +6,7 @@ defaults: &defaults
     - image: circleci/node:10.16.1
 
 jobs:
-  build:
+  prep:
     <<: *defaults
     steps:
       - checkout
@@ -27,13 +27,19 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  lint:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+        
       - run:
           name: Running linter
           command: npm run lint
-
-      - run:
-          name: Transpiling to .js files
-          command: npm run build
       
       - persist_to_workspace:
           root: ~/repo
@@ -44,18 +50,39 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
+
       - run:
           name: Running tests
-          command: npm run test:all
+          command: npm run test
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+
+      - run:
+          name: Transpiling to .js files
+          command: npm run build
+      
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
 
   docs:
     <<: *defaults
     steps:
       - attach_workspace:
           at: ~/repo
+
       - run:
           name: Build documentation
           command: npm run docs
+
       - persist_to_workspace:
           root: ~/repo
           paths: .
@@ -65,9 +92,11 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
+
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+
       - run:
           name: Publish package
           command: node scripts/npm-publish.js
@@ -77,6 +106,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
+
       - run:
           name: Deploy docs
           command: npm run deploy-gh-pages
@@ -86,21 +116,27 @@ workflows:
 
   package:
     jobs:
-      - build:
+      - lint:
           filters:
             tags:
               only: /.*/
 
       - test:
+          filters:
+            tags:
+              only: /.*/
+
+      - build:
           requires:
-            - build
+            - lint
+            - test
           filters:
             tags:
               only: /.*/
 
       - publish:
           requires:
-            - test
+            - build
           filters:
             tags:
               only: /^v.*/
