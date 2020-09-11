@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.2
 
 defaults: &defaults
   working_directory: ~/repo
@@ -54,6 +56,15 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: .
+
+  coverage:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+
+      - codecov/upload:
+          file: "./coverage/clover.xml"
 
   build:
     <<: *defaults
@@ -127,6 +138,13 @@ workflows:
       - test:
           requires:
             - prep
+          filters:
+            tags:
+              only: /.*/
+
+      - coverage:
+          requires:
+            - test
           filters:
             tags:
               only: /.*/
