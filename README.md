@@ -1,6 +1,7 @@
 multivariate_calculus
 =====================
 [![CircleCI](https://img.shields.io/circleci/build/gh/terrible-coder/multivariate_calculus/master?style=flat-square&logo=circleci)](https://www.circleci.com/gh/terrible-coder/multivariate_calculus)
+[![codecov](https://codecov.io/gh/terrible-coder/multivariate_calculus/branch/master/graph/badge.svg)](https://codecov.io/gh/terrible-coder/multivariate_calculus)
 
 [![npm](https://img.shields.io/npm/v/multivariate_calculus?style=flat-square&logo=npm)](https://npmjs.com/package/multivariate_calculus)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/terrible-coder/multivariate_calculus?style=flat-square&logo=github)](https://github.com/terrible-coder/multivariate_calculus/releases/latest)

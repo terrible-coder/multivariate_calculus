@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.2
 
 defaults: &defaults
   working_directory: ~/repo
@@ -6,7 +8,7 @@ defaults: &defaults
     - image: circleci/node:10.16.1
 
 jobs:
-  build:
+  prep:
     <<: *defaults
     steps:
       - checkout
@@ -27,9 +29,48 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  lint:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+        
       - run:
           name: Running linter
           command: npm run lint
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+
+      - run:
+          name: Running tests
+          command: npm run test
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  coverage:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+
+      - codecov/upload:
+          file: "./coverage/clover.xml"
+
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
 
       - run:
           name: Transpiling to .js files
@@ -39,23 +80,16 @@ jobs:
           root: ~/repo
           paths: .
 
-  test:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          name: Running tests
-          command: npm run test:all
-
   docs:
     <<: *defaults
     steps:
       - attach_workspace:
           at: ~/repo
+
       - run:
           name: Build documentation
           command: npm run docs
+
       - persist_to_workspace:
           root: ~/repo
           paths: .
@@ -65,9 +99,11 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
+
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+
       - run:
           name: Publish package
           command: node scripts/npm-publish.js
@@ -77,6 +113,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
+
       - run:
           name: Deploy docs
           command: npm run deploy-gh-pages
@@ -86,21 +123,43 @@ workflows:
 
   package:
     jobs:
-      - build:
+      - prep:
+          filters:
+            tags:
+              only: /.*/
+
+      - lint:
+          requires:
+            - prep
           filters:
             tags:
               only: /.*/
 
       - test:
           requires:
-            - build
+            - prep
+          filters:
+            tags:
+              only: /.*/
+
+      - coverage:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /.*/
+
+      - build:
+          requires:
+            - lint
+            - test
           filters:
             tags:
               only: /.*/
 
       - publish:
           requires:
-            - test
+            - build
           filters:
             tags:
               only: /^v.*/
