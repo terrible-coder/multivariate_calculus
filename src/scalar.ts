@@ -878,51 +878,29 @@ export namespace Scalar {
 	 */
 	export function constant(name: string): Scalar.Constant;
 	export function constant(a: number | Component | BigNum | string, b?: string) {
-		let scalar: Scalar.Constant;
-		let num: Scalar.Constant | undefined;
-		if(typeof a === "number") {
-			if(b === undefined) {
-				const big = BigNum.real(a);
-				scalar = new Scalar.Constant(big);
-			} else {
-				num = NAMED_CONSTANTS.get(b);
-				if(num !== undefined)
-					throw new Overwrite(b);
-				const big = BigNum.real(a);
-				scalar = new Scalar.Constant(big, b);
-				NAMED_CONSTANTS.set(b, scalar);
-			}
-		} else if(a instanceof Component) {
-			if(b === undefined) {
-				const big = new BigNum(a);
-				scalar = new Scalar.Constant(big);
-			} else {
-				num = NAMED_CONSTANTS.get(b);
-				if(num !== undefined)
-					throw new Overwrite(b);
-				const big = new BigNum(a);
-				scalar = new Scalar.Constant(big, b);
-				NAMED_CONSTANTS.set(b, scalar);
-			}
-		} else if(a instanceof BigNum) {
-			if(b === undefined) {
-				const big = a;
-				scalar = new Scalar.Constant(big);
-			} else {
-				num = NAMED_CONSTANTS.get(b);
-				if(num !== undefined)
-					throw new Overwrite(b);
-				const big = a;
-				scalar = new Scalar.Constant(big, b);
-				NAMED_CONSTANTS.set(b, scalar);
-			}
-		} else {
-			num = NAMED_CONSTANTS.get(a);
-			if(num === undefined)
-				throw new Error("No such constant defined.");
-			scalar = num;
+		if(typeof a === "string") {
+			const value = NAMED_CONSTANTS.get(a);
+			if(value === undefined)
+				throw Error(`No such constant defined: ${a}.`);
+			return value;
 		}
-		return scalar;
+		let name = "";
+		if(b !== undefined) {
+			if(NAMED_CONSTANTS.get(b) !== undefined)
+				throw new Overwrite(b);
+			name = b;
+		}
+		let big: BigNum;
+		if(typeof a === "number") {
+			big = BigNum.real(a);
+		} else if(a instanceof Component) {
+			big = new BigNum(a);
+		} else if(a instanceof BigNum) {
+			big = a;
+		} else{throw Error();}
+		const value = name === ""? new Scalar.Constant(big): new Scalar.Constant(big, name);
+		if(name !== "") NAMED_CONSTANTS.set(name, value);
+		return value;
 	}
 
 	/**
