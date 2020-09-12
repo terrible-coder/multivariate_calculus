@@ -1,11 +1,11 @@
 import { IllegalNumberFormat } from "../errors";
 
 /**
- * @ignore
+ * @internal
  */
 function trimStart(s: string, zero: (x: string, index: number) => boolean): string;
 /**
- * @ignore
+ * @internal
  */
 function trimStart<T>(s: T[], zero: (x: T, index: number) => boolean): T[];
 function trimStart<T>(s: string | T[], zero: (x: string | T, index: number) => boolean) {
@@ -18,11 +18,11 @@ function trimStart<T>(s: string | T[], zero: (x: string | T, index: number) => b
 }
 
 /**
- * @ignore
+ * @internal
  */
 function trimEnd(s: string, zero: (x: string, index: number) => boolean): string;
 /**
- * @ignore
+ * @internal
  */
 function trimEnd<T>(s: T[], zero: (x: T, index: number) => boolean): T[];
 function trimEnd<T>(s: string | T[], zero: (x: string | T, index: number) => boolean) {
@@ -41,7 +41,7 @@ function trimEnd<T>(s: string | T[], zero: (x: string | T, index: number) => boo
  * @param s String data to check.
  * @param pos Position to trim from.
  * @param zero Representation of zero element to trim.
- * @ignore
+ * @internal
  */
 export function trimZeroes(s: string, pos: "end" | "start", zero: (x: string, index: number) => boolean): string;
 /**
@@ -51,7 +51,7 @@ export function trimZeroes(s: string, pos: "end" | "start", zero: (x: string, in
  * @param s Array data to check.
  * @param pos Position to trim from.
  * @param zero Representation of zero element to trim.
- * @ignore
+ * @internal
  */
 export function trimZeroes<T>(s: T[], pos: "end" | "start", zero: (x: T, index: number) => boolean): T[];
 export function trimZeroes<T>(s: string | T[], pos: "end" | "start", zero: (x: string | T, index: number) => boolean) {
@@ -120,7 +120,7 @@ function isValid(s: string) {
  * @param n Number of times padding string must be used.
  * @param elt The padding string. It must be a single character string.
  * @param pos Indicate whether to pad at front or at rear.
- * @ignore
+ * @internal
  */
 export function pad(s: string, n: number, elt: string, pos: "end" | "start"): string;
 /**
@@ -131,7 +131,7 @@ export function pad(s: string, n: number, elt: string, pos: "end" | "start"): st
  * @param n Number of times padding element must be used.
  * @param elt The padding element.
  * @param pos Indicate whether to pad at front or at rear.
- * @ignore
+ * @internal
  */
 export function pad<T>(s: T[], n: number, elt: T, pos: "end" | "start"): T[];
 export function pad<T>(s: string | T[], n: number, elt: string | T, pos: "end" | "start") {
@@ -151,7 +151,7 @@ export function pad<T>(s: string | T[], n: number, elt: string | T, pos: "end" |
  * @param b 
  * @param elt String to use to align strings.
  * @param diff The difference of length between two strings as defined by caller.
- * @ignore
+ * @internal
  */
 export function align(a: string, b: string, elt: string, diff: number): string[];
 /**
@@ -164,7 +164,7 @@ export function align(a: string, b: string, elt: string, diff: number): string[]
  * @param b 
  * @param elt Element to use to align arrays.
  * @param diff The difference of length between two arrays as defined by caller.
- * @ignore
+ * @internal
  */
 export function align<T>(a: T[], b: T[], elt: T, diff: number): T[][];
 export function align<T>(a: string | T[], b: string | T[], elt: string | T, diff: number) {
