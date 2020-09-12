@@ -124,6 +124,46 @@ describe("Scalars", function() {
 				}
 			});
 		});
+	
+		test("from numbers", function() {
+			for(let i = 0; i < 10; i++) {
+				expect(Scalar.constant(i)).toBeInstanceOf(Scalar.Constant);
+				expect(Scalar.constant(i).value).toEqual(BigNum.real(i));
+			}
+		});
+
+		test("from array of numbers", function() {
+			for(let i = 0; i < 10; i++) {
+				const a = new Array(i+1).fill(0).map(() => (10 * Math.random()) | 0);
+				expect(Scalar.constant(a)).toBeInstanceOf(Scalar.Constant);
+				expect(Scalar.constant(a).value).toEqual(BigNum.hyper(a));
+			}
+		});
+
+		test("from array of strings", function() {
+			for(let i = 0; i < 10; i++) {
+				const a = new Array(i+1).fill(0).map(() => (10 * Math.random()).toString());
+				expect(Scalar.constant(a)).toBeInstanceOf(Scalar.Constant);
+				expect(Scalar.constant(a).value).toEqual(BigNum.hyper(a));
+			}
+		});
+
+		test("from Components", function() {
+			for(let i = 0; i < 10; i++) {
+				const a = Component.create(i);
+				expect(Scalar.constant(a)).toBeInstanceOf(Scalar.Constant);
+				expect(Scalar.constant(a).value).toEqual(new BigNum(a));
+			}
+		});
+
+		test("from BigNum", function() {
+			for(let i = 0; i < 10; i++) {
+				const comps = new Array(i+1).fill(0).map(() => (10 * Math.random()) | 0);
+				const a = BigNum.hyper(comps);  
+				expect(Scalar.constant(a)).toBeInstanceOf(Scalar.Constant);
+				expect(Scalar.constant(a).value).toEqual(a);
+			}
+		});
 	});
 
 	describe("Constants", function() {
