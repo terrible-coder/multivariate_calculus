@@ -3,15 +3,15 @@ import { IllegalNumberFormat } from "../errors";
 /**
  * @internal
  */
-function trimStart(s: string, zero: (x: string, index: number) => boolean): string;
+function trimStart(s: string, zero: (x: string) => boolean): string;
 /**
  * @internal
  */
-function trimStart<T>(s: T[], zero: (x: T, index: number) => boolean): T[];
-function trimStart<T>(s: string | T[], zero: (x: string | T, index: number) => boolean) {
+function trimStart<T>(s: T[], zero: (x: T) => boolean): T[];
+function trimStart<T>(s: string | T[], zero: (x: string | T) => boolean) {
 	let i: number;
 	for (i = 0; i < s.length; i++) {
-		if(!zero(s[i], i))
+		if(!zero(s[i]))
 			break;
 	}
 	return s.slice(i);
@@ -20,15 +20,15 @@ function trimStart<T>(s: string | T[], zero: (x: string | T, index: number) => b
 /**
  * @internal
  */
-function trimEnd(s: string, zero: (x: string, index: number) => boolean): string;
+function trimEnd(s: string, zero: (x: string) => boolean): string;
 /**
  * @internal
  */
-function trimEnd<T>(s: T[], zero: (x: T, index: number) => boolean): T[];
-function trimEnd<T>(s: string | T[], zero: (x: string | T, index: number) => boolean) {
+function trimEnd<T>(s: T[], zero: (x: T) => boolean): T[];
+function trimEnd<T>(s: string | T[], zero: (x: string | T) => boolean) {
 	let i: number;
 	for(i = s.length - 1; i >= 0; i--) {
-		if(!zero(s[i], i))
+		if(!zero(s[i]))
 			break;
 	}
 	return s.slice(0, i+1);
@@ -43,7 +43,7 @@ function trimEnd<T>(s: string | T[], zero: (x: string | T, index: number) => boo
  * @param zero Representation of zero element to trim.
  * @internal
  */
-export function trimZeroes(s: string, pos: "end" | "start", zero: (x: string, index: number) => boolean): string;
+export function trimZeroes(s: string, pos: "end" | "start", zero: (x: string) => boolean): string;
 /**
  * Trims unnecessary "zeroes" towards the end or beginning of an array.
  * The "zeroes" may not be numerically zero. Any data could be passed in to
@@ -53,8 +53,8 @@ export function trimZeroes(s: string, pos: "end" | "start", zero: (x: string, in
  * @param zero Representation of zero element to trim.
  * @internal
  */
-export function trimZeroes<T>(s: T[], pos: "end" | "start", zero: (x: T, index: number) => boolean): T[];
-export function trimZeroes<T>(s: string | T[], pos: "end" | "start", zero: (x: string | T, index: number) => boolean) {
+export function trimZeroes<T>(s: T[], pos: "end" | "start", zero: (x: T) => boolean): T[];
+export function trimZeroes<T>(s: string | T[], pos: "end" | "start", zero: (x: string | T) => boolean) {
 	if(typeof s === "string")
 		return (pos === "end")? trimEnd(s, zero): trimStart(s, zero);
 	else

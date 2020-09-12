@@ -8,6 +8,7 @@ import { MathContext } from "./core/math/context";
 import { mathenv } from "./core/env";
 import { BigNum } from "./core/math/bignum";
 import { hyper_cross } from "./core/math/numerical";
+import { trimZeroes } from "./core/math/parsers";
 
 /**
  * The double underscore.
@@ -978,9 +979,7 @@ function cross_index(A: Vector, B: Vector) {
  * @internal
  */
 function constantFromScalars(value: Scalar.Constant[]) {
-	const zeroIndex = value.length - value.reverse().findIndex(x => !x.equals(Scalar.ZERO));
-	value.reverse();
-	return zeroIndex === value.length + 1? []: value.slice(0, zeroIndex);
+	return trimZeroes(value, "end", x => x.equals(Scalar.ZERO));
 }
 
 /**
