@@ -1,4 +1,4 @@
-import { decimate, parseNum } from "../../../src/core/math/parsers";
+import { align, decimate, parseNum } from "../../../src/core/math/parsers";
 
 describe("decimating", function() {
 	test("with negative index", function() {
@@ -20,6 +20,67 @@ describe("decimating", function() {
 		test("with negative numbers", function() {
 			expect(decimate("-1234", 2)).toBe("-12.34");
 			expect(decimate("-1234", 5)).toBe("-0.01234");
+		});
+	});
+});
+
+describe("aligning", function() {
+	describe("for strings", function() {
+		test("same length +ve diff", function() {
+			expect(align("123", "444", "a", 3)).toEqual(["123", "444aaa"]);
+		});
+
+		test("same length -ve diff", function() {
+			expect(align("123", "444", "a", -4)).toEqual(["123aaaa", "444"]);
+		});
+
+		test("different length +ve diff", function() {
+			expect(align("1234", "LLL", "o", 3)).toEqual(["1234", "LLLooo"]);
+		});
+
+		test("different length -ve length", function() {
+			expect(align("1234", "LLL", "o", -4)).toEqual(["1234oooo", "LLL"]);
+		});
+	});
+
+	describe("for objects", function() {
+		const random = () => {
+			return {
+				foo: (Math.random() * 10) | 0,
+				bar: ((Math.random() * 10) | 0).toString()
+			}
+		}
+		const elt = {
+			foo: 4,
+			bar: "filler"
+		};
+
+		test("same length +ve diff", function() {
+			const a = new Array(3).fill(0).map(() => random());
+			const b = new Array(3).fill(0).map(() => random());
+			const end = b.concat(new Array(3).fill(elt));
+			expect(align(a, b, elt, 3)).toEqual([a, end]);
+		});
+
+		test("same length -ve diff", function() {
+			const a = new Array(3).fill(0).map(() => random());
+			const b = new Array(3).fill(0).map(() => random());
+			const end = a.concat(new Array(4).fill(elt));
+			expect(align(a, b, elt, -4)).toEqual([end, b]);
+		});
+
+		test("different length +ve diff", function() {
+			const a = new Array(4).fill(0).map(() => random());
+			const b = new Array(3).fill(0).map(() => random());
+			const end = b.concat(new Array(3).fill(elt));
+			expect(align(a, b, elt, 3)).toEqual([a, end]);
+		});
+
+		test("different length -ve diff", function() {
+			const a = new Array(4).fill(0).map(() => random());
+			const b = new Array(3).fill(0).map(() => random());
+			const end = a.concat(new Array(4).fill(elt));
+			expect(align(a, b, elt, -4)).toEqual([end, b]);
 		});
 	});
 });
