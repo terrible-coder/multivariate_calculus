@@ -836,6 +836,50 @@ export namespace Scalar {
 	 */
 	export function constant(value: number, name: string): Scalar.Constant;
 	/**
+	 * Creates a new {@link Scalar.Constant} object from an array of numbers.
+	 * The numbers are interpreted as the real and imaginary components of
+	 * a hyper-complex number.
+	 * 
+	 * This is the recommended way of creating {@link Scalar.Constant} objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
+	 */
+	export function constant(value: number[]): Scalar.Constant;
+	/**
+	 * Defines a named {@link Scalar.Constant} object from an array of numbers.
+	 * The numbers are interpreted as the real and imaginary components of
+	 * a hyper-complex number.
+	 * 
+	 * This is the recommended way of creating named {@link Scalar.Constant} objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
+	 * @param name The string with which `this` object is identified.
+	 * @throws Throws an error if a {@link Scalar.Constant} with the same name has been defined previously.
+	 */
+	export function constant(value: number[], name: string): Scalar.Constant;
+	/**
+	 * Creates a new {@link Scalar.Constant} object from an array of strings.
+	 * The numbers are interpreted as the real and imaginary components of
+	 * a hyper-complex number.
+	 * 
+	 * This is the recommended way of creating {@link Scalar.Constant} objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
+	 */
+	export function constant(value: string[]): Scalar.Constant;
+	/**
+	 * Defines a named {@link Scalar.Constant} object from an array of strings.
+	 * The numbers are interpreted as the real and imaginary components of
+	 * a hyper-complex number.
+	 * 
+	 * This is the recommended way of creating named {@link Scalar.Constant} objects instead of
+	 * using the constructor.
+	 * @param value The fixed value the {@link Scalar.Constant} is supposed to represent.
+	 * @param name The string with which `this` object is identified.
+	 * @throws Throws an error if a {@link Scalar.Constant} with the same name has been defined previously.
+	 */
+	export function constant(value: string[], name: string): Scalar.Constant;
+	/**
 	 * Creates a new {@link Scalar.Constant} object from a {@link Component} object.
 	 * 
 	 * This is the recommended way of creating {@link Scalar.Constant} objects instead of
@@ -877,7 +921,7 @@ export namespace Scalar {
 	 * @param name The name of the named {@link Scalar.Constant} object to be retrieved.
 	 */
 	export function constant(name: string): Scalar.Constant;
-	export function constant(a: number | Component | BigNum | string, b?: string) {
+	export function constant(a: number | number[] | string[] | Component | BigNum | string, b?: string) {
 		if(typeof a === "string") {
 			const value = NAMED_CONSTANTS.get(a);
 			if(value === undefined)
@@ -891,13 +935,12 @@ export namespace Scalar {
 			name = b;
 		}
 		let big: BigNum;
-		if(typeof a === "number") {
-			big = BigNum.real(a);
-		} else if(a instanceof Component) {
-			big = new BigNum(a);
-		} else if(a instanceof BigNum) {
-			big = a;
-		} else{throw Error();}
+		if(typeof a === "number") big = BigNum.real(a);
+		else if(Array.isArray(a))
+			if(typeof a[0] === "number") big = BigNum.hyper(<Array<number>>a);
+			else big = BigNum.hyper(<Array<string>>a);
+		else if(a instanceof Component) big = new BigNum(a);
+		else big = a;
 		const value = name === ""? new Scalar.Constant(big): new Scalar.Constant(big, name);
 		if(name !== "") NAMED_CONSTANTS.set(name, value);
 		return value;
