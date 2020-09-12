@@ -1,4 +1,28 @@
-import { parseNum } from "../../../src/core/math/parsers";
+import { decimate, parseNum } from "../../../src/core/math/parsers";
+
+describe("decimating", function() {
+	test("with negative index", function() {
+		expect(() => decimate("random", -1)).toThrow();
+		expect(() => decimate("random", -10)).toThrow();
+	});
+
+	describe("with positive index", function() {
+		test("for index larger than length of string", function() {
+			expect(() => decimate("abc", 5)).not.toThrow();
+			expect(decimate("abc", 5)).toBe("0.00abc");
+		});
+
+		test("with positive numbers", function() {
+			expect(decimate("1234", 2)).toBe("12.34");
+			expect(decimate("1234", 5)).toBe("0.01234");
+		});
+
+		test("with negative numbers", function() {
+			expect(decimate("-1234", 2)).toBe("-12.34");
+			expect(decimate("-1234", 5)).toBe("-0.01234");
+		});
+	});
+});
 
 describe("decimal notation", function() {
 	describe("positive values", function() {

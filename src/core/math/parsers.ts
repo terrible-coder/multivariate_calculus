@@ -185,7 +185,7 @@ export function align<T>(a: string | T[], b: string | T[], elt: string | T, diff
  * value is calculated from the rear of the string starting from 1.
  * @param a The number as a string.
  * @param index The index from the rear.
- * @ignore
+ * @internal
  */
 export function decimate(a: string, index: number) {
 	if (index < 0)
