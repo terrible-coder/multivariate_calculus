@@ -1,4 +1,4 @@
-import { align, decimate, parseNum } from "../../../src/core/math/parsers";
+import { align, decimate, parseNum, trimZeroes } from "../../../src/core/math/parsers";
 
 describe("decimating", function() {
 	test("with negative index", function() {
@@ -81,6 +81,45 @@ describe("aligning", function() {
 			const b = new Array(3).fill(0).map(() => random());
 			const end = a.concat(new Array(4).fill(elt));
 			expect(align(a, b, elt, -4)).toEqual([end, b]);
+		});
+	});
+});
+
+describe("trimming", function() {
+	describe("with string", function() {
+		test("from end", function() {
+			const a = "LaLaLaLaaaa";
+			expect(trimZeroes(a, "end", x => x === 'a')).toBe("LaLaLaL");
+		});
+
+		test("from beginning", function() {
+			const a = "aaaaargh!!";
+			expect(trimZeroes(a, "start", x => x === 'a')).toBe("rgh!!");
+		});
+	});
+
+	describe("with object", function() {
+		const random = () => {
+			return {
+				foo: (Math.random() * 10) | 0,
+				bar: ((Math.random() * 10) | 0).toString()
+			}
+		}
+		const elt = {
+			foo: 4,
+			bar: "filler"
+		};
+
+		test("from end", function() {
+			const a = new Array(5).fill(0).map(() => random());
+			const noisy = a.concat(new Array(3).fill(elt));
+			expect(trimZeroes(noisy, "end", x => x == elt)).toEqual(a);
+		});
+
+		test("from beginning", function() {
+			const a = new Array(5).fill(0).map(() => random());
+			const noisy = (new Array(3).fill(elt)).concat(a);
+			expect(trimZeroes(noisy, "start", x => x == elt)).toEqual(a);
 		});
 	});
 });
