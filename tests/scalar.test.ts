@@ -1,6 +1,7 @@
 import { Scalar } from "../src/scalar";
 import { Component } from "../src/core/math/component";
 import { BigNum } from "../src/core/math/bignum";
+import { Overwrite } from "../src/core/errors";
 
 function randomDigit() {
 	const digit = (10 * Math.random()) | 0;
@@ -124,19 +125,91 @@ describe("Scalars", function() {
 				}
 			});
 		});
+	
+		test("from numbers", function() {
+			for(let i = 0; i < 10; i++) {
+				expect(Scalar.constant(i)).toBeInstanceOf(Scalar.Constant);
+				expect(Scalar.constant(i).value).toEqual(BigNum.real(i));
+			}
+		});
+
+		test("from array of numbers", function() {
+			for(let i = 0; i < 10; i++) {
+				const a = new Array(i+1).fill(0).map(() => (10 * Math.random()) | 0);
+				expect(Scalar.constant(a)).toBeInstanceOf(Scalar.Constant);
+				expect(Scalar.constant(a).value).toEqual(BigNum.hyper(a));
+			}
+		});
+
+		test("from array of strings", function() {
+			for(let i = 0; i < 10; i++) {
+				const a = new Array(i+1).fill(0).map(() => (10 * Math.random()).toString());
+				expect(Scalar.constant(a)).toBeInstanceOf(Scalar.Constant);
+				expect(Scalar.constant(a).value).toEqual(BigNum.hyper(a));
+			}
+		});
+
+		test("from Components", function() {
+			for(let i = 0; i < 10; i++) {
+				const a = Component.create(i);
+				expect(Scalar.constant(a)).toBeInstanceOf(Scalar.Constant);
+				expect(Scalar.constant(a).value).toEqual(new BigNum(a));
+			}
+		});
+
+		test("from BigNum", function() {
+			for(let i = 0; i < 10; i++) {
+				const comps = new Array(i+1).fill(0).map(() => (10 * Math.random()) | 0);
+				const a = BigNum.hyper(comps);  
+				expect(Scalar.constant(a)).toBeInstanceOf(Scalar.Constant);
+				expect(Scalar.constant(a).value).toEqual(a);
+			}
+		});
 	});
 
 	describe("Constants", function() {
 		const a = Scalar.constant(2, "a"), b = Scalar.constant(3, "b");
 
-		it("Has naming system", function() {
+		it("has naming system", function() {
 			expect(a).not.toBe(Scalar.constant(2));
 		});
 
-		it("Names correctly", function() {
-			expect(Scalar.constant("a")).toBe(a);
-			expect(Scalar.constant("b")).toBe(b);
-			expect(() => Scalar.constant(5, "a")).toThrowError("already been declared");
+		describe("Names correctly", function() {
+	
+			test("for numbers", function() {
+				const name = "A";
+				const A = Scalar.constant(5, name);
+				expect(Scalar.constant(name)).toBe(A);
+				expect(() => Scalar.constant(1, name)).toThrow(Overwrite);
+			});
+	
+			test("for array of numbers", function() {
+				const name = "B";
+				const B = Scalar.constant([5, 2, 1], name);
+				expect(Scalar.constant(name)).toBe(B);
+				expect(() => Scalar.constant(["1"], name)).toThrow(Overwrite);
+			});
+	
+			test("for array of strings", function() {
+				const name = "C";
+				const C = Scalar.constant(["5", "-1", "3"], name);
+				expect(Scalar.constant(name)).toBe(C);
+				expect(() => Scalar.constant([1, -1, 0, -4], name)).toThrow(Overwrite);
+			});
+	
+			test("for Components", function() {
+				const name = "D";
+				const D = Scalar.constant(Component.create(-5), name);
+				expect(Scalar.constant(name)).toBe(D);
+				expect(() => Scalar.constant(1, name)).toThrow(Overwrite);
+			});
+	
+			test("for BigNum", function() {
+				const name = "E";
+				const E = Scalar.constant(BigNum.complex("15", "21"), name);
+				expect(Scalar.constant(name)).toBe(E);
+				expect(() => Scalar.constant(1, name)).toThrow(Overwrite);
+			});
 		});
 
 		it("Checks equality", function() {
