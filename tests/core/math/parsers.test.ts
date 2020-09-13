@@ -41,6 +41,10 @@ describe("aligning", function() {
 		test("different length -ve length", function() {
 			expect(align("1234", "LLL", "o", -4)).toEqual(["1234oooo", "LLL"]);
 		});
+
+		test("0 diff", function() {
+			expect(align("1234", "LLL", "o", 0)).toEqual(["1234", "LLL"]);
+		});
 	});
 
 	describe("for objects", function() {
@@ -81,6 +85,12 @@ describe("aligning", function() {
 			const b = new Array(3).fill(0).map(() => random());
 			const end = a.concat(new Array(4).fill(elt));
 			expect(align(a, b, elt, -4)).toEqual([end, b]);
+		});
+
+		test("0 diff", function() {
+			const a = new Array(4).fill(0).map(() => random());
+			const b = new Array(3).fill(0).map(() => random());
+			expect(align(a, b, elt, 0)).toEqual([a, b]);
 		});
 	});
 });
