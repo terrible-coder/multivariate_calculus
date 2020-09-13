@@ -136,7 +136,7 @@ export function pad(s: string, n: number, elt: string, pos: "end" | "start"): st
 export function pad<T>(s: T[], n: number, elt: T, pos: "end" | "start"): T[];
 export function pad<T>(s: string | T[], n: number, elt: string | T, pos: "end" | "start") {
 	if(typeof s === "string")
-		return pos === "start"? "".padEnd(n, <string>elt) + s : s + "".padEnd(n, <string>elt);
+		return pos === "start"? "".padEnd(n*(<string>elt).length, <string>elt) + s : s + "".padEnd(n*(<string>elt).length, <string>elt);
 	const padding = new Array(n).fill(0).map(() => <T>elt);
 	return pos === "end"? s.concat(padding): padding.concat(s);
 }
