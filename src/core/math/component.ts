@@ -168,7 +168,9 @@ export class Component extends Numerical {
 	/** @internal */
 	public static abs(x: Component, ...args: any[]): Component;
 	public static abs(x: Component, ...args: any[]) {
-		return x.integer.charAt(0) === "-"? Component.create(x.integer.substring(1) + "." + x.decimal): x;
+		if(x.integer.charAt(0) === "-" || x.integer.charAt(0) === "+")
+			return Component.create(x.toString().substring(1));
+		return x;
 	}
 
 	/**
@@ -275,8 +277,8 @@ export class Component extends Numerical {
 	 * The negative value of `this`.
 	 */
 	public get neg() {
-		if(this.integer.charAt(0) === "-")
-			return Component.create(this.integer.substring(1) + "." + this.decimal);
+		if(this.integer.charAt(0) === "-" || this.integer.charAt(0) === "+")
+			return Component.create(this.toString().substring(1));
 		return Component.create("-" + this.toString());
 	}
 

@@ -92,7 +92,11 @@ function isDecimal(s: string) {
 	const parts = s.split(".");
 	if (parts.length > 2)
 		return false;
-	return parts.length === 1 ? isInteger(parts[0]) : isInteger(parts[0]) && isInteger(parts[1], true);
+	if(parts.length === 1)
+		return isInteger(parts[0]);
+	if(parts[1] === "")
+		return false;
+	return isInteger(parts[0]) && isInteger(parts[1], true);
 }
 
 /**
@@ -107,6 +111,7 @@ function isValid(s: string) {
 		// M is the mantissa and E is the exponent with base 10
 		const i = s.indexOf("e");
 		const mantissa = s.substring(0, i), exponent = s.substring(i + 1);
+		// if(mantissa === "" || exponent === "") return false;
 		return isDecimal(mantissa) && isInteger(exponent);
 	}
 	return isDecimal(s);
@@ -190,6 +195,7 @@ export function align<T>(a: string | T[], b: string | T[], elt: string | T, diff
 export function decimate(a: string, index: number) {
 	if (index < 0)
 		throw new Error("Cannot put decimal point at negative index.");
+	if(index === 0) return a;
 	let s = a, sgn = "";
 	if (s.charAt(0) === "-") {
 		s = s.substring(1);
