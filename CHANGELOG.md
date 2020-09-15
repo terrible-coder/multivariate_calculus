@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.2](https://github.com/terrible-coder/multivariate_calculus/compare/v1.4.1...v1.4.2) (2020-09-15)
+
+
+### Bug Fixes
+
+* :ambulance: Numbers without fractional part ([267cde0](https://github.com/terrible-coder/multivariate_calculus/commit/267cde041b707914d5f6d23701b4fc6ab691d28a))
+* :ambulance: Only signs are not valid numbers. ([c59901e](https://github.com/terrible-coder/multivariate_calculus/commit/c59901e495b47d05477060c9e58f022ebdd03048))
+* :bug: Padding with strings. ([7c1c5ec](https://github.com/terrible-coder/multivariate_calculus/commit/7c1c5ec20d25a46471b8adf90f82956ba16f0600))
+* :fire: Remove interval.ts from exports ([01cb33c](https://github.com/terrible-coder/multivariate_calculus/commit/01cb33c3b032e4bd6ae2b02c838e54764ba3a56f))
+* :sparkles: Scalars from numbers and strings ([f101b10](https://github.com/terrible-coder/multivariate_calculus/commit/f101b1071cd7f58baa48562271d5579d04345366))
+
 ### [1.4.1](https://github.com/terrible-coder/multivariate_calculus/compare/v1.4.0...v1.4.1) (2020-09-10)
 
 ## [1.4.0](https://github.com/terrible-coder/multivariate_calculus/compare/v1.3.0...v1.4.0) (2020-08-30)
