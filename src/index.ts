@@ -9,7 +9,6 @@ export * from "./core/env";
 export * from "./core/definitions";
 export * from "./core/expression";
 export * from "./core/errors";
-export * from "./core/interval";
 export * from "./scalar";
 export * from "./vector";
 export * from "./matrix";
