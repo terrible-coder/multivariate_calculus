@@ -13,6 +13,7 @@ node_modules
 
 #files
 /.gitignore
+/.gitattributes
 /.eslintrc.json
 /.versionrc.json
 /package-lock.json
