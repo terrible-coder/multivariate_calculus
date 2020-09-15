@@ -111,9 +111,12 @@ function isValid(s: string) {
 		// M is the mantissa and E is the exponent with base 10
 		const i = s.indexOf("e");
 		const mantissa = s.substring(0, i), exponent = s.substring(i + 1);
-		// if(mantissa === "" || exponent === "") return false;
+		if(mantissa === "" || exponent === "") return false;
+		if(mantissa === "+" || mantissa === "-") return false;
+		if(exponent === "+" || exponent === "-") return false;
 		return isDecimal(mantissa) && isInteger(exponent);
 	}
+	if(s === "+" || s === "-") return false;
 	return isDecimal(s);
 }
 
