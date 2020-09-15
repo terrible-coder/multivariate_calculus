@@ -18,6 +18,7 @@ describe("Scalars", function() {
 					const integers = new Array(rand).fill(0).map(() => randomDigit()).join("");
 					rand = (10 * Math.random()) | 0;
 					const decimals = new Array(rand).fill(0).map(() => randomDigit()).join("");
+					if(decimals === "") continue;
 					const numString = integers + "." + decimals;
 					const num = Component.create(numString);
 					expect(Scalar.constant(num).value).toEqual(BigNum.real(numString));
@@ -33,6 +34,7 @@ describe("Scalars", function() {
 						const integers = new Array(rand).fill(0).map(() => randomDigit()).join("");
 						rand = (10 * Math.random()) | 0;
 						const decimals = new Array(rand).fill(0).map(() => randomDigit()).join("");
+						if(decimals === "") continue;
 						const numString = integers + "." + decimals;
 						components.push(numString);
 					}

@@ -1,3 +1,4 @@
+import { IllegalNumberFormat } from "../../../src/core/errors";
 import { align, decimate, pad, parseNum, trimZeroes } from "../../../src/core/math/parsers";
 
 describe("decimating", function() {
@@ -193,6 +194,12 @@ describe("decimal notation", function() {
 				expect(parseNum(`+4.${i}000`)).toEqual(["4", `${i}`]);
 			}
 		});
+
+		test("errors", function() {
+			expect(() => parseNum("1.1.1")).toThrow(IllegalNumberFormat);
+			expect(() => parseNum("a.1")).toThrow();
+			expect(() => parseNum("1.0!")).toThrow();
+		});
 	});
 
 	describe("negative values", function() {
@@ -209,6 +216,13 @@ describe("decimal notation", function() {
 		test("with trailing zeroes", function() {
 			for(let i = 1; i <= 9; i++)
 				expect(parseNum(`-4.${i}000`)).toEqual(["-4", `${i}`]);
+		});
+
+		test("errors", function() {
+			expect(() => parseNum("-1.1.1")).toThrow(IllegalNumberFormat);
+			expect(() => parseNum("-B.1")).toThrow();
+			expect(() => parseNum("-1.0!")).toThrow();
+			expect(() => parseNum("0.-212")).toThrow(IllegalNumberFormat);
 		});
 	});
 });
@@ -287,6 +301,13 @@ describe("Exponential notation", function() {
 				}
 			});
 		});
+
+		test("errors", function() {
+			expect(() => parseNum("1e1.2")).toThrow(IllegalNumberFormat);
+			expect(() => parseNum("5e")).toThrow();
+			expect(() => parseNum("e10")).toThrow();
+			expect(() => parseNum("0.e-212")).toThrow(IllegalNumberFormat);
+		});
 	});
 
 	describe("negative values", function() {
@@ -344,6 +365,13 @@ describe("Exponential notation", function() {
 				for(let i = 1; i <= 9; i++)
 					expect(parseNum(`-1.${i}e-002`)).toEqual(["-", `01${i}`]);
 			});
+		});
+
+		test("errors", function() {
+			expect(() => parseNum("-1e1.2")).toThrow(IllegalNumberFormat);
+			expect(() => parseNum("-5e")).toThrow();
+			expect(() => parseNum("-e10")).toThrow();
+			expect(() => parseNum("-0.e-212")).toThrow(IllegalNumberFormat);
 		});
 	});
 });
